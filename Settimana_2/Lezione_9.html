@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lezione 9 - Novità in Java 8: Metodi Utility e Paradigmi</title>
+    <link rel="stylesheet" href="/styles/style.css">
+</head>
+<body>
+    <h1>Lezione 9: Novità in Java 8 - Metodi Utility e Paradigmi di Programmazione</h1>
+
+    <section class="intro">
+        <p>La nona lezione si concentra sulle nuove funzionalità introdotte in Java 8 nei metodi utility delle principali classi e sul cambiamento paradigmatico nella programmazione Java. Analizzeremo gli aggiornamenti a <code>Arrays</code>, <code>Collections</code>, e <code>Objects</code>, e discuteremo come questi miglioramenti abbiano influenzato il modo di scrivere codice Java. Con l'adozione di Java 8, gli sviluppatori hanno avuto accesso a strumenti più potenti per scrivere codice conciso, performante e mantenibile, sfruttando anche le capacità dei sistemi multicore grazie a un miglior supporto al parallelismo.</p>
+    </section>
+
+    <section class="section">
+        <h2>Nuovi Metodi Utility</h2>
+        <p>Java 8 ha introdotto nuovi metodi statici in diverse classi utility, facilitando operazioni comuni e riducendo il codice boilerplate. Approfondiamo i principali miglioramenti:</p>
+
+        <h3>Arrays</h3>
+        <p>La classe <code>Arrays</code> è stata arricchita con nuovi metodi per la gestione efficiente degli array. Tra questi spicca <code>parallelSort()</code>, che permette di ordinare gli elementi di un array sfruttando il parallelismo. Questo è particolarmente utile per grandi dataset, dove l'elaborazione parallela può ridurre significativamente i tempi di esecuzione.</p>
+
+        <div class="example">
+            <h4>Esempio 1: Ordinamento parallelo</h4>
+            <pre><code>int[] numeri = {5, 3, 8, 1, 9, 2};
+
+// Ordinamento parallelo
+Arrays.parallelSort(numeri);
+
+// Stampa dell'array ordinato
+for (int numero : numeri) {
+    System.out.println(numero);
+}</code></pre>
+        </div>
+
+        <div class="example">
+            <h4>Esempio 2: Ordinamento personalizzato</h4>
+            <pre><code>int[] numeri = {12, 7, -5, 3};
+
+// Ordinamento con Comparator
+Arrays.sort(numeri, (a, b) -> Integer.compare(b, a));
+
+// Stampa dell'array ordinato
+for (int numero : numeri) {
+    System.out.println(numero);
+}</code></pre>
+        </div>
+
+        <h3>Collections</h3>
+        <p>Le collezioni in Java hanno ricevuto nuovi metodi statici per supportare operazioni comuni. Metodi come <code>emptyList()</code>, <code>emptyMap()</code> e <code>emptySet()</code> creano collezioni immutabili vuote, utili per scenari in cui vogliamo evitare modifiche accidentali.</p>
+
+        <div class="example">
+            <h4>Esempio: Collezioni vuote</h4>
+            <pre><code>List<String> listaVuota = Collections.emptyList();
+System.out.println("Lista vuota: " + listaVuota);
+
+Set<Integer> setVuoto = Collections.emptySet();
+System.out.println("Set vuoto: " + setVuoto);</code></pre>
+        </div>
+
+        <h3>Objects</h3>
+        <p>La classe <code>Objects</code> introduce metodi per migliorare la gestione degli oggetti. Tra questi troviamo <code>requireNonNull()</code>, che consente di validare i riferimenti nulli, e <code>compare()</code>, utile per confrontare due oggetti con un Comparator fornito.</p>
+
+        <div class="example">
+            <h4>Esempio 1: Validazione di oggetti</h4>
+            <pre><code>String nome = "Mario";
+Objects.requireNonNull(nome, "Il nome non può essere null");
+System.out.println("Nome validato: " + nome);</code></pre>
+        </div>
+
+        <div class="example">
+            <h4>Esempio 2: Confronto di oggetti</h4>
+            <pre><code>String a = "Ciao";
+String b = "Mondo";
+
+int risultato = Objects.compare(a, b, String::compareTo);
+System.out.println("Risultato del confronto: " + risultato);</code></pre>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2>Metodi di Ordinamento</h2>
+        <p>I metodi di ordinamento in Java 8 supportano l'uso di espressioni lambda per definire criteri di confronto in modo conciso. Questo permette di ordinare collezioni in modo personalizzato senza la necessità di creare classi Comparator separate.</p>
+
+        <div class="example">
+            <h4>Esempio: Ordinamento con lambda</h4>
+            <pre><code>List<String> nomi = Arrays.asList("Anna", "Luca", "Marco");
+
+// Ordinamento alfabetico inverso
+nomi.sort((a, b) -> b.compareTo(a));
+
+// Stampa della lista ordinata
+System.out.println(nomi);</code></pre>
+        </div>
+
+        <div class="example">
+            <h4>Esempio avanzato: Ordinamento di oggetti</h4>
+            <pre><code>class Persona {
+    String nome;
+    int eta;
+
+    Persona(String nome, int eta) {
+        this.nome = nome;
+        this.eta = eta;
+    }
+
+    @Override
+    public String toString() {
+        return nome + " (" + eta + " anni)";
+    }
+}
+
+List<Persona> persone = Arrays.asList(
+    new Persona("Anna", 30),
+    new Persona("Luca", 25),
+    new Persona("Marco", 35)
+);
+
+// Ordinamento per età
+persone.sort((p1, p2) -> Integer.compare(p1.eta, p2.eta));
+
+// Stampa delle persone ordinate
+persone.forEach(System.out::println);</code></pre>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2>Riflessione sulle Novità</h2>
+        <p>Java 8 rappresenta un cambio di paradigma verso uno stile di programmazione più funzionale. Le interfacce funzionali, le espressioni lambda e le nuove API incoraggiano uno sviluppo più conciso e intuitivo. Inoltre, l'introduzione di metodi statici e collezioni immutabili favorisce la scrittura di codice più sicuro e privo di errori legati alla concorrenza.</p>
+        <p>Con questi miglioramenti, gli sviluppatori possono scrivere codice che si adatta meglio alle esigenze moderne, dove il parallelismo e la modularità giocano un ruolo cruciale.</p>
+    </section>
+
+    <section class="bibliography">
+        <h3>Bibliografia</h3>
+        <ul>
+            <li><a href="https://docs.oracle.com/javase/8/docs/api/">Documentazione ufficiale Java 8</a></li>
+            <li><a href="https://www.baeldung.com/java-8">Guida a Java 8 su Baeldung</a></li>
+            <li><a href="https://www.geeksforgeeks.org/java-8-features/">Java 8 Features - GeeksforGeeks</a></li>
+        </ul>
+    </section>
+
+    <section class="advanced">
+        <h3>Avanzata</h3>
+        <p>Gli studenti interessati possono approfondire i seguenti temi:</p>
+        <ul>
+            <li><strong>Internals di parallelSort:</strong> studio del funzionamento del fork/join framework.</li>
+            <li><strong>Custom Collectors:</strong> creazione di collector personalizzati con Stream API.</li>
+            <li><strong>Sorting avanzato:</strong> utilizzo di Comparator combinati con lambda.</li>
+            <li><strong>Lazy Evaluation:</strong> approfondimento sul comportamento lazy di Stream e sulle ottimizzazioni possibili.</li>
+        </ul>
+    </section>
+
+    <footer class="footer">
+        <br>
+        <a href="/index.html" class="footer-logo">
+            <img src="/img/logo.png" alt="Logo del sito" />
+        </a>
+
+        <a href="pagina-precedente.html" class="footer-link left">
+          &#8592; Pagina precedente
+        </a>
+
+        <a href="pagina-successiva.html" class="footer-link right">
+          Pagina successiva &#8594;
+        </a>
+
+        <br><br>&copy; 2025 Corso di Programmazione Backend. Tutti i diritti riservati.
+    </footer>
+</body>
+</html>

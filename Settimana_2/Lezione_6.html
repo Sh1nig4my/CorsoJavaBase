@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lezione 6: Lambda Expressions, Functional Interfaces e Default Methods</title>
+    <link rel="stylesheet" href="/styles/style.css">
+</head>
+<body>
+    <h1>Lezione 6: Lambda Expressions, Functional Interfaces e Default Methods</h1>
+
+    <section class="intro">
+        <h2>Introduzione</h2>
+        <p>Con l'introduzione di Java 8, il linguaggio ha subito una rivoluzione che ha reso possibile adottare uno stile di programmazione più funzionale. La sesta lezione esplorerà tre concetti fondamentali:</p>
+        <ul>
+            <li><strong>Lambda Expressions:</strong> un modo conciso per implementare metodi astratti.</li>
+            <li><strong>Functional Interfaces:</strong> interfacce con un singolo metodo astratto che fungono da target per le Lambda Expressions.</li>
+            <li><strong>Default Methods:</strong> la possibilità di definire metodi con implementazione predefinita nelle interfacce.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>Lambda Expressions</h2>
+        <p>Le <em>Lambda Expressions</em> sono un meccanismo per implementare metodi in modo più compatto. Permettono di eliminare la verbosità associata alle classi anonime, migliorando leggibilità e mantenibilità del codice.</p>
+        <h3>Sintassi</h3>
+        <pre><code>(parametri) -> espressione
+(parametri) -> {
+    // corpo della funzione
+}</code></pre>
+        <p>Ad esempio:</p>
+        <div class="example">
+            <pre><code>interface Operazione {
+    int calcola(int a, int b);
+}
+
+public class LambdaExample {
+    public static void main(String[] args) {
+        Operazione somma = (a, b) -> a + b;
+        Operazione moltiplicazione = (a, b) -> a * b;
+
+        System.out.println("Somma: " + somma.calcola(5, 3));
+        System.out.println("Moltiplicazione: " + moltiplicazione.calcola(5, 3));
+    }
+}</code></pre>
+        </div>
+        <p>In questo esempio, usiamo due implementazioni lambda per eseguire operazioni matematiche.</p>
+    </section>
+
+    <section>
+        <h2>Functional Interfaces</h2>
+        <p>Le <strong>Functional Interfaces</strong> sono interfacce che definiscono un solo metodo astratto. Sono annotate con <code>@FunctionalInterface</code> per garantire questa caratteristica.</p>
+        <h3>Esempio di Functional Interface</h3>
+        <div class="example">
+            <pre><code>@FunctionalInterface
+interface Saluto {
+    void saluta(String nome);
+}
+
+public class FunctionalInterfaceExample {
+    public static void main(String[] args) {
+        Saluto salutoFormale = nome -> System.out.println("Buongiorno, " + nome + "!");
+        Saluto salutoInformale = nome -> System.out.println("Ciao, " + nome + "!");
+
+        salutoFormale.saluta("Luca");
+        salutoInformale.saluta("Anna");
+    }
+}</code></pre>
+        </div>
+        <p>Questo esempio dimostra due implementazioni diverse di una functional interface per i saluti.</p>
+    </section>
+
+    <section>
+        <h2>Default Methods</h2>
+        <p>I <strong>Default Methods</strong> permettono di aggiungere metodi con implementazione predefinita nelle interfacce. Ciò consente di estendere le funzionalità di un'interfaccia senza interrompere il codice esistente.</p>
+        <h3>Esempio di Default Method</h3>
+        <div class="example">
+            <pre><code>interface Calcolatrice {
+    default int sottrai(int a, int b) {
+        return a - b;
+    }
+
+    int moltiplica(int a, int b);
+}
+
+public class DefaultMethodExample implements Calcolatrice {
+    public int moltiplica(int a, int b) {
+        return a * b;
+    }
+
+    public static void main(String[] args) {
+        DefaultMethodExample calcolatrice = new DefaultMethodExample();
+        System.out.println("Sottrazione: " + calcolatrice.sottrai(10, 5));
+        System.out.println("Moltiplicazione: " + calcolatrice.moltiplica(10, 5));
+    }
+}</code></pre>
+        </div>
+    </section>
+
+    <section class="bibliography">
+        <h2>Bibliografia</h2>
+        <p>Risorse consigliate per approfondire:</p>
+        <ul>
+            <li><a href="https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html">Oracle: Lambda Expressions</a></li>
+            <li><a href="https://docs.oracle.com/javase/8/docs/api/java/util/function/package-summary.html">Functional Interfaces</a></li>
+            <li><a href="https://www.baeldung.com/java-default-methods">Baeldung: Default Methods</a></li>
+        </ul>
+    </section>
+
+    <section class="advanced">
+        <h2>Approfondimenti Avanzati</h2>
+        <p>Per approfondire:</p>
+        <ul>
+            <li><strong>Method References:</strong> sintassi alternativa alle Lambda Expressions.</li>
+            <li><strong>Stream API:</strong> elaborazione funzionale di collezioni.</li>
+            <li><strong>Interfacce personalizzate:</strong> creazione di interfacce per scenari specifici.</li>
+        </ul>
+    </section>
+
+    <footer class="footer">
+        <br>
+        <a href="/index.html" class="footer-logo">
+            <img src="/img/logo.png" alt="Logo del sito">
+        </a>
+        <a href="/Settimana_1/Esercitazione/Esercitazione_1.html" class="footer-link left">
+            &#8592; Pagina precedente
+        </a>
+        <a href="/Settimana_2/Lezione_7.html" class="footer-link right">
+            Pagina successiva &#8594;
+        </a>
+        <br><br>&copy; 2025 Corso di Programmazione Backend. Tutti i diritti riservati.
+    </footer>
+</body>
+</html>

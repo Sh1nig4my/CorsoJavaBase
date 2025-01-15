@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lezione Giorno 7: Stream API e Optional</title>
+    <link rel="stylesheet" href="/styles/style.css">
+
+</head>
+<body>
+    <h1>Lezione Giorno 7: Stream API e Optional</h1>
+
+    <section class="intro">
+        <h2>Introduzione</h2>
+        <p>Durante questa lezione esploreremo due delle funzionalità più potenti introdotte in Java 8: la <strong>Stream API</strong> e la classe <strong>Optional</strong>. Questi strumenti rappresentano un cambiamento significativo nel modo in cui i programmatori Java affrontano la manipolazione dei dati e la gestione dei valori null.</p>
+    </section>
+
+    <section>
+        <h2>Stream API</h2>
+        <p>La Stream API permette di lavorare con sequenze di dati in modo dichiarativo e funzionale. Le operazioni su uno stream possono essere classificate in:</p>
+        <ul>
+            <li><strong>Operazioni intermedie:</strong> trasformano uno stream in un altro (es. <code>filter</code>, <code>map</code>).</li>
+            <li><strong>Operazioni terminali:</strong> producono un risultato finale o un effetto collaterale (es. <code>collect</code>, <code>forEach</code>).</li>
+        </ul>
+        <p>Un aspetto fondamentale degli Stream è che lavorano in modo <strong>lazy</strong>, cioè le operazioni intermedie non vengono eseguite finché non viene chiamata un'operazione terminale. Questo approccio migliora l'efficienza, specialmente su grandi volumi di dati.</p>
+        <div class="example">
+            <h3>Esempio Pratico 1</h3>
+            <p>Filtrare una lista di numeri pari e sommarli:</p>
+            <pre><code>public class StreamExample {
+    public static void main(String[] args) {
+        List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6);
+
+        int sum = numbers.stream()
+                         .filter(n -> n % 2 == 0)
+                         .mapToInt(Integer::intValue)
+                         .sum();
+
+        System.out.println("Somma dei numeri pari: " + sum);
+    }
+}</code></pre>
+        </div>
+        <div class="example">
+            <h3>Esempio Pratico 2</h3>
+            <p>Convertire una lista di stringhe in maiuscolo:</p>
+            <pre><code>public class StreamUppercaseExample {
+    public static void main(String[] args) {
+        List<String> words = Arrays.asList("java", "stream", "api");
+
+        List<String> uppercasedWords = words.stream()
+                                            .map(String::toUpperCase)
+                                            .collect(Collectors.toList());
+
+        System.out.println("Parole in maiuscolo: " + uppercasedWords);
+    }
+}</code></pre>
+        </div>
+        <div class="example">
+            <h3>Esempio Pratico 3</h3>
+            <p>Calcolare la lunghezza media delle parole:</p>
+            <pre><code>public class StreamAverageExample {
+    public static void main(String[] args) {
+        List<String> words = Arrays.asList("hello", "world", "java", "stream");
+
+        double averageLength = words.stream()
+                                    .mapToInt(String::length)
+                                    .average()
+                                    .orElse(0.0);
+
+        System.out.println("Lunghezza media delle parole: " + averageLength);
+    }
+}</code></pre>
+        </div>
+    </section>
+
+    <section>
+        <h2>Optional</h2>
+        <p>La classe <code>Optional</code> è stata introdotta per evitare il rischio di <code>NullPointerException</code>. Essa incapsula un valore che può essere presente o assente e offre metodi funzionali per gestire questi casi.</p>
+        <p>Optional semplifica l'esecuzione di operazioni sicure su valori opzionali, come controllare la presenza del valore, trasformarlo o fornire un valore predefinito in sua assenza.</p>
+        <div class="example">
+            <h3>Esempio Pratico 1</h3>
+            <p>Utilizzo di <code>Optional</code> per gestire un valore potenzialmente nullo:</p>
+            <pre><code>public class OptionalExample {
+    public static void main(String[] args) {
+        Optional<String> optionalValue = Optional.ofNullable(getValue());
+
+        optionalValue.ifPresentOrElse(
+            value -> System.out.println("Valore presente: " + value),
+            () -> System.out.println("Valore assente")
+        );
+    }
+
+    public static String getValue() {
+        return null; // Prova con "Hello, World!" per cambiare il risultato
+    }
+}</code></pre>
+        </div>
+        <div class="example">
+            <h3>Esempio Pratico 2</h3>
+            <p>Fornire un valore predefinito con <code>orElse</code>:</p>
+            <pre><code>public class OptionalDefaultExample {
+    public static void main(String[] args) {
+        String value = Optional.ofNullable(null)
+                               .orElse("Valore di default");
+
+        System.out.println("Risultato: " + value);
+    }
+}</code></pre>
+        </div>
+        <div class="example">
+            <h3>Esempio Pratico 3</h3>
+            <p>Utilizzare <code>map</code> per trasformare un valore presente:</p>
+            <pre><code>public class OptionalMapExample {
+    public static void main(String[] args) {
+        Optional<String> optionalValue = Optional.of("java");
+
+        optionalValue.map(String::toUpperCase)
+                     .ifPresent(value -> System.out.println("Valore trasformato: " + value));
+    }
+}</code></pre>
+        </div>
+    </section>
+
+    <section class="bibliography">
+        <h2>Bibliografia</h2>
+        <p>Per ulteriori informazioni sugli argomenti trattati, consulta le seguenti risorse:</p>
+        <ul>
+            <li><a href="https://docs.oracle.com/javase/8/docs/api/java/util/stream/package-summary.html" target="_blank">Documentazione Stream API</a></li>
+            <li><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html" target="_blank">Documentazione Optional</a></li>
+            <li><a href="https://www.baeldung.com/java-8-streams" target="_blank">Guida a Java Streams - Baeldung</a></li>
+        </ul>
+    </section>
+
+    <section class="advanced">
+        <h2>Approfondimenti</h2>
+        <p>Per chi desidera approfondire:</p>
+        <ul>
+            <li>Analizza il funzionamento interno di <code>Stream</code>, come il concetto di <em>lazy evaluation</em>.</li>
+            <li>Esplora le <strong>Custom Collectors</strong> nella Stream API.</li>
+            <li>Sperimenta con <code>Optional</code> nelle applicazioni reali, combinandolo con le Stream API per gestire dati complessi.</li>
+            <li>Leggi l'articolo "Effective Java" (capitolo dedicato a Optional) di Joshua Bloch.</li>
+        </ul>
+    </section>
+
+    <footer class="footer">
+        <!-- Logo -->
+        <a href="/index.html" class="footer-logo">
+            <img src="/img/logo.png" alt="Logo del sito">
+        </a>
+
+        <!-- Link alle pagine precedenti e successive -->
+        <a href="/Settimana_2/Lezione_6.html" class="footer-link left">&#8592; Pagina precedente</a>
+        <a href="/Settimana_2/Lezione_8.html" class="footer-link right">Pagina successiva &#8594;</a>
+
+        <p>&copy; 2025 Corso di Programmazione Backend. Tutti i diritti riservati.</p>
+    </footer>
+
+</body>
+</html>

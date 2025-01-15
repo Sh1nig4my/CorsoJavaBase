@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lezione 8: Date and Time API, Parallel Streams e Collector API</title>
+    <link rel="stylesheet" href="/styles/style.css">
+</head>
+
+<body>
+    <h1>Lezione 8: Date and Time API, Parallel Streams e Collector API</h1>
+
+    <section class="intro">
+        <p>Benvenuti alla lezione dedicata a tre fondamentali innovazioni introdotte con Java 8: la nuova API per la
+            gestione di date e orari (<code>Date and Time API</code>), l'uso degli stream paralleli per sfruttare al
+            meglio le capacità delle moderne CPU multi-core, e l'API Collector per semplificare operazioni complesse di
+            aggregazione e trasformazione dei dati.</p>
+        <p>Queste funzionalità non solo migliorano le performance e la leggibilità del codice, ma promuovono anche
+            pratiche di programmazione più robuste e moderne. Attraverso spiegazioni dettagliate ed esempi pratici,
+            acquisiremo una comprensione approfondita di questi strumenti indispensabili.</p>
+    </section>
+
+    <section class="section">
+        <h2>Date and Time API</h2>
+        <p>La <code>Date and Time API</code>, introdotta con il pacchetto <code>java.time</code>, è stata progettata per
+            risolvere i limiti delle vecchie classi come <code>java.util.Date</code> e <code>Calendar</code>. Tra i
+            vantaggi principali troviamo:</p>
+        <ul>
+            <li><strong>Immutabilità:</strong> le classi come <code>LocalDate</code>, <code>LocalTime</code> e
+                <code>LocalDateTime</code> sono immutabili, riducendo il rischio di errori dovuti a modifiche
+                inaspettate.</li>
+            <li><strong>Chiarezza:</strong> nomi di metodi e classi intuitivi rendono il codice più leggibile e
+                comprensibile.</li>
+            <li><strong>Supporto a fusi orari:</strong> classi come <code>ZonedDateTime</code> semplificano la gestione
+                di date e orari con fusi orari differenti.</li>
+        </ul>
+
+        <div class="example">
+            <h3>Esempio pratico: Utilizzo di LocalDate, LocalTime e LocalDateTime</h3>
+            <pre><code>public class DateAndTimeExample {
+    public static void main(String[] args) {
+        // Ottenere la data, l'orario e il timestamp corrente
+        LocalDate today = LocalDate.now();
+        LocalTime now = LocalTime.now();
+        LocalDateTime currentDateTime = LocalDateTime.now();
+
+        System.out.println("Data odierna: " + today);
+        System.out.println("Orario attuale: " + now);
+        System.out.println("Data e ora correnti: " + currentDateTime);
+    }
+}</code></pre>
+        </div>
+
+        <div class="example">
+            <h3>Esempio pratico: Calcoli con date</h3>
+            <pre><code>public class DateCalculations {
+    public static void main(String[] args) {
+        LocalDate birthDate = LocalDate.of(1990, 5, 15);
+        LocalDate today = LocalDate.now();
+
+        Period age = Period.between(birthDate, today);
+        System.out.println("Età: " + age.getYears() + " anni, " + age.getMonths() + " mesi, " + age.getDays() + " giorni.");
+    }
+}</code></pre>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2>Parallel Streams</h2>
+        <p>Con i parallel streams, Java 8 ha introdotto un modo semplice per eseguire operazioni su collezioni
+            sfruttando il parallelismo. Questo approccio si basa sul framework <code>Fork/Join</code>, che suddivide il
+            lavoro in task più piccoli, gestiti in parallelo da più thread.</p>
+        <p>È importante notare che, sebbene il parallelismo possa migliorare le performance, il suo utilizzo richiede
+            attenzione. Operazioni non thread-safe o la sincronizzazione eccessiva possono annullare i vantaggi offerti.
+        </p>
+
+        <div class="example">
+            <h3>Esempio pratico: Differenza tra stream sequenziali e paralleli</h3>
+            <pre><code>public class ParallelStreamsExample {
+    public static void main(String[] args) {
+        List<String> items = Arrays.asList("Apple", "Banana", "Cherry", "Date", "Elderberry");
+
+        System.out.println("Elaborazione sequenziale:");
+        items.stream().forEach(System.out::println);
+
+        System.out.println("\nElaborazione parallela:");
+        items.parallelStream().forEach(System.out::println);
+    }
+}</code></pre>
+        </div>
+
+        <div class="example">
+            <h3>Esempio pratico: Somma parallela di numeri</h3>
+            <pre><code>public class ParallelSumExample {
+    public static void main(String[] args) {
+        int sum = IntStream.range(1, 1000).parallel().sum();
+        System.out.println("Somma parallela: " + sum);
+    }
+}</code></pre>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2>Collector API</h2>
+        <p>L'API Collector di Java 8 semplifica la raccolta e l'aggregazione dei dati da uno stream. Permette di creare
+            mappe, liste e set con pochi passaggi, oltre a supportare operazioni personalizzate come la riduzione o il
+            raggruppamento.</p>
+        <p>La flessibilità di questa API la rende adatta a molti scenari, dalla trasformazione di dati alla creazione di
+            strutture dati complesse.</p>
+
+        <div class="example">
+            <h3>Esempio pratico: Raggruppare elementi</h3>
+            <pre><code>public class CollectorExample {
+    public static void main(String[] args) {
+        List<String> items = Arrays.asList("Apple", "Banana", "Cherry", "Apple");
+
+        Map<String, Long> itemCount = items.stream().collect(Collectors.groupingBy(
+                item -> item,
+                Collectors.counting()
+        ));
+
+        itemCount.forEach((item, count) -> System.out.println(item + ": " + count));
+    }
+}</code></pre>
+        </div>
+
+        <div class="example">
+            <h3>Esempio pratico: Calcolo della media</h3>
+            <pre><code>public class AverageExample {
+    public static void main(String[] args) {
+        List<Integer> numbers = Arrays.asList(10, 20, 30, 40, 50);
+
+        double average = numbers.stream()
+                                .collect(Collectors.averagingInt(num -> num));
+
+        System.out.println("Media: " + average);
+    }
+}</code></pre>
+        </div>
+    </section>
+
+    <section class="bibliography">
+        <h2>Bibliografia</h2>
+        <p>Per approfondire gli argomenti trattati, si consiglia di consultare:</p>
+        <ul>
+            <li><a href="https://docs.oracle.com/javase/8/docs/api/java/time/package-summary.html">Documentazione
+                    ufficiale Java 8 - java.time</a></li>
+            <li><a href="https://docs.oracle.com/javase/8/docs/api/java/util/stream/package-summary.html">Documentazione
+                    ufficiale Java 8 - Stream API</a></li>
+            <li><a href="https://www.baeldung.com/java-8-date-time-intro">Guida Baeldung - Date and Time API</a></li>
+            <li><a href="https://www.baeldung.com/java-8-streams">Guida Baeldung - Stream API</a></li>
+        </ul>
+    </section>
+
+    <section class="advanced">
+        <h2>Approfondimenti Avanzati</h2>
+        <p>Per gli studenti più esperti, si suggeriscono i seguenti argomenti di approfondimento:</p>
+        <ul>
+            <li>Approfondimento su fusi orari e gestione delle date in ambienti distribuiti utilizzando
+                <code>ZonedDateTime</code>.</li>
+            <li>Confronto tra performance di stream sequenziali e paralleli con benchmark dettagliati.</li>
+            <li>Creazione di collector personalizzati per implementare logiche di aggregazione specifiche.</li>
+        </ul>
+    </section>
+
+    <footer class="footer">
+        <br>
+        <a href="home.html" class="footer-logo">
+            <img src="/img/logo.png" alt="Logo del sito" />
+        </a>
+
+        <a href="/Settimana_2/Lezione_7.html" class="footer-link left">
+            &#8592; Pagina precedente
+        </a>
+
+        <a href="/Settimana_2/Lezione_9.html" class="footer-link right">
+            Pagina successiva &#8594;
+        </a>
+
+        <br><br>&copy; 2025 Corso di Programmazione Backend. Tutti i diritti riservati.
+    </footer>
+</body>
+
+</html>

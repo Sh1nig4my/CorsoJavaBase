@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lezione 3 - Fondamenti Java</title>
+    <link rel="stylesheet" href="/styles/style.css">
+</head>
+
+<body>
+    <h1>Lezione 3 - Fondamenti Java</h1>
+
+    <section class="intro">
+        <p>In questa lezione ci concentreremo sui fondamenti del linguaggio Java, essenziali per costruire solide basi
+            di programmazione. Tratteremo variabili, tipi di dati, operatori e strutture di controllo, concludendo con
+            la realizzazione di un primo programma Java per la gestione di input e output da console.</p>
+    </section>
+
+    <h2>Argomenti Trattati</h2>
+    <ul>
+        <li><strong>Introduzione alle variabili e ai tipi di dati:</strong> Concetti base, tipi primitivi e oggetti in
+            Java.</li>
+        <li><strong>Operatori:</strong> Aritmetici, logici, relazionali e operatori speciali.</li>
+        <li><strong>Strutture di controllo:</strong> If-else, switch-case, cicli for, while e do-while.</li>
+        <li><strong>Primo programma Java:</strong> Creazione di un programma per la gestione dell'input/output.</li>
+    </ul>
+    <br>
+
+    <h2>Linguaggio Java</h2>
+    <h3>Variabili e Tipi di Dati</h3>
+    <p>Le variabili sono contenitori per memorizzare dati. In Java, ogni variabile deve avere un tipo definito. I tipi
+        primitivi più comuni includono:</p>
+    <ul>
+        <li><code>int</code>: numeri interi.</li>
+        <li><code>double</code>: numeri in virgola mobile.</li>
+        <li><code>char</code>: un singolo carattere.</li>
+        <li><code>boolean</code>: valori <code>true</code> o <code>false</code>.</li>
+    </ul>
+    <div class="example">
+        <strong>Esempio:</strong>
+        <pre><code>public class Variabili {
+    public static void main(String[] args) {
+        int numero = 10;
+        double prezzo = 19.99;
+        char iniziale = 'J';
+        boolean isOnline = true;
+
+        System.out.println("Numero: " + numero);
+        System.out.println("Prezzo: " + prezzo);
+        System.out.println("Iniziale: " + iniziale);
+        System.out.println("Online: " + isOnline);
+    }
+}</code></pre>
+    </div>
+
+    <h3>Operatori</h3>
+    <p>Gli operatori permettono di eseguire operazioni su variabili e valori. I principali sono:</p>
+    <ul>
+        <li><strong>Aritmetici:</strong> <code>+ - * / %</code></li>
+        <li><strong>Relazionali:</strong> <code>&gt; &lt; &gt;= &lt;= == !=</code></li>
+        <li><strong>Logici:</strong> <code>&& || !</code></li>
+    </ul>
+    <div class="example">
+        <strong>Esempio:</strong>
+        <pre><code>public class Operatori {
+    public static void main(String[] args) {
+        int a = 10, b = 20;
+        System.out.println("Somma: " + (a + b));
+        System.out.println("Maggiore: " + (a > b));
+        System.out.println("E logico: " + (a > 5 && b > 15));
+    }
+}</code></pre>
+    </div>
+
+    <h3>Strutture di Controllo</h3>
+    <p>Le strutture di controllo determinano il flusso del programma. Esempi includono:</p>
+    <ul>
+        <li><code>if-else</code>: per scelte condizionali.</li>
+        <li><code>switch-case</code>: per selezioni multiple.</li>
+        <li><code>for</code>, <code>while</code>, <code>do-while</code>: per cicli iterativi.</li>
+    </ul>
+    <div class="example">
+        <strong>Esempio:</strong>
+        <pre><code>public class Controllo {
+    public static void main(String[] args) {
+        int voto = 85;
+
+        if (voto >= 90) {
+            System.out.println("Ottimo!");
+        } else if (voto >= 70) {
+            System.out.println("Buono!");
+        } else {
+            System.out.println("Da migliorare.");
+        }
+    }
+}</code></pre>
+    </div>
+
+    <h3>Primo Programma Java</h3>
+    <p>Un programma Java inizia con un metodo <code>main</code>. Qui creiamo un programma per ricevere input e mostrare
+        output.</p>
+    <div class="example">
+        <strong>Esempio:</strong>
+        <pre><code>import java.util.Scanner;
+
+public class PrimoProgramma {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Inserisci il tuo nome: ");
+        String nome = scanner.nextLine();
+
+        System.out.println("Ciao, " + nome + "!");
+    }
+}</code></pre>
+    </div>
+
+    <div class="bibliography">
+        <h3>Bibliografia</h3>
+        <ul>
+            <li><a href="https://docs.oracle.com/javase/tutorial/">Java Tutorials - Oracle</a>: Documentazione ufficiale
+                di Java.</li>
+            <li><a href="https://www.w3schools.com/java/">Java Tutorial - W3Schools</a>: Esempi e spiegazioni semplici.
+            </li>
+            <li><a href="https://www.geeksforgeeks.org/java/">GeeksforGeeks Java</a>: Guide ed esercizi pratici.</li>
+        </ul>
+    </div>
+
+    <div class="advanced">
+        <h3>Sezione Avanzata</h3>
+        <p>Per approfondire:</p>
+        <ul>
+            <li>Leggere le specifiche del linguaggio Java: <a href="https://docs.oracle.com/javase/specs/">Java Language
+                    Specification</a>.</li>
+            <li>Esplorare la gestione della memoria in Java, inclusi Garbage Collection e Stack/Heap.</li>
+            <li>Sperimentare con debugger integrati negli IDE come IntelliJ IDEA o Eclipse.</li>
+        </ul>
+    </div>
+
+    <footer class="footer">
+        <br>
+        <a href="/index.html" class="footer-logo">
+            <img src="/img/logo.png" alt="Logo del sito" />
+        </a>
+        <a href="/Settimana_1/Lezione_2.html" class="footer-link left">
+            &#8592; Pagina precedente
+        </a>
+        <a href="/Settimana_1/Lezione_4.html" class="footer-link right">
+            Pagina successiva &#8594;
+        </a>
+        <br><br>&copy; 2025 Corso di Programmazione Backend. Tutti i diritti riservati.
+    </footer>
+
+</body>
+
+</html>
