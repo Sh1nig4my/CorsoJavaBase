@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html lang="it">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Lezione 1 - Introduzione alla Programmazione</title>
     <link rel="stylesheet" href="/styles/style.css" />
-  </head>
+</head>
 
-  <body>
+<body>
     <h1 class="lesson-title">Lezione 1: Introduzione alla Programmazione</h1>
 
     <div class="section">
@@ -22,12 +23,12 @@
             risolvere un problema. Può essere rappresentato tramite pseudocodice o
             diagrammi di flusso, ed è il cuore della programmazione.
         </p>
-    
+
         <div class="example">
             <h3>Esempio di Algoritmo:</h3>
             <p>Pseudocodice per calcolare la somma di due numeri in Java:</p>
             <pre><code>public class SommaNumeri {
-            public static void main(String[] args) {
+        public static void main(String[] args) {
             Scanner scanner = new Scanner(System.in);
     
             // Leggi il primo numero
@@ -43,17 +44,16 @@
     
             // Stampa il risultato
             System.out.println("La somma è: " + somma);
-                }
-            }
-            </code></pre>
+        }
+}</code></pre>
         </div>
-    
+
         <p>
             Un altro concetto chiave sono le <strong>strutture dati</strong>, che
             aiutano a organizzare e gestire informazioni. Alcuni esempi includono
             array, liste, stack e queue.
         </p>
-        
+
         <div class="example">
             <h3>Esempio: Array</h3>
             <p>Un esempio di utilizzo degli array in Java:</p>
@@ -68,7 +68,7 @@
     }
             </code></pre>
         </div>
-    
+
         <div class="test">
             <h3>Test sugli Algoritmi</h3>
             <p>Verifica la tua comprensione rispondendo alle seguenti domande:</p>
@@ -78,7 +78,7 @@
                 <li>Scrivi un codice Java per trovare il valore massimo in un array di numeri interi.</li>
             </ul>
         </div>
-    
+
         <div class="test">
             <h3>Test sulle Strutture Dati</h3>
             <p>Verifica la tua comprensione rispondendo alle seguenti domande:</p>
@@ -89,7 +89,7 @@
             </ul>
         </div>
     </div>
-    
+
 
     <div class="section">
         <h2>2. Differenze tra Frontend e Backend</h2>
@@ -107,7 +107,7 @@
                 applicativa, gestione dei dati e interazione con i database.
             </li>
         </ul>
-    
+
         <p>Ad esempio, quando un utente compila un modulo e clicca "Invia":</p>
         <ul>
             <li>Il <strong>frontend</strong> raccoglie i dati dal modulo.</li>
@@ -116,7 +116,7 @@
                 salvarli in un database.
             </li>
         </ul>
-    
+
         <div class="example">
             <h3>Scenario di un Sistema di Login:</h3>
             <pre>
@@ -124,14 +124,11 @@
     Backend: Verifica delle credenziali nel database e restituzione di una risposta.
             </pre>
         </div>
-    
+
         <div class="example">
             <h3>Esempio pratico di Backend:</h3>
             <p>Un semplice esempio in Java per verificare le credenziali di accesso:</p>
-            <pre><code>import java.util.HashMap;
-    import java.util.Scanner;
-    
-    public class LoginSystem {
+            <pre><code>public class LoginSystem {
         public static void main(String[] args) {
             // Simulazione di un database di credenziali
             HashMap<String, String> database = new HashMap<>();
@@ -157,7 +154,7 @@
     }
             </code></pre>
         </div>
-    
+
         <div class="test">
             <h3>Test: Differenze tra Frontend e Backend</h3>
             <ul>
@@ -166,10 +163,11 @@
                 <li>Qual è il ruolo del backend nel trattamento dei dati inviati da un modulo?</li>
             </ul>
         </div>
-    
+
         <div class="approfondimento">
             <h3>Approfondimento sulle API</h3>
-            <p>Le API (Application Programming Interfaces) sono fondamentali per la comunicazione tra frontend e backend. Scrivi un esempio di chiamata API in un'applicazione di login.</p>
+            <p>Le API (Application Programming Interfaces) sono fondamentali per la comunicazione tra frontend e
+                backend. Scrivi un esempio di chiamata API in un'applicazione di login.</p>
             <pre><code>// Chiamata API dal Frontend (JavaScript)
     fetch('https://mio-sito.com/login', {
         method: 'POST',
@@ -189,70 +187,63 @@
             </code></pre>
         </div>
     </div>
-    
 
     <div class="section">
         <h2>3. Configurazione degli Strumenti</h2>
-        <p>
-            Un ambiente di sviluppo configurato correttamente è fondamentale per
-            lavorare in modo efficiente.
-        </p>
+        <p>Un ambiente di sviluppo configurato correttamente è fondamentale per lavorare in modo efficiente.</p>
         <ul>
-            <li>
-                <strong>Java:</strong> Installa il JDK da
-                <a href="https://www.oracle.com/java/">Oracle</a> e configurane il
-                percorso nel sistema.
-            </li>
-            <li>
-                <strong>Maven:</strong> Utilizza questo strumento per la gestione
-                delle dipendenze. Configura il file <code>pom.xml</code> per
-                aggiungere librerie.
-            </li>
-            <li>
-                <strong>Git:</strong> Per il controllo delle versioni. Crea un
-                repository con <code>git init</code> e usa comandi come
-                <code>git add</code>, <code>git commit</code>, <code>git push</code>.
-            </li>
-            <li>
-                <strong>IDE:</strong> IntelliJ IDEA o Eclipse sono strumenti ideali
-                per sviluppare in Java con supporto per Maven.
-            </li>
+            <li><strong>Java:</strong> Installa il JDK da <a href="https://www.oracle.com/java/">Oracle</a> e configurane il percorso nel sistema.</li>
+            <li><strong>Maven:</strong> Utilizza questo strumento per la gestione delle dipendenze. Configura il file <code>pom.xml</code> per aggiungere librerie.</li>
+            <li><strong>Git:</strong> Per il controllo delle versioni. Crea un repository con <code>git init</code> e usa comandi come <code>git add</code>, <code>git commit</code>, <code>git push</code>.</li>
+            <li><strong>IDE:</strong> IntelliJ IDEA o Eclipse sono strumenti ideali per sviluppare in Java con supporto per Maven.</li>
         </ul>
-    
+
         <div class="example">
-            <h3>Comandi Essenziali:</h3>
-            <pre><code># Verifica della versione di Java
-    java -version
-    
-    # Compilazione e installazione del progetto con Maven
-    mvn clean install
-    
-    # Stato del repository Git
-    git status
+            <h3>Esempio 1: Verifica della Configurazione di Java</h3>
+            <p>Un programma Java per verificare la versione e il percorso di Java installato:</p>
+            <pre><code>public class VerificaJava {
+    public static void main(String[] args) {
+        System.out.println("Versione di Java installata: " + System.getProperty("java.version"));
+        System.out.println("Percorso di Java: " + System.getProperty("java.home"));
+    }
+}
             </code></pre>
         </div>
-    
+
         <div class="example">
-            <h3>Esempio di Configurazione Maven:</h3>
-            <p>Un file <code>pom.xml</code> base per un progetto Java:</p>
-            <pre><code>&lt;project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"&gt;
-        &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
-        &lt;groupId&gt;com.example&lt;/groupId&gt;
-        &lt;artifactId&gt;my-project&lt;/artifactId&gt;
-        &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
-        &lt;dependencies&gt;
-            &lt;dependency&gt;
-                &lt;groupId&gt;junit&lt;/groupId&gt;
-                &lt;artifactId&gt;junit&lt;/artifactId&gt;
-                &lt;version&gt;4.13.2&lt;/version&gt;
-                &lt;scope&gt;test&lt;/scope&gt;
-            &lt;/dependency&gt;
-        &lt;/dependencies&gt;
-    &lt;/project&gt;
+            <h3>Esempio 2: Utilizzo di Maven</h3>
+            <p>Comando per creare un nuovo progetto Maven:</p>
+            <pre><code>mvn archetype:generate -DgroupId=com.example -DartifactId=my-app -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
+            </code></pre>
+            <p>Comandi per compilare ed eseguire un progetto Maven:</p>
+            <pre><code># Pulizia e compilazione del progetto
+mvn clean install
+
+# Esecuzione del progetto con Maven
+mvn exec:java -Dexec.mainClass="com.example.App"
             </code></pre>
         </div>
-    
+
+        <div class="example">
+            <h3>Esempio 3: Inizializzazione di un Repository Git</h3>
+            <p>Comandi per configurare e inizializzare un repository Git:</p>
+            <pre><code># Inizializza il repository
+git init
+
+# Aggiungi tutti i file
+git add .
+
+# Commit iniziale
+git commit -m "Initial commit"
+
+# Aggiungi un remoto (es. GitHub)
+git remote add origin https://github.com/username/repository.git
+
+# Push iniziale
+git push -u origin main
+            </code></pre>
+        </div>
+
         <div class="test">
             <h3>Test: Configurazione degli Strumenti</h3>
             <ul>
@@ -262,82 +253,73 @@
                 <li>Quali sono i vantaggi di utilizzare un IDE come IntelliJ IDEA o Eclipse?</li>
             </ul>
         </div>
-    
+
         <div class="exercise">
             <h3>Esercizio Pratico</h3>
             <p>Configura un progetto base seguendo i passi descritti:</p>
             <ol>
                 <li>Scarica e installa il JDK dal sito ufficiale di Oracle.</li>
-                <li>Crea un nuovo progetto Maven con il file <code>pom.xml</code> fornito.</li>
+                <li>Crea un nuovo progetto Maven con il comando fornito.</li>
                 <li>Inizializza un repository Git e aggiungi i file del progetto.</li>
                 <li>Verifica che tutto funzioni eseguendo il comando <code>mvn clean install</code>.</li>
             </ol>
         </div>
-    
+
         <div class="approfondimento">
             <h3>Approfondimento: IntelliJ IDEA</h3>
             <p>Configura un progetto Maven in IntelliJ IDEA:</p>
             <pre><code>1. Apri IntelliJ IDEA e seleziona "New Project".
-    2. Scegli "Maven" come tipo di progetto.
-    3. Imposta il GroupId e l'ArtifactId.
-    4. Configura il file <code>pom.xml</code> per aggiungere dipendenze.
-    5. Esegui il progetto direttamente dall'IDE utilizzando l'opzione "Run".</code></pre>
+2. Scegli "Maven" come tipo di progetto.
+3. Imposta il GroupId e l'ArtifactId.
+4. Configura il file <code>pom.xml</code> per aggiungere dipendenze.
+5. Esegui il progetto direttamente dall'IDE utilizzando l'opzione "Run".
+            </code></pre>
         </div>
     </div>
-    
+
     </div>
 
     <div class="bibliography">
-      <h2>4. Bibliografia e Risorse Utili</h2>
-      <ul>
-        <li>
-          <a href="https://docs.oracle.com/en/java/"
-            >Documentazione ufficiale di Java</a
-          >
-        </li>
-        <li>
-          <a href="https://maven.apache.org/guides/index.html">Guide Maven</a>
-        </li>
-        <li><a href="https://git-scm.com/doc">Documentazione di Git</a></li>
-      </ul>
+        <h2>4. Bibliografia e Risorse Utili</h2>
+        <ul>
+            <li>
+                <a href="https://docs.oracle.com/en/java/">Documentazione ufficiale di Java</a>
+            </li>
+            <li>
+                <a href="https://maven.apache.org/guides/index.html">Guide Maven</a>
+            </li>
+            <li><a href="https://git-scm.com/doc">Documentazione di Git</a></li>
+        </ul>
     </div>
 
     <div class="advanced">
-      <h2>5. Approfondimenti</h2>
-      <p>Esplora ulteriormente con le seguenti risorse:</p>
-      <ul>
-        <li>
-          <a href="https://www.geeksforgeeks.org/fundamentals-of-algorithms/"
-            >Algoritmi fondamentali</a
-          >
-        </li>
-        <li>
-          Approfondisci librerie avanzate come <strong>Guava</strong> e
-          <strong>Apache Commons</strong>.
-        </li>
-        <li>Sperimenta con JUnit e Mockito per il testing del codice.</li>
-      </ul>
+        <h2>5. Approfondimenti</h2>
+        <p>Esplora ulteriormente con le seguenti risorse:</p>
+        <ul>
+            <li>
+                <a href="https://www.geeksforgeeks.org/fundamentals-of-algorithms/">Algoritmi fondamentali</a>
+            </li>
+            <li>
+                Approfondisci librerie avanzate come <strong>Guava</strong> e
+                <strong>Apache Commons</strong>.
+            </li>
+            <li>Sperimenta con JUnit e Mockito per il testing del codice.</li>
+        </ul>
     </div>
 
     <footer class="footer">
-      <!-- Logo -->
-      <br />
-      <a href="/index.html" class="footer-logo">
-        <img src="/img/logo.png" alt="Logo del sito" />
-      </a>
-
-      <!-- Link alla pagina precedente -->
-      <a href="/index.html" class="footer-link left">
-        &#8592; Pagina precedente
-      </a>
-
-      <!-- Link alla pagina successiva -->
-      <a href="/Settimana_1/Lezione_2.html" class="footer-link right">
-        Pagina successiva &#8594;
-      </a>
-
-      <br /><br />&copy; 2025 Corso di Programmazione Backend. Tutti i diritti
-      riservati.
+        <a href="/index.html" class="footer-logo">
+            <img src="/img/logo.png" alt="Logo del sito" />
+        </a>
+        <div class="footer-links">
+            <a href="/index.html" class="footer-link left">
+                &#8592; Pagina precedente
+            </a>
+            <a href="/Settimana_1/Lezione_2.html" class="footer-link right">
+                Pagina successiva &#8594;
+            </a>
+        </div>
+        &copy; 2025 Corso di Programmazione Backend. Tutti i diritti riservati.
     </footer>
-  </body>
+</body>
 </html>

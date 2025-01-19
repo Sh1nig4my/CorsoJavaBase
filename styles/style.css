@@ -180,9 +180,8 @@ code {
 
 .footer {
     display: flex;
-    background-color: #f0f0f0; /* Fondo più visibile */
-    flex-direction: column; /* Disposizione verticale */
-    align-items: center; /* Centra il contenuto */
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
     padding: 20px;
     color: #333;
@@ -190,6 +189,16 @@ code {
     margin-top: 15px;
     font-size: 0.9em;
     border-radius: 5px;
+    gap: 20px;
+    width: 100%;
+}
+
+.footer-links {
+    display: flex;
+    justify-content: space-between; /* Allinea i link ai bordi */
+    align-items: center;
+    width: 100%; /* Usa tutta la larghezza disponibile */
+    max-width: 800px; /* Limita la larghezza massima per estetica */
 }
 
 .footer-link {
@@ -207,9 +216,11 @@ code {
 }
 
 .footer-link.left {
-    margin-right: auto; /* Sposta completamente a sinistra */
+    margin-right: 0; /* Rimuovi auto */
+    order: 1; /* Mantieni a sinistra */
 }
 
 .footer-link.right {
-    margin-left: auto; /* Sposta completamente a destra */
+    margin-left: 0; /* Rimuovi auto */
+    order: 3; /* Mantieni a destra */
 }
