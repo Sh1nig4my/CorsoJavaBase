@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lezione 3 - Fondamenti Java</title>
+    <link rel="stylesheet" href="/styles/style.css">
+</head>
+<body>
+    <h1 class="lesson-title">Lezione 3: Fondamenti Java</h1>
+
+    <div class="section">
+        <h2>1. Introduzione alle variabili e ai tipi di dati</h2>
+        <p>In Java, le variabili sono utilizzate per memorizzare dati, e ogni variabile deve essere dichiarata con un tipo specifico. Questo approccio fortemente tipizzato aiuta a prevenire errori durante l'esecuzione. I tipi di dati primitivi più utilizzati sono:</p>
+        <ul>
+            <li><strong>int:</strong> Numeri interi, ad esempio 10 o -5.</li>
+            <li><strong>double:</strong> Numeri decimali, come 3.14 o -0.01.</li>
+            <li><strong>char:</strong> Singoli caratteri, rappresentati da apici singoli, ad esempio 'A'.</li>
+            <li><strong>boolean:</strong> Rappresenta valori di verità: <code>true</code> o <code>false</code>.</li>
+        </ul>
+        <div class="example">
+            <h3>Esempio: Dichiarazione e utilizzo di variabili</h3>
+            <pre><code>public class Variabili {
+    public static void main(String[] args) {
+        int eta = 25;
+        double salario = 45000.75;
+        char grado = 'A';
+        boolean isAssunto = true;
+
+        System.out.println("Età: " + eta);
+        System.out.println("Salario: " + salario);
+        System.out.println("Grado: " + grado);
+        System.out.println("Assunto: " + isAssunto);
+    }
+}</code></pre>
+        </div>
+        <div class="example">
+            <h3>Esempio Avanzato: Utilizzo di costanti e stringhe</h3>
+            <pre><code>public class CostantiStringhe {
+    public static void main(String[] args) {
+        final double PI = 3.14159;
+        String messaggio = "Benvenuto nel corso di Java!";
+
+        System.out.println("Valore di PI: " + PI);
+        System.out.println(messaggio);
+    }
+}</code></pre>
+            <p>In questo esempio, utilizziamo una costante <code>PI</code> e una stringa <code>messaggio</code> per mostrare come lavorare con dati non primitivi e valori immutabili.</p>
+        </div>
+        <div class="exercise">
+            <h3>Esercizio</h3>
+            <p>Scrivi un programma che utilizzi le variabili per memorizzare i dettagli di uno studente: nome, età, voto medio e stato di iscrizione. Stampa questi dettagli a schermo.</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>2. Gli operatori in Java</h2>
+        <p>Gli operatori sono strumenti fondamentali per manipolare dati e variabili. Ecco una panoramica:</p>
+        <ul>
+            <li><strong>Aritmetici:</strong> Usati per calcoli matematici (<code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, <code>%</code>).</li>
+            <li><strong>Relazionali:</strong> Comparano valori (<code>&gt;</code>, <code>&lt;</code>, <code>&gt;=</code>, <code>&lt;=</code>, <code>==</code>, <code>!=</code>).</li>
+            <li><strong>Logici:</strong> Combina condizioni (<code>&&</code>, <code>||</code>, <code>!</code>).</li>
+        </ul>
+        <div class="example">
+            <h3>Esempio: Utilizzo di operatori</h3>
+            <pre><code>public class Operatori {
+    public static void main(String[] args) {
+        int x = 10, y = 20;
+        System.out.println("Somma: " + (x + y));
+        System.out.println("Differenza: " + (x - y));
+        System.out.println("Prodotto: " + (x * y));
+        System.out.println("Divisione: " + (x / y));
+
+        boolean confronto = x < y;
+        System.out.println("x è minore di y: " + confronto);
+    }
+}</code></pre>
+        </div>
+        <div class="exercise">
+            <h3>Esercizio</h3>
+            <p>Scrivi un programma che calcoli il risultato di operazioni aritmetiche su due numeri forniti dall'utente. Includi somma, differenza, prodotto e modulo.</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>3. Strutture di controllo</h2>
+        <p>Le strutture di controllo influenzano il flusso di esecuzione del programma, consentendo di prendere decisioni e ripetere operazioni:</p>
+        <ul>
+            <li><strong>if-else:</strong> Esegue blocchi di codice in base a condizioni.</li>
+            <li><strong>switch-case:</strong> Sostituisce molteplici <code>if</code> per confronti diretti su un valore.</li>
+            <li><strong>for:</strong> Itera per un numero specifico di volte.</li>
+            <li><strong>while:</strong> Itera finché una condizione è vera.</li>
+            <li><strong>do-while:</strong> Simile a <code>while</code>, ma garantisce almeno un'esecuzione.</li>
+        </ul>
+        <div class="example">
+            <h3>Esempio: Struttura <code>for</code></h3>
+            <pre><code>public class Cicli {
+    public static void main(String[] args) {
+        for (int i = 1; i <= 5; i++) {
+            System.out.println("Iterazione: " + i);
+        }
+    }
+}</code></pre>
+        </div>
+        <div class="example">
+            <h3>Esempio Avanzato: Cicli Annidati</h3>
+            <pre><code>public class CicliAnnidati {
+    public static void main(String[] args) {
+        for (int i = 1; i <= 3; i++) {
+            for (int j = 1; j <= 3; j++) {
+                System.out.println("Ciclo esterno: " + i + ", Ciclo interno: " + j);
+            }
+        }
+    }
+}</code></pre>
+            <p>Questo esempio mostra come utilizzare cicli annidati per iterare su più livelli.</p>
+        </div>
+        <div class="exercise">
+            <h3>Esercizio</h3>
+            <p>Scrivi un programma che utilizzi un ciclo per stampare la tabellina di un numero fornito dall'utente.</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>4. Esercizio Pratico: Primo Programma Java</h2>
+        <p>Un classico programma Java prevede di interagire con l'utente tramite input da tastiera e output su console. Vediamo un esempio completo:</p>
+        <div class="example">
+            <h3>Esempio: Input e Output</h3>
+            <pre><code>import java.util.Scanner;
+
+public class PrimoProgramma {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("Inserisci il tuo nome: ");
+        String nome = scanner.nextLine();
+
+        System.out.print("Inserisci la tua età: ");
+        int eta = scanner.nextInt();
+
+        System.out.println("Ciao, " + nome + ". Hai " + eta + " anni.");
+    }
+}</code></pre>
+        </div>
+        <div class="exercise">
+            <h3>Esercizio Pratico</h3>
+            <p>Implementa un programma che calcoli la somma e la media di una serie di numeri forniti dall'utente:</p>
+            <ol>
+                <li>Chiedi all'utente di inserire il numero di elementi.</li>
+                <li>Utilizza un ciclo <code>for</code> per leggere i numeri e calcolare la somma.</li>
+                <li>Calcola la media e stampala a schermo.</li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="bibliography">
+        <h3>Bibliografia</h3>
+        <ul>
+            <li><a href="https://docs.oracle.com/javase/tutorial/">Java Tutorials - Oracle</a> - Documentazione ufficiale per imparare Java direttamente dalla fonte principale.</li>
+            <li><a href="https://www.w3schools.com/java/">Java Tutorial - W3Schools</a> - Un'ottima risorsa per apprendere le basi e consultare esempi pratici.</li>
+            <li><a href="https://www.geeksforgeeks.org/java/">GeeksforGeeks Java</a> - Articoli e guide dettagliate su concetti Java, dalle basi agli argomenti avanzati.</li>
+            <li><a href="https://stackoverflow.com/questions/tagged/java">StackOverflow - Java</a> - Una comunità di programmatori per risolvere dubbi e trovare risposte.</li>
+        </ul>
+    </div>
+
+    <div class="advanced">
+        <h3>Approfondimenti</h3>
+        <ul>
+            <li><strong>Garbage Collection:</strong> Esplora i meccanismi di gestione automatica della memoria in Java e gli algoritmi di raccolta utilizzati. Consulta la documentazione ufficiale di <a href="https://docs.oracle.com/javase/specs/">Java SE Specifications</a>.</li>
+            <li><strong>Stream API:</strong> Approfondisci l'uso degli Stream introdotti in Java 8 per elaborare dati in modo funzionale. Un'ottima guida è disponibile su <a href="https://www.baeldung.com/java-8-streams">Baeldung</a>.</li>
+            <li><strong>Debugging:</strong> Impara a tracciare ed eseguire il debug dei programmi utilizzando strumenti come IntelliJ IDEA o Eclipse. Segui il tutorial su <a href="https://www.jetbrains.com/help/idea/debugging-your-first-java-application.html">JetBrains</a>.</li>
+        </ul>
+    </div>
+
+    <footer class="footer">
+        <a href="/index.html" class="footer-logo">
+            <img src="/img/logo.png" alt="Logo del sito" />
+        </a>
+        <div class="footer-links">
+            <a href="/Settimana_1/Lezione_2.html" class="footer-link left">
+                &#8592; Pagina precedente
+            </a>
+            <a href="/Settimana_1/Lezione_4.html" class="footer-link right">
+                Pagina successiva &#8594;
+            </a>
+        </div>
+        &copy; 2025 Corso di Programmazione Backend. Tutti i diritti riservati.
+    </footer>
+</body>
+</html>
