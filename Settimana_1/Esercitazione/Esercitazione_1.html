@@ -7,48 +7,126 @@
     <link href="/styles/style.css" rel="stylesheet"/>
 </head>
 <body>
-    <h1>Esercizio di Programmazione</h1>
+    <header>
+        <h1>Esercizio Giorno 5: Utilizzo di List, Map e Salvataggio su File JSON</h1>
+    </header>
 
-    <div class="task">
-        <h2>Descrizione dell'Esercizio</h2>
-        <p>
-            Scrivi un programma in Java che legga un array di numeri interi inserito dall'utente e:
-        </p>
-        <ol>
-            <li>Calcoli e stampi il numero più grande nell'array.</li>
-            <li>Calcoli e stampi il numero più piccolo nell'array.</li>
-            <li>Calcoli e stampi la media dei numeri presenti nell'array.</li>
-        </ol>
-        <p>
-            Il programma deve gestire input non validi e continuare a chiedere l'inserimento dei dati finché non vengono forniti numeri validi.
-        </p>
-    </div>
+    <main>
+        <section class="introduction">
+            <h2>Obiettivi</h2>
+            <p>In questa esercitazione, utilizzerai le interfacce <code>List</code> e <code>Map</code> della libreria Java Collections per gestire dati dinamici. Inoltre, implementerai il salvataggio e il caricamento di dati in formato JSON usando librerie come Gson o Jackson.</p>
+        </section>
 
-    <div class="task">
-        <h2>Esempio di Input e Output</h2>
-        <h3>Input:</h3>
-        <pre><code>
-Inserisci il numero di elementi dell'array: 5
-Inserisci 5 numeri interi: 10 20 30 40 50
-        </code></pre>
+        <section class="task">
+            <h2>Descrizione dell'Esercizio</h2>
+            <p>
+                Scrivi un programma in Java che:
+            </p>
+            <ol>
+                <li>Legga una lista di numeri interi forniti dall'utente e li memorizzi in una <code>List</code> (ad esempio, ArrayList).</li>
+                <li>Classifichi i numeri come "Pari" o "Dispari" utilizzando una <code>Map</code> con due chiavi: "Pari" e "Dispari".</li>
+                <li>Calcoli e stampi il numero più grande, il numero più piccolo e la media dei numeri.</li>
+                <li>Salvi i numeri originali, la classificazione e le statistiche in un file JSON chiamato <code>risultati.json</code>.</li>
+                <li>Consenta di caricare dati da un file JSON esistente e di continuare l'analisi.</li>
+            </ol>
+            <p>
+                Il programma deve gestire input non validi e chiedere nuovamente i dati finché non vengono forniti numeri validi.
+            </p>
+        </section>
 
-        <h3>Output:</h3>
-        <pre><code>
-Numero più grande: 50
-Numero più piccolo: 10
-Media: 30.0
-        </code></pre>
-    </div>
+        <section class="example">
+            <h2>Esempio di Input e Output</h2>
+            <div class="example-block">
+                <h3>Input:</h3>
+                <pre><code>Inserisci i numeri (separati da spazio): 10 20 15 7 9 3</code></pre>
 
-    <div class="task">
-        <h2>Requisiti</h2>
-        <ul>
-            <li>Usa un ciclo per leggere i numeri forniti dall'utente.</li>
-            <li>Verifica che l'input sia un numero intero.</li>
-            <li>Implementa almeno una funzione/method per calcolare i valori richiesti.</li>
-        </ul>
-    </div>
+                <h3>Output Console:</h3>
+                <pre><code>Numero più grande: 20
+Numero più piccolo: 3
+Media: 10.67
+Numeri pari: 10, 20
+Numeri dispari: 15, 7, 9, 3
+Dati salvati con successo in risultati.json</code></pre>
 
-    <p><strong>Buona fortuna! 😊</strong></p>
+                <h3>Contenuto del File JSON:</h3>
+                <pre><code>{
+  "numeriOriginali": [10, 20, 15, 7, 9, 3],
+  "analisi": {
+    "numeroPiuGrande": 20,
+    "numeroPiuPiccolo": 3,
+    "media": 10.67
+  },
+  "classificazione": {
+    "Pari": [10, 20],
+    "Dispari": [15, 7, 9, 3]
+  }
+}</code></pre>
+            </div>
+
+            <h3>Esempio di Creazione di un File JSON:</h3>
+            <pre><code>try (FileWriter writer = new FileWriter("risultati.json")) {
+    Gson gson = new Gson();
+    gson.toJson(datiAnalizzati, writer);
+    System.out.println("File JSON creato con successo!");
+} catch (IOException e) {
+    e.printStackTrace();
+}</code></pre>
+
+            <h3>Esempio di Modifica di un File JSON:</h3>
+            <pre><code>try (FileReader reader = new FileReader("risultati.json")) {
+    Gson gson = new Gson();
+    Map<String, Object> dati = gson.fromJson(reader, Map.class);
+    List<Integer> nuoviNumeri = Arrays.asList(25, 30);
+    ((List<Integer>) dati.get("numeriOriginali")).addAll(nuoviNumeri);
+
+    try (FileWriter writer = new FileWriter("risultati.json")) {
+        gson.toJson(dati, writer);
+        System.out.println("File JSON aggiornato con nuovi dati!");
+    }
+} catch (IOException e) {
+    e.printStackTrace();
+}</code></pre>
+
+            <h3>Esempio di Eliminazione di un File JSON:</h3>
+            <pre><code>File file = new File("risultati.json");
+if (file.delete()) {
+    System.out.println("File JSON eliminato con successo!");
+} else {
+    System.out.println("Impossibile eliminare il file.");
+}</code></pre>
+        </section>
+
+        <section class="requirements">
+            <h2>Requisiti</h2>
+            <ul>
+                <li>Usa una <code>List</code> per memorizzare i numeri forniti dall'utente.</li>
+                <li>Utilizza una <code>Map</code> per classificare i numeri in "Pari" e "Dispari".</li>
+                <li>Adotta una libreria come Gson o Jackson per il salvataggio e il caricamento dei dati in formato JSON.</li>
+                <li>Assicurati di validare gli input dell'utente.</li>
+                <li>Documenta il codice per renderlo comprensibile.</li>
+            </ul>
+        </section>
+
+        <section class="advanced">
+            <h2>Per gli Studenti Avanzati</h2>
+            <p>Prova a implementare le seguenti funzionalità aggiuntive:</p>
+            <ul>
+                <li>Permetti all'utente di aggiornare i dati caricati da un file JSON e salvarli nuovamente.</li>
+                <li>Aggiungi una funzione per esportare i dati in formato CSV.</li>
+                <li>Offri la possibilità di filtrare i numeri caricati in base a un intervallo specificato dall'utente.</li>
+                <li>Implementa un menu interattivo per scegliere le diverse operazioni (inserimento, salvataggio, caricamento, analisi, esportazione).</li>
+            </ul>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <a href="/Settimana_1/Lezione_4.html" class="footer-link left">
+            &#8592; Pagina precedente
+        </a>
+        <a href="/Settimana_2/Lezione_6.html" class="footer-link right">
+            Pagina successiva &#8594;
+        </a>
+        &copy; 2025 Corso di Programmazione Backend. Tutti i diritti riservati.
+    </footer>
 </body>
 </html>
