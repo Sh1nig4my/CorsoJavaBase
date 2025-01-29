@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esercizio Giorno 5</title>
+    <link href="/styles/style.css" rel="stylesheet" />
+</head>
+
+<body>
+    <header>
+        <h1>Esercizio Giorno 5: Utilizzo di List, Map e Salvataggio su File JSON</h1>
+    </header>
+
+    <main>
+        <section class="section">
+            <h2>Obiettivi</h2>
+            <p>In questa esercitazione, utilizzerai le interfacce <code>List</code> e <code>Map</code> della libreria
+                Java Collections per gestire dati dinamici. Inoltre, implementerai il salvataggio e il caricamento di
+                dati in formato JSON usando librerie come Gson o Jackson.</p>
+        </section>
+
+        <section class="section">
+            <h2>Descrizione dell'Esercizio</h2>
+            <p>
+                Scrivi un programma in Java che:
+            </p>
+            <ol>
+                <li>Legga una lista di numeri interi forniti dall'utente e li memorizzi in una <code>List</code> (ad
+                    esempio, ArrayList).</li>
+                <li>Classifichi i numeri come "Pari" o "Dispari" utilizzando una <code>Map</code> con due chiavi: "Pari"
+                    e "Dispari".</li>
+                <li>Calcoli e stampi il numero più grande, il numero più piccolo e la media dei numeri.</li>
+                <li>Salvi i numeri originali, la classificazione e le statistiche in un file JSON chiamato
+                    <code>risultati.json</code>.
+                </li>
+            </ol>
+            <p>
+                Il programma deve gestire input non validi e chiedere nuovamente i dati finché non vengono forniti
+                numeri validi.
+            </p>
+
+            <section class="example">
+                <h2>Esempio di Input e Output</h2>
+                <div class="example-block">
+                    <h3>Input:</h3>
+                    <pre><code>Inserisci i numeri (separati da spazio): 10 20 15 7 9 3</code></pre>
+
+                    <h3>Output Console:</h3>
+                    <pre><code>Numero più grande: 20
+    Numero più piccolo: 3
+    Media: 10.67
+    Numeri pari: 10, 20
+    Numeri dispari: 15, 7, 9, 3
+    Dati salvati con successo in risultati.json</code></pre>
+
+                    <h3>Contenuto del File JSON:</h3>
+                    <pre><code>{
+      "numeriOriginali": [10, 20, 15, 7, 9, 3],
+      "analisi": {
+        "numeroPiuGrande": 20,
+        "numeroPiuPiccolo": 3,
+        "media": 10.67
+      },
+      "classificazione": {
+        "Pari": [10, 20],
+        "Dispari": [15, 7, 9, 3]
+      }
+    }</code></pre>
+                </div>
+
+                <h3>Esempio di Creazione e Scrittura di un File JSON:</h3>
+<pre><code>
+// Importa le librerie necessarie
+import com.google.gson.Gson;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.*;
+
+public class GestioneRisultati {
+
+    public static void main(String[] args) {
+        // Dati di esempio
+        List<Integer> numeriOriginali = Arrays.asList(10, 20, 15, 7, 9, 3);
+        Map<String, List<Integer>> classificazione = new HashMap<>();
+        classificazione.put("Pari", Arrays.asList(10, 20));
+        classificazione.put("Dispari", Arrays.asList(15, 7, 9, 3));
+
+        Map<String, Object> analisi = new HashMap<>();
+        analisi.put("numeroPiuGrande", 20);
+        analisi.put("numeroPiuPiccolo", 3);
+        analisi.put("media", 10.67);
+
+        // Struttura dati per il salvataggio
+        Map<String, Object> datiAnalizzati = new HashMap<>();
+        datiAnalizzati.put("numeriOriginali", numeriOriginali);
+        datiAnalizzati.put("analisi", analisi);
+        datiAnalizzati.put("classificazione", classificazione);
+
+        // Scrivi i dati in un file JSON
+        try (FileWriter writer = new FileWriter("risultati.json")) {
+            Gson gson = new Gson();
+            gson.toJson(datiAnalizzati, writer);
+            System.out.println("Dati salvati con successo in risultati.json");
+        } catch (IOException e) {
+            System.err.println("Errore durante la scrittura del file JSON: " + e.getMessage());
+        }
+    }
+}
+
+### Spiegazione:
+1. **Preparazione dei dati:**
+   - La lista `numeriOriginali` contiene i numeri forniti dall'utente.
+   - La mappa `classificazione` suddivide i numeri in "Pari" e "Dispari".
+   - La mappa `analisi` contiene il numero massimo, minimo e la media.
+   - Tutti questi dati sono inseriti nella mappa `datiAnalizzati`, che rappresenta la struttura finale del file JSON.
+
+2. **Creazione e scrittura del file:**
+   - La libreria Gson viene utilizzata per serializzare l'oggetto `datiAnalizzati` in JSON.
+   - Il file `risultati.json` viene creato e i dati vengono scritti al suo interno.
+
+3. **Gestione delle eccezioni:**
+   - In caso di errore durante la scrittura del file, viene stampato un messaggio di errore.
+
+### Output Atteso:
+Dopo aver eseguito il programma, il file `risultati.json` conterrà:
+```json
+{
+  "numeriOriginali": [10, 20, 15, 7, 9, 3],
+  "analisi": {
+    "numeroPiuGrande": 20,
+    "numeroPiuPiccolo": 3,
+    "media": 10.67
+  },
+  "classificazione": {
+    "Pari": [10, 20],
+    "Dispari": [15, 7, 9, 3]
+  }
+}
+</code></pre>
+
+
+
+            </section>
+
+        </section>
+
+        <section class="section">
+            <h2>Requisiti</h2>
+            <ul>
+                <li>Usa una <code>List</code> per memorizzare i numeri forniti dall'utente.</li>
+                <li>Utilizza una <code>Map</code> per classificare i numeri in "Pari" e "Dispari".</li>
+                <li>Adotta una libreria come Gson o Jackson per il salvataggio e il caricamento dei dati in formato
+                    JSON.</li>
+                <li>Assicurati di validare gli input dell'utente.</li>
+                <li>Documenta il codice per renderlo comprensibile.</li>
+            </ul>
+        </section>
+
+        <section class="advanced">
+            <h2>Esercizi Avanzati</h2>
+            <p>Prova a completare i seguenti esercizi per approfondire gli argomenti trattati:</p>
+            <ul>
+                <li>
+                    <strong>Test della classificazione:</strong> Scrivi un test con <code>JUnit</code> per verificare
+                    che la classificazione dei numeri in "Pari" e "Dispari" sia corretta. Fornisci come input una lista
+                    di numeri e verifica che la mappa risultante contenga le chiavi "Pari" e "Dispari" con i valori
+                    corretti.
+                </li>
+                <li>
+                    <strong>Validazione input:</strong> Scrivi un metodo per controllare se l'input dell'utente è valido
+                    (solo numeri interi separati da spazi) e crea un test con <code>JUnit</code> per verificarne il
+                    funzionamento.
+                </li>
+                <li>
+                    <strong>Statistiche extra:</strong> Aggiungi una funzionalità che calcola la somma di tutti i numeri
+                    inseriti. Scrivi un test per verificare che il calcolo della somma sia corretto.
+                </li>
+                <li>
+                    <strong>Lettura semplice:</strong> Implementa una funzione che legga da un file una lista di interi e salva solo i numeri primi in
+                    formato JSON.
+                </li>
+            </ul>
+            
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <a class="footer-logo" href="/index.html">
+            <img alt="Logo del sito" src="/img/logo.png" />
+        </a>
+        <div class="footer-links">
+            <a class="footer-link left" href="/Settimana_1/Lezione_4.html">
+                ← Pagina precedente
+            </a>
+            <a class="footer-link right" href="/Settimana_2/Lezione_6.html">
+                Pagina successiva →
+            </a>
+        </div>
+        © 2025 Corso di Programmazione Backend. Tutti i diritti riservati.
+    </footer>
+
+</body>
+
+</html>

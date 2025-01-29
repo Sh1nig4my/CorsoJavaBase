@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lezione: Strutture Dati - List e Map</title>
+    <link href="/styles/style.css" rel="stylesheet" />
+</head>
+
+<body>
+    <header>
+        <h1>Esercitazione: Strutture Dati: List e Map</h1>
+    </header>
+    <main>
+
+        <section class="section">
+            <h2>Introduzione alle Strutture Dati</h2>
+            <p>
+                Le strutture dati sono un elemento fondamentale nella programmazione e rappresentano un mezzo per
+                organizzare e gestire le informazioni in modo efficiente. In sostanza, consentono di risolvere problemi
+                complessi mantenendo il codice leggibile, scalabile e performante.
+            </p>
+            <p>
+                In Java, esistono molteplici tipi di strutture dati, ma in questa lezione ci concentreremo su due delle
+                più importanti e ampiamente utilizzate: <strong>List</strong> e <strong>Map</strong>. La comprensione di
+                queste due strutture consente di affrontare una vasta gamma di situazioni reali, dalla gestione di
+                elenchi sequenziali alla creazione di associazioni chiave-valore per un rapido accesso ai dati.
+            </p>
+            <p>
+                Una <strong>List</strong> è una collezione ordinata, ideale per rappresentare una sequenza di elementi
+                dove l'ordine e i duplicati sono importanti. Ad esempio, una lista della spesa o una sequenza di attività
+                da completare.
+            </p>
+            <p>
+                Una <strong>Map</strong>, d'altra parte, è una collezione non ordinata basata su associazioni chiave-valore,
+                perfetta per rappresentare scenari in cui si desidera un accesso rapido ai dati tramite una chiave univoca.
+                Un esempio comune è un dizionario, in cui una parola (la chiave) è associata alla sua definizione (il valore).
+            </p>
+            <p>
+                Nel corso di questa lezione, analizzeremo le caratteristiche principali, i vantaggi e gli svantaggi di queste
+                due strutture, corredando il tutto con esempi pratici che ne dimostrano l'utilità.
+            </p>
+        </section>
+
+        <div class="section">
+            <h2>La struttura List</h2>
+            <p>
+                <strong>List</strong> è una collezione ordinata che consente elementi duplicati. Alcune implementazioni
+                comuni di List in Java sono:
+            <ul>
+                <li><code>ArrayList</code></li>
+                <li><code>LinkedList</code></li>
+            </ul>
+            </p>
+            <h3>Esempio pratico</h3>
+            <pre><code class="language-java">import java.util.ArrayList;
+import java.util.List;
+
+public class ListExample {
+    public static void main(String[] args) {
+        List&lt;String&gt; fruits = new ArrayList&lt;&gt;();
+
+        // Aggiunta di elementi
+        fruits.add("Mela");
+        fruits.add("Banana");
+        fruits.add("Arancia");
+
+        // Iterazione
+        for (String fruit : fruits) {
+            System.out.println(fruit);
+        }
+
+        // Accesso per indice
+        System.out.println("Frutto al primo indice: " + fruits.get(0));
+    }
+}</code></pre>
+        </div>
+
+        <div class="section">
+            <h2>La struttura Map</h2>
+            <p>
+                <strong>Map</strong> è una collezione che associa chiavi a valori. Le chiavi devono essere uniche, ma i
+                valori possono essere duplicati.
+                Alcune implementazioni comuni di Map in Java sono:
+            <ul>
+                <li><code>HashMap</code></li>
+                <li><code>TreeMap</code></li>
+                <li><code>LinkedHashMap</code></li>
+            </ul>
+            </p>
+            <h3>Esempio pratico</h3>
+            <pre><code class="language-java">import java.util.HashMap;
+import java.util.Map;
+
+public class MapExample {
+    public static void main(String[] args) {
+        Map&lt;String, Integer&gt; studentGrades = new HashMap&lt;&gt;();
+
+        // Inserimento di chiavi e valori
+        studentGrades.put("Mario", 90);
+        studentGrades.put("Luigi", 85);
+        studentGrades.put("Anna", 92);
+
+        // Iterazione
+        for (Map.Entry&lt;String, Integer&gt; entry : studentGrades.entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
+        }
+
+        // Accesso per chiave
+        System.out.println("Voto di Mario: " + studentGrades.get("Mario"));
+    }
+}</code></pre>
+        </div>
+
+        <div class="section">
+            <h2>Confronto tra List e Map</h2>
+            <p>
+                <strong>List</strong> e <strong>Map</strong> sono due strutture dati fondamentali, ciascuna con caratteristiche e utilizzi specifici. La scelta tra di esse dipende dal tipo di problema che si vuole risolvere:
+            </p>
+            <p>
+                <strong>List</strong> è ideale per lavorare con una sequenza ordinata di elementi, come una lista della spesa o una coda di attività. Permette di accedere agli elementi in base all'indice e di avere elementi duplicati. Alcuni dei metodi principali di <code>List</code> includono:
+            </p>
+            <ul>
+                <li><code>add()</code>: per aggiungere un elemento alla lista.</li>
+                <li><code>get()</code>: per accedere a un elemento in base all'indice.</li>
+                <li><code>remove()</code>: per rimuovere un elemento specifico.</li>
+                <li><code>size()</code>: per ottenere il numero totale di elementi nella lista.</li>
+            </ul>
+            <p> Esempio pratico di utilizzo di <code>List</code>:</p>
+            <pre><code class="language-java">import java.util.ArrayList;
+        import java.util.List;
+        
+        public class ListExample {
+            public static void main(String[] args) {
+                List<String> tasks = new ArrayList<>();
+        
+                // Aggiunta di attività
+                tasks.add("Comprare il latte");
+                tasks.add("Scrivere codice Java");
+                tasks.add("Fare una passeggiata");
+        
+                // Iterazione e stampa
+                for (String task : tasks) {
+                    System.out.println(task);
+                }
+        
+                // Accesso tramite indice
+                System.out.println("Prima attività: " + tasks.get(0));
+            }
+        }</code></pre>
+            <br>
+            <p>
+                <strong>Map</strong>, invece, è perfetta quando si ha bisogno di associare una chiave univoca a un valore. Per esempio, una rubrica telefonica in cui i nomi (chiavi) sono associati ai numeri di telefono (valori). A differenza di <code>List</code>, non consente duplicati per le chiavi, ma permette valori duplicati. Alcuni dei metodi principali di <code>Map</code> includono:
+            </p>
+            <ul>
+                <li><code>put()</code>: per aggiungere una coppia chiave-valore.</li>
+                <li><code>get()</code>: per ottenere un valore basato sulla chiave.</li>
+                <li><code>remove()</code>: per rimuovere una coppia chiave-valore specifica.</li>
+                <li><code>containsKey()</code>: per verificare l'esistenza di una chiave.</li>
+            </ul>
+            <p>Esempio pratico di utilizzo di <code>Map</code>:</p>
+            <pre><code class="language-java">import java.util.HashMap;
+        import java.util.Map;
+        
+        public class MapExample {
+            public static void main(String[] args) {
+                Map<String, String> phoneBook = new HashMap<>();
+        
+                // Aggiunta di coppie chiave-valore
+                phoneBook.put("Mario", "333-1234567");
+                phoneBook.put("Luigi", "333-7654321");
+                phoneBook.put("Anna", "333-9876543");
+        
+                // Iterazione e stampa
+                for (Map.Entry<String, String> entry : phoneBook.entrySet()) {
+                    System.out.println(entry.getKey() + ": " + entry.getValue());
+                }
+        
+                // Accesso tramite chiave
+                System.out.println("Numero di Mario: " + phoneBook.get("Mario"));
+            }
+        }</code></pre>
+        <br>
+            <p>
+                In conclusione:
+            </p>
+            <ul>
+                <li>Usa <strong>List</strong> quando hai bisogno di una collezione ordinata di elementi in cui l'ordine e i duplicati sono importanti.</li>
+                <li>Usa <strong>Map</strong> quando devi associare una chiave univoca a un valore per un accesso rapido e diretto.</li>
+            </ul>
+        </div>
+        
+        <section class = "bibliography">
+            <h2>Bibliografia</h2>
+            <ul>
+                <li><a href="https://docs.oracle.com/javase/8/docs/api/java/util/List.html"
+                        target="_blank">Documentazione ufficiale di List</a></li>
+                <li><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Map.html"
+                        target="_blank">Documentazione ufficiale di Map</a></li>
+                <li><a href="https://www.baeldung.com/java-collections" target="_blank">Guida alle collezioni Java su
+                        Baeldung</a></li>
+            </ul>
+        </section>
+
+        <section class="advanced">
+            <h2>Sezione Avanzata</h2>
+            <p>
+                Esplora le seguenti tematiche:
+            <ul>
+                <li>Utilizzo di <code>TreeMap</code> per ordinare gli elementi in base alle chiavi.</li>
+                <li>Implementazione di una <code>Custom Comparator</code> per personalizzare l'ordinamento in una
+                    <code>List</code>.</li>
+                <li>Introduzione agli Stream API per lavorare con <code>List</code> e <code>Map</code> in modo più
+                    conciso.</li>
+            </ul>
+            </p>
+        </section>
+
+
+    </main>
+
+    <footer class="footer">
+        <a href="/index.html" class="footer-logo">
+            <img src="/img/logo.png" alt="Logo del sito" />
+        </a>
+        &copy; 2025 Corso di Programmazione Backend. Tutti i diritti riservati.
+    </footer>
+
+</body>
+
+</html>

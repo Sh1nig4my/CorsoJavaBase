@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/styles/style.css" rel="stylesheet" />
+    <title>Lezione: Introduzione a Java</title>
+</head>
+
+<body>
+    <header>
+        <h1>Lezione: Introduzione a Java</h1>
+    </header>
+
+    <div class="section">
+        <h2>Cos'è Java?</h2>
+        <p>
+            Java è un linguaggio di programmazione ad alto livello, orientato agli oggetti, creato da Sun Microsystems
+            nel 1995 e attualmente mantenuto da Oracle.
+            Il suo obiettivo principale è stato quello di consentire agli sviluppatori di "scrivere una volta, eseguire
+            ovunque" (Write Once, Run Anywhere - WORA).
+            Questo significa che il codice Java, compilato in bytecode, può essere eseguito su qualsiasi piattaforma
+            dotata di una Java Virtual Machine (JVM) compatibile,
+            garantendo così un elevato livello di portabilità.
+        </p>
+        <p>
+            Java è progettato per essere:
+        </p>
+        <ul>
+            <li><strong>Semplice:</strong> Con una sintassi simile a quella di C++, ma priva di caratteristiche
+                complesse come i puntatori espliciti.</li>
+            <li><strong>Orientato agli oggetti:</strong> Promuove la modularità e la riusabilità del codice grazie a
+                concetti come classi, oggetti, ereditarietà e polimorfismo.</li>
+            <li><strong>Sicuro:</strong> La gestione automatica della memoria, un sistema di tipi rigoroso e il
+                sandboxing nella JVM proteggono da molte vulnerabilità.</li>
+            <li><strong>Portabile:</strong> Grazie alla JVM, il bytecode può essere eseguito su una vasta gamma di
+                dispositivi e piattaforme.</li>
+            <li><strong>Scalabile e performante:</strong> Adatto sia per applicazioni leggere che per grandi sistemi
+                aziendali grazie all'ottimizzazione continua della JVM.</li>
+        </ul>
+        <p>
+            Java è oggi utilizzato in una vasta gamma di applicazioni, tra cui:
+        </p>
+        <ul>
+            <li><strong>Applicazioni desktop:</strong> Software per ufficio, editor grafici e strumenti per
+                sviluppatori.</li>
+            <li><strong>Applicazioni mobili:</strong> La maggior parte delle app Android è sviluppata in Java o in
+                Kotlin, che si integra facilmente con Java.</li>
+            <li><strong>Sistemi embedded:</strong> Dispositivi come lettori Blu-ray, set-top box e sensori IoT.</li>
+            <li><strong>Applicazioni web e enterprise:</strong> Grandi sistemi aziendali, grazie a framework come Spring
+                e Java EE.</li>
+            <li><strong>Sviluppo di giochi:</strong> Anche se meno comune rispetto ad altri linguaggi, Java è utilizzato
+                per alcuni giochi multipiattaforma.</li>
+        </ul>
+        <p>
+            Con il passare degli anni, Java si è evoluto con aggiornamenti regolari, offrendo nuove funzionalità e
+            miglioramenti alle prestazioni, mantenendo una vasta comunità
+            e un ecosistema ricco di librerie e framework per semplificare lo sviluppo e affrontare le esigenze moderne.
+        </p>
+    </div>
+
+    <section class="section">
+        <h2>La Nascita di Java</h2>
+        <p>
+            Java è stato sviluppato da <strong>Sun Microsystems</strong> e lanciato ufficialmente nel 1995. Il progetto
+            iniziale, chiamato
+            <strong>"Project Green"</strong>, fu avviato nei primi anni '90 con l'obiettivo di creare un linguaggio di
+            programmazione versatile
+            destinato a dispositivi elettronici di consumo, come set-top box, televisori interattivi e telecomandi.
+        </p>
+        <p>
+            Il team di sviluppo era guidato da <strong>James Gosling</strong>, affettuosamente conosciuto come il "padre
+            di Java". Durante lo sviluppo, il linguaggio
+            venne inizialmente chiamato <strong>"Oak"</strong>, ispirandosi a una maestosa quercia (in inglese "oak")
+            che cresceva fuori dall'ufficio di Gosling.
+            Tuttavia, a causa di conflitti con altri marchi registrati, il nome fu cambiato in <strong>"Java"</strong>,
+            prendendo spunto dalla passione del team per il caffè
+            Java, una popolare varietà di caffè proveniente dall'isola di Giava in Indonesia.
+        </p>
+        <p>
+            Il successo di Java risiede nella sua capacità di soddisfare alcune esigenze fondamentali degli
+            sviluppatori, come:
+        </p>
+        <ul>
+            <li><strong>Portabilità:</strong> Grazie alla <strong>Java Virtual Machine (JVM)</strong>, i programmi
+                scritti in Java possono essere eseguiti su qualsiasi piattaforma che supporti la JVM, garantendo così un
+                alto grado di compatibilità cross-platform.</li>
+            <li><strong>Semplicità:</strong> Java semplifica la programmazione eliminando complessità come i puntatori
+                espliciti e introducendo la gestione automatica della memoria tramite il garbage collector.</li>
+            <li><strong>Sicurezza:</strong> L'architettura del linguaggio e la JVM offrono funzionalità per prevenire
+                errori comuni e vulnerabilità, come buffer overflow e accessi non autorizzati.</li>
+            <li><strong>Orientamento agli oggetti:</strong> Java si basa su questo paradigma per favorire lo sviluppo di
+                software modulare e riutilizzabile, riducendo i costi di manutenzione a lungo termine.</li>
+        </ul>
+        <p>
+            Nel corso degli anni, Java è diventato uno dei linguaggi di programmazione più popolari al mondo, utilizzato
+            in una vasta gamma di contesti,
+            dalle applicazioni mobili su Android alle grandi applicazioni enterprise, fino ai sistemi embedded e ai
+            server cloud. La sua comunità attiva
+            e il continuo sviluppo lo mantengono rilevante e potente anche nelle tecnologie moderne.
+        </p>
+    </section>
+
+
+    <section class="section">
+        <h2>Cos'è la Java Virtual Machine (JVM)?</h2>
+        <p>
+            La <strong>Java Virtual Machine (JVM)</strong> è uno degli elementi chiave che rendono Java un linguaggio
+            versatile, portabile e sicuro.
+            La JVM è un ambiente di esecuzione virtuale responsabile dell'esecuzione del <strong>bytecode</strong>, un
+            formato intermedio generato
+            dal compilatore Java. Questo approccio consente al codice Java di essere indipendente dalla piattaforma,
+            poiché il bytecode può essere
+            eseguito su qualsiasi dispositivo dotato di una JVM compatibile.
+        </p>
+        <p>
+            Quando un programmatore scrive un'applicazione in Java e la compila, il compilatore Java (javac) non produce
+            direttamente codice
+            macchina comprensibile dal sistema operativo, bensì <strong>bytecode</strong>, un linguaggio binario
+            ottimizzato per la JVM.
+            La JVM si occupa poi di tradurre ed eseguire questo bytecode nel contesto della piattaforma ospitante.
+        </p>
+        <h3>Come funziona la JVM</h3>
+        <p>
+            La JVM opera in diverse fasi, ciascuna delle quali svolge un ruolo importante per garantire che il codice
+            venga eseguito in modo corretto ed efficiente:
+        </p>
+        <ol>
+            <li><strong>Caricamento del bytecode:</strong> La JVM utilizza un componente chiamato <em>class loader</em>
+                per caricare le classi Java dal file .class compilato. Queste classi possono essere caricate da diverse
+                fonti, come file system locali o risorse di rete.</li>
+            <li><strong>Verifica:</strong> Prima dell'esecuzione, la JVM verifica che il bytecode sia sicuro e non
+                contenga istruzioni che potrebbero compromettere la stabilità o la sicurezza dell'ambiente.</li>
+            <li><strong>Interpretazione ed esecuzione:</strong> Il bytecode viene inizialmente interpretato dalla JVM,
+                che traduce ogni istruzione in codice macchina specifico per la piattaforma in tempo reale.</li>
+            <li><strong>Compilazione Just-In-Time (JIT):</strong> Per migliorare le prestazioni, la JVM utilizza il
+                compilatore JIT per convertire porzioni di bytecode frequentemente utilizzate direttamente in codice
+                macchina, riducendo i costi di interpretazione continua. Questo processo accelera significativamente
+                l'esecuzione.</li>
+        </ol>
+        <h3>Esempi pratici</h3>
+        <p>
+            Per comprendere meglio il funzionamento della JVM, consideriamo un esempio:
+        </p>
+        <pre><code class="language-java">
+    // Un semplice programma Java
+    public class EsempioJVM {
+        public static void main(String[] args) {
+            System.out.println("Ciao, JVM!");
+        }
+    }
+        </code></pre>
+        <p>
+            1. Il codice sopra viene compilato con il comando <code>javac EsempioJVM.java</code>. Questo genera un file
+            <code>EsempioJVM.class</code>, che contiene il bytecode.
+        </p>
+        <p>
+            2. Quando eseguiamo il comando <code>java EsempioJVM</code>, la JVM carica il file
+            <code>EsempioJVM.class</code>, verifica il bytecode e lo interpreta.
+        </p>
+        <p>
+            3. Se il metodo <code>main</code> viene richiamato frequentemente, il compilatore JIT potrebbe ottimizzarlo
+            convertendolo in codice macchina nativo, migliorando le prestazioni.
+        </p>
+        <h3>Funzionalità principali della JVM</h3>
+        <ul>
+            <li><strong>Gestione della memoria:</strong> La JVM gestisce automaticamente la memoria tramite il
+                <em>garbage collector</em>, che libera memoria occupata da oggetti non più utilizzati, evitando perdite
+                di memoria.</li>
+            <li><strong>Ottimizzazioni runtime:</strong> La compilazione JIT e altre tecniche consentono di migliorare
+                le prestazioni delle applicazioni.</li>
+            <li><strong>Sicurezza:</strong> La JVM isola il bytecode dal sistema operativo e verifica che il codice non
+                contenga istruzioni pericolose o non autorizzate.</li>
+        </ul>
+        <h3>Interpretazione vs. Compilazione JIT</h3>
+        <p>
+            Un esempio per chiarire la differenza tra interpretazione e compilazione JIT:
+        </p>
+        <ul>
+            <li><strong>Interpretazione:</strong> La JVM traduce ed esegue il bytecode istruzione per istruzione. Questo
+                approccio è più lento ma consente alla JVM di iniziare subito l'esecuzione del programma.</li>
+            <li><strong>Compilazione JIT:</strong> La JVM analizza il codice e identifica le parti eseguite più
+                frequentemente, compilando queste sezioni in codice nativo per la piattaforma, che può essere eseguito
+                molto più velocemente rispetto al bytecode interpretato.</li>
+        </ul>
+        <p>
+            La combinazione di queste tecniche rende la JVM uno strumento potente per eseguire applicazioni Java in modo
+            efficiente su diverse piattaforme.
+        </p>
+    </section>
+
+
+    <section class="section">
+        <h2>Esempio Pratico</h2>
+        <p>
+            Un semplice programma Java per mostrare il classico "Hello, World!". Questo esempio è il punto di partenza per qualsiasi principiante che desideri apprendere Java, 
+            poiché illustra la struttura base di un programma Java:
+        </p>
+        <pre><code class="language-java">
+    // Definizione della classe pubblica
+    public class HelloWorld {
+        // Metodo principale, punto di ingresso del programma
+        public static void main(String[] args) {
+            // Stampa del messaggio "Hello, World!" sulla console
+            System.out.println("Hello, World!");
+        }
+    }
+        </code></pre>
+        <h3>Spiegazione del codice</h3>
+        <ul>
+            <li><strong>public class HelloWorld:</strong> Ogni programma Java deve avere almeno una classe. Qui, la classe si chiama <code>HelloWorld</code>. Il nome del file deve corrispondere al nome della classe pubblica (in questo caso <code>HelloWorld.java</code>).</li>
+            <li><strong>public static void main(String[] args):</strong> Questo è il metodo principale, cioè il punto di ingresso del programma. Quando esegui un programma Java, la JVM cerca e avvia questo metodo.</li>
+            <li><strong>System.out.println("Hello, World!");</strong> Questo comando stampa il messaggio <code>"Hello, World!"</code> sulla console. La funzione <code>println</code> aggiunge automaticamente un ritorno a capo dopo la stringa stampata.</li>
+        </ul>
+        <h3>Come eseguire il programma</h3>
+        <p>
+            Per compilare ed eseguire il programma, segui questi passaggi:
+        </p>
+        <ol>
+            <li>Salva il codice in un file chiamato <code>HelloWorld.java</code>.</li>
+            <li>Compila il file con il comando:
+                <pre><code>javac HelloWorld.java</code></pre>
+                Questo comando genera un file <code>HelloWorld.class</code> contenente il bytecode.
+            </li>
+            <li>Esegui il programma con il comando:
+                <pre><code>java HelloWorld</code></pre>
+                Questo comando avvierà la JVM, che caricherà ed eseguirà il file <code>HelloWorld.class</code>, producendo il seguente output sulla console:
+            </li>
+        </ol>
+        <pre><code>
+    Hello, World!
+        </code></pre>
+        <h3>Concetti chiave mostrati in questo esempio</h3>
+        <ul>
+            <li><strong>Compilazione:</strong> Il comando <code>javac</code> converte il codice sorgente Java in bytecode eseguibile dalla JVM.</li>
+            <li><strong>Esecuzione:</strong> Il comando <code>java</code> esegue il bytecode sulla JVM, rendendo il programma indipendente dalla piattaforma.</li>
+            <li><strong>Struttura del programma:</strong> La struttura base di un programma Java include una classe, un metodo principale e istruzioni eseguibili.</li>
+        </ul>
+        <p>
+            Questo semplice esempio pone le basi per comprendere i concetti fondamentali della programmazione Java, come classi, metodi e l'interazione con la console.
+        </p>
+    </section>
+    
+
+    <section class="bibliography">
+        <h2>Bibliografia</h2>
+        <p>
+            Di seguito alcune risorse utili per approfondire:
+        </p>
+        <ul>
+            <li><a href="https://docs.oracle.com/javase/">Documentazione ufficiale di Java</a></li>
+            <li><a href="https://en.wikipedia.org/wiki/Java_(programming_language)">Wikipedia: Java</a></li>
+            <li><a href="https://www.baeldung.com/">Baeldung: Approfondimenti su Java</a></li>
+        </ul>
+    </section>
+
+    <section class="advanced">
+        <h2>Sezione Avanzata</h2>
+        <p>
+            Ecco alcune aree di approfondimento:
+        </p>
+        <ul>
+            <li>Come funziona il garbage collector nella JVM?</li>
+            <li>Analisi delle differenze tra il compilatore JIT e l'interprete.</li>
+            <li>Explorazione del bytecode Java con strumenti come <code>javap</code>.</li>
+        </ul>
+    </section>
+
+    <footer class="footer">
+        <a href="/index.html" class="footer-logo">
+            <img src="/img/logo.png" alt="Logo del sito" />
+        </a>
+        <div class="footer-links">
+            <a href="/Settimana_x/Lezione_x.html" class="footer-link left">
+                &#8592; Pagina precedente
+            </a>
+            <a href="/Settimana_y/Lezione_y.html" class="footer-link right">
+                Pagina successiva &#8594;
+            </a>
+        </div>
+        &copy; 2025 Corso di Programmazione Backend. Tutti i diritti riservati.
+    </footer>
+</body>
+
+</html>
