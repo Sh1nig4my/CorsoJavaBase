@@ -64,19 +64,16 @@ ul {
 li {
     margin-bottom: 15px; /* Spaziatura maggiore tra gli elementi */
     font-size: 1.1em;
+    padding-left: 10px;
+    border-left: 3px solid #014684;
 }
 
-.lesson-title {
-    color: #003366; /* Colore distintivo per i titoli delle lezioni */
-    text-align: left;
-    font-size: 2em; /* Dimensione leggermente più grande */
-    font-weight: bold;
-    margin-top: 30px;
-    margin-bottom: 20px;
-    text-transform: uppercase; /* Tutto maiuscolo per enfasi */
-    border-bottom: 2px solid #014389; /* Linea decorativa sotto il titolo */
-    padding-bottom: 5px;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Ombreggiatura leggera */
+li li {
+    font-size: 14px;
+    margin-left: 20px;
+    padding-left: 10px;
+    border-left: none;
+    list-style-type: square; /* Cambia il tipo di pallino della lista annidata */
 }
 
 .section {
@@ -133,23 +130,47 @@ code {
     font-family: "Courier New", Courier, monospace;
 }
 
+
+
+
 .bibliography {
     background-color: #e9f5e9;
+    
     border-left: 4px solid #248202;
+    
     padding: 15px;
+
     margin-top: 20px;
-    border-radius: 5px; /* Bordo arrotondato */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+    color: #333333; /* Testo scuro per una buona leggibilità */
+    margin: 20px auto; /* Centrare la sezione e aggiungere margini */
+    border-radius: 10px; /* Angoli più arrotondati */
+    max-width: 800px; /* Limita la larghezza per facilitare la lettura */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Ombreggiatura leggera */
+    line-height: 1.8; /* Migliora la leggibilità del testo */
+    font-size: 1.1em; /* Dimensione del font leggermente più grande */
+    text-align: justify; /* Testo giustificato per un aspetto professionale */
 }
 
 .advanced {
     background-color: #f5e9f4;
     border-left: 4px solid #570282;
     padding: 15px;
+
     margin-top: 20px;
-    border-radius: 5px; /* Bordo arrotondato */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+    color: #333333; /* Testo scuro per una buona leggibilità */
+    margin: 20px auto; /* Centrare la sezione e aggiungere margini */
+    border-radius: 10px; /* Angoli più arrotondati */
+    max-width: 800px; /* Limita la larghezza per facilitare la lettura */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Ombreggiatura leggera */
+    line-height: 1.8; /* Migliora la leggibilità del testo */
+    font-size: 1.1em; /* Dimensione del font leggermente più grande */
+    text-align: justify; /* Testo giustificato per un aspetto professionale */
 }
+
+
+
 
 .example {
     background-color: #f0f2f5;
@@ -186,6 +207,9 @@ code {
     border-radius: 5px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
+
+
+
 
 .footer {
     display: flex;
