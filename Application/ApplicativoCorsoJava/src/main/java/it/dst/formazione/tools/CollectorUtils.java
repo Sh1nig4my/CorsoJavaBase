@@ -1,4 +1,4 @@
-package it.dst.formazione.lezione7;
+package it.dst.formazione.tools;
 
 import java.util.List;
 import java.util.stream.Collector;

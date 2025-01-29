@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lezione 9 - Innovazioni di Java 8</title>
+    <link rel="stylesheet" href="/styles/style.css">
+</head>
+
+<body>
+    <h1 class="lesson-title">Lezione 9: Innovazioni di Java 8</h1>
+
+
+    <div class="section">
+        <h2>1. Default Methods nelle Interfacce</h2>
+        <p>Prima di Java 8, tutte le interfacce potevano contenere solo dichiarazioni di metodi astratti, che le classi implementatrici erano obbligate a definire. 
+            Questo significava che qualsiasi cambiamento in un'interfaccia richiedeva una modifica in tutte le classi che la implementavano. 
+            Con l'introduzione dei <strong>Default Methods</strong>, Java 8 ha permesso di fornire un'implementazione predefinita direttamente nell'interfaccia. 
+            Ciò consente di aggiungere nuovi metodi senza interrompere il codice esistente.</p>
+        
+        <p>I default methods vengono spesso utilizzati per estendere funzionalità in librerie e API senza richiedere aggiornamenti a tutte le classi che le implementano.</p>
+        
+        <div class="example">
+            <h3>Esempio base: Default Method</h3>
+            <pre><code>interface Veicolo {
+    default void avvia() {
+        System.out.println("Il veicolo sta partendo.");
+    }
+}
+
+class Auto implements Veicolo {
+    // Non è necessario implementare 'avvia', ma possiamo sovrascriverlo se necessario
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Auto miaAuto = new Auto();
+        miaAuto.avvia(); // Output: Il veicolo sta partendo.
+    }
+}</code></pre>
+        </div>
+        
+        <p>Se una classe implementa più interfacce con metodi di default aventi lo stesso nome, è necessario sovrascrivere il metodo per risolvere il conflitto.</p>
+        
+        <div class="example">
+            <h3>Esempio avanzato: Gestione dei conflitti tra interfacce</h3>
+            <pre><code>interface Veicolo {
+    default void avvia() {
+        System.out.println("Il veicolo sta partendo.");
+    }
+}
+
+interface Macchina {
+    default void avvia() {
+        System.out.println("La macchina sta partendo.");
+    }
+}
+
+class Auto implements Veicolo, Macchina {
+    @Override
+    public void avvia() {
+        System.out.println("Auto personalizzata: avvio specifico!");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Auto miaAuto = new Auto();
+        miaAuto.avvia(); // Output: Auto personalizzata: avvio specifico!
+    }
+}</code></pre>
+        </div>
+
+        <p>In questo caso, la classe <code>Auto</code> è obbligata a fornire un'implementazione del metodo <code>avvia()</code> per risolvere il conflitto tra le due interfacce.</p>
+    </div>
+
+    <div class="section">
+        <h2>2. Metodi Statici nelle Interfacce</h2>
+        <p>Java 8 ha introdotto anche i metodi statici nelle interfacce, che permettono di definire metodi di utilità direttamente all'interno dell'interfaccia stessa. 
+           Questo evita la necessità di creare classi di supporto con metodi statici separati.</p>
+        
+        <p>I metodi statici nelle interfacce sono particolarmente utili per fornire funzionalità comuni senza richiedere istanze dell'interfaccia.</p>
+        
+        <div class="example">
+            <h3>Esempio base: Metodo statico</h3>
+            <pre><code>interface Util {
+    static int somma(int a, int b) {
+        return a + b;
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        int risultato = Util.somma(5, 10);
+        System.out.println("Risultato: " + risultato); // Output: 15
+    }
+}</code></pre>
+        </div>
+        
+        <h3>Quando usare i Metodi Statici nelle Interfacce?</h3>
+        <ul>
+            <li>Quando si vogliono definire metodi di utilità direttamente nell'interfaccia.</li>
+            <li>Per evitare la creazione di classi di supporto con metodi statici.</li>
+            <li>Per fornire implementazioni comuni utilizzabili senza dover istanziare un oggetto.</li>
+        </ul>
+        
+        <h3>Limitazioni dei Metodi Statici nelle Interfacce</h3>
+        <ul>
+            <li>I metodi statici non possono essere sovrascritti dalle classi implementatrici.</li>
+            <li>Devono essere invocati direttamente sull'interfaccia, non sulle sue implementazioni.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>3. Nuovi Metodi Utility in Java 8</h2>
+        <p>Java 8 ha introdotto diversi miglioramenti nelle classi utility, aggiungendo metodi che semplificano la manipolazione di array, collezioni e oggetti. 
+           Questi metodi migliorano la leggibilità del codice, riducono la necessità di boilerplate e rendono più sicura la gestione degli oggetti.</p>
+        
+        <h3>Principali Metodi Introdotti</h3>
+        <ul>
+            <li><code>Arrays.sort()</code> con Comparator Lambda per ordinare array in modo più conciso.</li>
+            <li><code>Objects.requireNonNull()</code> per validare oggetti e prevenire <code>NullPointerException</code>.</li>
+            <li><code>Collections.unmodifiableList()</code> per creare liste immutabili e proteggere i dati.</li>
+        </ul>
+
+        <div class="example">
+            <h3>Esempio: Ordinare una lista con una lambda</h3>
+            <pre><code>import java.util.Arrays;
+import java.util.List;
+
+public class Ordinamento {
+    public static void main(String[] args) {
+        List<String> nomi = Arrays.asList("Marco", "Andrea", "Luca");
+        nomi.sort((s1, s2) -> s1.compareToIgnoreCase(s2));
+        System.out.println(nomi); // Output: [Andrea, Luca, Marco]
+    }
+}</code></pre>
+        </div>
+
+        <div class="example">
+            <h3>Esempio: Validare un oggetto con Objects.requireNonNull</h3>
+            <pre><code>import java.util.Objects;
+
+public class Validazione {
+    public static void main(String[] args) {
+        String nome = null;
+        
+        try {
+            Objects.requireNonNull(nome, "Il nome non può essere null");
+        } catch (NullPointerException e) {
+            System.out.println("Errore: " + e.getMessage()); // Output: Errore: Il nome non può essere null
+        }
+    }
+}</code></pre>
+        </div>
+
+        <div class="example">
+            <h3>Esempio: Creare una lista immutabile con Collections.unmodifiableList</h3>
+            <pre><code>import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+public class ListaImmutabile {
+    public static void main(String[] args) {
+        List<String> nomi = Arrays.asList("Marco", "Andrea", "Luca");
+        List<String> listaImmutabile = Collections.unmodifiableList(nomi);
+        
+        System.out.println(listaImmutabile); // Output: [Marco, Andrea, Luca]
+        
+        // Tentare di modificare la lista causerà un'eccezione
+        try {
+            listaImmutabile.add("Giulia");
+        } catch (UnsupportedOperationException e) {
+            System.out.println("Errore: La lista è immutabile"); // Output: Errore: La lista è immutabile
+        }
+    }
+}</code></pre>
+        </div>
+
+        <h3>Quando Usare i Nuovi Metodi Utility?</h3>
+        <ul>
+            <li>Quando si desidera semplificare il codice con <code>Comparator</code> più concisi.</li>
+            <li>Per garantire che un oggetto non sia <code>null</code> prima di utilizzarlo, prevenendo errori in fase di runtime.</li>
+            <li>Per proteggere strutture dati da modifiche indesiderate, rendendole immutabili.</li>
+        </ul>
+
+        <h3>Vantaggi dell'Uso di questi Metodi</h3>
+        <ul>
+            <li><strong>Migliore leggibilità:</strong> riducono la quantità di codice boilerplate.</li>
+            <li><strong>Maggiore sicurezza:</strong> evitano errori comuni come <code>NullPointerException</code> o modifiche accidentali ai dati.</li>
+            <li><strong>Prestazioni ottimizzate:</strong> alcuni metodi sono più efficienti rispetto alle implementazioni tradizionali.</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>4. Case Study: Java 8 e Manutenibilità del Codice</h2>
+        <p>Grazie alle innovazioni introdotte da Java 8, il codice è diventato più leggibile e manutenibile. 
+           L'introduzione delle espressioni lambda e dei metodi di default ha ridotto significativamente la necessità di classi anonime, semplificando la logica del codice e migliorando la modularità.</p>
+        
+        <p>Uno degli esempi più evidenti di questa evoluzione riguarda il modo in cui venivano definite e utilizzate le interfacce funzionali prima e dopo Java 8.</p>
+        
+        <div class="example">
+            <h3>Prima di Java 8: Uso di una classe separata</h3>
+            <pre><code>class Saluto {
+    public void stampa() {
+        System.out.println("Ciao!");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Saluto s = new Saluto();
+        s.stampa(); // Output: Ciao!
+    }
+}</code></pre>
+        </div>
+
+        <div class="example">
+            <h3>Con Java 8: Uso di Lambda Expression</h3>
+            <pre><code>interface Saluto {
+    void stampa();
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Saluto s = () -> System.out.println("Ciao!");
+        s.stampa(); // Output: Ciao!
+    }
+}</code></pre>
+        </div>
+        
+        <p>Come si può vedere, l’uso di espressioni lambda riduce il codice boilerplate e rende il codice più conciso e leggibile.</p>
+
+        <div class="example">
+            <h3>Utilizzo di interfacce funzionali predefinite</h3>
+            <pre><code>import java.util.function.Consumer;
+
+public class Main {
+    public static void main(String[] args) {
+        Consumer<String> saluta = nome -> System.out.println("Ciao, " + nome + "!");
+        saluta.accept("Marco"); // Output: Ciao, Marco!
+    }
+}</code></pre>
+        </div>
+
+        <div class="example">
+            <h3>Uso di lambda con Streams API</h3>
+            <pre><code>import java.util.Arrays;
+import java.util.List;
+
+public class Main {
+    public static void main(String[] args) {
+        List<String> nomi = Arrays.asList("Marco", "Andrea", "Luca");
+        nomi.forEach(nome -> System.out.println("Ciao, " + nome + "!"));
+        // Output: Ciao, Marco!
+        //         Ciao, Andrea!
+        //         Ciao, Luca!
+    }
+}</code></pre>
+        </div>
+
+        <h3>Benefici delle Lambda Expression</h3>
+        <ul>
+            <li><strong>Maggiore leggibilità:</strong> il codice è più compatto e intuitivo.</li>
+            <li><strong>Minore necessità di classi anonime:</strong> elimina la complessità di dichiarare classi inutilmente verbose.</li>
+            <li><strong>Migliore modularità:</strong> permette di scrivere codice più flessibile e riutilizzabile.</li>
+        </ul>
+
+        <h3>Altri miglioramenti di Java 8</h3>
+        <ul>
+            <li><strong>Interfacce funzionali:</strong> con l’introduzione dell’annotazione <code>@FunctionalInterface</code>, è ora possibile dichiarare interfacce destinate a essere usate con le lambda.</li>
+            <li><strong>Streams API:</strong> una nuova modalità per lavorare con le collezioni in maniera dichiarativa ed efficiente.</li>
+            <li><strong>Optional:</strong> una classe che aiuta a gestire correttamente i valori nulli ed evitare <code>NullPointerException</code>.</li>
+        </ul>
+    </div>
+
+
+    <div class="bibliography">
+        <h2>5. Bibliografia</h2>
+        <p>Java 8 ha introdotto numerose innovazioni nel linguaggio, rivoluzionando la scrittura del codice e la gestione delle interfacce.
+           Per approfondire ulteriormente i concetti trattati in questa lezione, ecco alcune risorse utili:</p>
+        <ul>
+            <li><a href="https://docs.oracle.com/javase/8/docs/">Documentazione ufficiale di Java 8</a> - La documentazione ufficiale di Oracle, che fornisce una panoramica completa su tutte le nuove funzionalità introdotte in Java 8.</li>
+            <li><a href="https://www.baeldung.com/java-8">Guida completa a Java 8 - Baeldung</a> - Un’ottima risorsa con esempi pratici e spiegazioni dettagliate per comprendere appieno le nuove funzionalità.</li>
+            <li><a href="https://www.javatpoint.com/java-8-features">Java 8 Features - Javatpoint</a> - Un'altra risorsa che elenca e descrive le principali caratteristiche di Java 8 con esempi pratici.</li>
+            <li><a href="https://dev.java/learn/">Dev.java - Learn Java</a> - Una risorsa ufficiale della comunità Java che fornisce approfondimenti continui sulle innovazioni del linguaggio.</li>
+        </ul>
+    </div>
+
+    <div class="advanced">
+        <h2>6. Approfondimenti</h2>
+        <p>Java 8 ha introdotto molte funzionalità avanzate che migliorano la leggibilità, la manutenibilità e le prestazioni del codice. 
+           Ecco alcuni temi avanzati che potrebbero essere esplorati per una comprensione più profonda:</p>
+        
+        <ul>
+            <li><strong>Uso avanzato degli <code>Optional</code></strong>:<br> 
+                L’uso di <code>Optional</code> consente di evitare <code>NullPointerException</code> e migliorare la gestione dei valori nulli in Java. 
+                Approfondire questo concetto può portare a scrivere codice più sicuro e leggibile.
+                <br><a href="https://www.baeldung.com/java-optional">Leggi di più su Optional</a>
+            </li>
+            
+            <li><strong>Implementazione di un’interfaccia con più metodi di default</strong>:<br> 
+                Le interfacce Java possono ora avere più metodi di default, permettendo maggiore flessibilità senza compromettere la compatibilità con il codice esistente. 
+                Esplorare casi d’uso pratici di questa funzionalità aiuta a comprenderne meglio i vantaggi.
+                <br><a href="https://docs.oracle.com/javase/tutorial/java/IandI/defaultmethods.html">Documentazione Oracle sui Default Methods</a>
+            </li>
+            
+            <li><strong>Parallel Streams</strong>:<br> 
+                Java 8 ha migliorato il supporto per il parallelismo attraverso le Stream API. 
+                Studiare come dividere ed eseguire operazioni su grandi insiemi di dati in modo parallelo può migliorare significativamente le prestazioni delle applicazioni.
+                <br><a href="https://www.baeldung.com/java-8-parallel-streams">Leggi di più su Parallel Streams</a>
+            </li>
+            
+            <li><strong>Lambda avanzate e metodi di riferimento</strong>:<br> 
+                Comprendere come le espressioni lambda possono essere combinate con i metodi di riferimento consente di scrivere codice più conciso e leggibile.
+                <br><a href="https://www.baeldung.com/java-8-lambda-expressions-tips">Approfondisci sulle Lambda Expressions</a>
+            </li>
+        </ul>
+        
+        <h3>Esempio: Utilizzo avanzato di Optional</h3>
+        <div class="example">
+            <pre><code>import java.util.Optional;
+
+public class OptionalExample {
+    public static void main(String[] args) {
+        Optional<String> nome = Optional.ofNullable(getNome());
+        System.out.println(nome.orElse("Nome non disponibile"));
+    }
+    
+    static String getNome() {
+        return null; // Simula un valore mancante
+    }
+}</code></pre>
+        </div>
+
+        <h3>Esempio: Uso di Parallel Streams</h3>
+        <div class="example">
+            <pre><code>import java.util.Arrays;
+import java.util.List;
+
+public class ParallelStreamsExample {
+    public static void main(String[] args) {
+        List<String> nomi = Arrays.asList("Marco", "Andrea", "Luca", "Giovanni");
+        
+        nomi.parallelStream().forEach(nome -> 
+            System.out.println(Thread.currentThread().getName() + " - " + nome));
+    }
+}</code></pre>
+        </div>
+        
+        <p>Questi approfondimenti forniranno una visione più completa delle innovazioni di Java 8 e delle loro applicazioni pratiche nei progetti di sviluppo.</p>
+    </div>
+
+
+    <footer class="footer">
+        <a href="/index.html" class="footer-logo">
+            <img src="/img/logo.png" alt="Logo del sito" />
+        </a>
+        <div class="footer-links">
+            <a href="/Settimana_2/Lezione_8.html" class="footer-link left">&#8592; Pagina precedente</a>
+            <a href="/Settimana_2/Lezione_10.html" class="footer-link right">Pagina successiva &#8594;</a>
+        </div>
+        &copy; 2025 Corso di Programmazione Backend. Tutti i diritti riservati.
+    </footer>
+    
+</body>
+</html>

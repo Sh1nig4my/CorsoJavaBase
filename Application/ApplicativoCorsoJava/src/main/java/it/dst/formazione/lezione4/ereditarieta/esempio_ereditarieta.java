@@ -9,4 +9,12 @@ public class esempio_ereditarieta {
         auto.accendi();
         auto.mostraDettagli();
     }
+
+    public static void lezione9() {
+        Auto miaAuto = new Auto();
+        miaAuto.accendi();
+        miaAuto.avvia(); // Output: Il veicolo sta partendo.
+
+    }
+
 }
