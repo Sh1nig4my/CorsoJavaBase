@@ -15,6 +15,19 @@ public class esempio_ereditarieta {
         miaAuto.accendi();
         miaAuto.avvia(); // Output: Il veicolo sta partendo.
 
+
+        miaAuto.setNumeroPorte(4);
+        miaAuto.setTipo("Fiat - Panda");
+        Integer n_motori = miaAuto.getMotore();
+        miaAuto.setProprietario(null);
+        System.out.println(miaAuto.getProprietario());
+
+        Integer x = miaAuto.test_richiamo;
+
+        String tmp = VeicoloInterface.marca;
+
+        miaAuto.mostraDettagli();
+
     }
 
 }
