@@ -8,6 +8,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import static it.dst.formazione.esercitazioni.esercitazione1.Soluzioni_esercitazione.*;
+
 
 public class Esercitazione1Test {
 
