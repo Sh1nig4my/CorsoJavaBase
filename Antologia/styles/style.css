@@ -62,7 +62,7 @@ ul {
 }
 
 li {
-    margin-bottom: 15px; /* Spaziatura maggiore tra gli elementi */
+    margin-bottom: 10px; /* Spaziatura maggiore tra gli elementi */
     font-size: 1.1em;
     padding-left: 10px;
     border-left: 3px solid #014684;
