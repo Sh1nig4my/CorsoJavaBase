@@ -104,7 +104,7 @@ public class GiocoUtils {
         }
     }
 
-    public boolean ControlloSconfitta(Persona giocatore){
+    public boolean controlloSconfitta(Persona giocatore){
         if (controlloHp(giocatore) <= 0){
             System.out.println("⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣤⣶⣿⣿⡿⠿⠛⠛⠋⠉⠉⠉⠉⠉⠉⠛⠛⠻⢿⣿⣿⣷⣦⣄⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n" +
                     "⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣀⣴⣿⣿⠿⠛⠉⠁⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠉⠙⠻⣿⣿⣶⣄⡀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀\n" +
@@ -137,43 +137,70 @@ public class GiocoUtils {
     }
 
     //Secondo Hacking da qui in poi
-    public String generaDataCasuale() {
+    public String[] generaDataCasuale() {
         Random random = new Random();
-        int mese = random.nextInt(6) + 3;  // Mesi tra marzo (3) e agosto (8)
+        int mese = random.nextInt(3) + 3; // Genera un mese tra Marzo (3), Aprile (4) e Maggio (5)
         int giorno;
+        String segno;
 
         switch (mese) {
-            case 3: // Ariete
-                giorno = random.nextInt(31 - 21) + 21;  // 21-31 marzo
-                return "Ariete";
-            case 5: // Gemelli
-                giorno = random.nextInt(31 - 21) + 21;  // 21-31 maggio
-                return "Gemelli";
-            case 6: // Gemelli
-                giorno = random.nextInt(30 - 21) + 21;  // 21-30 giugno
-                return "Gemelli";
-            case 9: // Bilancia
-                giorno = random.nextInt(30 - 23) + 23;  // 23-30 settembre
-                return "Bilancia";
-            case 10: // Bilancia
-                giorno = random.nextInt(23 - 1) + 1;   // 1-22 ottobre
-                return "Bilancia";
-            default:
-                return "";
-        }
-    }
+            case 3: // Marzo -> Ariete (21-31 marzo)
+                giorno = random.nextInt(11) + 21;
+                segno = "Ariete";
+                break;
 
-    public boolean verificaRisposta(int scelta, String segnoCorretto) {
-        if (scelta == 1 && segnoCorretto.equals("Ariete")) {
-            return true;
-        } else if (scelta == 2 && segnoCorretto.equals("Gemelli")) {
-            return true;
-        } else if (scelta == 3 && segnoCorretto.equals("Bilancia")) {
-            return true;
+            case 4: // Aprile -> Ariete (1-20), Toro (21-30)
+                giorno = random.nextInt(30) + 1;
+                if (giorno >= 21) {
+                    segno = "Toro";
+                } else {
+                    segno = "Ariete";
+                }
+                break;
+
+            case 5: // Maggio -> Toro (1-20), Gemelli (21-31)
+                giorno = random.nextInt(31) + 1;
+                if (giorno >= 21) {
+                    segno = "Gemelli";
+                } else {
+                    segno = "Toro";
+                }
+                break;
+
+            case 6: // Giugno -> Gemelli (1-20)
+                giorno = random.nextInt(20) + 1;
+                segno = "Gemelli";
+                break;
+
+            default:
+                return new String[]{"", ""}; // Non dovrebbe mai accadere(forse)
         }
-        return false;
+        return new String[]{giorno + "/" + mese, segno};
+    }
+    public boolean verificaRisposta(int scelta, String segnoCorretto) {
+        switch (scelta) {
+            case 1: return segnoCorretto.equals("Ariete");
+            case 2: return segnoCorretto.equals("Toro");
+            case 3: return segnoCorretto.equals("Gemelli");
+            default: return false;
+        }
     }
     //Fine secondo hacking
+
+    public void stampaVittoria(){
+        System.out.println("""
+                
+                ░▒▓█▓▒░░▒▓█▓▒░░▒▓██████▓▒░░▒▓█▓▒░░▒▓█▓▒░            ░▒▓█▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░▒▓███████▓▒░       ░▒▓█▓▒░▒▓█▓▒░\s
+                ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░            ░▒▓█▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░      ░▒▓█▓▒░▒▓█▓▒░\s
+                ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░            ░▒▓█▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░      ░▒▓█▓▒░▒▓█▓▒░\s
+                 ░▒▓██████▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░            ░▒▓█▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░      ░▒▓█▓▒░▒▓█▓▒░\s
+                   ░▒▓█▓▒░   ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░            ░▒▓█▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░      ░▒▓█▓▒░▒▓█▓▒░\s
+                   ░▒▓█▓▒░   ░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░            ░▒▓█▓▒░░▒▓█▓▒░░▒▓█▓▒░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░                   \s
+                   ░▒▓█▓▒░    ░▒▓██████▓▒░ ░▒▓██████▓▒░              ░▒▓█████████████▓▒░░▒▓█▓▒░▒▓█▓▒░░▒▓█▓▒░      ░▒▓█▓▒░▒▓█▓▒░\s
+                                                                                                                               \s
+                                                                                                                               \s
+                """);
+    }
 
 
 

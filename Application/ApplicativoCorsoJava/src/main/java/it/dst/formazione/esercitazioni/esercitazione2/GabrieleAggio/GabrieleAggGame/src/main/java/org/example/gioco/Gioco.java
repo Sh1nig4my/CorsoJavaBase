@@ -9,10 +9,7 @@ import org.example.scenario.ScenarioLaboratorio;
 import org.example.scenario.ScenarioNaveSpazialeNemica;
 import org.example.scenario.ScenarioRoverLunare;
 
-import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Gioco {
@@ -143,11 +140,17 @@ public class Gioco {
                 // Se la scelta è valida 1, 2, o 3, usciamo dal ciclo
                 if (scelta.equals("1") && !scenLab.isUsato()) {
                     scenLab.setUsato(true); // Segna come usato
+                    scenLab.disegnoScenario();
+                    scenLab.descrizioneScenario();
                     break;
                 } else if (scelta.equals("2") && !scenNavSpazNem.isUsato()) {
+                    scenNavSpazNem.disegnoScenario();
+                    scenNavSpazNem.descrizioneScenario();
                     scenNavSpazNem.setUsato(true); // Segna come usato
                     break;
                 } else if (scelta.equals("3") && !scenRovLun.isUsato()) {
+                    scenRovLun.disegnoScenario();
+                    scenRovLun.descrizioneScenario();
                     scenRovLun.setUsato(true); // Segna come usato
                     break;
                 } else {
@@ -221,15 +224,17 @@ public class Gioco {
         System.out.println("I tuoi HP: " + gu.controlloHp(persona));
 
         // Segni Zodiacali e intervalli di date
-        String[] segni = {"Ariete", "Gemelli", "Bilancia"};
-        String segnoCorretto = gu.generaDataCasuale();
-        System.out.println(segnoCorretto);
+        String[] datiGenerati = gu.generaDataCasuale();
+        String dataCasuale = datiGenerati[0];
+        String segnoCorretto = datiGenerati[1];
+
+        System.out.println("Data generata: " + dataCasuale);
 
         // Fai scegliere all'utente il segno zodiacale
         System.out.println("Indovina il segno zodiacale:");
         System.out.println("1) Ariete");
-        System.out.println("2) Gemelli");
-        System.out.println("3) Bilancia");
+        System.out.println("2) Toro");
+        System.out.println("3) Gemelli");
         System.out.print("Inserisci il numero corrispondente al segno: ");
 
         int scelta = scanner.nextInt();
@@ -237,11 +242,56 @@ public class Gioco {
         // Controlla se la risposta è corretta
         if (gu.verificaRisposta(scelta, segnoCorretto)) {
             System.out.println("Corretto! La data appartiene a " + segnoCorretto + ".");
+            gu.controlloHp(persona);
         } else {
             System.out.println("Sbagliato! La risposta giusta era " + segnoCorretto + ".");
+            gu.perdiHp(persona);
+            gu.perdiHp(persona);
         }
     }
 
 
+    public void terzoHacking(Persona persona) {
+        Random random = new Random();
+        Scanner scanner = new Scanner(System.in);
+
+        int numeroSegreto = random.nextInt(100) + 1;
+        int tentativo;
+        int tentativiEffettuati = 0;
+        int tentativiMassimi = 10; // Limite massimo di tentativi
+
+        System.out.println("Per hackerare questo Computer devi indovinare il numero segreto in 10 tentativi." +
+                "Se non dovessi indovinarlo, perderai HP");
+        System.out.println("Hai " + tentativiMassimi + " tentativi per indovinarlo");
+
+        do {
+            System.out.print("Inserisci un numero: ");
+            tentativo = scanner.nextInt();
+            tentativiEffettuati++;
+
+            if (tentativo > numeroSegreto) {
+                System.out.println("Troppo grande");
+            } else if (tentativo < numeroSegreto) {
+                System.out.println("Troppo piccolo");
+            } else {
+                System.out.println("Corretto! Hai indovinato in " + tentativiEffettuati + " tentativi.");
+                return;
+            }
+
+            if (tentativiEffettuati >= tentativiMassimi) {
+                System.out.println("Hai esaurito i tentativi! Il numero corretto era " + numeroSegreto + ".");
+
+                for(int i = 0; i < 4; i++){
+                    gu.perdiHp(persona);
+                }
+                return;
+            }
+        } while (true);
+    }
+
+
+
+
 
 }
+

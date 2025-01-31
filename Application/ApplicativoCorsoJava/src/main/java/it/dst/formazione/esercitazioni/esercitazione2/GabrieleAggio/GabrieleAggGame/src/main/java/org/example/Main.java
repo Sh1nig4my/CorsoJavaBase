@@ -26,20 +26,28 @@ public class Main {
         gu.gestisciOggettiSegreti(giocatore);
         gioco.primoHacking(giocatore);
 
-        if(gu.ControlloSconfitta(giocatore)){
+        if(gu.controlloSconfitta(giocatore)){
             return;
         }
 
         gioco.sceltaSvolta();
         gioco.secondoHacking(giocatore);
+        System.out.println(gu.controlloHp(giocatore));
+
+        if(gu.controlloSconfitta(giocatore)){
+            return;
+        }
 
 
         gioco.sceltaSvolta();
+        gioco.terzoHacking(giocatore);
+        System.out.println(gu.controlloHp(giocatore));
 
-        if(gu.ControlloSconfitta(giocatore)){
+        if(gu.controlloSconfitta(giocatore)){
+            System.out.println("*** Hai perso ***");
             return;
         } else {
-            System.out.println("HAI VINTO YEY");
+            gu.stampaVittoria();
         }
 
 
