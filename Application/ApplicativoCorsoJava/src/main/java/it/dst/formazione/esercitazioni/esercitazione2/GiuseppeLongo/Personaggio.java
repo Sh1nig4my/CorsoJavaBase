@@ -49,7 +49,22 @@ public class Personaggio implements PersonaggioBase {
         System.out.println(tipo + " ha aumentato la sua potenza di " + quantita + ". Potenza attuale: " + potere);
     }
 
-    // Getters aggiuntivi
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
+    public void setHp(int hp) {
+        this.hp = hp;
+    }
+
+    public void setPotere(int potere) {
+        this.potere = potere;
+    }
+
+    public void setFazione(String fazione) {
+        this.fazione = fazione;
+    }
+
     public String getTipo() {
         return tipo;
     }
