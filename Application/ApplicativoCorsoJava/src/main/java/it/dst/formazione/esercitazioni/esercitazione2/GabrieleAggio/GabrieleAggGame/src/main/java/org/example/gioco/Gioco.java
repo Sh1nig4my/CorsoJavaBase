@@ -25,11 +25,10 @@ public class Gioco {
     GiocoUtils gu = new GiocoUtils();
 
 
-    public Persona scegliPersonaggio(){
 
+    public Persona scegliPersonaggio() {
         try {
-
-            String sceltaPersonaggio;
+            int sceltaPersonaggio;
             while (true) {
                 System.out.println(" ------------------------ ");
                 System.out.println("Scegli il tipo di protagonista da usare:");
@@ -38,13 +37,19 @@ public class Gioco {
                 System.out.println("3. Recluta [Difficile]");
                 System.out.println(" ------------------------ ");
                 System.out.print("Inserisci la tua scelta (1-3): ");
-                sceltaPersonaggio = scanner.nextLine();
 
-                // Se la scelta è valida 1, 2, o 3, usciamo dal ciclo
-                if (sceltaPersonaggio.equals("1") || sceltaPersonaggio.equals("2") || sceltaPersonaggio.equals("3")) {
-                    break;
+                if (scanner.hasNextInt()) {
+                    sceltaPersonaggio = scanner.nextInt();
+                    scanner.nextLine();
+
+                    if (sceltaPersonaggio >= 1 && sceltaPersonaggio <= 3) {
+                        break;
+                    } else {
+                        System.out.println("Scelta non valida, riprova (1-3).");
+                    }
                 } else {
-                    System.out.println("Scelta non valida, riprova (1, 2 o 3).");
+                    System.out.println("Input non valido! Inserisci un numero tra 1 e 3.");
+                    scanner.nextLine();
                 }
             }
 
@@ -52,78 +57,33 @@ public class Gioco {
             String nome = scanner.nextLine();
 
             switch (sceltaPersonaggio) {
-                case "1":
+                case 1:
                     return new Tecnico(nome, 50);
-                case "2":
+                case 2:
                     return new Soldato(nome, 30);
-                case "3":
+                case 3:
                     return new Recluta(nome, 20);
                 default:
-                    System.out.println("Scelta non valida, riprova.");
                     return null;
             }
-        } catch (InputMismatchException ex){
-            System.out.println("Errore, Inserisci la tua scelta (1-3):");
+        } catch (Exception ex) {
+            System.out.println("Si è verificato un errore: " + ex.getMessage());
         }
-        return personaggioScelto;
+        return null;
     }
 
-//    public void sceltaSvolta(){
-//        try {
-//
-//            String scelta;
-//            while (true) {
-//                System.out.println(" ------------------------ ");
-//                System.out.println("Quale zona vuoi visitare:");
-//                System.out.println("Laboratorio");
-//                System.out.println("Nave spaziale");
-//                System.out.println("Rover Lunare");
-//                System.out.println(" ------------------------ ");
-//                System.out.print("Inserisci la tua scelta (1-3): ");
-//                scelta = scanner.nextLine();
-//
-//                // Se la scelta è valida 1, 2, o 3, usciamo dal ciclo
-//                if (scelta.equals("1") || scelta.equals("2") || scelta.equals("3")) {
-//                    break;
-//                } else {
-//                    System.out.println("Scelta non valida, riprova (1, 2 o 3).");
-//                }
-//            }
-//
-//            switch (scelta) {
-//                case "1":
-//                    scenLab.disegnoScenario();
-//                    scenLab.descrizioneScenario();
-//                    scenLab.setUsato(true);
-//                    break;
-//                case "2":
-//                    scenNavSpazNem.disegnoScenario();
-//                    scenNavSpazNem.descrizioneScenario();
-//                    scenNavSpazNem.setUsato(true);
-//                    break;
-//                case "3":
-//                    scenRovLun.disegnoScenario();
-//                    scenRovLun.descrizioneScenario();
-//                    scenRovLun.setUsato(true);
-//                    break;
-//                default:
-//                    System.out.println("Scelta non valida, riprova.");
-//            }
-//
-//        } catch (InputMismatchException exception){
-//            System.out.println("Errore, riprova");
-//        }
-//    }
     public void sceltaSvolta() {
         try {
             String scelta;
 
-            // Chiediamo l'utente di scegliere una zona
+            if (scenLab.isUsato() && scenNavSpazNem.isUsato() && scenRovLun.isUsato()) {
+                return;
+            }
+
             while (true) {
                 System.out.println(" ------------------------ ");
                 System.out.println("Quale zona vuoi visitare:");
 
-                // Mostra tutte le opzioni disponibili (anche quelle già usate, ma le rimuoviamo subito)
                 if (!scenLab.isUsato()) {
                     System.out.println("1. Laboratorio");
                 }
@@ -135,23 +95,23 @@ public class Gioco {
                 }
                 System.out.println(" ------------------------ ");
                 System.out.print("Inserisci la tua scelta (1-3): ");
-                scelta = scanner.nextLine();
 
-                // Se la scelta è valida 1, 2, o 3, usciamo dal ciclo
+                scelta = scanner.nextLine().trim();
+
                 if (scelta.equals("1") && !scenLab.isUsato()) {
-                    scenLab.setUsato(true); // Segna come usato
                     scenLab.disegnoScenario();
                     scenLab.descrizioneScenario();
+                    scenLab.setUsato(true);
                     break;
                 } else if (scelta.equals("2") && !scenNavSpazNem.isUsato()) {
                     scenNavSpazNem.disegnoScenario();
                     scenNavSpazNem.descrizioneScenario();
-                    scenNavSpazNem.setUsato(true); // Segna come usato
+                    scenNavSpazNem.setUsato(true);
                     break;
                 } else if (scelta.equals("3") && !scenRovLun.isUsato()) {
                     scenRovLun.disegnoScenario();
                     scenRovLun.descrizioneScenario();
-                    scenRovLun.setUsato(true); // Segna come usato
+                    scenRovLun.setUsato(true);
                     break;
                 } else {
                     System.out.println("Scelta non valida o zona già visitata, riprova.");
@@ -161,6 +121,7 @@ public class Gioco {
             System.out.println("Si è verificato un errore: " + e.getMessage());
         }
     }
+
 
     public void primoHacking(Persona persona){
 
@@ -210,6 +171,7 @@ public class Gioco {
         System.out.println("I tuoi HP finali: " + gu.controlloHp(persona));
     }
 
+    //Al momento inutilizzato ma contiene esercizio .filter
     public List<BaseScenary> metodoPerFiltrareScenariUsati(List<BaseScenary> lista){
         // Filtra gli scenari che non sono stati usati
         return lista.stream()
@@ -242,9 +204,11 @@ public class Gioco {
         // Controlla se la risposta è corretta
         if (gu.verificaRisposta(scelta, segnoCorretto)) {
             System.out.println("Corretto! La data appartiene a " + segnoCorretto + ".");
+            System.out.println(gu.asciiZodiaco(segnoCorretto));
             gu.controlloHp(persona);
         } else {
             System.out.println("Sbagliato! La risposta giusta era " + segnoCorretto + ".");
+            System.out.println(gu.asciiZodiaco(segnoCorretto));
             gu.perdiHp(persona);
             gu.perdiHp(persona);
         }
@@ -256,37 +220,43 @@ public class Gioco {
         Scanner scanner = new Scanner(System.in);
 
         int numeroSegreto = random.nextInt(100) + 1;
-        int tentativo;
+        int tentativo = -1;
         int tentativiEffettuati = 0;
-        int tentativiMassimi = 10; // Limite massimo di tentativi
+        int tentativiMassimi = 10;
 
-        System.out.println("Per hackerare questo Computer devi indovinare il numero segreto in 10 tentativi." +
-                "Se non dovessi indovinarlo, perderai HP");
-        System.out.println("Hai " + tentativiMassimi + " tentativi per indovinarlo");
+        System.out.println("Per hackerare questo Computer devi indovinare il numero segreto in 10 tentativi.");
+        System.out.println("Se non dovessi indovinarlo, perderai HP.");
+        System.out.println("Hai " + tentativiMassimi + " tentativi per indovinarlo.");
 
-        do {
+        while (tentativiEffettuati < tentativiMassimi) {
             System.out.print("Inserisci un numero: ");
-            tentativo = scanner.nextInt();
-            tentativiEffettuati++;
 
-            if (tentativo > numeroSegreto) {
-                System.out.println("Troppo grande");
-            } else if (tentativo < numeroSegreto) {
-                System.out.println("Troppo piccolo");
-            } else {
-                System.out.println("Corretto! Hai indovinato in " + tentativiEffettuati + " tentativi.");
-                return;
-            }
+            if (scanner.hasNextInt()) {
+                tentativo = scanner.nextInt();
+                scanner.nextLine(); // Pulisce il buffer
+                tentativiEffettuati++;
 
-            if (tentativiEffettuati >= tentativiMassimi) {
-                System.out.println("Hai esaurito i tentativi! Il numero corretto era " + numeroSegreto + ".");
-
-                for(int i = 0; i < 4; i++){
-                    gu.perdiHp(persona);
+                if (tentativo > numeroSegreto) {
+                    System.out.println("Troppo grande!");
+                } else if (tentativo < numeroSegreto) {
+                    System.out.println("Troppo piccolo!");
+                } else {
+                    System.out.println("Corretto! Hai indovinato in " + tentativiEffettuati + " tentativi.");
+                    return;
                 }
-                return;
+            } else {
+                System.out.println("Input non valido! Devi inserire un numero.");
+                scanner.nextLine(); // Consuma l'input errato
             }
-        } while (true);
+        }
+
+        // Se si esce dal ciclo, significa che l'utente ha esaurito i tentativi
+        System.out.println("Hai esaurito i tentativi! Il numero corretto era " + numeroSegreto + ".");
+
+        // Perdita di HP
+        for (int i = 0; i < 4; i++) {
+            gu.perdiHp(persona);
+        }
     }
 
 

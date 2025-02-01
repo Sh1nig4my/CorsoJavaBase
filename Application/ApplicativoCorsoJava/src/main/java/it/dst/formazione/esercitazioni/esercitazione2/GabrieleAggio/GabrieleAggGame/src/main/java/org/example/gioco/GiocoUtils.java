@@ -50,6 +50,7 @@ public class GiocoUtils {
         }
     }
 
+    //Inutilizzato ma ormai l'ho scritto quindi non lo tolgo.
     public void aumentaHp(Persona giocatore){
         if (giocatore instanceof Recluta) {
             Recluta recluta = (Recluta) giocatore; // Cast a Recluta
@@ -185,7 +186,37 @@ public class GiocoUtils {
             default: return false;
         }
     }
+    public String asciiZodiaco(String segnoZodiacale){
+        switch (segnoZodiacale){
+            case "Ariete":
+                return "   .-.   .-.\n" +
+                        "  (_  \\ /  _)    Ariete\n" +
+                        "       |\n" +
+                        "       |\n" +
+                        "\n" +
+                        "------------------------------------------------\n";
+            case "Toro":
+                return "    .     .\n" +
+                        "    '.___.'      Toro\n" +
+                        "    .'   `.\n" +
+                        "   :       :\n" +
+                        "   :       :\n" +
+                        "    `.___.'\n" +
+                        "\n" +
+                        "------------------------------------------------\n";
+            case "Gemelli":
+                return "    ._____.\n" +
+                        "      | |        Gemelli\n" +
+                        "      | |\n" +
+                        "     _|_|_\n" +
+                        "    '     '\n" +
+                        "\n" +
+                        "------------------------------------------------\n";
+            default: return "Errore";
+        }
+    }
     //Fine secondo hacking
+
 
     public void stampaVittoria(){
         System.out.println("""
