@@ -23,6 +23,8 @@ public class GameState {
 
     private static Personaggio userCharacterInstance;
 
+    // una collection delle disponibili classi java da instanziare come ruolo per il giocatore
+
     public static Personaggio getUserCharacterInstance() {
         return userCharacterInstance;
     }
@@ -34,6 +36,9 @@ public class GameState {
     );
 
     private Scanner input = new Scanner(System.in);
+
+
+    // il codice che permette al giocatore di scegliere nome età e la classe da instanziare che diventerà il suo ruolo
 
     public void choseClass(){
         System.out.println("scegli la tua classe: ");
@@ -92,6 +97,10 @@ public class GameState {
             }
         }
     }
+
+    // qui voglio gestire il flusso del gioco, per adesso il loop termina al ritorno di un booleano di un certo evento
+    // termina se il field del giocatore va a 0 o meno, e ricomincia quando l'evento ritorna una stringa dal suffisso LOOK
+    // per permettere al giocatore di scegliere se fermarsi ad esplorare o muoversi
 
     public void runScenario(){
 
