@@ -2,6 +2,7 @@ package org.example.scenari;
 
 import org.example.eventi.ComputerFound;
 import org.example.eventi.Corridoio;
+import org.example.eventi.DefaultEvents;
 
 import java.util.Map;
 
@@ -10,9 +11,9 @@ public class CorridoioA extends Scenes{
       super.newPossibleDirections = Map.of(
             1, LaboratorioIncredibile.class,
             2, LaStanzaDelleScimmieInGabbia.class,
-              3,Ambulatorio.class
+           3,Ambulatorio.class
         );
-      super.scenaryEvents = Map.of(1, new Corridoio("ti aggiri nei bianchi corridoi", null));
+      super.scenaryEvents = Map.of(1, new Corridoio("ti aggiri nei bianchi corridoi"));
         super.setScenaryName("Corridoio A");
     }
 }

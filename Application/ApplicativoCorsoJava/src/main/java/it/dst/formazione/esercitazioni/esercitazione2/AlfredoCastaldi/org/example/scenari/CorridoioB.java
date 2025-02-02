@@ -11,7 +11,7 @@ public class CorridoioB extends Scenes{
                 2, Ambulatorio.class
         );
         super.setScenaryName("Corridoio B");
-        super.scenaryEvents = Map.of(1, new Corridoio("ti aggiri nei bianchi corridoi", null));
+        super.scenaryEvents = Map.of(1, new Corridoio("ti aggiri nei bianchi corridoi"));
 
     }
 }

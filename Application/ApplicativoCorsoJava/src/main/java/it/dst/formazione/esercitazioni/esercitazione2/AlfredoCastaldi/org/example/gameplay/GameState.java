@@ -13,6 +13,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAmount;
 import java.time.temporal.TemporalField;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
@@ -52,7 +53,9 @@ public class GameState {
         while (true){
             userChoice = input.nextLine();
             if (isInputNumber(userChoice)) {
-                userCharacter = this.classiDisponibili.get(Integer.parseInt(userChoice));
+                Optional<Class<? extends Personaggio>> classOptional =  Optional.ofNullable(this.classiDisponibili.get(Integer.parseInt(userChoice)));
+                // se la classe scelta non è presente nella lista mi ritorna una classe di default
+                userCharacter = classOptional.orElseGet(()-> AstralBerserker.class);
                 break;
             } else {
                 System.out.println("please insert a valid value");

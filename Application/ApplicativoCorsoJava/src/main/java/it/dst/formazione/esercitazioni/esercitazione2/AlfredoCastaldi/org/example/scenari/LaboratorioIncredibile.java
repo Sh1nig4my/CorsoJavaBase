@@ -17,9 +17,7 @@ public class LaboratorioIncredibile extends Scenes {
 
         // questa invece andrebbe riempita di eventi legati allo scenario corrente, ad ogni ciclo del gioco 1 di queste instanze viene scelta casualmente
         // portandosi dietro scelte, conseguenze e ricompense
-        super.scenaryEvents = Map.of(1,new ProvettaEsplodeInTheFace("ti scoppia una provetta in the face!!!"
-        , null
-        ));
+        super.scenaryEvents = Map.of(1,new ProvettaEsplodeInTheFace("ti scoppia una provetta in the face!!!"));
 
     }
 }

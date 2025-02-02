@@ -1,9 +1,10 @@
 package org.example.scenari;
 
-import org.example.eventi.AmbulatorioEvents;
+import org.example.eventi.DefaultEvents;
 import org.example.eventi.Event;
 
 import java.util.Map;
+import java.util.Optional;
 import java.util.Random;
 
 public class Scenes {
@@ -31,10 +32,11 @@ public class Scenes {
     // se non ne trova usa ambulatorio perchè è la scena iniziale del gioco
     // per adesso evita le nullpointer e mi permette di iniziare il gioco da ambulatorio
     public Event randomEvent(){
-        if (scenaryEvents != null) {
-        return scenaryEvents.get(rng.nextInt(1,scenaryEvents.size() +1));
+        Optional<Map<Integer, Event>> opt = Optional.ofNullable(scenaryEvents);
+        if (opt.isPresent()) {
+        return opt.get().get(rng.nextInt(1,scenaryEvents.size() +1));
         } else {
-            return new AmbulatorioEvents("ti risvegli");
+            return new DefaultEvents("ti risvegli");
         }
     }
 

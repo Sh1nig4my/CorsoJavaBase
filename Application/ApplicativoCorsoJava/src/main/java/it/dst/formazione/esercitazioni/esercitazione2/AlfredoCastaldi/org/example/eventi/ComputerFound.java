@@ -1,6 +1,7 @@
 package org.example.eventi;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 public class ComputerFound extends Event{
@@ -21,7 +22,7 @@ public class ComputerFound extends Event{
                         return "ti scoppia il computer in faccia prendi 3 danni";
                     }
                 }),
-                2, Arrays.asList((pg)-> "ignori il computer")
+                2, List.of((pg) -> "ignori il computer")
         );
     }
 

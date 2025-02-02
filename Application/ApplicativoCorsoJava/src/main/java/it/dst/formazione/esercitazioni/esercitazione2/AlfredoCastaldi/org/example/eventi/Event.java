@@ -2,6 +2,7 @@ package org.example.eventi;
 
 import org.example.gameplay.GameState;
 import org.example.player.Personaggio;
+import org.example.scenari.LaboratorioIncredibile;
 import org.example.scenari.Scenes;
 import org.example.scenari.Ambulatorio;
 
@@ -33,6 +34,8 @@ public abstract class Event {
 
     public Event(String messaggioEvento,   String possibleReward) {
         this.messaggioEvento = messaggioEvento;
+        // ricompense ancora da implementare, invece di string userò un oggetto che rappresenta un item dell'inventario
+        // è ancora possibile passare null al costruttore evento
         this.possibleReward = Optional.ofNullable(possibleReward);
     }
 
@@ -51,19 +54,23 @@ public abstract class Event {
         String userChoice;
 
         EventActions result = null;
+        Optional<Map<Integer, List<EventActions>>> eventConsequencesOtp = Optional.ofNullable(this.eventConsequences);
         while (true) {
-            userChoice = input.nextLine();
-            if (isInputANumber(userChoice)) {
-
-                if (this.eventConsequences.get(Integer.parseInt(userChoice)).size() == 1 ) {
-                    result = this.eventConsequences.get(Integer.parseInt(userChoice)).get(0);
+            if (eventConsequencesOtp.isPresent()) {
+                 userChoice = input.nextLine();
+                if (isInputANumber(userChoice)) {
+                    if (this.eventConsequences.get(Integer.parseInt(userChoice)).size() == 1 ) {
+                        result = this.eventConsequences.get(Integer.parseInt(userChoice)).get(0);
+                        break;
+                    } else {
+                    result = this.eventConsequences.get(Integer.parseInt(userChoice)).get(rng.nextInt(0, this.eventConsequences.size() - 1));
                     break;
+                    }
                 } else {
-                result = this.eventConsequences.get(Integer.parseInt(userChoice)).get(rng.nextInt(0, this.eventConsequences.size() - 1));
-                break;
+                    System.out.println("please insert a number");
                 }
             } else {
-                System.out.println("please insert a number");
+                throw new RuntimeException("errore la mappa consequenze eventi è null");
             }
         }
         return result.getConsequence(target);
@@ -96,7 +103,8 @@ public abstract class Event {
             userChoice = input.nextLine();
         if (isInputANumber(userChoice)) {
                 try {
-                    currentScene = currentScene.newPossibleDirections.get(Integer.parseInt(userChoice)).getConstructor().newInstance();
+                    Optional<Scenes> currentSceneOtp = Optional.ofNullable(currentScene.newPossibleDirections.get(Integer.parseInt(userChoice)).getConstructor().newInstance());
+                    currentScene = currentSceneOtp.orElseThrow(()->{throw new RuntimeException("scenario non trovato");});
                     break;
                 } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
                     System.out.println(e.getMessage());
@@ -108,6 +116,7 @@ public abstract class Event {
         }
 
     }
+
 
 
     @Override
