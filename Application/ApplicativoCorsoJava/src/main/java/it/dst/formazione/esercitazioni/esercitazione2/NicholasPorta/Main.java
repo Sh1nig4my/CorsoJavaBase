@@ -59,7 +59,7 @@ public class Main {
         ruoli.put(3, new Ruoli("Assassino Cosmico", " Maestria nell'arte della furtività e delle tecniche di eliminazione silenziosa.", 120));
         ruoli.put(4, new Ruoli("Pilota Interstellare", " Esperto di navigazione spaziale, capace di affrontare ogni tipo di avventura tra le stelle", 140));
 
-        System.out.println("Benvenuto, giocatore!" +
+        System.out.println("Benvenuto, giocatore!" + personaggio.getNome() +
                 " Sei pronto ad affrontare un'avventura galattica dove ogni scelta che farai avrà un impatto sul destino delle stelle? " +
                 "Scegli il tuo personaggio, esplora mondi misteriosi e affronta pericoli inaspettati. " +
                 "In un universo lontano, dove la verità è nascosta tra le ombre e gli enigmi sono la chiave della sopravvivenza, il tuo viaggio sta per cominciare...");
@@ -67,29 +67,42 @@ public class Main {
         LocalDateTime inizio = LocalDateTime.now();
 
 
+        //ciclo while per indicare all'utente che puo scegliere solo quelli disponibili
+        int scelta = 0;
+        boolean sceltaValida = false;
 
-        //qui con un ciclo for mostro a schermo i vari ruoli che l'utente puo scegliere
-        System.out.println(personaggio.getNome() + ", scegli il tuo personaggio tra: ");
-        for (Map.Entry<Integer, Ruoli> entry : ruoli.entrySet()) {
-            System.out.println(entry.getKey() + ". " + entry.getValue());
+        while (!sceltaValida) {
+            System.out.println("Scegli il tuo personaggio tra: ");
+            for (Map.Entry<Integer, Ruoli> entry : ruoli.entrySet()) {
+                System.out.println(entry.getKey() + ". " + entry.getValue().getNome());
+            }
+
+            if (scan.hasNextInt()) {
+                scelta = scan.nextInt();
+                if (ruoli.containsKey(scelta)) {
+                    sceltaValida = true;
+                } else {
+                    System.out.println("Errore! Scegli tra le opzioni disponibili.");
+                }
+            } else {
+                System.out.println("Inserisci un numero valido.");
+                scan.next(); // Pulisce l'input errato
+            }
         }
-        int scelta = scan.nextInt();
-        System.out.println("hai scelto " + ruoli.get(scelta));
-
-        //creo una mappa dove inserisco le ambientazioni di gico
-        Map<Integer, Ambientazione> sceltaEffetuata = new HashMap<>();
-        sceltaEffetuata.put(1, new Ambientazione("Pianeta Eremita ", " Un pianeta desolato, pieno di rovine antiche e misteri da svelare."));
-        sceltaEffetuata.put(2, new Ambientazione("Stazione Orbitante Atlas ", " Una stazione spaziale avanzata che orbita intorno a un buco nero, con pericoli nascosti e strani fenomeni."));
-        sceltaEffetuata.put(3, new Ambientazione("Foresta Lunare ", "  Un mondo selvaggio e oscuro con alberi giganti e creature mitiche."));
-        sceltaEffetuata.put(4, new Ambientazione("Tempio degli Elementi ", "Un antico tempio, nascosto su un pianeta lontano, che nasconde i segreti della creazione dell'universo."));
+        //creo una mappa dove inserisco le ambientazioni di gioco
+        Map<Integer, Ambientazione> ambientazione = new HashMap<>();
+        ambientazione.put(1, new Ambientazione("Pianeta Eremita ", " Un pianeta desolato, pieno di rovine antiche e misteri da svelare."));
+        ambientazione.put(2, new Ambientazione("Stazione Orbitante Atlas ", " Una stazione spaziale avanzata che orbita intorno a un buco nero, con pericoli nascosti e strani fenomeni."));
+        ambientazione.put(3, new Ambientazione("Foresta Lunare ", "  Un mondo selvaggio e oscuro con alberi giganti e creature mitiche."));
+        ambientazione.put(4, new Ambientazione("Tempio degli Elementi ", "Un antico tempio, nascosto su un pianeta lontano, che nasconde i segreti della creazione dell'universo."));
         System.out.println("dove vuoi andare?fai bene le tue scelte");
         //ciclo for mostro all'utente le scelte che puo prendere
-        for (Map.Entry<Integer, Ambientazione> entry : sceltaEffetuata.entrySet()) {
+        for (Map.Entry<Integer, Ambientazione> entry : ambientazione.entrySet()) {
             System.out.println(entry.getKey() + ". " + entry.getValue());
         }
         //salvo la scelta in una variabile
         int direzione = scan.nextInt();
-        System.out.println(" hai scelta di andare " + sceltaEffetuata.get(direzione));
+        System.out.println(" hai scelta di andare " + ambientazione.get(direzione));
         //creo una mappa di eventi(conseguenza in base alla scelta dell'utente)
         Map<Integer, String> eventi = new HashMap<>();
         eventi.put(1, "Scavi archeologici hanno rivelato una porta segreta. Un potente guardiano alieno la protegge.");
@@ -102,6 +115,7 @@ public class Main {
                 .filter(entry -> entry.getKey() == direzione)
                 .map(Map.Entry::getValue)
                 .forEach(System.out::println);
+
         //creo una mappa con delle informazioni segrete
         Map<Integer, String> informazioni = new HashMap<>();
         informazioni.put(1, "Secret: Un'antica civiltà ha nascosto nei recessi dell'universo artefatti che potrebbero cambiare il destino di interi mondi.");
@@ -111,12 +125,12 @@ public class Main {
 
         // con l'uso di random posso creare una casualita di vero o falso in questo caso 50% di possibilita
         // metto Optional.empy(vuoto) e con rando vero falso lo riempie
-        Optional<String> iformazioniSegrete = Optional.empty();
+        Optional<String> informazioniSegrete = Optional.empty();
         if (random.nextBoolean() && informazioni.containsKey(direzione)) {
-            iformazioniSegrete = Optional.of(informazioni.get(direzione));
+            informazioniSegrete = Optional.of(informazioni.get(direzione));
         }
 
-        iformazioniSegrete.ifPresentOrElse(
+        informazioniSegrete.ifPresentOrElse(
                 // qui se vero (riempito)stampo l'informazione
                 System.out::println,
                 // falso se rimane vuoto stampo il messaggio
@@ -128,7 +142,7 @@ public class Main {
         risultati.add("Nome del personaggio: " + personaggio.getNome());
         risultati.add("Età del personaggio: " + personaggio.getEta());
         risultati.add("Ruolo scelto: " + ruoli.get(scelta).getNome());
-        risultati.add("Ambientazione scelta: " + sceltaEffetuata.get(direzione).getZona());
+        risultati.add("Ambientazione scelta: " + ambientazione.get(direzione).getZona());
         risultati.add("Evento accaduto: " + eventi.get(direzione));
 
         Gson gson = new Gson();
@@ -151,6 +165,7 @@ public class Main {
         System.out.println("FINE");
         System.out.println("===============================");
         System.out.println("Arrivederci, " + personaggio.getNome() + ". A presto!");
+
     }
 
 }
