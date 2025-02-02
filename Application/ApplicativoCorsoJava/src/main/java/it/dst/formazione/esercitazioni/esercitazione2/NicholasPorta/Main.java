@@ -16,6 +16,41 @@ public class Main {
         Scanner scan = new Scanner(System.in);
         //istanzio la classe personaggio
         Personaggio personaggio = new Personaggio();
+        //qui faccio un controllo del nome tramite una regex e lo ciclo finche l'utente non lo inserisce nel modo giusto
+        //e il .trim per annullare gli spazi se ci sono all'inizio oppure alla fine
+        String nomeInserito;
+        while (true) {
+            System.out.println("Inserisci il tuo nome: ");
+            nomeInserito = scan.nextLine().trim();
+            try {
+                personaggio.setNome(nomeInserito);
+                break;
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+
+        //e l'eta con un semplice ciclo che non deve essere minore di 15 anni
+        int eta = 0;
+        boolean etaValida = false;
+        while (!etaValida) {
+            System.out.println("Inserisci la tua età: ");
+            if (scan.hasNextInt()) {
+                eta = scan.nextInt();
+                if (eta >= 15) {
+                    personaggio.setEta(eta);
+                    etaValida = true;
+                } else {
+                    System.out.println("per giocare devi avere alemo 15 anni. Mi dispiace.");
+                }
+            } else {
+                System.out.println("Per favore, inserisci un numero valido per l'età.");
+                scan.next();  // Consuma l'input non valido
+            }
+        }
+
+        // Mostra il nome e l'età
+        System.out.println(personaggio.getNome() + ", hai " + personaggio.getEta() + " anni.");
         //creo una mappa dove definisco i ruoli dando la chiave e richiamando con il new in modo da inizzializzare
         //la mappa
         Map<Integer, Ruoli> ruoli = new HashMap<>();
@@ -30,12 +65,8 @@ public class Main {
                 "In un universo lontano, dove la verità è nascosta tra le ombre e gli enigmi sono la chiave della sopravvivenza, il tuo viaggio sta per cominciare...");
         //registro l'inizio del gioco
         LocalDateTime inizio = LocalDateTime.now();
-        //istanzio scanner cosi da poter far interagire l'utente con la console di gioco
 
-        System.out.println("Inserisci il tuo nome ");
-        personaggio.setNome(scan.nextLine());
-        System.out.println("Inserisci la tua età ");
-        personaggio.setEta(scan.nextInt());
+
 
         //qui con un ciclo for mostro a schermo i vari ruoli che l'utente puo scegliere
         System.out.println(personaggio.getNome() + ", scegli il tuo personaggio tra: ");
@@ -80,12 +111,12 @@ public class Main {
 
         // con l'uso di random posso creare una casualita di vero o falso in questo caso 50% di possibilita
         // metto Optional.empy(vuoto) e con rando vero falso lo riempie
-        Optional<String> eventoSegreto = Optional.empty();
+        Optional<String> iformazioniSegrete = Optional.empty();
         if (random.nextBoolean() && informazioni.containsKey(direzione)) {
-            eventoSegreto = Optional.of(informazioni.get(direzione));
+            iformazioniSegrete = Optional.of(informazioni.get(direzione));
         }
 
-        eventoSegreto.ifPresentOrElse(
+        iformazioniSegrete.ifPresentOrElse(
                 // qui se vero (riempito)stampo l'informazione
                 System.out::println,
                 // falso se rimane vuoto stampo il messaggio

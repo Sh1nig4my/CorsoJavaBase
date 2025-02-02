@@ -20,7 +20,11 @@ public class Personaggio {
     }
 
     public void setNome(String nome) {
-        this.nome = nome;
+        if (nome.matches("^[A-Za-zà-ÿ]+(?: [A-Za-zà-ÿ]+)*$")) {
+            this.nome = nome;
+        } else {
+            throw new IllegalArgumentException("ERRORE Il nome può contenere solo lettere e spazi riprova ");
+        }
     }
 
     public int getEta() {

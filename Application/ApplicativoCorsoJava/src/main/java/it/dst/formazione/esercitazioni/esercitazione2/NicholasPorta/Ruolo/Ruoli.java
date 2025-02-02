@@ -11,6 +11,8 @@ import it.dst.formazione.esercitazioni.esercitazione2.NicholasPorta.Player.Perso
         private String descrizione;
         private int vita;
 
+
+
         public Ruoli(String nome, String descrizione, int vita) {
             this.nome = nome;
             this.descrizione = descrizione;
