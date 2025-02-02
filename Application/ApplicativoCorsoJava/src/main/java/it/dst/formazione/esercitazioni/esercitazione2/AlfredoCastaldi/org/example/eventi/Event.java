@@ -10,26 +10,32 @@ import java.util.*;
 
 public abstract class Event {
 
-
-    // scenario corrente
+    // questa proprietà rappresenta la posizione attuale del giocatore, necessaria per determinare a quali eventi può essere soggetto
     public static Scenes currentScene = new Ambulatorio();
 
-    // protagonista evento
+    // questo pointer al giocatore instanziato è necessario per poter richiamare o settare le proprietà dentro giocatore
+    // come conseguenza di un evento nel caso l'evento lo prevedesse
     protected Personaggio target = GameState.getUserCharacterInstance();
     // descrizione evento
     protected String messaggioEvento;
     // da implementare
     protected Optional<String> possibleReward;
 
-    // quello che succeede durante un evento
+    // questa è la mappa delle conseguenze, la chiave è un intero e corrisponde alla scelta del giocatore
+    // il valore è la collection di possibili outcome legata alla scelta del giocatore
+    // può capitare che una di queste liste abbia un valore solo perchè magari
+    // è stato deciso che quell'evento dovesse avere un solo outcome
     protected Map<Integer, List<EventActions> > eventConsequences = new HashMap<>();
-    // quello che puoi fare durante un evento da implementare
+    // questa è una mappa che serve ad associare un input del giocatore ad un messaggio, esempio
+    // 1 provi a schivare, questo 1 verrà usato come chiave per prendere la lista delle conseguenze
     protected Map<Integer, String> avaibleActions;
+
 
     public Event(String messaggioEvento,   String possibleReward) {
         this.messaggioEvento = messaggioEvento;
         this.possibleReward = Optional.ofNullable(possibleReward);
     }
+
 
     public Object runEvent(Scanner input){
 
@@ -61,6 +67,12 @@ public abstract class Event {
         }
     }
 
+    // questo permette al giocatore di muoversi tra i vari scenari
+    // ogni scenario è " collegato " ad altri scenari tramite la propria proprietà
+    // newPossibleDirections
+    // ed è per questo che ho trovato importante la gestione della proprietà currentScene
+    // al cambiare dello scenario quindi della currentscene i luoghi su cui spostarsi cambiano
+
     public void moveChoice(Scanner input ){
         System.out.println("dove vuoi andare adesso?");
         currentScene.newPossibleDirections.forEach(
@@ -89,6 +101,9 @@ public abstract class Event {
                 '}';
     }
 
+
+    // minigioco dell'hacking del computer che può essere invocato tramite evento
+    // ancora da implementare una vera ricompensa ed una vera penalità
     public static boolean computerHackingGame(){
         Scanner hackComputerInput = new Scanner(System.in);
         List<Character> password = new ArrayList<>(Arrays.asList('1','2','3','2','3'));
