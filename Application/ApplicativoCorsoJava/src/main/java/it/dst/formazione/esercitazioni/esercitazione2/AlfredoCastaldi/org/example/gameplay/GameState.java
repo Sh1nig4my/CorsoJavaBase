@@ -105,9 +105,13 @@ public class GameState {
     public void runScenario(){
 
         while (true) {
-
+         // si inizia con un evento casuale dato dallo scenario
          Event evento = Event.currentScene.randomEvent();
+         // si lancia l'evento mettendo da parte il risultato il dato di ritorno
          Object result = evento.runEvent(input);
+         // questo si può cambiare, per adesso ho usato un booleano per determinare la win condition
+         // l'evento che tornerà true è quello che farà vincere il giocatore
+         // va cambiato sicuramente, troppo generico un booleano qualsiasi
          if (result instanceof Boolean) {
              if ((Boolean) result){
                  System.out.println("hai vinto grande");
@@ -117,12 +121,15 @@ public class GameState {
                  break;
              }
          }
+         // ho pensato di dare il suffisso look agli eventi di esplorazione,
+         // in modo da non dover chiedere al giocatore di cambiare scenario dopo aver esplorato
          if (result instanceof String){
              System.out.println(result);
              if (((String) result).startsWith("LOOK")){
                  continue;
              }
          }
+         // un check della vita del giocatore dopo il ciclo di gameplay
         if (userCharacterInstance.getVita() <= 0){
             System.out.println("sei morto");
             time2 = LocalDateTime.now();
@@ -130,8 +137,11 @@ public class GameState {
             System.out.println("tempo iniziale: " + formatter.format(time) + " tempo finale: " + formatter.format(time2));
             break;
         }
-
-            evento.moveChoice(input);
+        // se tutto va bene al giocatore viene chiesto dove vuole andare
+        // come per l'evento che torna il suffisso LOOK posso rendere il muoversi un'altro evento
+        // magari con il suffisso MOVE posso chiamare questo metodo
+        // per adesso il giocatore è costretto a muoversi se non esplora
+        evento.moveChoice(input);
 
         }
     }

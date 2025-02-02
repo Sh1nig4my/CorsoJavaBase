@@ -48,12 +48,23 @@ public abstract class Event {
                     System.out.println(k + ": " + v);
                 }
         );
-        String userChoice = input.nextLine(); // è un finto input, devo sistemare
+        String userChoice;
+
         EventActions result = null;
-        if (this.eventConsequences.get(Integer.parseInt(userChoice)).size() == 1 ) {
-            result = this.eventConsequences.get(Integer.parseInt(userChoice)).get(0);
-        } else {
-         result = this.eventConsequences.get(Integer.parseInt(userChoice)).get(rng.nextInt(0, this.eventConsequences.size()-1));
+        while (true) {
+            userChoice = input.nextLine();
+            if (isInputANumber(userChoice)) {
+
+                if (this.eventConsequences.get(Integer.parseInt(userChoice)).size() == 1 ) {
+                    result = this.eventConsequences.get(Integer.parseInt(userChoice)).get(0);
+                    break;
+                } else {
+                result = this.eventConsequences.get(Integer.parseInt(userChoice)).get(rng.nextInt(0, this.eventConsequences.size() - 1));
+                break;
+                }
+            } else {
+                System.out.println("please insert a number");
+            }
         }
         return result.getConsequence(target);
     }
@@ -80,15 +91,20 @@ public abstract class Event {
                     System.out.println(k + ": " + v.getSimpleName());
                 }
         );
-        String userChoice = input.nextLine();
+        String userChoice;
+        while (true) {
+            userChoice = input.nextLine();
         if (isInputANumber(userChoice)) {
-            try {
-                currentScene = currentScene.newPossibleDirections.get(Integer.parseInt(userChoice)).getConstructor().newInstance();
-            } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-                throw new RuntimeException(e);
+                try {
+                    currentScene = currentScene.newPossibleDirections.get(Integer.parseInt(userChoice)).getConstructor().newInstance();
+                    break;
+                } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+                    System.out.println(e.getMessage());
+                    System.out.println(e.getStackTrace().toString());
+                }
+            } else {
+                System.out.println("please insert a valid number");
             }
-        } else {
-            throw new RuntimeException("solution for wrong input to be implemented yet !!!!");
         }
 
     }
@@ -114,7 +130,9 @@ public abstract class Event {
             System.out.println("la password è composta da " + password.size() + " caratteri, seleziona un carattere da indovinare");
             System.out.println(password.stream().map(value -> "X").toList());
 
+            // non credo che questo input possa generare un eccezione
             Character userChoice = hackComputerInput.next().charAt(0);
+
             if (password.contains(userChoice)) {
                 System.out.println("hai indovinato");
                 password.removeIf(character -> character.equals(userChoice));
