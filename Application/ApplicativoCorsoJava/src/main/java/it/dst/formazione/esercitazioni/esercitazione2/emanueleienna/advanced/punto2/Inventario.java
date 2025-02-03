@@ -1,4 +1,4 @@
-package it.dst.formazione.esercitazioni.esercitazione2.advanced.punto2;
+package it.dst.formazione.esercitazioni.esercitazione2.emanueleienna.advanced.punto2;
 
 import java.util.ArrayList;
 import java.util.List;

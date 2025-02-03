@@ -13,10 +13,13 @@
     <header class="section">
         <h1>Esercizio Giorno 10: Sviluppo di un Gioco Testuale con Stream e Date</h1>
         <h2>Obiettivi</h2>
-        <p>In questa esercitazione, svilupperai un <strong>gioco testuale</strong> interattivo ambientato su una stazione spaziale abbandonata.
+        <p>In questa esercitazione, svilupperai un <strong>gioco testuale</strong> interattivo ambientato su una
+            stazione spaziale abbandonata.
             Implementerai una storia in cui il giocatore potrà prendere decisioni che influenzano il corso degli eventi,
-            gestire incontri con intelligenze artificiali e scoprire segreti nascosti. L'obiettivo è familiarizzare con le API Java moderne, migliorare la logica
-            decisionale del codice e applicare concetti come <strong>Stream</strong>, <strong>Optional</strong> e <strong>Date</strong> per migliorare la dinamicità del gioco.
+            gestire incontri con intelligenze artificiali e scoprire segreti nascosti. L'obiettivo è familiarizzare con
+            le API Java moderne, migliorare la logica
+            decisionale del codice e applicare concetti come <strong>Stream</strong>, <strong>Optional</strong> e
+            <strong>Date</strong> per migliorare la dinamicità del gioco.
         </p>
     </header>
 
@@ -25,21 +28,32 @@
             <h2>Descrizione dell'Esercizio</h2>
             <p>Segui i passi sottostanti per creare il tuo gioco testuale in Java:</p>
             <ol>
-                <li><strong>Definizione dell'ambientazione:</strong> Il gioco si svolge sulla stazione spaziale abbandonata "Epsilon 9". Descrivi il contesto e gli obiettivi della missione.</li>
-                <li><strong>Scelta del personaggio:</strong> Il giocatore deve poter scegliere tra diversi personaggi di gioco (esempio pirata spaziale, un androide, ..), si consiglia di utilizzare una classe/interfaccia <code>Persona</code> per la creazione dei diversi personaggi di gioco; ogni personaggio dovrà avere attributi come nome, vita, anni, punti feriti, inventario, ..</li>
-                <li><strong>Scelta del percorso:</strong> Il giocatore deve poter scegliere tra diversi scenari di gioco (esempio se esplorare i laboratori segreti o la baia di carico).</li>
-                <li><strong>Eventi casuali con Stream:</strong> Implementa una lista di eventi come intelligenze artificiali attive, moduli danneggiati o terminali di sicurezza da hackerare.</li>
-                <li><strong>Utilizzo di Optional:</strong> Gestisci situazioni in cui il giocatore potrebbe trovare o meno informazioni segrete.</li>
-                <li><strong>Sistema di combattimento o hacking:</strong> Implementa un meccanismo basato su probabilità e/o abilità del personaggio. Nello specifico, utilizza una struttura dati per rappresentare nemici con punti vita e attacchi e simila un combattimento con il personaggio principale della storia.</li>
-                <li><strong>Gestione del tempo:</strong> Registra l'orario di inizio e fine della missione con le Date API.</li>
+                <li><strong>Definizione dell'ambientazione:</strong> Il gioco si svolge sulla stazione spaziale
+                    abbandonata "Epsilon 9". Descrivi il contesto e gli obiettivi della missione.</li>
+                <li><strong>Scelta del personaggio:</strong> Il giocatore deve poter scegliere tra diversi personaggi di
+                    gioco (esempio pirata spaziale, un androide, ..), si consiglia di utilizzare una classe/interfaccia
+                    <code>Persona</code> per la creazione dei diversi personaggi di gioco; ogni personaggio dovrà avere
+                    attributi come nome, vita, anni, punti feriti, inventario, ..</li>
+                <li><strong>Scelta del percorso:</strong> Il giocatore deve poter scegliere tra diversi scenari di gioco
+                    (esempio se esplorare i laboratori segreti o la baia di carico).</li>
+                <li><strong>Eventi casuali con Stream:</strong> Implementa una lista di eventi come intelligenze
+                    artificiali attive, moduli danneggiati o terminali di sicurezza da hackerare.</li>
+                <li><strong>Utilizzo di Optional:</strong> Gestisci situazioni in cui il giocatore potrebbe trovare o
+                    meno informazioni segrete.</li>
+                <li><strong>Sistema di combattimento o hacking:</strong> Implementa un meccanismo basato su probabilità
+                    e/o abilità del personaggio. Nello specifico, utilizza una struttura dati per rappresentare nemici
+                    con punti vita e attacchi e simila un combattimento con il personaggio principale della storia.</li>
+                <li><strong>Gestione del tempo:</strong> Registra l'orario di inizio e fine della missione con le Date
+                    API.</li>
             </ol>
-        </section>
 
-        <section class="example">
-            <h2>Esempio di Input e Output</h2>
-            <h3>Scenario di Gioco: Esplorazione dei Laboratori Segreti</h3>
-            <h4>Input dell'utente:</h4>
-            <pre><code>Benvenuto su Epsilon 9!
+            <br>
+            
+            <section class="example">
+                <h2>Esempio di Input e Output</h2>
+                <h3>Scenario di Gioco: Esplorazione dei Laboratori Segreti</h3>
+                <h4>Input dell'utente:</h4>
+                <pre><code>Benvenuto su Epsilon 9!
 Scegli la tua missione:
 1) Esplora i laboratori segreti
 2) Esamina la baia di carico
@@ -47,13 +61,17 @@ Scegli la tua missione:
 
 Trovi un'intelligenza artificiale ancora attiva. Vuoi interagire con essa? (sì/no)
 > sì</code></pre>
-            
-            <h4>Output Console Atteso:</h4>
-            <pre><code>Hai scelto di esplorare i laboratori segreti.
+
+                <h4>Output Console Atteso:</h4>
+                <pre><code>Hai scelto di esplorare i laboratori segreti.
 Evento casuale: Accedi ai registri segreti della stazione.
 L'IA ti fornisce accesso ai documenti top secret!
 Tempo di gioco: 15 secondi.</code></pre>
+            </section>
+
         </section>
+
+
 
         <section class="section">
             <h2>Codice di esempio</h2>
@@ -113,16 +131,20 @@ public class GiocoTestuale {
             <ul>
                 <li><a href="https://docs.oracle.com/en/java/">Documentazione ufficiale di Java</a></li>
                 <li><a href="https://www.baeldung.com/java-streams">Guida agli Stream in Java - Baeldung</a></li>
-                <li><a href="https://www.geeksforgeeks.org/optional-class-in-java/">Guida su Optional - GeeksForGeeks</a></li>
-                <li><a href="https://www.oracle.com/java/technologies/javase/datetime-guide.html">Date API di Java - Oracle</a></li>
+                <li><a href="https://www.geeksforgeeks.org/optional-class-in-java/">Guida su Optional -
+                        GeeksForGeeks</a></li>
+                <li><a href="https://www.oracle.com/java/technologies/javase/datetime-guide.html">Date API di Java -
+                        Oracle</a></li>
             </ul>
         </section>
 
         <section class="advanced">
             <h2>Approfondimenti</h2>
-            <p>Se vuoi espandere il gioco testuale con funzionalità avanzate, prova a implementare le seguenti migliorie:</p>
+            <p>Se vuoi espandere il gioco testuale con funzionalità avanzate, prova a implementare le seguenti
+                migliorie:</p>
             <ul>
-                <li>Aggiungi un sistema di gestione dell'ossigeno o dell'energia per rendere la missione più strategica.</li>
+                <li>Aggiungi un sistema di gestione dell'ossigeno o dell'energia per rendere la missione più strategica.
+                </li>
                 <li>Implementa una classe <code>Inventario</code> per gestire strumenti e risorse raccolte.</li>
                 <li>Memorizza le scelte dell'utente in un file JSON e permetti di riprendere una partita salvata.</li>
             </ul>

@@ -17,7 +17,8 @@ public class Scenes {
 
     // aprire LaboratorioIncredibile per vedere il costruttore commentato
 
-
+    // TODO: prova a far gestire il cambio di scenario ad un secondo oggetto, evita la mappa di classi
+    // mappa chiave integer valore un instanza oggetto abbastanza generico ma specifico da poter essere inserito in questa mappa?
     public Map<Integer, Class<? extends Scenes>> newPossibleDirections;
     private static Random rng = new Random();
 

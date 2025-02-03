@@ -1,7 +1,7 @@
-package it.dst.formazione.esercitazioni.esercitazione2.advanced.punto3;
+package it.dst.formazione.esercitazioni.esercitazione2.emanueleienna.advanced.punto3;
 
-import it.dst.formazione.esercitazioni.esercitazione2.advanced.punto2.GiocatoreConInventario;
-import it.dst.formazione.esercitazioni.esercitazione2.advanced.punto2.Inventario;
+import it.dst.formazione.esercitazioni.esercitazione2.emanueleienna.advanced.punto2.GiocatoreConInventario;
+import it.dst.formazione.esercitazioni.esercitazione2.emanueleienna.advanced.punto2.Inventario;
 
 public class StatoGioco {
 
