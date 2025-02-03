@@ -1,6 +1,6 @@
-package it.dst.formazione.esercitazioni.esercitazione2.advanced.punto1;
+package it.dst.formazione.esercitazioni.esercitazione2.emanueleienna.advanced.punto1;
 
-import it.dst.formazione.esercitazioni.esercitazione2.gioco.Giocatore;
+import it.dst.formazione.esercitazioni.esercitazione2.emanueleienna.gioco.Giocatore;
 
 public class GiocatoreAvanzato extends Giocatore {
     private int ossigeno;

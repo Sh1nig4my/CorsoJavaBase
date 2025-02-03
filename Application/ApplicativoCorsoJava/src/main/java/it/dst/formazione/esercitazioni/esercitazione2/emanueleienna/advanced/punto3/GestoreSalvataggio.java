@@ -1,8 +1,8 @@
-package it.dst.formazione.esercitazioni.esercitazione2.advanced.punto3;
+package it.dst.formazione.esercitazioni.esercitazione2.emanueleienna.advanced.punto3;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import it.dst.formazione.esercitazioni.esercitazione2.advanced.punto2.GiocatoreConInventario;
+import it.dst.formazione.esercitazioni.esercitazione2.emanueleienna.advanced.punto2.GiocatoreConInventario;
 
 import java.io.FileReader;
 import java.io.FileWriter;

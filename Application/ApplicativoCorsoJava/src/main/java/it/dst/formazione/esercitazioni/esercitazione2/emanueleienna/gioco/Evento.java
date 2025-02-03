@@ -1,4 +1,4 @@
-package it.dst.formazione.esercitazioni.esercitazione2.gioco;
+package it.dst.formazione.esercitazioni.esercitazione2.emanueleienna.gioco;
 
 import java.util.Arrays;
 import java.util.List;
