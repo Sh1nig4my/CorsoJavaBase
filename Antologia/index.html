@@ -9,8 +9,12 @@
 </head>
 
 <body>
+  
+  
   <h1>Programma Corso di Programmazione Backend</h1>
 
+  <section class="section">
+    <!-- INTRO  -->
   <section class="intro">
     <p>
       Benvenuti al corso di formazione in Programmazione Backend, un viaggio
@@ -29,8 +33,12 @@
       culminando nella realizzazione di un progetto completo in Java Spring.
     </p>
   </section>
+  </section>
+  
   <br />
 
+  <section class="section">
+    <!-- Settimana 1  -->
   <div class="week">
     <h2>
       Settimana 1: Introduzione alla Programmazione e Configurazione degli
@@ -100,7 +108,10 @@
 
     </ul>
   </div>
-
+  </section>
+  
+  <section class="section">
+    <!-- Settimana 2 -->
   <div class="week">
     <h2>Settimana 2: Java e le sue Versioni</h2>
     <ul>
@@ -164,45 +175,45 @@
       
     </ul>
   </div>
+  </section>
+  
 
+  <section class="section">
+    <!-- Settimana 3 -->
   <div class="week">
-    <h2>Settimana 3: Java + MySQL con JPA e Hibernate</h2>
+    <h2>Settimana 3: SQL Language / JDBC</h2>
     <ul>
+
       <li class="day">
-        <span class="title">Giorno 16:</span>
+        <span class="title">Giorno 11:</span>
         <div class="content">
+          - <strong>Correzione Esercitazione:</strong> visione e discussione dei progetti realizzati nell'esercitazione della settimana 2.
+        </div>
+      </li>
+      <li class="day">
+        <span class="title">Giorno 12:</span>
+        <div class="content">
+
           - <strong>Database Relazionali:</strong> concetti base di SQL, tabelle, colonne, relazioni e chiavi
           primarie/esterne.<br />
           - <strong>Installazione di MySQL:</strong> configurazione di un database MySQL e connessione con MySQL
           Workbench.<br />
           - <strong>Query SQL:</strong> SELECT, INSERT, UPDATE, DELETE con esempi pratici.
-        </div>
-      </li>
-      <li class="day">
-        <span class="title">Giorno 17:</span>
-        <div class="content">
-          - <strong>Introduzione a JPA e Hibernate:</strong> concetti di ORM e vantaggi rispetto a JDBC.<br />
-          - <strong>Configurazione di Hibernate:</strong> creazione del file <code>persistence.xml</code>, EntityManager
-          e SessionFactory.<br />
-          - <strong>Entità e Mappatura:</strong> utilizzo delle annotazioni @Entity, @Table, @Id, @GeneratedValue per
-          modellare il database.
+
+          
         </div>
       </li>
       <li class="day">
         <span class="title">Giorno 18:</span>
         <div class="content">
-          - <strong>Collegamento Java-MySQL con JPA:</strong> gestione delle connessioni con EntityManager.<br />
-          - <strong>CRUD con Hibernate:</strong> implementazione delle operazioni di persistenza (INSERT, SELECT,
-          UPDATE, DELETE).<br />
-          - <strong>Gestione delle transazioni:</strong> commit, rollback e gestione delle eccezioni con JPA.<br />
-          - <strong>Lazy vs Eager Loading:</strong> gestione delle relazioni e impatto sulle performance.
+          
+          - <strong>Introduzione a JDBC:</strong> vanatggi con JDBC.<br />
         </div>
       </li>
       <li class="day-exercise">
         <span class="title">Giorno 19 (Esercitazione):</span>
         <div class="content">
-          - <strong>Progetto Hibernate:</strong> Creazione di un'applicazione Java che gestisce utenti in MySQL
-          utilizzando JPA e Hibernate.<br />
+          
           - <strong>Inserimento e recupero dati:</strong> <br />
           - <strong>Gestione degli errori SQL:</strong> trattamento delle eccezioni e gestione delle transazioni.
         </div>
@@ -214,12 +225,77 @@
           - <strong>Discussione:</strong> revisione degli errori più comuni e suggerimenti per il miglioramento.
         </div>
       </li>
-    </ul>
-  </div>
 
+    </ul>
+
+  </div>
+  </section>
+  
+
+  <section class="section">
+    <!-- Settimana 4 -->
   <div class="week">
-    <h2>Settimana 4: Java + Spring</h2>
+
+    <h2>Settimana 4: Java + JPA e Hibernate</h2>
+
     <ul>
+
+      <li class="day">
+        <span class="title">Giorno 16:</span>
+        <div class="content">
+          - <strong>Introduzione a JPA e Hibernate:</strong> concetti di ORM e vantaggi rispetto a JDBC.<br />
+          - <strong>Configurazione di Hibernate:</strong> creazione del file <code>persistence.xml</code>, EntityManager
+          e SessionFactory.<br />
+          - <strong>Entità e Mappatura:</strong> utilizzo delle annotazioni @Entity, @Table, @Id, @GeneratedValue per
+          modellare il database.
+        </div>
+      </li>
+      <li class="day">
+        <span class="title">Giorno 17:</span>
+        <div class="content">
+          - <strong>Collegamento Java-MySQL con JPA:</strong> gestione delle connessioni con EntityManager.<br />
+          - <strong>CRUD con Hibernate:</strong> implementazione delle operazioni di persistenza (INSERT, SELECT,
+          UPDATE, DELETE).<br />
+          - <strong>Gestione delle transazioni:</strong> commit, rollback e gestione delle eccezioni con JPA.<br />
+          - <strong>Lazy vs Eager Loading:</strong> gestione delle relazioni e impatto sulle performance.
+        </div>
+      </li>
+      <li class="day">
+        <span class="title">Giorno 18:</span>
+        <div class="content">
+          - <strong>Hibernate e suoi utilizzi:</strong> Creazione di un'applicazione Java che gestisce utenti in MySQL
+          utilizzando JPA e Hibernate.<br />
+          - <strong>Inserimento e recupero dati:</strong> <br />
+          - <strong>Gestione degli errori SQL:</strong> trattamento delle eccezioni e gestione delle transazioni.
+        </div>
+      </li>
+      <li class="day">
+        <span class="title">Giorno 19:</span>
+        <div class="content">
+          <strong>Chiamate REST</strong>
+          
+        </div>
+      </li>
+      <li class="day-exercise">
+        <span class="title">Giorno 20 (Test Intermedio):</span>
+        <div class="content">
+          - <strong>Esercizio pratico:</strong> realizzazione di un'applicazione CRUD con Hibernate e MySQL.<br />
+          - <strong>Discussione:</strong> revisione degli errori più comuni e suggerimenti per il miglioramento.
+        </div>
+      </li>
+
+    </ul>
+
+  </div>
+  </section>
+  
+
+  <section class="section">
+    <!-- Settimana 5  -->
+  <div class="week">
+    <h2>Settimana 5: Java + Spring</h2>
+    <ul>
+      
       <li class="day">
         <span class="title">Giorno 21:</span>
         <div class="content">
@@ -263,12 +339,20 @@
           - <strong>Testing avanzato:</strong> utilizzo di Postman o Swagger.
         </div>
       </li>
+
     </ul>
   </div>
+  </section>
+  
 
+  <section class="section">
+    <!-- Serttimana 6  -->
   <div class="week">
-    <h2>Settimana 5: Panoramica di Altri Linguaggi e Testing</h2>
+
+    <h2>Settimana 6: Altri linguaggi lato Backend</h2>
+
     <ul>
+
       <li class="day">
         <span class="title">Giorno 26:</span>
         <div class="content">
@@ -299,59 +383,9 @@
           - <strong>API REST:</strong> accenni a test automatici.
         </div>
       </li>
-      <li class="day-exercise">
-        <span class="title">Giorno 30 (Esercitazione):</span>
-        <div class="content">
-          - <strong>Test Unitari:</strong> Revisione e implementazione di test
-          unitari e integrazione per le API sviluppate durante il corso.<br />
-          - <strong>Esempio API REST:</strong> Progettazione di un esempio
-          pratico di API REST usando Spring Boot con focus sui concetti
-          appresi.
-        </div>
-      </li>
-    </ul>
-  </div>
 
-  <div class="week">
-    <h2>Settimana 6: Progetto Finale</h2>
-    <ul>
-      <li class="day">
-        <span class="title">Giorno 31:</span>
-        <div class="content">
-          - <strong>Progetto finale:</strong> brainstorming, definizione
-          entità e architettura.<br />
-          - <strong>Struttura base:</strong> creazione con Spring Boot.
-        </div>
-      </li>
-      <li class="day">
-        <span class="title">Giorno 32:</span>
-        <div class="content">
-          - <strong>CRUD:</strong> implementazione delle funzionalità
-          principali.<br />
-          - <strong>Database:</strong> connessione a MongoDB per la gestione
-          dei dati.
-        </div>
-      </li>
-      <li class="day">
-        <span class="title">Giorno 33:</span>
-        <div class="content">
-          - <strong>Ottimizzazione:</strong> aggiunta di sicurezza, logging e
-          test.<br />
-          - <strong>Debug:</strong> risoluzione dei problemi e miglioramenti
-          finali.
-        </div>
-      </li>
-      <li class="day">
-        <span class="title">Giorno 34:</span>
-        <div class="content">
-          - <strong>Documentazione:</strong> specifiche tecniche, diagrammi e
-          API docs.<br />
-          - <strong>Preparazione:</strong> organizzazione per la presentazione
-          finale.
-        </div>
-      </li>
       <li class="day-exam">
-        <span class="title">Giorno 35 (Esame e Valutazione):</span>
+        <span class="title">Giorno 30 (Esame e Valutazione):</span>
         <div class="content">
           - <strong>Presentazione progetti:</strong> discussione individuale
           dei progetti sviluppati.<br />
@@ -359,8 +393,14 @@
           soluzioni proposte.
         </div>
       </li>
+
     </ul>
+
   </div>
+  </section>
+  
+
+
 
   <footer class="footer">
     <a href="/index.html" class="footer-logo">
