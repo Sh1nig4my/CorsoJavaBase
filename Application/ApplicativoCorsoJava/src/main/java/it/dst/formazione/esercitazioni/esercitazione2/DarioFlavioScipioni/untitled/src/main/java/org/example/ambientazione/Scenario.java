@@ -28,7 +28,6 @@ public class Scenario extends Ambientazione {
         Scanner scanner = new Scanner(System.in);
 
         int sceltaPercorso;
-
         while (true) {
             System.out.println("Scegli percorso: \n");
             System.out.println("1> Corridoio");

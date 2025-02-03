@@ -62,7 +62,7 @@ public class Ruolo extends Persona {
         int sceltaPersonaggio;
 
         while (true) {
-            System.out.println("\nScegli il tuo ruolo");
+            System.out.println("\nScegli la tua classe");
             System.out.println("1> Umano");
             System.out.println("2> Alieno");
             System.out.println("3> Robot");
