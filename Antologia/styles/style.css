@@ -257,3 +257,65 @@ code {
     margin-left: 0; /* Rimuovi auto */
     order: 3; /* Mantieni a destra */
 }
+
+/* Stile generale per la tabella */
+table {
+    width: 100%;
+    max-width: 800px; /* Mantiene una larghezza leggibile */
+    margin: 20px auto; /* Centrare la tabella */
+    border-collapse: collapse; /* Rimuove gli spazi tra i bordi */
+    background-color: #ffffff; /* Sfondo bianco */
+    border-radius: 10px; /* Angoli arrotondati */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Ombreggiatura leggera */
+    overflow: hidden; /* Evita che gli angoli si sovrappongano */
+}
+
+/* Stile per l'intestazione della tabella */
+thead {
+    background-color: #003366; /* Blu scuro in linea con il tema */
+    color: white;
+    font-weight: bold;
+}
+
+th {
+    padding: 12px;
+    text-align: left;
+    font-size: 1.1em;
+    border-bottom: 2px solid #002244; /* Bordo inferiore più scuro */
+}
+
+/* Stile per le righe della tabella */
+tr {
+    border-bottom: 1px solid #ddd; /* Bordo sottile tra le righe */
+}
+
+tr:nth-child(even) {
+    background-color: #f8f9fa; /* Alternanza di colore tra le righe */
+}
+
+/* Stile per le celle della tabella */
+td {
+    padding: 12px;
+    font-size: 1.1em;
+    text-align: left;
+    color: #333; /* Testo scuro per una buona leggibilità */
+}
+
+/* Effetto hover per le righe */
+tr:hover {
+    background-color: #e9f5e9; /* Leggera evidenziazione al passaggio del mouse */
+}
+
+/* Adattabilità per dispositivi mobili */
+@media screen and (max-width: 768px) {
+    table {
+        width: 100%;
+        display: block;
+        overflow-x: auto;
+    }
+
+    th, td {
+        padding: 10px;
+        font-size: 1em;
+    }
+}
