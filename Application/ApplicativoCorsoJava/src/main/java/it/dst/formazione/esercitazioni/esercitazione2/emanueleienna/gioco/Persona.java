@@ -1,4 +1,4 @@
-package it.dst.formazione.esercitazioni.esercitazione2.gioco;
+package it.dst.formazione.esercitazioni.esercitazione2.emanueleienna.gioco;
 
 // Interfaccia per i personaggi
 interface Persona {

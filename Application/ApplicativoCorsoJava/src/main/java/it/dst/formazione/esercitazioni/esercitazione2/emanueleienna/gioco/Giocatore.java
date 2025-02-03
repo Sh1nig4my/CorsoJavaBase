@@ -1,9 +1,4 @@
-package it.dst.formazione.esercitazioni.esercitazione2.gioco;
-
-import it.dst.formazione.esercitazioni.esercitazione2.advanced.punto2.Inventario;
-
-import java.util.ArrayList;
-import java.util.List;
+package it.dst.formazione.esercitazioni.esercitazione2.emanueleienna.gioco;
 
 public class Giocatore implements Persona {
 

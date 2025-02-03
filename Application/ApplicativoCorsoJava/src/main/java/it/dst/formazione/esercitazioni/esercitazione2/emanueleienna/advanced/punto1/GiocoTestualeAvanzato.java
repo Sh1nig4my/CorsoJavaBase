@@ -1,4 +1,4 @@
-package it.dst.formazione.esercitazioni.esercitazione2.advanced.punto1;
+package it.dst.formazione.esercitazioni.esercitazione2.emanueleienna.advanced.punto1;
 
 import java.util.Scanner;
 

@@ -1,6 +1,6 @@
-package it.dst.formazione.esercitazioni.esercitazione2.advanced.punto2;
+package it.dst.formazione.esercitazioni.esercitazione2.emanueleienna.advanced.punto2;
 
-import it.dst.formazione.esercitazioni.esercitazione2.advanced.punto1.GiocatoreAvanzato;
+import it.dst.formazione.esercitazioni.esercitazione2.emanueleienna.advanced.punto1.GiocatoreAvanzato;
 
 import java.util.List;
 
