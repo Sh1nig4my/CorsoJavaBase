@@ -1,0 +1,10 @@
+{
+  "nomeGiocatore": "Pirata",
+  "vita": 100,
+  "ossigeno": 50,
+  "inventario": {
+    "oggetti": [
+      "Chiave elettronica"
+    ]
+  }
+}
