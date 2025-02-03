@@ -21,7 +21,6 @@ public class Gioco {
     ScenarioRoverLunare scenRovLun = new ScenarioRoverLunare();
 
     public List<BaseScenary> listeScenari = new ArrayList<>();
-
     GiocoUtils gu = new GiocoUtils();
 
 

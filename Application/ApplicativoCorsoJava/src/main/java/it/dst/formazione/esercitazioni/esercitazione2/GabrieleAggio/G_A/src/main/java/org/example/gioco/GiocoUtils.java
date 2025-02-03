@@ -82,6 +82,7 @@ public class GiocoUtils {
         );
     }
 
+    //TODO rivedere.
     private Optional<List<String>> trovaOggettiSegreti(Persona giocatore) {
 
         List<String> oggettiTrovati = new ArrayList<>();

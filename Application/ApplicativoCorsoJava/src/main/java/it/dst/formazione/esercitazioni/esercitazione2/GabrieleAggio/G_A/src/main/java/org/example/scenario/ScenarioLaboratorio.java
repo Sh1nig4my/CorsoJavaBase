@@ -65,11 +65,11 @@ public class ScenarioLaboratorio implements BaseScenary{
 
     @Override
     public boolean isUsato() {
-        return usato;  // Ritorna se lo scenario è stato usato
+        return usato;
     }
 
     @Override
     public void setUsato(boolean usato) {
-        this.usato = usato;  // Imposta lo stato "usato"
+        this.usato = usato;
     }
 }
