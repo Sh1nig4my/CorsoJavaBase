@@ -59,12 +59,16 @@ public abstract class Event {
             if (eventConsequencesOtp.isPresent()) {
                  userChoice = input.nextLine();
                 if (isInputANumber(userChoice)) {
-                    if (this.eventConsequences.get(Integer.parseInt(userChoice)).size() == 1 ) {
-                        result = this.eventConsequences.get(Integer.parseInt(userChoice)).get(0);
+                    if (eventConsequences.containsKey(Integer.parseInt(userChoice))) {
+                        if (this.eventConsequences.get(Integer.parseInt(userChoice)).size() == 1 ) {
+                            result = this.eventConsequences.get(Integer.parseInt(userChoice)).get(0);
+                            break;
+                        } else {
+                        result = this.eventConsequences.get(Integer.parseInt(userChoice)).get(rng.nextInt(0, this.eventConsequences.size() - 1));
                         break;
+                        }
                     } else {
-                    result = this.eventConsequences.get(Integer.parseInt(userChoice)).get(rng.nextInt(0, this.eventConsequences.size() - 1));
-                    break;
+                        System.out.println("please insert a valid option");
                     }
                 } else {
                     System.out.println("please insert a number");
@@ -101,15 +105,20 @@ public abstract class Event {
         String userChoice;
         while (true) {
             userChoice = input.nextLine();
-        if (isInputANumber(userChoice)) {
-                try {
-                    Optional<Scenes> currentSceneOtp = Optional.ofNullable(currentScene.newPossibleDirections.get(Integer.parseInt(userChoice)).getConstructor().newInstance());
-                    currentScene = currentSceneOtp.orElseThrow(()->{throw new RuntimeException("scenario non trovato");});
-                    break;
-                } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-                    System.out.println(e.getMessage());
-                    System.out.println(e.getStackTrace().toString());
-                }
+            if (isInputANumber(userChoice)) {
+                    if (currentScene.newPossibleDirections.containsKey(Integer.parseInt(userChoice))){
+                        try {
+                            Optional<Scenes> currentSceneOtp = Optional.ofNullable(currentScene.newPossibleDirections.get(Integer.parseInt(userChoice)).getConstructor().newInstance());
+                            currentScene = currentSceneOtp.orElseThrow(()->{throw new RuntimeException("scenario non trovato");});
+                            break;
+                        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+                            System.out.println(e.getMessage());
+                            System.out.println(e.getStackTrace().toString());
+                        }
+                    }
+                    else {
+                    System.out.println("please insert a valid option");
+                    }
             } else {
                 System.out.println("please insert a valid number");
             }

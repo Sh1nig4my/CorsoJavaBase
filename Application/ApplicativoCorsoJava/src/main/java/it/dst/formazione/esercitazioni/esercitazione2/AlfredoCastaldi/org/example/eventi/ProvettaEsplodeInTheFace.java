@@ -15,9 +15,6 @@ public class ProvettaEsplodeInTheFace extends Event {
                 1, "provi a schivare",
                 2, "ti proteggi con le braccia"
         );
-
-
-
         // ogni volta che instanzio un evento gli fornisco separatamente
         // le conseguenze possibili divise per scelta
         // ogni lista di lambda è legata ad una scelta
