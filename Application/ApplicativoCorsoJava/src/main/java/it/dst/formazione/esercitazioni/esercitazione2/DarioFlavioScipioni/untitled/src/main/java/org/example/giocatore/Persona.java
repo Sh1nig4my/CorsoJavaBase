@@ -5,7 +5,6 @@ import java.util.Scanner;
 public class Persona {
     String nome;
     int eta;
-    int vita;
     String provenienza;
 
     public String getProvenienza() {
@@ -19,17 +18,10 @@ public class Persona {
     public Persona() {
         this.nome = nome;
         this.eta = eta;
-        this.vita = vita;
+
         this.provenienza = provenienza;
     }
 
-    public int getVita() {
-        return vita;
-    }
-
-    public void setVita(int vita) {
-        this.vita = vita;
-    }
 
     public String getNome() {
 
@@ -65,4 +57,10 @@ public class Persona {
         System.out.println("Bene " + personaggio.getNome() + " Possiamo iniziare!\n\nSei nella sala principale,buia e cupa, della stazione spaziale.\n\nDavanti a te hai tre percorsi\n");
         return personaggio;
     }
+
+
+
+
+
+
 }

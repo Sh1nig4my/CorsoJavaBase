@@ -24,7 +24,7 @@ public class Scenario extends Ambientazione {
         return percorso;
     }
 
-    public static Scenario scegliPercorso() {
+    public static Scenario scegliPercorso(Persona personaggio, Ruolo classe) {
         Scanner scanner = new Scanner(System.in);
 
         int sceltaPercorso;
@@ -56,17 +56,17 @@ public class Scenario extends Ambientazione {
         if (sceltaPercorso == 1) {
             scenarioGenerico.setNome("Corridoio");
             System.out.println("Ti avvii con prudenza verso il  " + scenarioGenerico.getNome());
-            Eventi.eventiRandomCorridoio();
+            Eventi.eventiRandomCorridoio(personaggio);
         } else if (sceltaPercorso == 2) {
 
             scenarioGenerico.setNome("Sala Macchine");
             System.out.println("Ti muovi con prudenza verso la " + scenarioGenerico.getNome());
-            Eventi.eventiRandomSalaMacchine();
+            Eventi.eventiRandomSalaMacchine(personaggio);
 
         } else {
             scenarioGenerico.setNome("Dormitori");
             System.out.println("Ti avvicini con prudenza verso i " + scenarioGenerico.getNome());
-            Eventi.eventiRandomDormitori();
+            Eventi.eventiRandomDormitori(personaggio, classe );
 
         }
         return scenarioGenerico;

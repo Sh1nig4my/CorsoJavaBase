@@ -1,7 +1,6 @@
 package org.example.giocatore;
 
 import java.util.Arrays;
-import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -11,21 +10,22 @@ public class Ruolo extends Persona {
     List<String> abilita;
     int vita;
 
-    public Ruolo(String nome, String descrizione, List<String> abilita) {
+    public Ruolo(String nome, String descrizione, List<String> abilita,int vita) {
         this.nome = nome;
         this.descrizione = descrizione;
         this.abilita = abilita;
+        this.vita=vita;
     }
 
     public Ruolo() {
     }
 
-    @Override
+
     public int getVita() {
         return vita;
     }
 
-    @Override
+
     public void setVita(int vita) {
         this.vita = vita;
     }
@@ -56,7 +56,7 @@ public class Ruolo extends Persona {
         this.abilita = abilita;
     }
 
-    public static Ruolo scegliRuolo() {
+    public static Ruolo scegliRuolo(Persona persona) {
         Scanner scanner = new Scanner(System.in);
 
         int sceltaPersonaggio;
@@ -104,5 +104,18 @@ public class Ruolo extends Persona {
         }
         System.out.println("\nClasse selezionata: " + ruoloGenerico.getNome() + "\nPunti vita: " + ruoloGenerico.getVita() + "\nAbilità: " + ruoloGenerico.getAbilita());
         return ruoloGenerico;
+    }
+    public void perdiHp(int hpDaTogliere){
+        this.vita = this.vita-hpDaTogliere;
+        System.out.println("Punti vita attuali: " +this.vita);
+        return;
+    }
+
+
+
+    public  void stampaHp(){
+        int vita= this.vita;
+        System.out.println("LA VITA ATTUALE é: ----------->" +vita);
+
     }
 }

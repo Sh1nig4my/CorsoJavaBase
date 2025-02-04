@@ -18,9 +18,10 @@ public class Main {
 
         LocalDateTime inizio = LocalDateTime.now();
 
-        Persona.creaPersonaggio();
-        Ruolo.scegliRuolo();
-        Scenario.scegliPercorso();
+        Persona giocatore = Persona.creaPersonaggio();
+        Ruolo classe = Ruolo.scegliRuolo(giocatore);
+        classe.stampaHp();
+        Scenario.scegliPercorso(giocatore, classe);
 
         LocalDateTime fine = LocalDateTime.now();
         long durata = java.time.Duration.between(inizio, fine).getSeconds();

@@ -1,5 +1,7 @@
 package org.example.ambientazione;
 
-public class Corridoio extends Ambientazione{
+import org.example.eventi.Eventi;
+
+public class Corridoio extends Eventi {
 
 }
