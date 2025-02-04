@@ -42,7 +42,7 @@ public class Scenario extends Ambientazione {
                     break;
 
                 } else {
-                    System.out.println("Puoi scegliere soltanto 1,2 o 3.");
+                    System.out.println("Scelta non valida. Puoi scegliere soltanto 1,2 o 3.");
                 }
 
             } else {
@@ -63,20 +63,12 @@ public class Scenario extends Ambientazione {
             System.out.println("Ti muovi con prudenza verso la " + scenarioGenerico.getNome());
             Eventi.eventiRandomSalaMacchine();
 
-        } else if (sceltaPercorso == 3) {
+        } else {
             scenarioGenerico.setNome("Dormitori");
             System.out.println("Ti avvicini con prudenza verso i " + scenarioGenerico.getNome());
             Eventi.eventiRandomDormitori();
 
-        } else {
-            System.out.println("Scelta non valida, prova di nuovo scegliendo tra 1,2 o 3.");
-            sceltaPercorso = scanner.nextInt();
-            System.out.println("1> Corridoio");
-            System.out.println("2> Sala Macchine ");
-            System.out.println("3> Dormitori");
-            System.out.println("\nDove vuoi andare?\n>");
         }
-
         return scenarioGenerico;
     }
 }
