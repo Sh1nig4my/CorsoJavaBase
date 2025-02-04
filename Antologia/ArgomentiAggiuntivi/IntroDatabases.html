@@ -24,198 +24,274 @@
         </section>
 
         <section class="section">
-            <h2>1. Istallazione e preparazione ambiente SQL</h2>
-
-            <h3>1.1 Installazione Server Mysql</h3>
-            <p>Nello specifico faremo il download della versione 8.0.40 dal link ufficiale di MYSQL Communitiy
-				<a href="https://dev.mysql.com/downloads/" >download del server</a>
-
+			<h2>1. Installazione e preparazione ambiente SQL</h2>
+		
+			<h3>1.1 Installazione Server MySQL</h3>
+			<p>
+				Effettueremo il download della versione 8.0.40 dal sito ufficiale di MySQL Community. 
+				<a href="https://dev.mysql.com/downloads/" target="_blank">Download del server</a>.
 			</p>
-			
+		
 			<h3>1.2 Installazione dei driver ODBC</h3>
-            <p>Nello specifico faremo il download dei connettori utili ODBC per l'interfacciamento del server dal link ufficiale 
-				<a href="https://dev.mysql.com/downloads/connector/odbc/" >ODBC connector</a></br>
-			   Ci potrà essere util la seguente guida <a href="https://help.interfaceware.com/v6/connect-to-mysql-from-windows-with-odbc" >
-			   guida di configurazione per gli ODBC connector</a>
-				
+			<p>
+				Per l'interfacciamento del server, sarà necessario installare i connettori ODBC dal link ufficiale:
+				<a href="https://dev.mysql.com/downloads/connector/odbc/" target="_blank">ODBC Connector</a>.
+				<br>Per la configurazione, possiamo seguire questa guida dettagliata:
+				<a href="https://help.interfaceware.com/v6/connect-to-mysql-from-windows-with-odbc" target="_blank">Guida di configurazione per gli ODBC connector</a>.
 			</p>
-
-            <h3>1.3 Introduzione alle varie tipologie di Database</h3>
-            <p>Database relazionali: 
-					I database relazionali come SQL sono il tipo di database attualmente più diffuso. 
-					I motivi di questo successo sono fondamentalmente due:
-					<ul>
-						<li>Database relazionali: 
-								I database relazionali come SQL sono il tipo di database attualmente più diffuso. 
-								I motivi di questo successo sono fondamentalmente due:
-
-								1. forniscono sistemi semplici ed efficienti per rappresentare e manipolare i dati
-								2. si basano su un modello, quello relazionale, con solide basi teoriche
-
-								La struttura fondamentale del modello relazionale e' appunto la "relazione", 
-								cioè una tabella bidimensionale costituita da righe (tuple) e colonne (attributi). 
-
-								sono il tipo più comune di database e organizzano i dati in tabelle strutturate, 
-								che si interconnettono tramite relazioni basate su chiavi primarie e chiavi esterne. 
-								Questi database utilizzano il linguaggio SQL per eseguire query e manipolare i dati. 
-								Esempi di sistemi di gestione dei database relazionali (RDBMS) sono MySQL, PostgreSQL, Oracle e Microsoft SQL Server.</li> 
-						<li>Database non relazionali: 
-								noti anche come database NoSQL, questi sistemi di gestione dei dati non utilizzano tabelle e relazioni per organizzare
-								i dati, ma altre strutture più flessibili e scalabili. 
-								I database non relazionali si suddividono in diverse sottocategorie, come document-based (MongoDB), key-value (Redis),
-								column-family (Cassandra) e graph-based (Neo4j). 
-								Questi database utilizzano linguaggi di query specifici per il loro sistema, che possono differire dal tradizionale SQL.</li> 
-						<li>Database ad oggetti: 
-								questi database memorizzano e gestiscono i dati come oggetti, piuttosto che come tabelle e relazioni. 
-								Sono particolarmente adatti per applicazioni che richiedono un alto livello di astrazione e 
-								la capacità di gestire relazioni complesse tra oggetti. 
-								Esempi di database ad oggetti includono db4o e ObjectDB.</li> 
-						<li>Database temporali: 
-								questi database tengono traccia delle modifiche ai dati nel tempo, 
-								consentendo agli utenti di eseguire query su dati storici o su intervalli temporali specifici. 
-								Sono spesso utilizzati in ambito finanziario, meteorologico e di analisi delle serie temporali. 
-								Esempi di database temporali includono TimescaleDB e InfluxDB.</li> 
-					</ul></br>
-					<a href="https://aulab.it/guide/177/linguaggio-sql-i-database-relazionali"> approfondimento database relazionali</a></br></p>
-					
-					<h3>Database relazionali: </h3>
-					<p>La struttura fondamentale del modello relazionale e' appunto la "relazione", 
-					cioè una tabella bidimensionale costituita da righe (tuple) e colonne (attributi). 
-
-					sono il tipo più comune di database e organizzano i dati in tabelle strutturate, 
-					che si interconnettono tramite relazioni basate su chiavi primarie e chiavi esterne. 
-					Questi database utilizzano il linguaggio SQL per eseguire query e manipolare i dati. 
-					Esempi di sistemi di gestione dei database relazionali (RDBMS) sono MySQL, PostgreSQL, Oracle e Microsoft SQL Server.</p>
-					
-			<h3>Database non relazionali: </h3>
-					<p>noti anche come database NoSQL, questi sistemi di gestione dei dati non utilizzano tabelle e relazioni per organizzare
-					i dati, ma altre strutture più flessibili e scalabili. 
-					I database non relazionali si suddividono in diverse sottocategorie, come document-based (MongoDB), key-value (Redis),
-					column-family (Cassandra) e graph-based (Neo4j). 
-					Questi database utilizzano linguaggi di query specifici per il loro sistema, che possono differire dal tradizionale SQL.</p>
-							
-			<h3>Database ad oggetti: </h3>
-					<p>questi database memorizzano e gestiscono i dati come oggetti, piuttosto che come tabelle e relazioni. 
-					Sono particolarmente adatti per applicazioni che richiedono un alto livello di astrazione e 
-					la capacità di gestire relazioni complesse tra oggetti. 
-					Esempi di database ad oggetti includono db4o e ObjectDB.</p>
-											
-			<h3>Database temporali:</h3> 
-					<p>questi database tengono traccia delle modifiche ai dati nel tempo, 
-					consentendo agli utenti di eseguire query su dati storici o su intervalli temporali specifici. 
-					Sono spesso utilizzati in ambito finanziario, meteorologico e di analisi delle serie temporali. 
-					Esempi di database temporali includono TimescaleDB e InfluxDB.</p>
-
-
-            <h3>1.4 Il linguaggio SQL</h3>
-            <p>SQL. Questi sottolinguaggi sono:
-
-					Data Query Language (DQL)		 - Il Data Query Language è il sottolinguaggio responsabile della lettura,
-														o interrogazione, dei dati di un database. In SQL, questo corrisponde al SELECT
-														
-					Data Manipulation Language (DML) - Il Data Manipulation Language è il sottolinguaggio responsabile dell'aggiunta, 
-														della modifica o della cancellazione di dati da un database. 
-														In SQL, corrisponde ai linguaggi INSERT, UPDATE, e DELETE
-														
-					Data Definition Language (DDL) 	 - Il Data Definition Language è il sottolinguaggio responsabile della definizione della 
-														struttura dei dati in un database. In SQL, questo corrisponde alla manipolazione 
-														delle tabelle attraverso i linguaggi CREATE TABLE, ALTER TABLE, e DROP TABLE
-														
-					Data Control Language (DCL) 	 - Il Data Control Language è il sottolinguaggio responsabile delle attività amministrative 
-														di controllo del database stesso, in particolare la concessione e la revoca dei permessi 
-														agli utenti. In SQL, questo corrisponde ai comandi GRANT, REVOKE, e DENY, tra gli altri.</p>
+		
+			<h3>1.3 Introduzione alle varie tipologie di Database</h3>
+			<table>
+				<thead>
+					<tr>
+						<th>Tipologia</th>
+						<th>Descrizione</th>
+						<th>Esempi</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Database Relazionali</td>
+						<td>
+							I database relazionali (RDBMS) organizzano i dati in tabelle strutturate interconnesse tramite chiavi primarie ed esterne.
+							Utilizzano SQL per le query e le operazioni sui dati.
+						</td>
+						<td>MySQL, PostgreSQL, Oracle, Microsoft SQL Server</td>
+					</tr>
+					<tr>
+						<td>Database Non Relazionali (NoSQL)</td>
+						<td>
+							Questi database non utilizzano il modello tabellare, offrendo strutture più flessibili e scalabili.
+							Sono suddivisi in diverse categorie: document-based, key-value, column-family e graph-based.
+						</td>
+						<td>MongoDB, Redis, Cassandra, Neo4j</td>
+					</tr>
+					<tr>
+						<td>Database ad Oggetti</td>
+						<td>
+							Memorizzano e gestiscono i dati come oggetti, permettendo relazioni complesse tra entità.
+							Sono adatti per applicazioni con alto livello di astrazione.
+						</td>
+						<td>db4o, ObjectDB</td>
+					</tr>
+					<tr>
+						<td>Database Temporali</td>
+						<td>
+							Tracciano le modifiche ai dati nel tempo, permettendo query su dati storici o intervalli temporali specifici.
+							Spesso usati per analisi finanziarie e meteorologiche.
+						</td>
+						<td>TimescaleDB, InfluxDB</td>
+					</tr>
+				</tbody>
+			</table>
+			<p>
+				Per approfondire i database relazionali, consulta questa risorsa:
+				<a href="https://aulab.it/guide/177/linguaggio-sql-i-database-relazionali" target="_blank">Approfondimento Database Relazionali</a>.
+			</p>
+		
+			<h3>1.4 Il Linguaggio SQL</h3>
+			<p>SQL si suddivide in quattro sottolinguaggi principali, ognuno con specifiche funzionalità:</p>
+		
+			<table>
+				<thead>
+					<tr>
+						<th>Sottolinguaggio</th>
+						<th>Descrizione</th>
+						<th>Esempi di Comandi</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Data Query Language (DQL)</td>
+						<td>Responsabile della lettura e interrogazione dei dati.</td>
+						<td><pre><code>SELECT * FROM utenti;</code></pre></td>
+					</tr>
+					<tr>
+						<td>Data Manipulation Language (DML)</td>
+						<td>Gestisce l'aggiunta, modifica e cancellazione dei dati.</td>
+						<td>
+							<pre><code>
+		INSERT INTO utenti (nome, cognome) VALUES ('Mario', 'Rossi');
+		UPDATE utenti SET cognome = 'Bianchi' WHERE id = 1;
+		DELETE FROM utenti WHERE id = 1;
+							</code></pre>
+						</td>
+					</tr>
+					<tr>
+						<td>Data Definition Language (DDL)</td>
+						<td>Definisce la struttura dei dati in un database.</td>
+						<td>
+							<pre><code>
+		CREATE TABLE utenti (id INT PRIMARY KEY, nome VARCHAR(100));
+		ALTER TABLE utenti ADD COLUMN email VARCHAR(255);
+		DROP TABLE utenti;
+							</code></pre>
+						</td>
+					</tr>
+					<tr>
+						<td>Data Control Language (DCL)</td>
+						<td>Gestisce i permessi e i controlli di accesso al database.</td>
+						<td>
+							<pre><code>
+		GRANT SELECT ON utenti TO 'utente1';
+		REVOKE INSERT ON utenti FROM 'utente2';
+							</code></pre>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		
 		</section>
+		
         
         <section class="section">
-
-            <section class="intro">
-                <h2>2. tipi di dati</h2>
-					<h3>Tipi numerici interi</h3>
-					<p>Sono usati per rappresentare numeri interi positivi e/o negativi. Ne esistono diverse varianti, 
-						a seconda del numero di bit destinati alla codifica del numero, e quindi dell'intervallo massimo di valori ammissibili.
-
-						TINYINT: 8 bit, -128...127 (non standard)
-						SMALLINT: 16 bit, -32.768 ... 32.767
-						MEDIUMINT: 24 bit, -8.338.608 ... 8.338.607 (non standard)
-						INTEGER / INT: 32 bit, -2.147.483.648 ... 2.147.483.647
-						BIGINT: 64 bit, -9.223.372.036.854.775.808 ... 9.223.372.036.854.775.807 (non standard)
-
-						Con "(non standard)" sono indicati dei tipi che sono supportati da MySQL ma non dallo standard SQL.
-						Se ne sconsiglia pertanto l'uso indiscriminato. Si noti inoltre che il numero di bit utilizzati dai tipi 
-						INTEGER e SMALLINT non è definito dallo standard SQL: DBMS diversi possono usare convenzioni diverse.
-
-
-
-						Tutti i tipi interi posso essere dichiarati UNSIGNED (si tratta anche questa di una estensione non standard di MySQL). 
-						In questo caso il valore massimo dei dati aumenta: 
-								TINYINT passa fa -128.. 127 a 0..255, 
-								SMALLINT da -32.768..32.767 a  0...65535.. e così via. 
-						Il modificatore UNSIGNED va messo dopo il tipo e non prima, come di solito si fa in Java e in C</p>
-						
-
-					<h3>Tipi numerici non interi</h3>
-						<p>Si distinguono due sottotipi: numeri approssimati in virgola mobile e numeri esatti in virgola fissa. 
-						Per quanto riguarda i primi, si distinguono in base al numero di bit usati per la rappresentazione, 
-						che influisce sia sull'intervallo massimo di valori rappresentabili che sul numero di cifre significative.
-						
-						FLOAT: 32 bit, singola precisione.
-							Valori ammessi: da -3.402823466E+38 a -1.175494351E-38, 0, e da 1.175494351E-38 a 3.402823466E+38
-						
-						DOUBLE PRECISION: 64 bit, doppia precisione.
-							Valori ammessi: da-1.7976931348623157E+308 a -2.2250738585072014E-308, 0, e 
-											da 2.2250738585072014E-308 a 1.7976931348623157E+308
-						
-						
-						I tipi in virgola fissa sono invece i seguenti:
-							NUMERIC(<m>,<d>): numero decimale con m cifre significative, di cui d cifre sono dopo la virgola. 
-											  Il valore massimo di m è 65, il valore massimo di d è 30.
-							NUMERIC(<m>)	: sinonimo di NUMERIC(<m>,0).
-							
-							NUMERIC			: sinonimo di NUMERIC(10).
-							DECIMAL			: sinonimo di NUMERIC, in tutte e tre le forme viste sopra.
-							
-						Tutti i tipi numerici non interi possono essere dichiarati UNSIGNED, 
-							ma in tal caso l'intervallo di valori positivi rappresentabili non aumenta come avveniva nel caso dei tipi interi.</p>
-
-					<h3>Tipi stringa</h3>
-						<p>CHAR(<n>) / CHARACTER(<n>): stringa di n caratteri a lunghezza fissa. Se la stringa è più corta, viene riempita di spazi alla fine.
-						VARCHAR(<n>) / CHARACTER VARYING(<n>): stringa di al massimo n caratteri, n <= 65535
-
-						I tipi a lunghezzi fissa come CHAR(<n>) creano tabelle più efficienti di quelli a lunghezza variabile, 
-						a fronte di uno spreco di memoria di massa. Se serve memorizzare delle stringhe più lunghe, si possono usare 
-						i tipi non standard TEXT:
-							TINYTEXT(<n>): come VARCHAR(<n>)
-							TEXT(<n>): come VARCHAR(<n>) ma n fino a 65535 = 216
-							MEDIUMTEXT(<n>): come VARCHAR(<n>) ma n fino a 224
-							LONGTEXT(<n>): come VARCHAR(<n>) ma n fino a 232</p>
-
-					<h3>Tipi insiemi ed enumerati</h3>
-						<p>Si tratta di tipi non standard, che possono essere usati al posto di tipi stringa o numerici per rendere 
-						più leggibile la struttura del database:
-
-						ENUM('val1','val2',.... 'valn'): un valore qualunque tra quelli indicati (massimo 65535). In realtà è ammesso anche il valore '' (stringa nulla).
-						SET('val1','val2'... 'valn'): uno o più valori tra quelli indicati (massimo 64).
-
-						Ad esempio:
-							mysql> CREATE TABLE tenum ( vero ENUM('si','no'), colore SET('rosso','verde','giallo') );</p>
-
-					<h3>Tipi per la data l'ora</h3>
-						<p>I tipi per data e ora di MySQL sono abbastanza diversi da quelli dello standard SQL. Ne elenchiamo soltanto due:
-
-						DATE	: data, nel formato aaaa-mm-gg, dal '0000-00-00' al '9999-12-31'.
-						TIME	: ora, nel formato hh:mm:ss.
-						DATETIME: ora e data, nel formato aaaa-mm-gg hh:mm:ss, dal '0000-00-00 00:00:00' al '9999-12-31 23:59:59' (non standard).</p>
-						
-					<h3>Campi AUTO_INCREMENT</h3>
-						<p>In questo modo non abbiamo più bisogno di inserire valori per il campo id: li genera MySQL automaticamente,
-						quando si tenta di inserire un valore null per la chiave. 
-						 solo un campo di tipo intero può essere AUTO_INCREMENT.</p>
-                
-            </section>
-
-				<a href="https://www.w3schools.com/sql/default.asp"> guida per sintassi</a>
-            </p>
-        </section>
+			<h2>2. Tipi di dati</h2>
+		
+			<h3>Tipi numerici interi</h3>
+			<table>
+				<thead>
+					<tr>
+						<th>Tipo</th>
+						<th>Bit</th>
+						<th>Intervallo Valori</th>
+						<th>Standard SQL</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>TINYINT</td>
+						<td>8</td>
+						<td>-128 ... 127</td>
+						<td>No</td>
+					</tr>
+					<tr>
+						<td>SMALLINT</td>
+						<td>16</td>
+						<td>-32.768 ... 32.767</td>
+						<td>Sì</td>
+					</tr>
+					<tr>
+						<td>MEDIUMINT</td>
+						<td>24</td>
+						<td>-8.338.608 ... 8.338.607</td>
+						<td>No</td>
+					</tr>
+					<tr>
+						<td>INTEGER / INT</td>
+						<td>32</td>
+						<td>-2.147.483.648 ... 2.147.483.647</td>
+						<td>Sì</td>
+					</tr>
+					<tr>
+						<td>BIGINT</td>
+						<td>64</td>
+						<td>-9.223.372.036.854.775.808 ... 9.223.372.036.854.775.807</td>
+						<td>No</td>
+					</tr>
+				</tbody>
+			</table>
+		
+			<h3>Tipi numerici non interi</h3>
+			<p>Si distinguono due sottotipi: numeri approssimati in virgola mobile e numeri esatti in virgola fissa.</p>
+			<table>
+				<thead>
+					<tr>
+						<th>Tipo</th>
+						<th>Bit</th>
+						<th>Intervallo Valori</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>FLOAT</td>
+						<td>32</td>
+						<td>-3.402823466E+38 a 3.402823466E+38</td>
+					</tr>
+					<tr>
+						<td>DOUBLE</td>
+						<td>64</td>
+						<td>-1.7976931348623157E+308 a 1.7976931348623157E+308</td>
+					</tr>
+					<tr>
+						<td>NUMERIC(m, d)</td>
+						<td>Variabile</td>
+						<td>Fino a 65 cifre significative, con 30 decimali</td>
+					</tr>
+				</tbody>
+			</table>
+		
+			<h3>Tipi stringa</h3>
+			<table>
+				<thead>
+					<tr>
+						<th>Tipo</th>
+						<th>Descrizione</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>CHAR(n)</td>
+						<td>Stringa a lunghezza fissa, riempita di spazi se più corta</td>
+					</tr>
+					<tr>
+						<td>VARCHAR(n)</td>
+						<td>Stringa a lunghezza variabile, fino a 65535 caratteri</td>
+					</tr>
+					<tr>
+						<td>TEXT</td>
+						<td>Come VARCHAR ma con dimensioni più ampie</td>
+					</tr>
+				</tbody>
+			</table>
+		
+			<h3>Tipi insiemi ed enumerati</h3>
+			<pre><code>
+		ENUM('val1', 'val2', 'val3'); -- Può assumere solo uno dei valori specificati
+		SET('val1', 'val2', 'val3'); -- Può assumere uno o più valori specificati
+			</code></pre>
+		
+			<h3>Tipi per la data e l'ora</h3>
+			<table>
+				<thead>
+					<tr>
+						<th>Tipo</th>
+						<th>Formato</th>
+						<th>Intervallo Valori</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>DATE</td>
+						<td>YYYY-MM-DD</td>
+						<td>'0000-00-00' al '9999-12-31'</td>
+					</tr>
+					<tr>
+						<td>TIME</td>
+						<td>hh:mm:ss</td>
+						<td>'-838:59:59' a '838:59:59'</td>
+					</tr>
+					<tr>
+						<td>DATETIME</td>
+						<td>YYYY-MM-DD hh:mm:ss</td>
+						<td>'0000-00-00 00:00:00' al '9999-12-31 23:59:59'</td>
+					</tr>
+				</tbody>
+			</table>
+		
+			<h3>Campi AUTO_INCREMENT</h3>
+			<pre><code>
+		CREATE TABLE utenti (
+			id INT AUTO_INCREMENT PRIMARY KEY,
+			nome VARCHAR(100)
+		);
+			</code></pre>
+		
+			<h3>Guida per la sintassi SQL</h3>
+			<p>Per ulteriori dettagli sui tipi di dati in SQL, visita: 
+				<a href="https://www.w3schools.com/sql/default.asp">Guida SQL di W3Schools</a>
+			</p>
+		</section>
+		
         
         
     </main>

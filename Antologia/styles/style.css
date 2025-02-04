@@ -301,11 +301,6 @@ td {
     color: #333; /* Testo scuro per una buona leggibilità */
 }
 
-/* Effetto hover per le righe */
-tr:hover {
-    background-color: #e9f5e9; /* Leggera evidenziazione al passaggio del mouse */
-}
-
 /* Adattabilità per dispositivi mobili */
 @media screen and (max-width: 768px) {
     table {
