@@ -10,7 +10,7 @@
 
 <body>
     <header>
-        <h1>Concetti base Databases</h1>
+        <h1>Introduzione ai Databases</h1>
     </header>
 
     <main>
@@ -92,54 +92,53 @@
 			<h3>1.4 Il Linguaggio SQL</h3>
 			<p>SQL si suddivide in quattro sottolinguaggi principali, ognuno con specifiche funzionalità:</p>
 		
-			<table>
-				<thead>
-					<tr>
-						<th>Sottolinguaggio</th>
-						<th>Descrizione</th>
-						<th>Esempi di Comandi</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>Data Query Language (DQL)</td>
-						<td>Responsabile della lettura e interrogazione dei dati.</td>
-						<td><pre><code>SELECT * FROM utenti;</code></pre></td>
-					</tr>
-					<tr>
-						<td>Data Manipulation Language (DML)</td>
-						<td>Gestisce l'aggiunta, modifica e cancellazione dei dati.</td>
-						<td>
-							<pre><code>
-		INSERT INTO utenti (nome, cognome) VALUES ('Mario', 'Rossi');
-		UPDATE utenti SET cognome = 'Bianchi' WHERE id = 1;
-		DELETE FROM utenti WHERE id = 1;
-							</code></pre>
-						</td>
-					</tr>
-					<tr>
-						<td>Data Definition Language (DDL)</td>
-						<td>Definisce la struttura dei dati in un database.</td>
-						<td>
-							<pre><code>
-		CREATE TABLE utenti (id INT PRIMARY KEY, nome VARCHAR(100));
-		ALTER TABLE utenti ADD COLUMN email VARCHAR(255);
-		DROP TABLE utenti;
-							</code></pre>
-						</td>
-					</tr>
-					<tr>
-						<td>Data Control Language (DCL)</td>
-						<td>Gestisce i permessi e i controlli di accesso al database.</td>
-						<td>
-							<pre><code>
-		GRANT SELECT ON utenti TO 'utente1';
-		REVOKE INSERT ON utenti FROM 'utente2';
-							</code></pre>
-						</td>
-					</tr>
-				</tbody>
-			</table>
+			<div class="table-container">
+				<table>
+					<thead>
+						<tr>
+							<th>Sottolinguaggio</th>
+							<th>Descrizione</th>
+							<th>Esempi di Comandi</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Data Query Language (DQL)</td>
+							<td>Responsabile della lettura e interrogazione dei dati.</td>
+							<td><pre><code>SELECT * FROM utenti;</code></pre></td>
+						</tr>
+						<tr>
+							<td>Data Manipulation Language (DML)</td>
+							<td>Gestisce l'aggiunta, modifica e cancellazione dei dati.</td>
+							<td>
+								<pre><code>INSERT INTO utenti (nome, cognome) VALUES ('Mario', 'Rossi');
+			UPDATE utenti SET cognome = 'Bianchi' WHERE id = 1;
+			DELETE FROM utenti WHERE id = 1;</code></pre>
+							</td>
+						</tr>
+						<tr>
+							<td>Data Definition Language (DDL)</td>
+							<td>Definisce la struttura dei dati in un database.</td>
+							<td>
+								<pre><code>CREATE TABLE utenti (id INT PRIMARY KEY, nome VARCHAR(100));
+			ALTER TABLE utenti ADD COLUMN email VARCHAR(255);
+			DROP TABLE utenti;</code></pre>
+							</td>
+						</tr>
+						<tr>
+							<td>Data Control Language (DCL)</td>
+							<td>Gestisce i permessi e i controlli di accesso al database.</td>
+							<td>
+								<pre><code>GRANT SELECT ON utenti TO 'utente1';
+			REVOKE INSERT ON utenti FROM 'utente2';</code></pre>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			
+		
+			
 		
 		</section>
 		

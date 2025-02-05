@@ -258,11 +258,18 @@ code {
     order: 3; /* Mantieni a destra */
 }
 
+/* Contenitore per la tabella con scrolling orizzontale */
+.table-container {
+    width: 100%;
+    overflow-x: auto; /* Scroll orizzontale per schermi piccoli */
+    margin: 20px auto; /* Mantiene la coerenza del layout */
+    padding: 10px;
+}
+
 /* Stile generale per la tabella */
 table {
     width: 100%;
     max-width: 800px; /* Mantiene una larghezza leggibile */
-    margin: 20px auto; /* Centrare la tabella */
     border-collapse: collapse; /* Rimuove gli spazi tra i bordi */
     background-color: #ffffff; /* Sfondo bianco */
     border-radius: 10px; /* Angoli arrotondati */
@@ -301,8 +308,23 @@ td {
     color: #333; /* Testo scuro per una buona leggibilità */
 }
 
+/* Ottimizza il blocco di codice nei comandi */
+pre {
+    overflow-x: auto; /* Abilita lo scroll nei blocchi di codice */
+    max-width: 100%;
+    background-color: #2d2d2d; /* Colore di sfondo coerente con il tema */
+    color: #f8f8f2;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 0.95em;
+}
+
 /* Adattabilità per dispositivi mobili */
 @media screen and (max-width: 768px) {
+    .table-container {
+        overflow-x: auto; /* Scroll orizzontale per schermi piccoli */
+    }
+
     table {
         width: 100%;
         display: block;
@@ -314,3 +336,4 @@ td {
         font-size: 1em;
     }
 }
+
