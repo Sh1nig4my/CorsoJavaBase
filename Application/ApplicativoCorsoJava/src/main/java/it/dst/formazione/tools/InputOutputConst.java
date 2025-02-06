@@ -5,7 +5,7 @@ import it.dst.formazione.esercitazioni.esercitazione3.Libro;
 import java.util.Arrays;
 import java.util.List;
 
-public interface InputOuyputConst {
+public interface InputOutputConst {
 
     String resultString = "OK";
     String BLANK = " ";

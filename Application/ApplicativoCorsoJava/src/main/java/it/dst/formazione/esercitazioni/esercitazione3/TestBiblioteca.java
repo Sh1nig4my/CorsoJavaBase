@@ -1,15 +1,16 @@
 package it.dst.formazione.esercitazioni.esercitazione3;
 
+import it.dst.formazione.esercitazioni.esercitazione3.result.AlfredoCastaldi.LibraryCrud;
+
 import java.util.List;
 
-
-import static it.dst.formazione.tools.InputOuyputConst.resultString;
+import static it.dst.formazione.tools.InputOutputConst.resultString;
 
 public class TestBiblioteca {
 
     public static void main(String[] args) {
 
-/*        CRUDBiblioteca crud = new CRUDBiblioteca();
+/*        LibraryCrud crud = new LibraryCrud();
         String result;
 
         result = crud.createTableLibro();
@@ -48,8 +49,8 @@ public class TestBiblioteca {
         result = crud.testEliminazione(2);
         if(result.equalsIgnoreCase(resultString)) {
             System.out.println("\n6. PASS");
-        }*/
-
+        }
+*/
     }
 
 }
