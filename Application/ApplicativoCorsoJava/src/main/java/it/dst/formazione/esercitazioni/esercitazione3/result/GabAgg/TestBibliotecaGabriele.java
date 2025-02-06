@@ -27,10 +27,18 @@ public class TestBibliotecaGabriele {
 
 
         //Inserisco un libro
-        result = testGab.testInserimento();
+        result = testGab.testInserimentoLibriDaInputOutputConst();
         if(result.equalsIgnoreCase(resultString)) {
             System.out.println("\n2. PASS");
-            System.out.println("Dati inseriti con successo");
+            System.out.println("Dati inseriti con successo (da interfaccia InputOutputConst)");
+        }
+
+
+        //Inserisco un libro SINGOLO FISSO
+        result = testGab.testInserimento();
+        if(result.equalsIgnoreCase(resultString)) {
+            System.out.println("\n2.5 PASS");
+            System.out.println("Dato singolo inserito con successo");
         }
 
         //test + stampa lista libri con select *

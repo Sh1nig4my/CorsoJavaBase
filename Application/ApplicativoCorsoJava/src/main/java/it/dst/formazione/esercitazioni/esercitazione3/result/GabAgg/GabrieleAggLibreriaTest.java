@@ -2,20 +2,24 @@ package it.dst.formazione.esercitazioni.esercitazione3.result.GabAgg;
 
 import it.dst.formazione.esercitazioni.esercitazione3.BibliotecaInterface;
 import it.dst.formazione.esercitazioni.esercitazione3.Libro;
+import it.dst.formazione.tools.InputOutputConst;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class GabrieleAggLibreriaTest implements BibliotecaInterface {
 
-    // TODO: potrebbe valere la pena pensare di lanciare un messaggio di Errore nelle sezioni catch?
+    //Migliorato catch (Gabriele 6/2/25, 12.50)
 
     private static final String URL = "jdbc:mysql://localhost:3306/biblioteca";
     private static final String USER = "root";
     private static final String PASSWORD = "1234";
+    private static final String OKSTATO = "OK";
 
 
+    @SuppressWarnings("unused")
     public static void testConnessione(){
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)){
 
@@ -23,7 +27,10 @@ public class GabrieleAggLibreriaTest implements BibliotecaInterface {
 
         } catch (SQLException e){
             System.out.println("Errore nella connessione al database.");
-            e.printStackTrace();
+            System.out.println("Codice dell'errore: " + e.getErrorCode());
+            System.out.println("Messaggio dell'errore: " + e.getMessage());
+            System.out.println("StackTrace stampato come array: " + Arrays.toString(e.getStackTrace()));
+            System.out.println("Altre info test: " + e.getSQLState());
         }
     }
 
@@ -41,19 +48,14 @@ public class GabrieleAggLibreriaTest implements BibliotecaInterface {
     @Override
     public String createTableLibro() {
 
-        // TODO: hai già la query salvata nell'interfaccia InputOutputConst
-        String query = "CREATE TABLE IF NOT EXISTS libri ("
-                + "id INT AUTO_INCREMENT PRIMARY KEY, "
-                + "titolo VARCHAR(100) NOT NULL, "
-                + "autore VARCHAR(100) NOT NULL, "
-                + "anno_pubblicazione INT NOT NULL, "
-                + "disponibile BOOLEAN DEFAULT TRUE)";
+        // GabrieleAgg 6/2/25 12:57 modificata con query in InputOutputConst.
+        String query = InputOutputConst.query;
 
         try (Connection conn = getConnection();
              Statement stmt = conn.createStatement()) {
 
             stmt.executeUpdate(query);
-            return ("OK");  // TODO: modificre con const
+            return OKSTATO;
 
         } catch (SQLException e) {
             return ("Errore nella creazione della tabella: " + e.getMessage());
@@ -63,7 +65,8 @@ public class GabrieleAggLibreriaTest implements BibliotecaInterface {
     @Override
     public String testInserimento() {
 
-        // TODO: e se volessi inserire tutti i libri presnti nella lista dell'Interfaccia InputOutpuConst??
+        // Emanuele: e se volessi inserire tutti i libri presenti nella lista dell'Interfaccia InputOutputConst??
+        // GabrieleA: Metodo a seguire che inserisce la lista presente nell'interfaccia.
         String query = "INSERT INTO libri (titolo, autore, anno_pubblicazione) VALUES (?, ?, ?)";
 
         try (Connection conn = getConnection();
@@ -74,12 +77,35 @@ public class GabrieleAggLibreriaTest implements BibliotecaInterface {
             pstmt.setInt(3, 1954);
             pstmt.executeUpdate();
 
-            return ("OK"); // TODO: modificre con const
+            return OKSTATO;
 
         } catch (SQLException e) {
            return ("Errore durante l'inserimento: " + e.getMessage());
         }
     }
+
+    //Nel main di TestBibliotecaGabriele questo è il passaggio 2.5 (creato su richiesta di Emanuele)
+    public String testInserimentoLibriDaInputOutputConst(){
+
+        String query = "INSERT INTO libri (titolo, autore, anno_pubblicazione) VALUES (?, ?, ?)";
+
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+            for (Libro libro : InputOutputConst.libri) {
+                pstmt.setString(1, libro.getTitolo());
+                pstmt.setString(2, libro.getAutore());
+                pstmt.setInt(3, libro.getAnnoPubblicazione());
+                pstmt.executeUpdate();
+            }
+            return OKSTATO;
+
+        } catch (SQLException e) {
+            return ("Errore durante l'inserimento: " + e.getMessage());
+        }
+    }
+
+
 
     @Override
     public List<Libro> testSelezione() {
@@ -140,6 +166,12 @@ public class GabrieleAggLibreriaTest implements BibliotecaInterface {
     }
 
 
+    /*
+      Nota di Gabriele: La prima volta che viene eseguito questo metodo e subito dopo la prova di stampa, in console
+      apparirà ancora come true, nonostante questo il metodo funziona, penso sia un problema di concorrenza di azioni,
+      simile a una data race, dove l'invio di questi dati nel db, risultano più lenti del programma in java.
+      Esaminerò la situazione, penso si possa risolvere dando tempo, magari usando uno Sleep per testare la teoria.
+     */
     @Override
     public String testAggiornamentoDisponibilita(int idLibro, boolean disponibile) {
         String query = "UPDATE libri SET disponibile = ? WHERE id = ?";
@@ -153,7 +185,7 @@ public class GabrieleAggLibreriaTest implements BibliotecaInterface {
 
             if (rowsAffected > 0) {
                 System.out.println("Disponibilità aggiornata con successo, id libro: " + idLibro);
-                return "OK"; // TODO: modificare con const
+                return OKSTATO;
             } else {
                 return "Nessun libro trovato con id: " + idLibro;
             }
@@ -176,7 +208,7 @@ public class GabrieleAggLibreriaTest implements BibliotecaInterface {
 
             if (rowsAffected > 0) {
                 System.out.println("Libro con id: " + idLibro + " eliminato con successo.");
-                return "OK"; // TODO: modificre con const
+                return OKSTATO;
             } else {
                 return "Nessun libro trovato con id: " + idLibro;
             }
