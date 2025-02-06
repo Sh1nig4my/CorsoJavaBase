@@ -10,10 +10,14 @@ import java.util.Arrays;
 import java.util.List;
 
 public class CrudLibreria implements BibliotecaInterface {
+
+    // TODO: potrebbe essere una soluzione la cattura di una ecceione specifica per SQL e propagare l'errore? Parlo per tutti i metodi
+
     public static Connection connection = ConnessioneDatabase.getConnection();
 
     @Override
     public String createTableLibro() {
+        // TODO: la query sta nell'interfaccia InputOutputConst
         String query = "CREATE TABLE IF NOT EXISTS libri ("
                 + "id INT AUTO_INCREMENT PRIMARY KEY, "
                 + "titolo VARCHAR(100) NOT NULL, "
@@ -22,7 +26,7 @@ public class CrudLibreria implements BibliotecaInterface {
                 + "disponibile BOOLEAN DEFAULT TRUE)";
 
         try (Connection conn = ConnessioneDatabase.getConnection();
-             Statement stmt = conn.createStatement()) {
+             Statement stmt = conn.createStatement()) { // TODO: c'è un modo per togliere questi warning?
 
             stmt.executeUpdate(query);
             System.out.println("Tabella 'libri' creata con successo.");
@@ -30,12 +34,13 @@ public class CrudLibreria implements BibliotecaInterface {
         } catch (SQLException e) {
             System.err.println("Errore nella creazione della tabella: " + e.getMessage());
         }
-        return "";
+        return ""; // TODO: la String sta nell'interfaccia InputOutputConst, così il test non passa
     }
 
     @Override
     public String testInserimento() {
         String query = "INSERT INTO libri (titolo, autore, anno_pubblicazione, disponibile) VALUES (?, ?, ?, ?)";
+        // TODO: la lista sta nell'interfaccia InputOutputConst
         List<Libro> libri = Arrays.asList(
                 new Libro("I Promessi Sposi", "Alessandro Manzoni", 1827, true),
                 new Libro("1984", "George Orwell", 1949, true),
@@ -50,7 +55,7 @@ public class CrudLibreria implements BibliotecaInterface {
         );
 
         try (Connection conn = ConnessioneDatabase.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
+             PreparedStatement pstmt = conn.prepareStatement(query)) { // TODO: warning
 
             for (Libro libro : libri) {
                 pstmt.setString(1, libro.getTitolo());
@@ -70,7 +75,7 @@ public class CrudLibreria implements BibliotecaInterface {
         } catch (SQLException e) {
             System.err.println("Errore durante l'inserimento: " + e.getMessage());
         }
-        return "";
+        return ""; // TODO: la String sta nell'interfaccia InputOutputConst, così il test non passa
     }
 
     @Override
@@ -92,7 +97,7 @@ public class CrudLibreria implements BibliotecaInterface {
         } catch (SQLException e) {
             System.err.println("Errore durante il recupero dati: " + e.getMessage());
         }
-        return List.of();
+        return List.of(); // TODO: così il test non passa
     }
 
     @Override
@@ -100,7 +105,7 @@ public class CrudLibreria implements BibliotecaInterface {
         List<Libro> libriDisponibili = new ArrayList<>();
         String query = "SELECT * FROM libri WHERE disponibile = ?";
         try (Connection conn = ConnessioneDatabase.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
+             PreparedStatement pstmt = conn.prepareStatement(query)) { // TODO: warning
 
             pstmt.setBoolean(1, disponibile);
             try (ResultSet rs = pstmt.executeQuery()) {
@@ -116,47 +121,49 @@ public class CrudLibreria implements BibliotecaInterface {
                 }
             }
 
-            } catch (SQLException e) {
-                System.err.println("Errore durante la selezione dei libri: " + e.getMessage());
-            }
-
-            return libriDisponibili;
-
+        } catch (SQLException e) {
+            System.err.println("Errore durante la selezione dei libri: " + e.getMessage());
         }
 
-        @Override
-        public String testAggiornamentoDisponibilita ( int idLibro, boolean disponibile){
-            String query = "DELETE FROM libri WHERE id = ?";
+        return libriDisponibili;
 
-            try (Connection conn = ConnessioneDatabase.getConnection();
-                 PreparedStatement pstmt = conn.prepareStatement(query)) {
-
-               pstmt.setInt(1, 2);
-                pstmt.executeUpdate();
-
-                System.out.println("Libro eliminato con successo.");
-
-            } catch (SQLException e) {
-                System.err.println("Errore nell'eliminazione: " + e.getMessage());
-            }
-            return "";
-        }
-
-        @Override
-        public String testEliminazione ( int idLibro){
-            String query = "DELETE FROM libri WHERE id = ?";
-
-            try (Connection conn = ConnessioneDatabase.getConnection();
-                 PreparedStatement pstmt = conn.prepareStatement(query)) {
-
-               pstmt.setInt(1, idLibro);
-                pstmt.executeUpdate();
-
-                System.out.println("Libro eliminato con successo.");
-
-            } catch (SQLException e) {
-                System.err.println("Errore nell'eliminazione: " + e.getMessage());
-            }
-            return "";
-        }
     }
+
+    @Override
+    public String testAggiornamentoDisponibilita(int idLibro, boolean disponibile) {
+        String query = "DELETE FROM libri WHERE id = ?";
+
+        try (Connection conn = ConnessioneDatabase.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query)) { // TODO: warning
+
+            pstmt.setInt(1, 2);
+            pstmt.executeUpdate();
+
+            System.out.println("Libro eliminato con successo.");
+
+        } catch (SQLException e) {
+            System.err.println("Errore nell'eliminazione: " + e.getMessage());
+        }
+        return ""; // TODO: la String sta nell'interfaccia InputOutputConst, così il test non passa
+    }
+
+    @Override
+    public String testEliminazione(int idLibro) {
+        String query = "DELETE FROM libri WHERE id = ?";
+
+        try (Connection conn = ConnessioneDatabase.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(query)) { // TODO: warning
+
+            pstmt.setInt(1, idLibro);
+            pstmt.executeUpdate();
+
+            System.out.println("Libro eliminato con successo.");
+
+        } catch (SQLException e) {
+            System.err.println("Errore nell'eliminazione: " + e.getMessage());
+        }
+        return ""; // TODO: la String sta nell'interfaccia InputOutputConst, così il test non passa
+    }
+
+    // INFO: NON sono passati alcuni test del main!!!
+}

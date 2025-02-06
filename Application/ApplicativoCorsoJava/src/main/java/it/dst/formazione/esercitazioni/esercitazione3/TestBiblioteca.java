@@ -1,6 +1,6 @@
 package it.dst.formazione.esercitazioni.esercitazione3;
 
-import it.dst.formazione.esercitazioni.esercitazione3.result.AlfredoCastaldi.LibraryCrud;
+import it.dst.formazione.esercitazioni.esercitazione3.result.DarioFlavioScipioni.CrudLibreria;
 
 import java.util.List;
 
@@ -10,7 +10,7 @@ public class TestBiblioteca {
 
     public static void main(String[] args) {
 
-/*        LibraryCrud crud = new LibraryCrud();
+        CrudLibreria crud = new CrudLibreria();
         String result;
 
         result = crud.createTableLibro();
@@ -50,7 +50,6 @@ public class TestBiblioteca {
         if(result.equalsIgnoreCase(resultString)) {
             System.out.println("\n6. PASS");
         }
-*/
     }
 
 }
