@@ -1,10 +1,5 @@
 package it.dst.formazione.esercitazioni.esercitazione3;
 
-import java.util.List;
-
-
-import static it.dst.formazione.tools.InputOuyputConst.resultString;
-
 public class TestBiblioteca {
 
     public static void main(String[] args) {

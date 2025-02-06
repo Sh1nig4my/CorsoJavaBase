@@ -1,4 +1,4 @@
-package it.dst.formazione.esercitazioni.esercitazione3.result;
+package it.dst.formazione.esercitazioni.esercitazione3.result.GabAgg;
 
 import it.dst.formazione.esercitazioni.esercitazione3.BibliotecaInterface;
 import it.dst.formazione.esercitazioni.esercitazione3.Libro;
@@ -9,13 +9,14 @@ import java.util.List;
 
 public class GabrieleAggLibreriaTest implements BibliotecaInterface {
 
+    // TODO: potrebbe valere la pena pensare di lanciare un messaggio di Errore nelle sezioni catch?
 
     private static final String URL = "jdbc:mysql://localhost:3306/biblioteca";
     private static final String USER = "root";
     private static final String PASSWORD = "1234";
 
-    public static void testConnessione(){
 
+    public static void testConnessione(){
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)){
 
             System.out.println("Connessione al db riuscita");
@@ -26,6 +27,7 @@ public class GabrieleAggLibreriaTest implements BibliotecaInterface {
         }
     }
 
+
     public Connection getConnection(){
         try {
             return DriverManager.getConnection(URL, USER, PASSWORD);
@@ -35,9 +37,11 @@ public class GabrieleAggLibreriaTest implements BibliotecaInterface {
         }
     }
 
+
     @Override
     public String createTableLibro() {
 
+        // TODO: hai già la query salvata nell'interfaccia InputOutputConst
         String query = "CREATE TABLE IF NOT EXISTS libri ("
                 + "id INT AUTO_INCREMENT PRIMARY KEY, "
                 + "titolo VARCHAR(100) NOT NULL, "
@@ -49,7 +53,7 @@ public class GabrieleAggLibreriaTest implements BibliotecaInterface {
              Statement stmt = conn.createStatement()) {
 
             stmt.executeUpdate(query);
-            return ("OK");
+            return ("OK");  // TODO: modificre con const
 
         } catch (SQLException e) {
             return ("Errore nella creazione della tabella: " + e.getMessage());
@@ -59,6 +63,7 @@ public class GabrieleAggLibreriaTest implements BibliotecaInterface {
     @Override
     public String testInserimento() {
 
+        // TODO: e se volessi inserire tutti i libri presnti nella lista dell'Interfaccia InputOutpuConst??
         String query = "INSERT INTO libri (titolo, autore, anno_pubblicazione) VALUES (?, ?, ?)";
 
         try (Connection conn = getConnection();
@@ -69,7 +74,7 @@ public class GabrieleAggLibreriaTest implements BibliotecaInterface {
             pstmt.setInt(3, 1954);
             pstmt.executeUpdate();
 
-            return ("OK");
+            return ("OK"); // TODO: modificre con const
 
         } catch (SQLException e) {
            return ("Errore durante l'inserimento: " + e.getMessage());
@@ -148,7 +153,7 @@ public class GabrieleAggLibreriaTest implements BibliotecaInterface {
 
             if (rowsAffected > 0) {
                 System.out.println("Disponibilità aggiornata con successo, id libro: " + idLibro);
-                return "OK";
+                return "OK"; // TODO: modificare con const
             } else {
                 return "Nessun libro trovato con id: " + idLibro;
             }
@@ -171,7 +176,7 @@ public class GabrieleAggLibreriaTest implements BibliotecaInterface {
 
             if (rowsAffected > 0) {
                 System.out.println("Libro con id: " + idLibro + " eliminato con successo.");
-                return "OK";
+                return "OK"; // TODO: modificre con const
             } else {
                 return "Nessun libro trovato con id: " + idLibro;
             }

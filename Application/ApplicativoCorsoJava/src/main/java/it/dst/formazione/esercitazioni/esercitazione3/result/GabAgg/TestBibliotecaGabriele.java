@@ -1,11 +1,10 @@
 package it.dst.formazione.esercitazioni.esercitazione3.result.GabAgg;
 
 import it.dst.formazione.esercitazioni.esercitazione3.Libro;
-import it.dst.formazione.esercitazioni.esercitazione3.result.GabrieleAggLibreriaTest;
 
 import java.util.List;
 
-import static it.dst.formazione.tools.InputOuyputConst.resultString;
+import static it.dst.formazione.tools.InputOutputConst.resultString;
 
 public class TestBibliotecaGabriele {
 
@@ -74,6 +73,7 @@ public class TestBibliotecaGabriele {
         tuttiLibri.forEach(System.out::println);
 
 
+        // INFO: Esercitzione molto buona. Non c'è nulla d modificare!
     }
 
 }
