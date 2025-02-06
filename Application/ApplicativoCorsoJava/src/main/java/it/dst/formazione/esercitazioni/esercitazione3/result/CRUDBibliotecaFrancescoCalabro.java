@@ -18,7 +18,7 @@ public class CRUDBibliotecaFrancescoCalabro implements BibliotecaInterface {
 
     private static final String URL = "jdbc:mysql://localhost:3306/biblioteca";
     private static final String USER = "root";
-    private static final String PASSWORD = "011092"; //"Kenpachi92#";
+    private static final String PASSWORD = "Kenpachi92#";
 
     public static Connection getConnection() {
         try {
