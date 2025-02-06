@@ -2,7 +2,7 @@ package it.dst.formazione.esercitazioni.esercitazione3.result;
 
 import it.dst.formazione.esercitazioni.esercitazione3.BibliotecaInterface;
 import it.dst.formazione.esercitazioni.esercitazione3.Libro;
-import it.dst.formazione.tools.InputOuyputConst;
+import it.dst.formazione.tools.InputOutputConst;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -12,7 +12,7 @@ public class CRUDbibliotecaGL implements BibliotecaInterface {
 
     // Costanti per la connessione al database
     private static final String USERNAME = "root";
-    private static final String PASSWORD = "03571590!Massi";
+    private static final String PASSWORD = "011092"; //"03571590!Massi";
 
     // Costanti per le query SQL
     private static final String INSERT_QUERY = "INSERT INTO libri (titolo, autore, anno_pubblicazione, disponibile) VALUES (?, ?, ?, ?)";
@@ -21,14 +21,17 @@ public class CRUDbibliotecaGL implements BibliotecaInterface {
     private static final String UPDATE_DISPONIBILITA = "UPDATE libri SET disponibile = ? WHERE id = ?";
     private static final String DELETE_QUERY = "DELETE FROM libri WHERE id = ?";
 
+    // TODO: poteva essere una buona idea creare una classe generica che per tutti andava ad instaurare una connessione con il driver?
+    // TODO: nei catch dei metodo  potrebbe essere utile catturare e propagare uno specifico errore?
+
     // Metodo per creare la tabella
     @Override
     public String createTableLibro() {
-        try (Connection conn = DriverManager.getConnection(InputOuyputConst.URL, USERNAME, PASSWORD);
+        try (Connection conn = DriverManager.getConnection(InputOutputConst.URL, USERNAME, PASSWORD);
              Statement stmt = conn.createStatement()) {
 
-            stmt.executeUpdate(InputOuyputConst.query);
-            return InputOuyputConst.resultString;
+            stmt.executeUpdate(InputOutputConst.query);
+            return InputOutputConst.resultString;
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -39,10 +42,10 @@ public class CRUDbibliotecaGL implements BibliotecaInterface {
     // Metodo per inserire i libri predefiniti
     @Override
     public String testInserimento() {
-        try (Connection conn = DriverManager.getConnection(InputOuyputConst.URL, USERNAME, PASSWORD);
+        try (Connection conn = DriverManager.getConnection(InputOutputConst.URL, USERNAME, PASSWORD);
              PreparedStatement pstmt = conn.prepareStatement(INSERT_QUERY)) {
 
-            for (Libro libro : InputOuyputConst.libri) {
+            for (Libro libro : InputOutputConst.libri) {
                 pstmt.setString(1, libro.getTitolo());
                 pstmt.setString(2, libro.getAutore());
                 pstmt.setInt(3, libro.getAnnoPubblicazione());
@@ -50,7 +53,7 @@ public class CRUDbibliotecaGL implements BibliotecaInterface {
                 pstmt.executeUpdate();
             }
 
-            return InputOuyputConst.resultString;
+            return InputOutputConst.resultString;
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -60,9 +63,10 @@ public class CRUDbibliotecaGL implements BibliotecaInterface {
 
     // Nuovo metodo per inserimento manuale di un libro
     public String inserisciLibroManualmente(String titolo, String autore, int annoPubblicazione, boolean disponibile) {
-        try (Connection conn = DriverManager.getConnection(InputOuyputConst.URL, USERNAME, PASSWORD);
+        try (Connection conn = DriverManager.getConnection(InputOutputConst.URL, USERNAME, PASSWORD);
              PreparedStatement pstmt = conn.prepareStatement(INSERT_QUERY, Statement.RETURN_GENERATED_KEYS)) {
 
+            // TODO: dal momento che hai generato la tabella con delle cratteristiche (es NOT NULL o varie) potrebbe valere la bene lascitre la gestione dell'errore l db e nel caso catturare e propagare solo l'errore?
             // Validazione
             if (titolo == null || titolo.trim().isEmpty()) {
                 return "Errore: il titolo non può essere vuoto";
@@ -82,6 +86,7 @@ public class CRUDbibliotecaGL implements BibliotecaInterface {
             int affectedRows = pstmt.executeUpdate();
 
             if (affectedRows > 0) {
+                // TODO: se sto inserendo unasolariga può essere controllato solo il valore int in risposta a executeUpdate() senza passare per il ResultSet?
                 ResultSet generatedKeys = pstmt.getGeneratedKeys();
                 if (generatedKeys.next()) {
                     int id = generatedKeys.getInt(1);
@@ -89,7 +94,7 @@ public class CRUDbibliotecaGL implements BibliotecaInterface {
                 }
             }
 
-            return InputOuyputConst.resultString;
+            return InputOutputConst.resultString;
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -102,7 +107,7 @@ public class CRUDbibliotecaGL implements BibliotecaInterface {
     public List<Libro> testSelezione() {
         List<Libro> libri = new ArrayList<>();
 
-        try (Connection conn = DriverManager.getConnection(InputOuyputConst.URL, USERNAME, PASSWORD);
+        try (Connection conn = DriverManager.getConnection(InputOutputConst.URL, USERNAME, PASSWORD);
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(SELECT_ALL_QUERY)) {
 
@@ -121,7 +126,7 @@ public class CRUDbibliotecaGL implements BibliotecaInterface {
     public List<Libro> testSelezioneFiltrata(boolean disponibile) {
         List<Libro> libri = new ArrayList<>();
 
-        try (Connection conn = DriverManager.getConnection(InputOuyputConst.URL, USERNAME, PASSWORD);
+        try (Connection conn = DriverManager.getConnection(InputOutputConst.URL, USERNAME, PASSWORD);
              PreparedStatement pstmt = conn.prepareStatement(SELECT_BY_DISPONIBILITA)) {
 
             pstmt.setBoolean(1, disponibile);
@@ -141,14 +146,14 @@ public class CRUDbibliotecaGL implements BibliotecaInterface {
 
     @Override
     public String testAggiornamentoDisponibilita(int idLibro, boolean disponibile) {
-        try (Connection conn = DriverManager.getConnection(InputOuyputConst.URL, USERNAME, PASSWORD);
+        try (Connection conn = DriverManager.getConnection(InputOutputConst.URL, USERNAME, PASSWORD);
              PreparedStatement pstmt = conn.prepareStatement(UPDATE_DISPONIBILITA)) {
 
             pstmt.setBoolean(1, disponibile);
             pstmt.setInt(2, idLibro);
             pstmt.executeUpdate();
 
-            return InputOuyputConst.resultString;
+            return InputOutputConst.resultString;
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -158,13 +163,13 @@ public class CRUDbibliotecaGL implements BibliotecaInterface {
 
     @Override
     public String testEliminazione(int idLibro) {
-        try (Connection conn = DriverManager.getConnection(InputOuyputConst.URL, USERNAME, PASSWORD);
+        try (Connection conn = DriverManager.getConnection(InputOutputConst.URL, USERNAME, PASSWORD);
              PreparedStatement pstmt = conn.prepareStatement(DELETE_QUERY)) {
 
             pstmt.setInt(1, idLibro);
             pstmt.executeUpdate();
 
-            return InputOuyputConst.resultString;
+            return InputOutputConst.resultString;
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -172,6 +177,7 @@ public class CRUDbibliotecaGL implements BibliotecaInterface {
         }
     }
 
+    // INFO: molto carino ed organizzato il metodo sotto
     // Metodo di utilità
     private Libro createLibroFromResultSet(ResultSet rs) throws SQLException {
         return new Libro(
