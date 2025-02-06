@@ -13,9 +13,12 @@ import java.util.List;
 
 public class CRUDBibliotecaFrancescoCalabro implements BibliotecaInterface {
 
+    // TODO: potrebbe essere una soluzione la cattura di una ecceione specifica per SQL e propagare l'errore? Parlo per tutti i metodi
+
+
     private static final String URL = "jdbc:mysql://localhost:3306/biblioteca";
     private static final String USER = "root";
-    private static final String PASSWORD = "Kenpachi92#";
+    private static final String PASSWORD = "011092"; //"Kenpachi92#";
 
     public static Connection getConnection() {
         try {
@@ -28,6 +31,7 @@ public class CRUDBibliotecaFrancescoCalabro implements BibliotecaInterface {
 
     @Override
     public String createTableLibro() {
+        // TODO: la query la puoi prendere dall'interfaccia inputOutputConst
         String query = "CREATE TABLE IF NOT EXISTS libri ("
                 + "id INT AUTO_INCREMENT PRIMARY KEY, "
                 + "titolo VARCHAR(100) NOT NULL, "
@@ -36,7 +40,7 @@ public class CRUDBibliotecaFrancescoCalabro implements BibliotecaInterface {
                 + "disponibile BOOLEAN DEFAULT TRUE)";
 
         try (Connection conn = getConnection();
-             Statement stmt = conn.createStatement()) {
+             Statement stmt = conn.createStatement()) { // INFO: secondo te come mai questo warning?
 
             stmt.executeUpdate(query);
             System.out.println("Tabella 'libri' creata con successo.");
@@ -44,12 +48,13 @@ public class CRUDBibliotecaFrancescoCalabro implements BibliotecaInterface {
         } catch (SQLException e) {
             System.err.println("Errore nella creazione della tabella: " + e.getMessage());
         }
-        return "";
+        return ""; // TODO: la stringa la puoi prendere dall'interfaccia inputOutputConst
     }
 
     @Override
     public String testInserimento() {
         String query = "INSERT INTO libri (titolo, autore, anno_pubblicazione, disponibile) VALUES (?, ?, ?, ?)";
+        // TODO: la list la puoi prendere dall'interfaccia inputOutputConst
         List<Libro> libri = Arrays.asList(
                 new Libro("I Promessi Sposi", "Alessandro Manzoni", 1827, true),
                 new Libro("1984", "George Orwell", 1949, true),
@@ -64,7 +69,7 @@ public class CRUDBibliotecaFrancescoCalabro implements BibliotecaInterface {
         );
 
         try (Connection conn = getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
+             PreparedStatement pstmt = conn.prepareStatement(query)) { // INFO: secondo te come mai questo warning?
 
             for (Libro libro : libri) {
                 pstmt.setString(1, libro.getTitolo());
@@ -81,7 +86,7 @@ public class CRUDBibliotecaFrancescoCalabro implements BibliotecaInterface {
         } catch (SQLException e) {
             System.err.println("Errore durante l'inserimento: " + e.getMessage());
         }
-        return "";
+        return ""; // TODO: la stringa la puoi prendere dall'interfaccia inputOutputConst
     }
 
     @Override
@@ -89,11 +94,11 @@ public class CRUDBibliotecaFrancescoCalabro implements BibliotecaInterface {
         String query = "SELECT * FROM libri";
         List<Libro> libri = new ArrayList<>();
         try (Connection conn = getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query);
+             PreparedStatement pstmt = conn.prepareStatement(query); // INFO: secondo te come mai questo warning?
              ResultSet rs = pstmt.executeQuery()) {
 
             while (rs.next()) {
-                int id = rs.getInt("id");
+                int id = rs.getInt("id"); // INFO: non utilizzi questo id
                 String titolo = rs.getString("titolo");
                 String autore = rs.getString("autore");
                 int annoPubblicazione = rs.getInt("anno_pubblicazione");
@@ -111,11 +116,12 @@ public class CRUDBibliotecaFrancescoCalabro implements BibliotecaInterface {
         String query = "SELECT * FROM libri WHERE disponibile = ?";
         List<Libro> libriFiltrati = new ArrayList<>();
         try (Connection conn = getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
+             PreparedStatement pstmt = conn.prepareStatement(query)) { // INFO: secondo te come mai questo warning?
+
             pstmt.setBoolean(1, disponibile);
             try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
-                    int id = rs.getInt("id");
+                    int id = rs.getInt("id"); // INFO: idem sopra
                     String titolo = rs.getString("titolo");
                     String autore = rs.getString("autore");
                     int annoPubblicazione = rs.getInt("anno_pubblicazione");
@@ -135,7 +141,7 @@ public class CRUDBibliotecaFrancescoCalabro implements BibliotecaInterface {
         String query = "UPDATE libri SET disponibile = ? WHERE id = ?";
 
         try (Connection conn = getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
+             PreparedStatement pstmt = conn.prepareStatement(query)) { // INFO: secondo te come mai questo warning?
 
             pstmt.setBoolean(1, disponibile);
             pstmt.setInt(2, idLibro);
@@ -145,7 +151,7 @@ public class CRUDBibliotecaFrancescoCalabro implements BibliotecaInterface {
         } catch (SQLException e) {
             System.err.println("Errore nell'aggiornamento: " + e.getMessage());
         }
-        return "";
+        return ""; // TODO: la stringa la puoi prendere dall'interfaccia inputOutputConst
     }
 
     @Override
@@ -153,7 +159,7 @@ public class CRUDBibliotecaFrancescoCalabro implements BibliotecaInterface {
         String query = "DELETE FROM libri WHERE id = ?";
 
         try (Connection conn = getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
+             PreparedStatement pstmt = conn.prepareStatement(query)) { // INFO: secondo te come mai questo warning?
 
             pstmt.setInt(1, 1);
             pstmt.executeUpdate();
@@ -162,8 +168,9 @@ public class CRUDBibliotecaFrancescoCalabro implements BibliotecaInterface {
         } catch (SQLException e) {
             System.err.println("Errore nell'eliminazione: " + e.getMessage());
         }
-        return "";
+        return ""; // TODO: la stringa la puoi prendere dall'interfaccia inputOutputConst
     }
+
 }
 
 
