@@ -6,6 +6,7 @@ import java.sql.SQLException;
 
 public class DatabaseConnection {
 
+    // TODO: potrebbe trovarsi nella stessa classe  delle crud?
     // Metodo per ottenere la connessione al database
     public static Connection getConnection() {
         String url = "jdbc:mysql://localhost:3306/biblioteca";  // Inserisci l'URL del tuo database
