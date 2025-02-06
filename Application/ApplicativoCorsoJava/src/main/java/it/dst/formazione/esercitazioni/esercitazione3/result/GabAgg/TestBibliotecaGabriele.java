@@ -70,6 +70,14 @@ public class TestBibliotecaGabriele {
                 System.out.println("\n5. PASS");
             }
 
+            //BONUS 5.5 TRANSIZIONE (SEMPRE IL PRIMO RECORD PER CONFRONTO)
+            List<Libro> libriAggiornati = testGab.testAggiornamentoESelezione(1, false);
+            if (!libriAggiornati.isEmpty()) {
+                System.out.println("\n5.5 PASS");
+                System.out.println("\nNumero di libri aggiornati: " + libriAggiornati.size());
+                libriAggiornati.forEach(System.out::println);
+            }
+
 
             //elimino libro by id
             result = testGab.testEliminazione(4);
