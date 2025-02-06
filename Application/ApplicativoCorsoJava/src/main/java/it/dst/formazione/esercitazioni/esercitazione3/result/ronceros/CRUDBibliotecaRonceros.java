@@ -10,6 +10,8 @@ import java.util.List;
 
 public class CRUDBibliotecaRonceros implements BibliotecaInterface {
 
+    // TODO: potrebbe essere una soluzione la cattura di una ecceione specifica per SQL e propagare l'errore? Parlo per tutti i metodi
+
     @Override
     public String createTableLibro() {
         // Tentativo di creazione della tabella 'libri' nel database.
@@ -17,7 +19,7 @@ public class CRUDBibliotecaRonceros implements BibliotecaInterface {
         // Se la creazione va a buon fine, restituisce un messaggio di successo.
         // In caso di errore, restituisce il messaggio di errore generato.
         try (Connection conn = DatabaseConnection.getConnection();
-             Statement stmt = conn.createStatement()) {
+             Statement stmt = conn.createStatement()) { // TODO: come mai questo warning secondo te?
             stmt.executeUpdate(InputOutputConst.query);
             return InputOutputConst.resultString;
         } catch (SQLException e) {
@@ -29,7 +31,7 @@ public class CRUDBibliotecaRonceros implements BibliotecaInterface {
     public String testInserimento() {
         String query = "INSERT INTO libri (titolo, autore, anno_pubblicazione, disponibile) VALUES (?, ?, ?, ?)";
         try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
+             PreparedStatement pstmt = conn.prepareStatement(query)) { // TODO: come mai questo warning secondo te?
             for (Libro libro : InputOutputConst.libri) {
                 pstmt.setString(1, libro.getTitolo());
                 pstmt.setString(2, libro.getAutore());
@@ -48,7 +50,7 @@ public class CRUDBibliotecaRonceros implements BibliotecaInterface {
         List<Libro> libri = new ArrayList<>();
         String query = "SELECT * FROM libri";
         try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query);
+             PreparedStatement pstmt = conn.prepareStatement(query); // TODO: come mai questo warning secondo te?
              ResultSet rs = pstmt.executeQuery()) {
             while (rs.next()) {
                 libri.add(new Libro(
@@ -70,7 +72,7 @@ public class CRUDBibliotecaRonceros implements BibliotecaInterface {
         List<Libro> libri = new ArrayList<>();
         String query = "SELECT * FROM libri WHERE disponibile = ?";
         try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
+             PreparedStatement pstmt = conn.prepareStatement(query)) { // TODO: come mai questo warning secondo te?
             pstmt.setBoolean(1, disponibile);
             try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
@@ -93,7 +95,7 @@ public class CRUDBibliotecaRonceros implements BibliotecaInterface {
     public String testAggiornamentoDisponibilita(int idLibro, boolean disponibile) {
         String query = "UPDATE libri SET disponibile = ? WHERE id = ?";
         try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
+             PreparedStatement pstmt = conn.prepareStatement(query)) { // TODO: come mai questo warning secondo te?
             pstmt.setBoolean(1, disponibile);
             pstmt.setInt(2, idLibro);
             int rowsUpdated = pstmt.executeUpdate();
@@ -107,7 +109,7 @@ public class CRUDBibliotecaRonceros implements BibliotecaInterface {
     public String testEliminazione(int idLibro) {
         String query = "DELETE FROM libri WHERE id = ?";
         try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
+             PreparedStatement pstmt = conn.prepareStatement(query)) { // TODO: come mai questo warning secondo te?
             pstmt.setInt(1, idLibro);
             int rowsDeleted = pstmt.executeUpdate();
             return (rowsDeleted > 0) ? InputOutputConst.resultString : "Nessun libro eliminato.";
