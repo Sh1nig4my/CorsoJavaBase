@@ -2,37 +2,32 @@ package it.dst.formazione.esercitazioni.esercitazione3.result.AlfredoCastaldi;
 
 import it.dst.formazione.esercitazioni.esercitazione3.BibliotecaInterface;
 import it.dst.formazione.esercitazioni.esercitazione3.Libro;
+import it.dst.formazione.tools.InputOutputConst;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
-public class LibraryCrud implements BibliotecaInterface {
+public class LibreriaCrud implements BibliotecaInterface {
 
     private static Connection connection = ConnectionManager.getConnection();
+    private static String resultString = InputOutputConst.resultString;
 
     // TODO: per la gestione dell'errore puoi utilizzare una ecdezione? Magari catturando e propagando l'errore catturato..
-    // INFO: se provo ad eseguire tutto dal Main si rompe mle, come mai secondo te?
-    // INFO: comunque sia l'esercitazione va bene
+
 
     @Override
     public String createTableLibro() {
-        Integer affectedRows = 0; // TODO: inizializzazione non necessaria
-        // TODO: la query la puoi prendere da InputOutputConst
-        String query = "CREATE TABLE IF NOT EXISTS libri ("
-                + "id INT AUTO_INCREMENT PRIMARY KEY, "
-                + "titolo VARCHAR(100) NOT NULL, "
-                + "autore VARCHAR(100) NOT NULL, "
-                + "anno_pubblicazione INT NOT NULL, "
-                + "disponibile BOOLEAN DEFAULT TRUE)";
-
+        int affectedRows = 0;
+        String query = InputOutputConst.query;
+        String tableName = "libri";
         try {
-
             Statement stmt = connection.createStatement();
             affectedRows = stmt.executeUpdate(query);
             // da vedere
-            System.out.println(affectedRows > 0 ? "tabella creata" : "la tabella già esiste");
-            return "OK"; // TODO: la puoi prendere da InputOutputConst
+            System.out.println(!checkIfTableExists(connection, tableName) ? "tabella creata" : "la tabella già esiste");
+            return resultString;
 
         } catch (SQLException e) {
             System.err.println("Errore nella creazione della tabella: " + e.getMessage());
@@ -41,10 +36,18 @@ public class LibraryCrud implements BibliotecaInterface {
 
     }
 
+    private Boolean checkIfTableExists(  Connection connection, String tableName) throws SQLException {
+            DatabaseMetaData meta = connection.getMetaData();
+            ResultSet resultSet = meta.getTables(null, null, tableName, new String[] {"TABLE"});
+            return resultSet.next();
+
+    }
+
     // TODO: perché vero??
+    // perchè inserisce sul database un istanza della classe Libro
     public Integer veroInserimento(Libro book) {
         String query = "INSERT INTO libri (titolo, autore, anno_pubblicazione) VALUES (?, ?, ?)";
-        Integer affectedRows = 0; // TODO: perchè l'ide ci dice di fare un wrap secondo te?
+        int affectedRows = 0;
         try (
                 PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setString(1, book.getTitolo());
@@ -59,6 +62,15 @@ public class LibraryCrud implements BibliotecaInterface {
 
 
     // TODO: e se volessi inserire tutta la lista libri presente nell'interfaccia InputOutputConst
+    // inserimento tutta la lista presa da InputOutputConst.libri
+    public int inserimentoInteraLista(){
+        List<Libro> libri = InputOutputConst.libri;
+        AtomicReference<Integer> affectedRows = new AtomicReference<>(0);
+        libri.forEach((libro)->{ affectedRows.updateAndGet(v -> v + veroInserimento(libro));});
+        return affectedRows.get();
+    }
+
+
     @Override
     public String testInserimento() {
         String query = "INSERT INTO libri (titolo, autore, anno_pubblicazione) VALUES (?, ?, ?)";
@@ -68,7 +80,7 @@ public class LibraryCrud implements BibliotecaInterface {
             pstmt.setString(2, "J.R.R. Tolkien");
             pstmt.setInt(3, 1954);
             pstmt.executeUpdate();
-            return "OK"; // TODO: la puoi prendere da InputOutputConst
+            return resultString;
         } catch (SQLException e) {
             System.err.println("Errore durante l'inserimento: " + e.getMessage());
             return "ERROR";
@@ -112,12 +124,32 @@ public class LibraryCrud implements BibliotecaInterface {
     @Override
     public List<Libro> testSelezioneFiltrata(boolean disponibile) {
         //TODO: la tua soluzione è buona, può essere più efficiente prevedere una query specifica per questa selezione e non utilizzare un stream?
+        // nuova soluzione con query:
+        String filterQuery = "SELECT * FROM libri WHERE disponibile = true";
+        List<Libro> libriFiltrati = new ArrayList<>();
+        try (PreparedStatement pstmt = connection.prepareStatement(filterQuery);
+         ResultSet rs = pstmt.executeQuery()){
+            while (rs.next()){
+                libriFiltrati.add(new Libro(
+                        rs.getObject("id", Integer.class),
+                        rs.getString("titolo"),
+                        rs.getString("autore"),
+                        rs.getObject("anno_pubblicazione", Integer.class),
+                        rs.getObject("disponibile", Boolean.class))
+                );
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        /*
         List<Libro> libri = testSelezione();
         List<Libro> libriFiltrati = libri.stream().filter(
                         (libro) -> {
                             return libro.isDisponibile() == disponibile;
                         })
                 .toList();
+
+         */
         return libriFiltrati;
     }
 
@@ -125,7 +157,7 @@ public class LibraryCrud implements BibliotecaInterface {
     public String testAggiornamentoDisponibilita(int idLibro, boolean disponibile) {
 
         String query = "UPDATE libri SET disponibile = ? WHERE id = ?";
-        Integer affectedRows = 0; // TODO: altro warning come sopra
+        int affectedRows = 0;
         try (
                 PreparedStatement pstmt = connection.prepareStatement(query)) {
 
@@ -133,10 +165,10 @@ public class LibraryCrud implements BibliotecaInterface {
             pstmt.setInt(2, idLibro);
             affectedRows = pstmt.executeUpdate();
             if (affectedRows == 0) {
-                throw new SQLException("errore nell'aggiornamento");
+                throw new SQLException("il libro selezionato per UPDATE non esiste");
             }
             System.out.println("libro aggiornato con successo");
-            return "OK"; // TODO: la puoi prendere da InputOutputConst
+            return resultString;
         } catch (SQLException e) {
             System.err.println(e.getMessage());
             return "ERROR";
@@ -147,21 +179,22 @@ public class LibraryCrud implements BibliotecaInterface {
     @Override
     public String testEliminazione(int idLibro) {
         String query = "DELETE FROM libri WHERE id = ?";
-        Integer affectedRows = 0; // TODO
+        int affectedRows = 0;
         try (
                 PreparedStatement pstmt = connection.prepareStatement(query)) {
 
             pstmt.setInt(1, idLibro);
             affectedRows = pstmt.executeUpdate();
             if (affectedRows == 0) {
-                throw new SQLException("libro non trovato");
+                throw new SQLException("il libro selezionato per la DELETE non esiste");
             }
             System.out.println("Libro eliminato con successo.");
-            return "OK"; // TODO: la puoi prendere da InputOutputConst
+            return resultString;
         } catch (SQLException e) {
             System.err.println(e.getMessage());
             return "ERROR";
         }
 
     }
+
 }
