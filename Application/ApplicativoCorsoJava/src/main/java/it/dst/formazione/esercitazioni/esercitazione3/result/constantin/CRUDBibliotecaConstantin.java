@@ -1,4 +1,4 @@
-package it.dst.formazione.esercitazioni.esercitazione3.result;
+package it.dst.formazione.esercitazioni.esercitazione3.result.constantin;
 
 import it.dst.formazione.esercitazioni.esercitazione3.BibliotecaInterface;
 import it.dst.formazione.esercitazioni.esercitazione3.Libro;
@@ -10,9 +10,13 @@ import java.util.List;
 
 public class CRUDBibliotecaConstantin implements BibliotecaInterface {
 
+    // TODO: potrebbe essere una soluzione la cattura di una ecceione specifica per SQL e propagare l'errore? Parlo per tutti i metodi
+    //TODO: puoi prendere la url dall'interfaccia
     private static final String URL = "jdbc:mysql://localhost:3306/biblioteca";
     private static final String USER = "root";
-    private static final String PASSWORD = "";
+    private static final String PASSWORD = "011092";
+
+
     public Connection getConnection() {
         try {
             return DriverManager.getConnection(URL, USER, PASSWORD);
@@ -21,8 +25,11 @@ public class CRUDBibliotecaConstantin implements BibliotecaInterface {
             return null;
         }
     }
+
+
     @Override
     public String createTableLibro() {
+        // TODO pui prendere la query dall'interfaccia
         String query = "CREATE TABLE IF NOT EXISTS libri (" +
                 "id INT AUTO_INCREMENT PRIMARY KEY, " +
                 "titolo VARCHAR(100) NOT NULL, " +
@@ -31,7 +38,7 @@ public class CRUDBibliotecaConstantin implements BibliotecaInterface {
                 "disponibile BOOLEAN DEFAULT TRUE)";
         try (Connection conn = getConnection(); Statement stmt = conn.createStatement()) {
             stmt.executeUpdate(query);
-            return "Tabella 'libri' creata con successo.";
+            return "Tabella 'libri' creata con successo."; // TODO: Con questo risultato il test nel main non passa poichè si aspetta la stringa salvata nell'interfaccia che dice "OK"!
         } catch (SQLException e) {
             return "Errore nella creazione della tabella: " + e.getMessage();
         }
@@ -40,6 +47,7 @@ public class CRUDBibliotecaConstantin implements BibliotecaInterface {
     @Override
     public String testInserimento() {
         String query = "INSERT INTO libri (titolo, autore, anno_pubblicazione, disponibile) VALUES (?, ?, ?, ?)";
+        // TODO: prende libri dall'interfaccia InputOutputConst
         List<Libro> libri = Arrays.asList(
                 new Libro("I Promessi Sposi", "Alessandro Manzoni", 1827, true),
                 new Libro("1984", "George Orwell", 1949, true),
@@ -68,7 +76,7 @@ public class CRUDBibliotecaConstantin implements BibliotecaInterface {
         } catch (SQLException e) {
             System.err.println("Errore durante l'inserimento: " + e.getMessage());
         }
-        return "";
+        return ""; // TODO: Con questo risultato il test nel main non passa poichè si aspetta la stringa salvata nell'interfaccia che dice "OK"!
     }
 
     @Override
@@ -121,7 +129,7 @@ public class CRUDBibliotecaConstantin implements BibliotecaInterface {
             pstmt.setBoolean(1, disponibile);
             pstmt.setInt(2, idLibro);
             pstmt.executeUpdate();
-            return "Disponibilità aggiornata con successo.";
+            return "Disponibilità aggiornata con successo."; // TODO: Con questo risultato il test nel main non passa poichè si aspetta la stringa salvata nell'interfaccia che dice "OK"!
         } catch (SQLException e) {
             return "Errore nell'aggiornamento della disponibilità: " + e.getMessage();
         }
@@ -133,10 +141,12 @@ public class CRUDBibliotecaConstantin implements BibliotecaInterface {
         try (Connection conn = getConnection(); PreparedStatement pstmt = conn.prepareStatement(query)) {
             pstmt.setInt(1, idLibro);
             pstmt.executeUpdate();
-            return "Libro eliminato con successo.";
+            return "Libro eliminato con successo."; // TODO: Con questo risultato il test nel main non passa poichè si aspetta la stringa salvata nell'interfaccia che dice "OK"!
         } catch (SQLException e) {
             return "Errore nell'eliminazione del libro: " + e.getMessage();
         }
     }
+
+    // INFO: molto bene anche se tramite il main passano solo 2 metodi su 6 per vi del valore di ritorno
 }
 
