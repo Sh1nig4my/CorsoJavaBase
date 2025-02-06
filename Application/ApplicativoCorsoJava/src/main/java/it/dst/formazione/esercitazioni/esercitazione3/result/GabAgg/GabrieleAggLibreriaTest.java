@@ -20,7 +20,7 @@ public class GabrieleAggLibreriaTest implements BibliotecaInterface {
 
 
     @SuppressWarnings("unused")
-    public static void testConnessione(){
+    public static void testConnessione() throws SQLException{
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)){
 
             System.out.println("Connessione al db riuscita");
@@ -35,7 +35,7 @@ public class GabrieleAggLibreriaTest implements BibliotecaInterface {
     }
 
 
-    public Connection getConnection(){
+    public Connection getConnection() throws SQLException{
         try {
             return DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (SQLException e){
@@ -46,7 +46,7 @@ public class GabrieleAggLibreriaTest implements BibliotecaInterface {
 
 
     @Override
-    public String createTableLibro() {
+    public String createTableLibro()  {
 
         // GabrieleAgg 6/2/25 12:57 modificata con query in InputOutputConst.
         String query = InputOutputConst.query;
@@ -85,7 +85,7 @@ public class GabrieleAggLibreriaTest implements BibliotecaInterface {
     }
 
     //Nel main di TestBibliotecaGabriele questo è il passaggio 2.5 (creato su richiesta di Emanuele)
-    public String testInserimentoLibriDaInputOutputConst(){
+    public String testInserimentoLibriDaInputOutputConst() throws SQLException{
 
         String query = "INSERT INTO libri (titolo, autore, anno_pubblicazione) VALUES (?, ?, ?)";
 
@@ -127,7 +127,6 @@ public class GabrieleAggLibreriaTest implements BibliotecaInterface {
                 );
                 libri.add(libro);
             }
-
         } catch (SQLException e) {
             System.err.println("Errore durante il recupero dati: " + e.getMessage());
         }
@@ -161,7 +160,6 @@ public class GabrieleAggLibreriaTest implements BibliotecaInterface {
         } catch (SQLException e) {
             System.err.println("Errore durante la selezione dei libri: " + e.getMessage());
         }
-
         return libriDisponibili;
     }
 
