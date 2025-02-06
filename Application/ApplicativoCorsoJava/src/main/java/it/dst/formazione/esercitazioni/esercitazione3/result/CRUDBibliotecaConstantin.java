@@ -1,3 +1,8 @@
+package it.dst.formazione.esercitazioni.esercitazione3.result;
+
+import it.dst.formazione.esercitazioni.esercitazione3.BibliotecaInterface;
+import it.dst.formazione.esercitazioni.esercitazione3.Libro;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;

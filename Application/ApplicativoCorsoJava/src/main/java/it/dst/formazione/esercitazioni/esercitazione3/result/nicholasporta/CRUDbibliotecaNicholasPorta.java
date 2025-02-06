@@ -1,4 +1,4 @@
-package it.dst.formazione.esercitazioni.esercitazione3.result;
+package it.dst.formazione.esercitazioni.esercitazione3.result.nicholasporta;
 
 import it.dst.formazione.esercitazioni.esercitazione3.BibliotecaInterface;
 import it.dst.formazione.esercitazioni.esercitazione3.Libro;
@@ -11,8 +11,11 @@ import java.util.List;
 import static it.dst.formazione.tools.InputOutputConst.*;
 
 public class CRUDbibliotecaNicholasPorta implements BibliotecaInterface {
+
+    // TODO: potrebbe essere una soluzione la cattura di una ecceione specifica per SQL e propagare l'errore? Parlo per tutti i metodi
+
     private static final String USER = "root";
-    private static final String PASSWORD = "bnck028360";
+    private static final String PASSWORD = "011092"; //"bnck028360";
 
     public static Connection getConnection() {
         try {
@@ -26,7 +29,7 @@ public class CRUDbibliotecaNicholasPorta implements BibliotecaInterface {
 
     public String createTableLibro() {
         try (Connection conn = getConnection();
-             Statement stmt = conn.createStatement()) {
+             Statement stmt = conn.createStatement()) { // INFO: il warning può essere 'aggiustato'?
             stmt.executeUpdate(query);
             return resultString;
         } catch (SQLException e) {
@@ -38,7 +41,7 @@ public class CRUDbibliotecaNicholasPorta implements BibliotecaInterface {
         String query = "INSERT INTO libri (titolo, autore, anno_pubblicazione, disponibile) VALUES (?, ?, ?, ?)";
 
         try (Connection conn = getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
+             PreparedStatement pstmt = conn.prepareStatement(query)) { // INFO: il warning può essere 'aggiustato'?
             for (Libro libro : libri) {
                 pstmt.setString(1, libro.getTitolo());
                 pstmt.setString(2, libro.getAutore());
@@ -58,7 +61,7 @@ public class CRUDbibliotecaNicholasPorta implements BibliotecaInterface {
         List<Libro> elencoLibri = new ArrayList<>();
         String query = "SELECT * FROM libri";
         try (Connection conn = getConnection();
-             Statement stmt = conn.createStatement();
+             Statement stmt = conn.createStatement(); // INFO: il warning può essere 'aggiustato'?
              ResultSet rs = stmt.executeQuery(query)) {
             while (rs.next()) {
                 elencoLibri.add(new Libro(
@@ -79,7 +82,7 @@ public class CRUDbibliotecaNicholasPorta implements BibliotecaInterface {
         List<Libro> elencoLibri = new ArrayList<>();
         String query = "SELECT * FROM libri WHERE disponibile = ?";
         try (Connection conn = getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
+             PreparedStatement pstmt = conn.prepareStatement(query)) { // INFO: il warning può essere 'aggiustato'?
             pstmt.setBoolean(1, disponibile);
             ResultSet rs = pstmt.executeQuery();
             while (rs.next()) {
@@ -100,7 +103,7 @@ public class CRUDbibliotecaNicholasPorta implements BibliotecaInterface {
     public String testAggiornamentoDisponibilita(int idLibro, boolean disponibile) {
         String query = "UPDATE libri SET disponibile = ? WHERE id = ?";
         try (Connection conn = getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
+             PreparedStatement pstmt = conn.prepareStatement(query)) { // INFO: il warning può essere 'aggiustato'?
             pstmt.setBoolean(1, disponibile);
             pstmt.setInt(2, idLibro);
             return resultString;
@@ -113,7 +116,7 @@ public class CRUDbibliotecaNicholasPorta implements BibliotecaInterface {
         String query = "DELETE FROM libri WHERE id = ?";
 
         try (Connection conn = getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(query)) {
+             PreparedStatement pstmt = conn.prepareStatement(query)) { // INFO: il warning può essere 'aggiustato'?
 
             pstmt.setInt(1, 1);
             pstmt.executeUpdate();
@@ -121,10 +124,13 @@ public class CRUDbibliotecaNicholasPorta implements BibliotecaInterface {
             return resultString;
 
         } catch (SQLException e) {
-            return"Errore nell'eliminazione: " + e.getMessage();
+            return "Errore nell'eliminazione: " + e.getMessage();
         }
     }
-    }
+
+    // INFO: molto bene Nicholas!
+
+}
 
 
 
