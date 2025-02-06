@@ -82,7 +82,7 @@ public class TestBibliotecaGabriele {
             //Stampa per vedere se il libro è stato effettivamente eliminato
             tuttiLibri.forEach(System.out::println);
 
-            
+
 
         } catch (SQLException exception){
             System.out.println("Messaggio: " + exception.getMessage());
