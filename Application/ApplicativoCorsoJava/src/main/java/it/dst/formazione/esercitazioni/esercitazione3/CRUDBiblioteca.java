@@ -1,11 +1,5 @@
 package it.dst.formazione.esercitazioni.esercitazione3;
 
-import it.dst.formazione.tools.InputOuyputConst;
-
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-
 import static it.dst.formazione.tools.InputOuyputConst.*;
 
 
