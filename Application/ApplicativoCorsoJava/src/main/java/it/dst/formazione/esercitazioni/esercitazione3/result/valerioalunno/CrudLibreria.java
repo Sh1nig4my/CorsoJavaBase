@@ -7,6 +7,7 @@ import it.dst.formazione.esercitazioni.esercitazione3.result.ronceros.DatabaseCo
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class CrudLibreria implements BibliotecaInterface {
@@ -115,7 +116,7 @@ public class CrudLibreria implements BibliotecaInterface {
         } catch (SQLException e) {
             System.err.println("Errore durante il recupero dati: " + e.getMessage());
         }
-
+        return List.of();
     }
 
     @Override
@@ -133,6 +134,8 @@ public class CrudLibreria implements BibliotecaInterface {
         } catch (SQLException e) {
             System.err.println("Errore nell'aggiornamento: " + e.getMessage());
         }
+
+        return "";
     }
 
     @Override
@@ -151,6 +154,6 @@ public class CrudLibreria implements BibliotecaInterface {
             System.err.println("Errore nell'eliminazione: " + e.getMessage());
         }
 
-
+        return "";
     }
 }
