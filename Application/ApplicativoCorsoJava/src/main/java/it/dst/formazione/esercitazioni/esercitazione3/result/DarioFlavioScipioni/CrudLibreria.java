@@ -43,7 +43,7 @@ public class CrudLibreria implements BibliotecaInterface {
         return InputOutputConst.resultString;
     }
 
-    ;;@Override
+    @Override
     public String testInserimento() {
         String query = "INSERT INTO libri (titolo, autore, anno_pubblicazione, disponibile) VALUES (?, ?, ?, ?)";
         // TODO: la lista sta nell'interfaccia InputOutputConst

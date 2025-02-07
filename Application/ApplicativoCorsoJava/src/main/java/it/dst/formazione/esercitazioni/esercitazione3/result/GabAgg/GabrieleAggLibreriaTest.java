@@ -20,7 +20,7 @@ public class GabrieleAggLibreriaTest implements BibliotecaInterface {
 
 
     @SuppressWarnings("unused")
-    public static void testConnessione(){
+    public static void testConnessione() throws SQLException{
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)){
 
             System.out.println("Connessione al db riuscita");
@@ -35,7 +35,7 @@ public class GabrieleAggLibreriaTest implements BibliotecaInterface {
     }
 
 
-    public Connection getConnection(){
+    public Connection getConnection() throws SQLException{
         try {
             return DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (SQLException e){
@@ -46,7 +46,7 @@ public class GabrieleAggLibreriaTest implements BibliotecaInterface {
 
 
     @Override
-    public String createTableLibro() {
+    public String createTableLibro()  {
 
         // GabrieleAgg 6/2/25 12:57 modificata con query in InputOutputConst.
         String query = InputOutputConst.query;
@@ -85,7 +85,7 @@ public class GabrieleAggLibreriaTest implements BibliotecaInterface {
     }
 
     //Nel main di TestBibliotecaGabriele questo è il passaggio 2.5 (creato su richiesta di Emanuele)
-    public String testInserimentoLibriDaInputOutputConst(){
+    public String testInserimentoLibriDaInputOutputConst() throws SQLException{
 
         String query = "INSERT INTO libri (titolo, autore, anno_pubblicazione) VALUES (?, ?, ?)";
 
@@ -127,7 +127,6 @@ public class GabrieleAggLibreriaTest implements BibliotecaInterface {
                 );
                 libri.add(libro);
             }
-
         } catch (SQLException e) {
             System.err.println("Errore durante il recupero dati: " + e.getMessage());
         }
@@ -161,16 +160,16 @@ public class GabrieleAggLibreriaTest implements BibliotecaInterface {
         } catch (SQLException e) {
             System.err.println("Errore durante la selezione dei libri: " + e.getMessage());
         }
-
         return libriDisponibili;
     }
 
 
     /*
       Nota di Gabriele: La prima volta che viene eseguito questo metodo e subito dopo la prova di stampa, in console
-      apparirà ancora come true, nonostante questo il metodo funziona, penso sia un problema di concorrenza di azioni,
-      simile a una data race, dove l'invio di questi dati nel db, risultano più lenti del programma in java.
-      Esaminerò la situazione, penso si possa risolvere dando tempo, magari usando uno Sleep per testare la teoria.
+      apparirà ancora come true (pulito il resto del commento perché troppo lungo).
+
+      RISOLTO CON TRANSACTION, DOVE UPDATE STATO E STAMPA LISTA LIBRI AVVIENE IN UN UNICA TRANSIZIONE
+      VEDERE METODO public List<Libro> testAggiornamentoESelezione(int idLibro, boolean disponibile)
      */
     @Override
     public String testAggiornamentoDisponibilita(int idLibro, boolean disponibile) {
@@ -194,6 +193,61 @@ public class GabrieleAggLibreriaTest implements BibliotecaInterface {
             System.err.println("Errore nell'aggiornamento: " + e.getMessage());
             return "Errore nell'aggiornamento";
         }
+    }
+
+    /*
+        NOTA DI GABRIELE: METODO PER ESEGUIRE AGGIORNAMENTO DISPONIBILITA' E STAMPARE IN CONSOLE LA
+        LISTA DI LIBRI (SELECT *), NOMINATIVO: TEST BONUS 5.5
+     */
+    public List<Libro> testAggiornamentoESelezione(int idLibro, boolean disponibile) throws SQLException {
+        String updateQuery = "UPDATE libri SET disponibile = ? WHERE id = ?";
+        String selectQuery = "SELECT * FROM libri";
+
+        List<Libro> libri = new ArrayList<>();
+
+        try (Connection conn = getConnection()){
+
+            if(conn == null) {
+                System.out.println("Errore con la connessione, controllare connection string");
+                return libri;
+            }
+
+            conn.setAutoCommit(false);
+
+            try (PreparedStatement pstmt = conn.prepareStatement(updateQuery)) {
+                pstmt.setBoolean(1, disponibile);
+                pstmt.setInt(2, idLibro);
+                int rowsAffected = pstmt.executeUpdate();
+
+                if(rowsAffected == 0){
+                    conn.rollback();
+                    System.out.println("Nessun libro trovato con id: " + idLibro);
+                    return libri;
+                }
+            }
+            //Stampo per vedere quel bug fix
+            try (PreparedStatement pstmt = conn.prepareStatement(selectQuery);
+            ResultSet rs = pstmt.executeQuery()) {
+                while(rs.next()){
+                    Libro libro = new Libro(
+                            rs.getInt("id"),
+                            rs.getString("titolo"),
+                            rs.getString("autore"),
+                            rs.getInt("anno_pubblicazione"),
+                            rs.getBoolean("disponibile")
+                    );
+                    libri.add(libro);
+                }
+            }
+            conn.commit();
+
+        } catch (SQLException ex){
+            System.out.println("Errore nella transazione controllare sotto:\n " + ex.getMessage());
+            System.out.println("stato sql: " + ex.getSQLState());
+            System.out.println("codice errore: " + ex.getErrorCode());
+            System.out.println("test stacktrace(da eliminare in seguito): " + Arrays.toString(ex.getStackTrace()));
+        }
+        return libri;
     }
 
     @Override

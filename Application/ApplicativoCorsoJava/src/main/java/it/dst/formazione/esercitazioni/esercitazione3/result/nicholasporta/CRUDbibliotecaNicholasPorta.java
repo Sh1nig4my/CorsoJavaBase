@@ -17,12 +17,12 @@ public class CRUDbibliotecaNicholasPorta implements BibliotecaInterface {
     private static final String USER = "root";
     private static final String PASSWORD = "011092"; //"bnck028360";
 
-    public static Connection getConnection() {
+    public static Connection getConnection() throws SQLException{
         try {
             return DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (SQLException e) {
             System.out.println("Errore di connessione al database: " + e.getMessage());
-            return null;
+            throw e;
         }
     }
 
@@ -33,7 +33,7 @@ public class CRUDbibliotecaNicholasPorta implements BibliotecaInterface {
             stmt.executeUpdate(query);
             return resultString;
         } catch (SQLException e) {
-            return "Errore nella creazione della tabella: " + e.getMessage();
+            throw new RuntimeException("Errore durante la creazione della tabella", e);
         }
     }
 
@@ -52,7 +52,7 @@ public class CRUDbibliotecaNicholasPorta implements BibliotecaInterface {
             return resultString;
 
         } catch (SQLException e) {
-            return "Errore durante l'inserimento: " + e.getMessage();
+            throw new RuntimeException("Errore durante l'inserimento: " + e);
         }
     }
 
@@ -73,7 +73,7 @@ public class CRUDbibliotecaNicholasPorta implements BibliotecaInterface {
                 ));
             }
         } catch (SQLException e) {
-            System.out.println("Errore nella selezione dei libri: " + e.getMessage());
+            throw new RuntimeException("Errore nella selezione dei libri: " + e);
         }
         return elencoLibri;
     }
@@ -95,7 +95,7 @@ public class CRUDbibliotecaNicholasPorta implements BibliotecaInterface {
                 ));
             }
         } catch (SQLException e) {
-            System.out.println("Errore nella selezione filtrata: " + e.getMessage());
+            throw new RuntimeException("Errore nella selezione filtrata: " + e);
         }
         return elencoLibri;
     }
@@ -108,7 +108,7 @@ public class CRUDbibliotecaNicholasPorta implements BibliotecaInterface {
             pstmt.setInt(2, idLibro);
             return resultString;
         } catch (SQLException e) {
-            return "Errore nell'aggiornamento della disponibilità: " + e.getMessage();
+            throw new RuntimeException("Errore nell'aggiornamento della disponibilità: " + e);
         }
     }
 
@@ -124,7 +124,7 @@ public class CRUDbibliotecaNicholasPorta implements BibliotecaInterface {
             return resultString;
 
         } catch (SQLException e) {
-            return "Errore nell'eliminazione: " + e.getMessage();
+            throw new RuntimeException("Errore nell'eliminazione: " + e);
         }
     }
 

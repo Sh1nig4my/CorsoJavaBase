@@ -1,7 +1,13 @@
 package it.dst.formazione.esercitazioni.esercitazione3;
 
-import static it.dst.formazione.tools.InputOuyputConst.*;
 
+import it.dst.formazione.tools.InputOutputConst;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import static it.dst.formazione.tools.InputOutputConst.*;
 
 public class CRUDBiblioteca implements BibliotecaInterface{
 
@@ -16,7 +22,7 @@ public class CRUDBiblioteca implements BibliotecaInterface{
     public String testInserimento() {
         String query = "INSERT INTO libri (titolo, autore, anno_pubblicazione, disponibile) VALUES (?, ?, ?, ?)";
 
-        List<Libro> libri = InputOuyputConst.libri;
+        List<Libro> libri = InputOutputConst.libri;
 
         try (Connection conn = getConnection();
              PreparedStatement pstmt = conn.prepareStatement(query)) {
