@@ -1,4 +1,4 @@
-package it.dst.formazione.esercitazioni.esercitazione3.result.valerioAlunno;
+package it.dst.formazione.esercitazioni.esercitazione3.result.valerioalunno;
 
 import it.dst.formazione.esercitazioni.esercitazione3.BibliotecaInterface;
 import it.dst.formazione.esercitazioni.esercitazione3.Libro;
