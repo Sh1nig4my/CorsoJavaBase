@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+
+<html lang="it">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Lezione 4: Programmazione Orientata agli Oggetti</title>
+    <link href="/styles/style.css" rel="stylesheet" />
+</head>
+
+<body>
+    <h1>Giorno 4: Programmazione Orientata agli Oggetti</h1>
+    
+    <section class="intro">
+        <p>Oggi approfondiremo la Programmazione Orientata agli Oggetti (OOP), un paradigma di programmazione
+            fondamentale per lo sviluppo di applicazioni modulari e scalabili. L'OOP consente di rappresentare concetti
+            e processi utilizzando classi e oggetti, favorendo la manutenibilità e il riutilizzo del codice.</p>
+    </section>
+
+    <div class="section">
+        <h2>Argomenti della Lezione</h2>
+        <h3>1. Introduzione alla Programmazione Orientata agli Oggetti</h3>
+        <p>
+            La programmazione orientata agli oggetti (OOP) è un paradigma che consente di modellare i sistemi software
+            rappresentando entità del mondo reale come oggetti. L'OOP si basa su quattro pilastri fondamentali, ognuno
+            dei quali offre vantaggi unici nella progettazione del software:
+        </p>
+        <ul>
+            <li><strong>Astrazione:</strong> Processo di rappresentazione degli aspetti essenziali di un'entità,
+                nascondendo i dettagli irrilevanti. Ad esempio, possiamo rappresentare un'auto mostrando solo le sue
+                caratteristiche principali, come marca e modello, senza preoccuparci del funzionamento interno.
+            </li>
+            <li><strong>Incapsulamento:</strong> Meccanismo per nascondere i dettagli di implementazione e proteggere
+                i dati, fornendo accesso controllato attraverso metodi pubblici. Questo aumenta la sicurezza e riduce
+                il rischio di errori accidentali.
+            </li>
+            <li><strong>Ereditarietà:</strong> Possibilità di creare nuove classi basandosi su classi esistenti, 
+                ereditandone attributi e comportamenti. Questo promuove il riutilizzo del codice e facilita
+                l'estensibilità.
+            </li>
+            <li><strong>Polimorfismo:</strong> Capacità di utilizzare oggetti di tipi diversi attraverso un'unica
+                interfaccia, rendendo il codice più flessibile e scalabile.
+            </li>
+        </ul>
+        <div class="example">
+            <strong>Esempio:</strong> Rappresentare un'auto in Java con metodi base.
+            <pre><code>
+    // Classe che rappresenta un'auto
+    public class Auto {
+        private String marca;
+        private String modello;
+        private int anno;
+    
+        // Costruttore per inizializzare l'oggetto
+        public Auto(String marca, String modello, int anno) {
+            this.marca = marca;
+            this.modello = modello;
+            this.anno = anno;
+        }
+    
+        // Metodo per accendere l'auto
+        public void accendi() {
+            System.out.println("L'auto " + marca + " " + modello + " è accesa.");
+        }
+    
+        // Metodo per spegnere l'auto
+        public void spegni() {
+            System.out.println("L'auto " + marca + " " + modello + " è spenta.");
+        }
+    }
+    
+    // Classe principale per dimostrare l'uso
+    public class Main {
+        public static void main(String[] args) {
+            // Creazione di un'istanza di Auto
+            Auto miaAuto = new Auto("Fiat", "Punto", 2020);
+    
+            // Utilizzo dei metodi dell'oggetto Auto
+            miaAuto.accendi();
+            miaAuto.spegni();
+        }
+    }
+            </code></pre>
+        </div>
+        <p>
+            Questo esempio mostra come possiamo rappresentare un oggetto reale, come un'auto, utilizzando una classe
+            in Java. La classe <code>Auto</code> include attributi e metodi per rappresentare le sue caratteristiche e
+            comportamenti principali. Utilizziamo un costruttore per inizializzare l'oggetto, dimostrando il concetto
+            di incapsulamento nascondendo i dettagli dell'implementazione.
+        </p>
+    </div>    
+
+    <div class="section">
+        <h3>2. Ereditarietà</h3>
+        <p>
+            Con l'ereditarietà, possiamo creare nuove classi che riutilizzano il comportamento e le proprietà di classi esistenti.
+            Questo permette di estendere le funzionalità delle classi genitore senza duplicare il codice, favorendo il riuso e la 
+            manutenibilità del software.
+        </p>
+        <p>
+            In Java, l'ereditarietà si implementa utilizzando la parola chiave <code>extends</code>. Una classe figlia eredita
+            i membri della classe genitore (eccetto i membri privati), ma può anche aggiungere nuovi metodi e proprietà o 
+            sovrascrivere quelli esistenti.
+        </p>
+        <div class="example">
+            <strong>Esempio:</strong> Creare una classe <code>AutoElettrica</code> che estende la classe <code>Auto</code>.
+            <pre><code>
+    // Classe genitore
+    public class Auto {
+        String marca;
+        String modello;
+    
+        public void avvia() {
+            System.out.println("Avvio del motore...");
+        }
+    }
+    
+    // Classe figlia
+    public class AutoElettrica extends Auto {
+        int capacitaBatteria;
+    
+        public void ricarica() {
+            System.out.println("Ricaricando l'auto...");
+        }
+    }
+    
+    // Programma principale
+    public class Main {
+        public static void main(String[] args) {
+            AutoElettrica tesla = new AutoElettrica();
+            tesla.marca = "Tesla";
+            tesla.modello = "Model S";
+            tesla.capacitaBatteria = 100;
+    
+            // Utilizzo di metodi ereditati e nuovi
+            tesla.avvia();
+            System.out.println("Marca: " + tesla.marca);
+            System.out.println("Modello: " + tesla.modello);
+            System.out.println("Capacità batteria: " + tesla.capacitaBatteria + "%");
+            tesla.ricarica();
+        }
+    }
+            </code></pre>
+        </div>
+        <p>
+            Nell'esempio sopra, la classe <code>AutoElettrica</code> eredita i membri della classe <code>Auto</code> e aggiunge
+            nuove funzionalità, come la capacità della batteria e il metodo <code>ricarica()</code>. Questo dimostra come
+            l'ereditarietà permette di costruire una gerarchia di classi in modo efficace e modulare.
+        </p>
+    </div>
+
+    <div class="section">
+        <h3>3. Polimorfismo</h3>
+        <p>
+            Il polimorfismo è un concetto chiave della programmazione orientata agli oggetti che consente di trattare oggetti di classi diverse in modo uniforme.
+            Grazie al polimorfismo, un metodo può comportarsi in maniera differente a seconda dell'oggetto che lo invoca. Questo concetto è reso possibile 
+            dall'ereditarietà e dall'override dei metodi.
+        </p>
+        <p>
+            Esistono due tipi principali di polimorfismo:
+            <ul>
+                <li><strong>Polimorfismo statico:</strong> Avviene durante la compilazione ed è ottenuto tramite il metodo overloading.</li>
+                <li><strong>Polimorfismo dinamico:</strong> Avviene durante l'esecuzione ed è ottenuto tramite il metodo overriding.</li>
+            </ul>
+        </p>
+        <div class="example">
+            <strong>Esempio 1: Polimorfismo dinamico</strong>
+            <p>In questo esempio, la classe base <code>Veicolo</code> è estesa dalla classe <code>Moto</code>. Il metodo <code>avvia</code> viene sovrascritto nella classe derivata:</p>
+            <pre><code>public class Veicolo {
+        public void avvia() {
+            System.out.println("Il veicolo sta partendo.");
+        }
+    }
+    
+    public class Moto extends Veicolo {
+        @Override
+        public void avvia() {
+            System.out.println("La moto sta partendo.");
+        }
+    }
+    
+    public class Main {
+        public static void main(String[] args) {
+            Veicolo veicolo = new Moto(); // Polimorfismo dinamico
+            veicolo.avvia(); // Output: La moto sta partendo.
+        }
+    }</code></pre>
+            <p>
+                In questo caso, il metodo <code>avvia</code> invocato sull'oggetto <code>veicolo</code> utilizza la versione del metodo definita nella classe <code>Moto</code>, poiché l'oggetto è effettivamente di tipo <code>Moto</code>.
+            </p>
+        </div>
+        <div class="example">
+            <strong>Esempio 2: Polimorfismo statico</strong>
+            <p>Un esempio di polimorfismo statico può essere ottenuto tramite l'overloading dei metodi:</p>
+            <pre><code>public class Calcolatrice {
+        public int somma(int a, int b) {
+            return a + b;
+        }
+    
+        public double somma(double a, double b) {
+            return a + b;
+        }
+    }
+    
+    public class Main {
+        public static void main(String[] args) {
+            Calcolatrice calcolatrice = new Calcolatrice();
+            System.out.println("Somma interi: " + calcolatrice.somma(2, 3)); // Output: 5
+            System.out.println("Somma double: " + calcolatrice.somma(2.5, 3.5)); // Output: 6.0
+        }
+    }</code></pre>
+            <p>
+                Qui il metodo <code>somma</code> è sovraccaricato per gestire sia i numeri interi che i numeri in virgola mobile. La scelta del metodo corretto avviene al momento della compilazione.
+            </p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h3>4. Incapsulamento</h3>
+        <p>L'incapsulamento è un principio fondamentale della programmazione orientata agli oggetti. Consiste nel nascondere i dettagli di implementazione interni di una classe, permettendo l'accesso ai dati solo tramite metodi pubblici definiti. Questo approccio offre diversi vantaggi:</p>
+        <ul>
+            <li><strong>Protezione dei dati:</strong> I dati sensibili sono accessibili solo attraverso metodi specifici, riducendo il rischio di modifiche accidentali o inappropriate.</li>
+            <li><strong>Facilità di manutenzione:</strong> Cambiamenti interni alla classe non influiscono sul codice esterno.</li>
+            <li><strong>Controllo sulle modifiche:</strong> I metodi getter e setter permettono di aggiungere logica di validazione o trasformazione quando i dati vengono letti o scritti.</li>
+        </ul>
+        <p>Per implementare l'incapsulamento, i campi della classe sono dichiarati come <code>private</code>, mentre i metodi <code>getter</code> e <code>setter</code> consentono l'accesso controllato ai dati.</p>
+        <div class="example">
+            <strong>Esempio:</strong> Utilizzare getter e setter per proteggere i dati e aggiungere logica personalizzata.
+            <pre><code>public class Persona {
+        private String nome;
+        private int eta;
+    
+        // Getter per nome
+        public String getNome() {
+            return nome;
+        }
+    
+        // Setter per nome con validazione
+        public void setNome(String nome) {
+            if (nome != null && !nome.trim().isEmpty()) {
+                this.nome = nome;
+            } else {
+                throw new IllegalArgumentException("Il nome non può essere vuoto");
+            }
+        }
+    
+        // Getter per età
+        public int getEta() {
+            return eta;
+        }
+    
+        // Setter per età con controllo
+        public void setEta(int eta) {
+            if (eta > 0) {
+                this.eta = eta;
+            } else {
+                throw new IllegalArgumentException("L'età deve essere maggiore di 0");
+            }
+        }
+    }
+    
+    public class Main {
+        public static void main(String[] args) {
+            Persona persona = new Persona();
+            
+            // Impostare i dati con controllo
+            try {
+                persona.setNome("Mario");
+                persona.setEta(25);
+    
+                System.out.println("Nome: " + persona.getNome());
+                System.out.println("Età: " + persona.getEta());
+            } catch (IllegalArgumentException e) {
+                System.out.println("Errore: " + e.getMessage());
+            }
+        }
+    }</code></pre>
+        </div>
+        <p>In questo esempio, abbiamo aggiunto logica di validazione nei metodi setter per garantire che i dati impostati siano sempre validi, riducendo la possibilità di errori o dati inconsistenti.</p>
+    </div> 
+
+    <div class="section">
+        <h3>5. Astrazione</h3>
+        <p>
+            L'astrazione è un concetto fondamentale della programmazione orientata agli oggetti, che permette di modellare
+            il comportamento degli oggetti concentrandosi sugli aspetti rilevanti e nascondendo i dettagli implementativi.
+            Si tratta di definire "che cosa" un oggetto deve fare, lasciando a chi lo implementa il "come" farlo.
+        </p>
+        <p>
+            In Java, l'astrazione viene realizzata tramite classi astratte e interfacce:
+            <ul>
+                <li>
+                    <strong>Classi astratte:</strong> Utilizzate quando si vuole definire una classe base con metodi comuni e
+                    metodi che devono essere implementati dalle sottoclassi.
+                </li>
+                <li>
+                    <strong>Interfacce:</strong> Utilizzate per specificare un insieme di metodi che una classe deve
+                    implementare.
+                </li>
+            </ul>
+        </p>
+        <p>
+            L'astrazione consente di creare applicazioni modulari e facilmente estensibili, separando il contratto dal comportamento
+            specifico.
+        </p>
+        <div class="example">
+            <strong>Esempio:</strong> Utilizzare una classe astratta per rappresentare un animale con comportamenti comuni e specifici.
+            <pre><code>abstract class Animale {
+        // Metodo astratto: obbligatorio per le sottoclassi
+        abstract void verso();
+    
+        // Metodo concreto: comportamento comune
+        public void dormi() {
+            System.out.println("Zzz...");
+        }
+    }
+    
+    // Classe concreta: implementazione specifica per il cane
+    class Cane extends Animale {
+        @Override
+        void verso() {
+            System.out.println("Bau Bau");
+        }
+    }
+    
+    // Classe concreta: implementazione specifica per il gatto
+    class Gatto extends Animale {
+        @Override
+        void verso() {
+            System.out.println("Miao Miao");
+        }
+    }
+    
+    public class Main {
+        public static void main(String[] args) {
+            // Polimorfismo: un riferimento della classe astratta può puntare a oggetti concreti
+            Animale mioCane = new Cane();
+            Animale mioGatto = new Gatto();
+    
+            System.out.println("Cane:");
+            mioCane.verso();
+            mioCane.dormi();
+    
+            System.out.println("\nGatto:");
+            mioGatto.verso();
+            mioGatto.dormi();
+        }
+    }</code></pre>
+        </div>
+        <p>
+            In questo esempio, la classe astratta <code>Animale</code> definisce un metodo astratto
+            <code>verso()</code> che ogni sottoclasse deve implementare, insieme a un metodo concreto
+            <code>dormi()</code>, che è condiviso da tutte le sottoclassi. Il risultato è una struttura flessibile e riutilizzabile,
+            che consente di aggiungere nuovi tipi di animali senza modificare il codice esistente.
+        </p>
+        <div class="example">
+            <strong>Approfondimento:</strong> Utilizzo di interfacce per aumentare la flessibilità.
+            <pre><code>interface Volante {
+        void vola();
+    }
+    
+    abstract class Animale {
+        abstract void verso();
+        public void dormi() {
+            System.out.println("Zzz...");
+        }
+    }
+    
+    class Uccello extends Animale implements Volante {
+        @Override
+        void verso() {
+            System.out.println("Cip Cip");
+        }
+    
+        @Override
+        public void vola() {
+            System.out.println("Sto volando!");
+        }
+    }
+    
+    public class Main {
+        public static void main(String[] args) {
+            Uccello mioUccello = new Uccello();
+            mioUccello.verso();
+            mioUccello.vola();
+            mioUccello.dormi();
+        }
+    }</code></pre>
+        </div>
+        <p>
+            Questo esempio mostra come combinare classi astratte e interfacce per modellare comportamenti complessi, aumentando la
+            modularità e la riusabilità del codice.
+        </p>
+    </div>    
+
+    <section class="bibliography">
+        <h3>Bibliografia</h3>
+        <ul>
+            <li><a href="https://docs.oracle.com/javase/tutorial/java/concepts/index.html" target="_blank">Concetti di
+                    base di Java - Oracle</a></li>
+            <li><a href="https://www.baeldung.com/java-object-oriented-programming" target="_blank">Guida OOP in Java -
+                    Baeldung</a></li>
+        </ul>
+    </section>
+
+    <section class="advanced">
+        <h2>Approfondimenti</h2>
+        <h3>Note sui Modificatori di Accesso</h3>
+        <p>I modificatori di accesso in Java determinano la visibilità e l'ambito delle classi, dei metodi, degli
+            attributi e dei costruttori. Sono essenziali per applicare i principi di incapsulamento e sicurezza del
+            codice. Ecco i principali:</p>
+        <ul>
+            <li><strong>Public:</strong> L'elemento è accessibile da qualsiasi altra classe, senza restrizioni.</li>
+            <li><strong>Private:</strong> L'elemento è accessibile solo all'interno della classe in cui è definito,
+                garantendo la massima protezione.</li>
+            <li><strong>Protected:</strong> L'elemento è accessibile all'interno dello stesso package e dalle classi
+                derivate, anche se situate in package diversi.</li>
+            <li><strong>Default (Package-private):</strong> Se non viene specificato alcun modificatore, l'elemento è
+                accessibile solo all'interno del package in cui è definito.</li>
+        </ul>
+
+        <h3>Parola chiave <code>static</code></h3>
+        <p>La parola chiave <code>static</code> viene utilizzata per definire membri della classe (variabili o metodi)
+            che appartengono alla classe stessa, anziché a un'istanza specifica. Questo è utile per creare membri
+            condivisi tra tutte le istanze.</p>
+        <ul>
+            <li><a href="https://docs.oracle.com/javase/tutorial/java/javaOO/classvars.html"
+                    target="_blank">Documentazione ufficiale su membri statici</a></li>
+        </ul>
+
+        <h3>Parola chiave <code>final</code></h3>
+        <p>La parola chiave <code>final</code> viene utilizzata per impedire modifiche. Può essere applicata a
+            variabili, metodi e classi per garantire comportamenti immutabili o limitazioni di estendibilità.</p>
+        <ul>
+            <li><a href="https://docs.oracle.com/javase/tutorial/java/javaOO/final.html" target="_blank">Documentazione
+                    ufficiale su final</a></li>
+        </ul>
+
+        <h3>Link utili</h3>
+        <ul>
+            <li><a href="https://docs.oracle.com/javase/tutorial/java/javaOO/accesscontrol.html"
+                    target="_blank">Controllo di accesso in Java - Oracle</a></li>
+            <li><a href="https://www.geeksforgeeks.org/access-modifiers-in-java/" target="_blank">Modificatori di
+                    accesso in Java - GeeksforGeeks</a></li>
+            <li><a href="https://www.baeldung.com/java-access-modifiers" target="_blank">Guida ai modificatori di
+                    accesso - Baeldung</a></li>
+        </ul>
+    </section>
+
+    <footer class="footer">
+        <a class="footer-logo" href="/index.html">
+            <img alt="Logo del sito" src="/img/logo.png" />
+        </a>
+        <div class="footer-links">
+            <a class="footer-link left" href="/Settimana_1/Lezione_3.html">
+                ← Pagina precedente
+            </a>
+            <a class="footer-link right" href="/Settimana_1/Esercitazione_1.html">
+                Pagina successiva →
+            </a>
+        </div>
+        © 2025 Corso di Programmazione Backend. Tutti i diritti riservati.
+    </footer>
+
+</body>
+
+</html>

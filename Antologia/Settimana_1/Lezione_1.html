@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lezione 1 - Introduzione alla Programmazione</title>
+    <link rel="stylesheet" href="/styles/style.css" />
+</head>
+
+<body>
+    <h1 class="lesson-title">Lezione 1: Introduzione alla Programmazione</h1>
+
+    <div class="section">
+        <h2>1. Concetti fondamentali di Programmazione</h2>
+        <p>
+            La programmazione è l'arte di scrivere istruzioni che un computer può
+            comprendere e eseguire. Comprendere i concetti di base è essenziale per
+            costruire una solida base di conoscenza.
+        </p>
+        <p>
+            Un <strong>algoritmo</strong> è una sequenza logica di passi per
+            risolvere un problema. Può essere rappresentato tramite pseudocodice o
+            diagrammi di flusso, ed è il cuore della programmazione.
+        </p>
+
+        <div class="example">
+            <h3>Esempio di Algoritmo:</h3>
+            <p>Pseudocodice per calcolare la somma di due numeri in Java:</p>
+            <pre><code>public class SommaNumeri {
+        public static void main(String[] args) {
+            Scanner scanner = new Scanner(System.in);
+    
+            // Leggi il primo numero
+            System.out.print("Inserisci il primo numero: ");
+            int numero1 = scanner.nextInt();
+    
+            // Leggi il secondo numero
+            System.out.print("Inserisci il secondo numero: ");
+            int numero2 = scanner.nextInt();
+    
+            // Calcola la somma
+            int somma = numero1 + numero2;
+    
+            // Stampa il risultato
+            System.out.println("La somma è: " + somma);
+        }
+}</code></pre>
+        </div>
+
+        <p>
+            Un altro concetto chiave sono le <strong>strutture dati</strong>, che
+            aiutano a organizzare e gestire informazioni. Alcuni esempi includono
+            array, liste, stack e queue.
+        </p>
+
+        <div class="example">
+            <h3>Esempio: Array</h3>
+            <p>Un esempio di utilizzo degli array in Java:</p>
+            <pre><code>public class EsempioArray {
+        public static void main(String[] args) {
+            int[] numeri = {10, 20, 30, 40};
+    
+            for (int i = 0; i < numeri.length; i++) {
+                System.out.println("Elemento " + i + ": " + numeri[i]);
+            }
+        }
+    }
+            </code></pre>
+        </div>
+
+        <div class="test">
+            <h3>Test sugli Algoritmi</h3>
+            <p>Verifica la tua comprensione rispondendo alle seguenti domande:</p>
+            <ul>
+                <li>Cos'è un algoritmo e qual è il suo scopo?</li>
+                <li>Rappresenta un algoritmo per calcolare la media di tre numeri.</li>
+                <li>Scrivi un codice Java per trovare il valore massimo in un array di numeri interi.</li>
+            </ul>
+        </div>
+
+        <div class="test">
+            <h3>Test sulle Strutture Dati</h3>
+            <p>Verifica la tua comprensione rispondendo alle seguenti domande:</p>
+            <ul>
+                <li>Qual è la differenza tra array e lista?</li>
+                <li>Progetta uno stack utilizzando un array in Java.</li>
+                <li>Implementa una coda circolare con capacità fissa in Java.</li>
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="section">
+        <h2>2. Differenze tra Frontend e Backend</h2>
+        <p>
+            Nell'ambito dello sviluppo software, distinguiamo due parti fondamentali:
+        </p>
+        <ul>
+            <li>
+                <strong>Frontend:</strong> La parte visibile e interattiva, costruita
+                con HTML, CSS e JavaScript. È ciò che gli utenti vedono e usano
+                direttamente.
+            </li>
+            <li>
+                <strong>Backend:</strong> La parte nascosta, responsabile della logica
+                applicativa, gestione dei dati e interazione con i database.
+            </li>
+        </ul>
+
+        <p>Ad esempio, quando un utente compila un modulo e clicca "Invia":</p>
+        <ul>
+            <li>Il <strong>frontend</strong> raccoglie i dati dal modulo.</li>
+            <li>
+                Il <strong>backend</strong> riceve questi dati, li elabora e può
+                salvarli in un database.
+            </li>
+        </ul>
+
+        <div class="example">
+            <h3>Scenario di un Sistema di Login:</h3>
+            <pre>
+    Frontend: Inserimento di username e password in un modulo HTML.
+    Backend: Verifica delle credenziali nel database e restituzione di una risposta.
+            </pre>
+        </div>
+
+        <div class="example">
+            <h3>Esempio pratico di Backend:</h3>
+            <p>Un semplice esempio in Java per verificare le credenziali di accesso:</p>
+            <pre><code>public class LoginSystem {
+        public static void main(String[] args) {
+            // Simulazione di un database di credenziali
+            HashMap<String, String> database = new HashMap<>();
+            database.put("utente1", "password123");
+            database.put("admin", "adminpass");
+    
+            Scanner scanner = new Scanner(System.in);
+    
+            // Input dall'utente
+            System.out.print("Inserisci il tuo username: ");
+            String username = scanner.nextLine();
+    
+            System.out.print("Inserisci la tua password: ");
+            String password = scanner.nextLine();
+    
+            // Verifica delle credenziali
+            if (database.containsKey(username) && database.get(username).equals(password)) {
+                System.out.println("Accesso effettuato con successo!");
+            } else {
+                System.out.println("Credenziali non valide. Riprova.");
+            }
+        }
+    }
+            </code></pre>
+        </div>
+
+        <div class="test">
+            <h3>Test: Differenze tra Frontend e Backend</h3>
+            <ul>
+                <li>Quali linguaggi vengono comunemente utilizzati per il frontend e il backend?</li>
+                <li>Descrivi come il frontend e il backend interagiscono in un sistema di e-commerce.</li>
+                <li>Qual è il ruolo del backend nel trattamento dei dati inviati da un modulo?</li>
+            </ul>
+        </div>
+
+        <div class="approfondimento">
+            <h3>Approfondimento sulle API</h3>
+            <p>Le API (Application Programming Interfaces) sono fondamentali per la comunicazione tra frontend e
+                backend. Scrivi un esempio di chiamata API in un'applicazione di login.</p>
+            <pre><code>// Chiamata API dal Frontend (JavaScript)
+    fetch('https://mio-sito.com/login', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username: 'utente1', password: 'password123' })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            console.log('Login effettuato con successo');
+        } else {
+            console.log('Credenziali non valide');
+        }
+    });
+            </code></pre>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>3. Configurazione degli Strumenti</h2>
+        <p>Un ambiente di sviluppo configurato correttamente è fondamentale per lavorare in modo efficiente.</p>
+        <ul>
+            <li><strong>Java:</strong> Installa il JDK da <a href="https://www.oracle.com/java/">Oracle</a> e configurane il percorso nel sistema.</li>
+            <li><strong>Maven:</strong> Utilizza questo strumento per la gestione delle dipendenze. Configura il file <code>pom.xml</code> per aggiungere librerie.</li>
+            <li><strong>Git:</strong> Per il controllo delle versioni. Crea un repository con <code>git init</code> e usa comandi come <code>git add</code>, <code>git commit</code>, <code>git push</code>.</li>
+            <li><strong>IDE:</strong> IntelliJ IDEA o Eclipse sono strumenti ideali per sviluppare in Java con supporto per Maven.</li>
+        </ul>
+
+        <div class="example">
+            <h3>Esempio 1: Verifica della Configurazione di Java</h3>
+            <p>Un programma Java per verificare la versione e il percorso di Java installato:</p>
+            <pre><code>public class VerificaJava {
+    public static void main(String[] args) {
+        System.out.println("Versione di Java installata: " + System.getProperty("java.version"));
+        System.out.println("Percorso di Java: " + System.getProperty("java.home"));
+    }
+}
+            </code></pre>
+        </div>
+
+        <div class="example">
+            <h3>Esempio 2: Utilizzo di Maven</h3>
+            <p>Comando per creare un nuovo progetto Maven:</p>
+            <pre><code>mvn archetype:generate -DgroupId=com.example -DartifactId=my-app -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
+            </code></pre>
+            <p>Comandi per compilare ed eseguire un progetto Maven:</p>
+            <pre><code># Pulizia e compilazione del progetto
+mvn clean install
+
+# Esecuzione del progetto con Maven
+mvn exec:java -Dexec.mainClass="com.example.App"
+            </code></pre>
+        </div>
+
+        <div class="example">
+            <h3>Esempio 3: Inizializzazione di un Repository Git</h3>
+            <p>Comandi per configurare e inizializzare un repository Git:</p>
+            <pre><code># Inizializza il repository
+git init
+
+# Aggiungi tutti i file
+git add .
+
+# Commit iniziale
+git commit -m "Initial commit"
+
+# Aggiungi un remoto (es. GitHub)
+git remote add origin https://github.com/username/repository.git
+
+# Push iniziale
+git push -u origin main
+            </code></pre>
+        </div>
+
+        <div class="test">
+            <h3>Test: Configurazione degli Strumenti</h3>
+            <ul>
+                <li>Qual è il comando per verificare se Java è installato correttamente?</li>
+                <li>Scrivi un comando per inizializzare un repository Git.</li>
+                <li>Descrivi come aggiungere una libreria esterna utilizzando Maven.</li>
+                <li>Quali sono i vantaggi di utilizzare un IDE come IntelliJ IDEA o Eclipse?</li>
+            </ul>
+        </div>
+
+        <div class="exercise">
+            <h3>Esercizio Pratico</h3>
+            <p>Configura un progetto base seguendo i passi descritti:</p>
+            <ol>
+                <li>Scarica e installa il JDK dal sito ufficiale di Oracle.</li>
+                <li>Crea un nuovo progetto Maven con il comando fornito.</li>
+                <li>Inizializza un repository Git e aggiungi i file del progetto.</li>
+                <li>Verifica che tutto funzioni eseguendo il comando <code>mvn clean install</code>.</li>
+            </ol>
+        </div>
+
+        <div class="approfondimento">
+            <h3>Approfondimento: IntelliJ IDEA</h3>
+            <p>Configura un progetto Maven in IntelliJ IDEA:</p>
+            <pre><code>1. Apri IntelliJ IDEA e seleziona "New Project".
+2. Scegli "Maven" come tipo di progetto.
+3. Imposta il GroupId e l'ArtifactId.
+4. Configura il file <code>pom.xml</code> per aggiungere dipendenze.
+5. Esegui il progetto direttamente dall'IDE utilizzando l'opzione "Run".
+            </code></pre>
+        </div>
+    </div>
+
+    </div>
+
+    <div class="bibliography">
+        <h2>4. Bibliografia e Risorse Utili</h2>
+        <ul>
+            <li>
+                <a href="https://docs.oracle.com/en/java/">Documentazione ufficiale di Java</a>
+            </li>
+            <li>
+                <a href="https://maven.apache.org/guides/index.html">Guide Maven</a>
+            </li>
+            <li><a href="https://git-scm.com/doc">Documentazione di Git</a></li>
+        </ul>
+    </div>
+
+    <div class="advanced">
+        <h2>5. Approfondimenti</h2>
+        <p>Esplora ulteriormente con le seguenti risorse:</p>
+        <ul>
+            <li>
+                <a href="https://www.geeksforgeeks.org/fundamentals-of-algorithms/">Algoritmi fondamentali</a>
+            </li>
+            <li>
+                Approfondisci librerie avanzate come <strong>Guava</strong> e
+                <strong>Apache Commons</strong>.
+            </li>
+            <li>Sperimenta con JUnit e Mockito per il testing del codice.</li>
+        </ul>
+    </div>
+
+    <footer class="footer">
+        <a href="/index.html" class="footer-logo">
+            <img src="/img/logo.png" alt="Logo del sito" />
+        </a>
+        <div class="footer-links">
+            <a href="/index.html" class="footer-link left">
+                &#8592; Pagina precedente
+            </a>
+            <a href="/Settimana_1/Lezione_2.html" class="footer-link right">
+                Pagina successiva &#8594;
+            </a>
+        </div>
+        &copy; 2025 Corso di Programmazione Backend. Tutti i diritti riservati.
+    </footer>
+</body>
+</html>

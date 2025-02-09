@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lezione 2 - Utilizzo di Git e Risoluzione Problemi</title>
+    <link rel="stylesheet" href="/styles/style.css">
+</head>
+<body>
+    <h1 class="lesson-title">Lezione 2: Utilizzo di Git e Risoluzione Problemi</h1>
+
+    <div class="section">
+        <h2>1. Introduzione a Git</h2>
+        <p>Git è uno strumento di controllo di versione distribuito progettato per fornire velocità, efficienza e flessibilità nello sviluppo software. Consente agli sviluppatori di tracciare ogni modifica apportata ai file di un progetto, di tornare a versioni precedenti del codice e di collaborare in modo efficace con altri membri del team.</p>
+        <div class="example">
+            <h3>Esempio:</h3>
+            <p>Clonare un repository GitHub e apportare modifiche:</p>
+            <pre><code># Clonare un repository
+$ git clone https://github.com/user/repository.git
+
+# Creare un nuovo file
+$ echo "Hello, Git!" > hello.txt
+
+# Aggiungere il file al controllo di versione
+$ git add hello.txt
+
+# Fare un commit
+$ git commit -m "Aggiunto il file hello.txt"
+
+# Caricare le modifiche su GitHub
+$ git push origin main</code></pre>
+        </div>
+        <div class="example">
+            <h3>Esempio Avanzato:</h3>
+            <p>Gestire una situazione di conflitto:</p>
+            <pre><code># Modificare un file in due branch diversi
+$ git merge branch_conflitto
+
+# Messaggio di conflitto
+# Risolvere il conflitto modificando il file manualmente
+
+# Aggiungere le modifiche risolte
+$ git add file_conflitto.txt
+
+# Completare il merge
+$ git commit -m "Conflitto risolto"</code></pre>
+        </div>
+        <div class="test">
+            <h3>Test sugli Strumenti</h3>
+            <p>Rispondi alle seguenti domande:</p>
+            <ul>
+                <li>Qual è il comando per clonare un repository?</li>
+                <li>Come si crea un commit in Git?</li>
+                <li>Qual è la differenza tra <code>git pull</code> e <code>git fetch</code>?</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>2. Repository GitHub</h2>
+        <p>GitHub è una piattaforma online che ospita repository Git, offrendo strumenti avanzati per la collaborazione e la gestione di progetti software.</p>
+        <div class="example">
+            <h3>Esempio:</h3>
+            <p>Creazione di un nuovo repository su GitHub:</p>
+            <ol>
+                <li>Accedi a GitHub e fai clic su "New Repository".</li>
+                <li>Inserisci un nome per il progetto e scegli la visibilità.</li>
+                <li>Seleziona opzioni aggiuntive, come l'aggiunta di un file <code>README</code>.</li>
+                <li>Clicca su "Create Repository" per iniziare.</li>
+            </ol>
+        </div>
+        <div class="example">
+            <h3>Esempio Avanzato:</h3>
+            <p>Abilitare GitHub Actions per un workflow automatizzato:</p>
+            <pre><code># Creare un file di configurazione workflow
+.github/workflows/build.yml:
+
+name: Build
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Setup Java
+        uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+      - name: Build project
+        run: mvn clean install</code></pre>
+        </div>
+        <div class="exercise">
+            <h3>Esercizio Pratico</h3>
+            <p>Configura un repository Git seguendo questi passaggi:</p>
+            <ol>
+                <li>Inizializza un nuovo repository Git.</li>
+                <li>Crea un file <code>README.md</code> e aggiungi una breve descrizione del progetto.</li>
+                <li>Fai un commit e carica il repository su GitHub.</li>
+            </ol>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>3. Risoluzione Problemi con il Pseudocodice</h2>
+        <p>Il pseudocodice è una rappresentazione semplificata di un algoritmo che utilizza un linguaggio naturale e strutture logiche per descrivere la soluzione a un problema.</p>
+        <div class="example">
+            <h3>Esempio:</h3>
+            <p>Pseudocodice per calcolare la somma di un array:</p>
+            <pre><code>1. Inizializza somma a 0
+2. Per ogni numero nell'array:
+   a. Aggiungi il numero alla somma
+3. Stampa il valore della somma</code></pre>
+        </div>
+        <div class="example">
+            <h3>Esempio Avanzato:</h3>
+            <p>Pseudocodice per trovare il massimo in un array:</p>
+            <pre><code>1. Inizializza massimo al primo elemento dell'array
+2. Per ogni elemento nell'array:
+   a. Se l'elemento è maggiore di massimo, aggiorna massimo
+3. Stampa il valore massimo</code></pre>
+        </div>
+    </div>
+
+    <div class="bibliography">
+        <h2>4. Bibliografia e Risorse</h2>
+        <ul>
+            <li><a href="https://git-scm.com/doc">Documentazione ufficiale di Git</a></li>
+            <li><a href="https://github.com">GitHub</a>: piattaforma per il controllo di versione</li>
+            <li><a href="https://docs.github.com/actions">GitHub Actions Documentation</a></li>
+            <li><a href="https://www.geeksforgeeks.org/pseudocode/">Guida al Pseudocodice</a></li>
+        </ul>
+    </div>
+
+    <div class="advanced">
+        <h2>5. Approfondimenti</h2>
+        <p>Esplora ulteriormente:</p>
+        <ul>
+            <li>Utilizza <code>git rebase</code> per gestire una cronologia lineare.</li>
+            <li>Configura GitHub Actions per automatizzare i workflow.</li>
+            <li>Sperimenta con tecniche avanzate di pseudocodice per algoritmi complessi.</li>
+        </ul>
+    </div>
+
+    <footer class="footer">
+        <a href="/index.html" class="footer-logo">
+            <img src="/img/logo.png" alt="Logo del sito" />
+        </a>
+        <div class="footer-links">
+            <a href="/Settimana_1/Lezione_1.html" class="footer-link left">
+                &#8592; Pagina precedente
+            </a>
+            <a href="/Settimana_1/Lezione_3.html" class="footer-link right">
+                Pagina successiva &#8594;
+            </a>
+        </div>
+        &copy; 2025 Corso di Programmazione Backend. Tutti i diritti riservati.
+    </footer>
+</body>
+</html>
