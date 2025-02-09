@@ -11,28 +11,32 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import it.dst.formazione.esercitazioni.esercitazione3.BibliotecaInterface;
 import it.dst.formazione.esercitazioni.esercitazione3.Libro;
-import it.dst.formazione.tools.InputOutputConst;
 
 public class LibriDAO extends GenericDAO {
 	
-	private final String queryInsert				="INSERT INTO libri (titolo, autore, anno_pubblicazione, disponibile) VALUES (?, ?, ?, ?)";
-	private final String querySelectLibriDisponibili="SELECT * FROM libri WHERE disponibile = ?";
-	private final String querySelectAll				="SELECT * FROM libri";
-	private final String queryAggiornaDisponibili   ="UPDATE libri SET disponibile = ? WHERE id = ?";
-	private final String queryDeleteByID			="DELETE FROM libri WHERE id = ?";
+	public static final String resultStringKO 		= "KO";
+	private final String queryInsert				= "INSERT INTO libri (titolo, autore, anno_pubblicazione, disponibile)"
+															  + " VALUES (?, ?, ?, ?)";
+	
+	private final String querySelectLibriDisponibili= "SELECT * FROM libri "
+														    + " WHERE disponibile = ?";
+	
+	private final String querySelectAll				= "SELECT * FROM libri";
+	private final String queryAggiornaDisponibili   = "UPDATE libri SET disponibile = ? "
+															    + " WHERE id = ?";
+	
+	private final String queryDeleteByID			= "DELETE FROM libri "
+															    + " WHERE id = ?";
 	
 	
-	public LibriDAO(Connection conn) {
+	public LibriDAO(Connection conn) throws SQLException{
 		
         super(conn, "Libri");
     }
 	
-    public String testInserimento() {
+    public String testInserimento(List<Libro> libri) throws SQLException{
 
-		List<Libro> libri = InputOutputConst.libri;
-       
         PreparedStatement pstmt;
 		try {
 			pstmt = conn.prepareStatement(queryInsert);
@@ -54,56 +58,47 @@ public class LibriDAO extends GenericDAO {
         return resultString;
     }
 
-	public List<Libro> testSelezione() {
+	public List<Libro> testSelezione() throws SQLException{
 		List<Libro> libri = new ArrayList<>();
-		try {
-			PreparedStatement pstmt = conn.prepareStatement(querySelectAll);
-			ResultSet rs = pstmt.executeQuery();
 
-			while (rs.next()) {
-				Libro libro = new Libro(rs.getInt("id"), 
-										rs.getString("titolo"), 
-										rs.getString("autore"),
-										rs.getInt("anno_pubblicazione"), 
-										rs.getBoolean("disponibile"));
-				libri.add(libro);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
+		PreparedStatement pstmt = conn.prepareStatement(querySelectAll);
+		ResultSet rs = pstmt.executeQuery();
+
+		while (rs.next()) {
+			Libro libro = new Libro(rs.getInt("id"), 
+									rs.getString("titolo"), 
+									rs.getString("autore"),
+									rs.getInt("anno_pubblicazione"), 
+									rs.getBoolean("disponibile"));
+			libri.add(libro);
 		}
 
 		return libri;
 	}
 
-    public List<Libro> testSelezioneFiltrata(boolean disponibile) {
+    public List<Libro> testSelezioneFiltrata(boolean disponibile) throws SQLException{
         List<Libro> libri = new ArrayList<>();
 
-        try {
-             PreparedStatement pstmt = conn.prepareStatement(querySelectLibriDisponibili);
+        PreparedStatement pstmt = conn.prepareStatement(querySelectLibriDisponibili);
 
-            pstmt.setBoolean(1, disponibile);
-            ResultSet rs = pstmt.executeQuery();
+        pstmt.setBoolean(1, disponibile);
+        ResultSet rs = pstmt.executeQuery();
 
-            while (rs.next()) {
-                Libro libro = new Libro(
-                        rs.getInt("id"),
-                        rs.getString("titolo"),
-                        rs.getString("autore"),
-                        rs.getInt("anno_pubblicazione"),
-                        rs.getBoolean("disponibile")
-                );
-                libri.add(libro);
-            }
-
-        } catch (SQLException e) {
-            System.err.println("[Test Selezione Filtrata] ERRORE - " + e.getMessage());
-            e.printStackTrace();
+        while (rs.next()) {
+            Libro libro = new Libro(
+                    rs.getInt("id"),
+                    rs.getString("titolo"),
+                    rs.getString("autore"),
+                    rs.getInt("anno_pubblicazione"),
+                    rs.getBoolean("disponibile")
+            );
+            libri.add(libro);
         }
+
         return libri;
     }
 
-    public String testAggiornamentoDisponibilita(int idLibro, boolean disponibile) {
-        try {
+    public String testAggiornamentoDisponibilita(int idLibro, boolean disponibile) throws SQLException{
             PreparedStatement pstmt = conn.prepareStatement(queryAggiornaDisponibili);
 
             pstmt.setBoolean(1, disponibile);
@@ -112,17 +107,13 @@ public class LibriDAO extends GenericDAO {
 
             System.out.println("\n[Test Aggiornamento] OK - Righe aggiornate: " + rowsAffected);
 
-        } catch (SQLException e) {
-            System.err.println("[Test Aggiornamento] ERRORE - " + e.getMessage());
-            e.printStackTrace();
-        }
+        
 
         return resultString;
     }
 
-    public String testEliminazione(int idLibro) {
+    public String testEliminazione(int idLibro) throws SQLException{
 
-        try {
             PreparedStatement pstmt = conn.prepareStatement(queryDeleteByID);
 
             pstmt.setInt(1, idLibro);
@@ -130,15 +121,11 @@ public class LibriDAO extends GenericDAO {
 
             System.out.println("\n[Test Eliminazione] OK - Righe eliminate: " + rowsAffected);
 
-        } catch (SQLException e) {
-            System.err.println("[Test Eliminazione] ERRORE - " + e.getMessage());
-            throw new RuntimeException(e);
-        }
 
         return resultString;
     }
 
-    public String createTableLibro() {
+    public String createTableLibro() throws SQLException{
         try {
              Statement stmt = conn.createStatement();
 

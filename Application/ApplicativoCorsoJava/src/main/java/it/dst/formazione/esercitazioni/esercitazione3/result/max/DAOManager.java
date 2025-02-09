@@ -24,6 +24,16 @@ public class DAOManager {
 		}
 	}
 
+	public Boolean isClosed() throws SQLException {
+		try {
+			if (this.conn != null)
+				return this.conn.isClosed();
+		} catch (SQLException e) {
+			throw e;
+		}
+		return false;
+	}
+	
 	public void close() throws SQLException {
 		try {
 			if (this.conn != null)
@@ -33,6 +43,8 @@ public class DAOManager {
 		}
 	}
 
+
+	
 	public GenericDAO getDAO(Table t) throws SQLException {
 
 		try {

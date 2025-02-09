@@ -4,7 +4,7 @@ import java.sql.Connection;
 
 public abstract class GenericDAO {
 
-	private final String tableName;
+	private String tableName;
 	protected Connection conn;
 
 	protected GenericDAO(Connection con, String tableName) {
