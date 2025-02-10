@@ -19,5 +19,4 @@ public interface CRUDGiocatore {
 
     void cancellaGioctoreById(Integer id);
 
-
 }

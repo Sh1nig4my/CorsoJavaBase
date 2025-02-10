@@ -1,6 +1,6 @@
 package id.dst.game;
 
-import id.dst.game.service.Giocatore.GiocatoreService;
+import id.dst.game.service.giocatore.GiocatoreService;
 
 import java.sql.SQLException;
 

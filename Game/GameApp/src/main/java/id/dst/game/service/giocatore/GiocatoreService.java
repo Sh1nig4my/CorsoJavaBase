@@ -1,4 +1,4 @@
-package id.dst.game.service.Giocatore;
+package id.dst.game.service.giocatore;
 
 import id.dst.game.repository.giocatore.GiocatoreDAO;
 

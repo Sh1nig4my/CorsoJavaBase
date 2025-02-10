@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Esercitazione - Implementazione della Classe GiocatoreDAO</title>
+    <link rel="stylesheet" href="/styles/style.css">
+</head>
+
+<body>
+
+    <header>
+        <h1>Esercitazione: Implementazione della Classe GiocatoreDAO</h1>
+    </header>
+
+    <main>
+        <section class="section">
+            <h2>Obiettivi</h2>
+            <p>
+                In questa esercitazione, dovrai implementare la classe <code>GiocatoreDAO</code> che estende <code>DAOManager</code> e implementa l'interfaccia <code>CRUDGiocatore</code>.
+                Questa classe gestirà le operazioni sul database MySQL per la tabella <code>Giocatori</code>.
+            </p>
+            <p>
+                L'implementazione deve supportare le seguenti operazioni:
+            </p>
+            <ul>
+                <li>Creazione della tabella <code>Giocatori</code> nel database.</li>
+                <li>Inserimento di nuovi giocatori.</li>
+                <li>Recupero di tutti i giocatori presenti nel database.</li>
+                <li>Selezione di un giocatore tramite il suo ID.</li>
+                <li>Aggiornamento dei dati di un giocatore esistente.</li>
+                <li>Eliminazione di un giocatore specifico.</li>
+            </ul>
+        </section>
+
+        <section class="section">
+           <section class="example">
+            <h2>Implementazione della Classe <code>GiocatoreDAO</code></h2>
+            <p>
+                La classe <code>GiocatoreDAO</code> deve:
+            </p>
+            <ul>
+                <li>Estendere <code>DAOManager</code>.</li>
+                <li>Implementare <code>CRUDGiocatore</code>.</li>
+                <li>Utilizzare <code>getConnection()</code> per ottenere una connessione al database.</li>
+                <li>Gestire le eccezioni SQL.</li>
+            </ul>
+            
+        </section> 
+        </section>
+        
+
+        <section class="section">
+            <section class="test">
+            <h2>5. Test dell'Implementazione</h2>
+            <p>
+                Dopo aver implementato la classe <code>GiocatoreDAO</code>, scrivi un <code>main()</code> di test che:
+            </p>
+            <ul>
+                <li>Crei la tabella <code>Giocatori</code>.</li>
+                <li>Inserisca almeno due giocatori di esempio.</li>
+                <li>Recuperi e stampi tutti i giocatori.</li>
+                <li>Selezioni un giocatore per ID e ne stampi le informazioni.</li>
+                <li>Aggiorni i dati di un giocatore.</li>
+                <li>Elimini un giocatore.</li>
+                <li>Stampi la lista aggiornata.</li>
+            </ul>
+        </section>
+        </section>
+        
+
+        <section class="section">
+            <section class="exercise">
+            <h2>6. Esercizio Extra</h2>
+            <p>
+                Modifica <code>GiocatoreDAO</code> per permettere la ricerca di tutti i giocatori appartenenti a un determinato <code>tipo</code>.
+            </p>
+            <pre><code>public List<Giocatore> findByTipo(String tipo) throws SQLException {
+    String sql = "SELECT * FROM Giocatori WHERE tipo = ?";
+    // Implementazione...
+}</code></pre>
+        </section>
+        </section>
+        
+
+    </main>
+
+    <footer class="footer">
+        <a href="/index.html" class="footer-logo">
+            <img src="/img/logo.png" alt="Logo del sito" />
+        </a>
+        <div class="footer-links">
+            <a href="/Settimana_3/Esercitazione_3.html" class="footer-link left">← Pagina precedente</a>
+            <a href="/Settimana_2/Lezione_18.html" class="footer-link right">Pagina successiva →</a>
+        </div>
+        © 2025 Corso di Programmazione Backend. Tutti i diritti riservati.
+    </footer>
+
+</body>
+</html>
