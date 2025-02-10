@@ -1,16 +1,16 @@
 package it.dst.formazione.esercitazioni.esercitazione3;
 
-import it.dst.formazione.esercitazioni.esercitazione3.result.DarioFlavioScipioni.CrudLibreria;
-
-import java.util.List;
-
 import static it.dst.formazione.tools.InputOutputConst.resultString;
+import java.util.List;
+import it.dst.formazione.esercitazioni.esercitazione3.result.max.CRUDBibliotecaMax;
+import it.dst.formazione.esercitazioni.esercitazione3.result.max.DAOManager;
 
 public class TestBiblioteca {
 
     public static void main(String[] args) {
-
-        CrudLibreria crud = new CrudLibreria();
+    	DAOManager daoManager = new DAOManager();
+    	daoManager.getConnection();
+    	CRUDBibliotecaMax crud = new CRUDBibliotecaMax(daoManager);
         String result;
 
         result = crud.createTableLibro();
@@ -50,6 +50,8 @@ public class TestBiblioteca {
         if(result.equalsIgnoreCase(resultString)) {
             System.out.println("\n6. PASS");
         }
+        
+        daoManager.closeConnection();
     }
 
 }
