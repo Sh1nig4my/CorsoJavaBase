@@ -1,6 +1,5 @@
 package it.dst.formazione.test;
 
-import it.dst.formazione.test.TestIntermedio.GestioneStudenti;
 import it.dst.formazione.test.TestIntermedio.src.test.java.Connessione.GestioneStudenteV2;
 
 import java.sql.SQLException;
