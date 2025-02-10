@@ -7,6 +7,7 @@ import id.dst.game.tools.EntityEnum;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
+import java.util.Optional;
 
 public class GiocatoreDAO extends DAOManager implements CRUDGiocatore {
 
@@ -45,13 +46,13 @@ public class GiocatoreDAO extends DAOManager implements CRUDGiocatore {
     }
 
     @Override
-    public Giocatore selectGiocatoreById(Integer id) throws SQLException {
-        return null;
+    public Optional<Giocatore> selectGiocatoreById(Integer id) throws SQLException {
+        return Optional.empty();
     }
 
     @Override
-    public List<Giocatore> selectAllGiocatore() throws SQLException {
-        return List.of();
+    public Optional<List<Giocatore>> selectAllGiocatore() throws SQLException {
+        return Optional.empty();
     }
 
     @Override
