@@ -8,16 +8,16 @@ import java.util.Optional;
 
 public interface CRUDGiocatore {
 
-    void createTable() throws SQLException;
+    String createTable() throws SQLException;
 
-    void insertGiocatore(Giocatore giocatore) throws SQLException;
+    String insertGiocatore(Giocatore giocatore) throws SQLException;
 
-    void updateGiocatoreById(Integer id, Giocatore giocatore) throws SQLException;
+    String updateGiocatoreById(Integer id, Giocatore giocatore) throws SQLException;
 
     Optional<Giocatore> selectGiocatoreById(Integer id) throws SQLException;
 
     Optional<List<Giocatore>> selectAllGiocatore() throws SQLException;
 
-    void cancellaGiocatoreById(Integer id);
+    String cancellaGiocatoreById(Integer id) throws SQLException;
 
 }
