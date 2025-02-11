@@ -13,26 +13,28 @@ public class GameService {
 
     // INFO: fase di inizializzazione del gioco
     //  (creazione delle tabelle e dei attributi necessari)
-    public static String configGame() {
-
-        String resultConfig;
+    public static Boolean configGame() {
+        Boolean resultConfig;
 
         resultConfig = giocatoreService.createTable();
+        if (!resultConfig) return false;
+
+        resultConfig = scenarioService.createTable();
+        if (!resultConfig) return false;
 
         // TODO creo tutte le entity necessarie
+        // TODO popolo il gioco con le info di base
 
-        // TODO popolo il gioco con le oinfo di base
-
-        // TODO verifico che il giocatore ha già un salvataggio attivo
-
-        return resultConfig;
-
+        return true;
     }
 
 
-    public static String startGame() {
+    public static void startGame() {
 
-        return "resultConfig";
+        // TODO inizio della meccanica di gioco:
+        //  1. creazione nuovo personaggio
+        //  2. scelta dello scenario di gioco
+        //  3. meccanica da implementare
 
     }
 

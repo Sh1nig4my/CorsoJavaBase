@@ -3,7 +3,6 @@ package id.dst.game.example.repository.giocatore;
 import id.dst.game.example.entity.giocatore.Giocatore;
 import id.dst.game.example.repository.DAOManager;
 import id.dst.game.example.tools.EntityEnum;
-import id.dst.game.example.tools.ResultEnum;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -16,7 +15,7 @@ public class GiocatoreDAO extends DAOManager implements GiocatoreRepository {
     private static final Logger log = Logger.getLogger(GiocatoreDAO.class.getName());
 
     @Override
-    public String createTable() throws SQLException {
+    public Boolean createTable() throws SQLException {
         String sql = "CREATE TABLE IF NOT EXISTS " + EntityEnum.GIOCATORE.getTableName() + " (" +
                 "id INT AUTO_INCREMENT PRIMARY KEY, " +
                 "nome VARCHAR(100) NOT NULL, " +
@@ -34,6 +33,7 @@ public class GiocatoreDAO extends DAOManager implements GiocatoreRepository {
             stmt.execute(sql);
             log.info("Tabella Giocatori creata con successo.");
 
+            return true;
         } catch (SQLException e) {
             log.severe("Errore nella creazione della tabella: " + e.getMessage());
             throw new SQLException("Errore nella creazione della tabella: " + e.getMessage());
@@ -41,11 +41,10 @@ public class GiocatoreDAO extends DAOManager implements GiocatoreRepository {
             close();
         }
 
-        return ResultEnum.OK.getResultEnum();
     }
 
     @Override
-    public String insertGiocatore(Giocatore giocatore) throws SQLException {
+    public Boolean insertGiocatore(Giocatore giocatore) throws SQLException {
         String sql = "INSERT INTO " + EntityEnum.GIOCATORE.getTableName() +
                      " (nome, eta, hp, forza, destrezza, intelligenza, tipo) " +
                      "VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -70,7 +69,7 @@ public class GiocatoreDAO extends DAOManager implements GiocatoreRepository {
             }
 
             // INFO: Il valore di ritorno di executeUpdate() è il numero di righe aggiornate, quindi la condizione  è invertita.
-            return resultQuery > 0 ? ResultEnum.OK.getResultEnum() : ResultEnum.KO.getResultEnum();
+            return resultQuery > 0;
 
         } catch (SQLException e) {
             throw new SQLException("Errore nell'inserimento del giocatore: " + e.getMessage());
@@ -82,7 +81,7 @@ public class GiocatoreDAO extends DAOManager implements GiocatoreRepository {
     }
 
     @Override
-    public String updateGiocatoreById(Integer id, Giocatore giocatore) throws SQLException {
+    public Boolean updateGiocatoreById(Integer id, Giocatore giocatore) throws SQLException {
         String sql = "UPDATE " + EntityEnum.GIOCATORE.getTableName() + " SET nome = ?, eta = ?, hp = ?, forza = ?, destrezza = ?, intelligenza = ?, tipo = ? WHERE id = ?";
         int resultQuery;
         try {
@@ -104,7 +103,7 @@ public class GiocatoreDAO extends DAOManager implements GiocatoreRepository {
             }
 
             // INFO: Il valore di ritorno di executeUpdate() è il numero di righe aggiornate, quindi la condizione  è invertita.
-            return resultQuery > 0 ? ResultEnum.OK.getResultEnum() : ResultEnum.KO.getResultEnum();
+            return resultQuery > 0;
 
         } catch (SQLException e) {
             throw new SQLException("Errore nell'aggiornamento del giocatore: " + e.getMessage());
@@ -190,7 +189,7 @@ public class GiocatoreDAO extends DAOManager implements GiocatoreRepository {
     }
 
     @Override
-    public String cancellaGiocatoreById(Integer id) throws SQLException {
+    public Boolean cancellaGiocatoreById(Integer id) throws SQLException {
         String sql = "DELETE FROM " + EntityEnum.GIOCATORE.getTableName() + " WHERE id = ?";
         int resultQuery;
         try {
@@ -205,7 +204,7 @@ public class GiocatoreDAO extends DAOManager implements GiocatoreRepository {
                 log.warning("Nessun giocatore trovato con ID " + id + ". Eliminazione fallita.");
             }
 
-            return resultQuery > 0 ? ResultEnum.OK.getResultEnum() : ResultEnum.KO.getResultEnum();
+            return resultQuery > 0;
         } catch (SQLException e) {
             log.severe("Errore nella cancellazione del giocatore: " + e.getMessage());
             throw new SQLException("Errore nella cancellazione del giocatore: " + e.getMessage());

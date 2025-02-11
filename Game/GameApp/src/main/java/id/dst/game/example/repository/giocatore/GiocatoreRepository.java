@@ -8,16 +8,16 @@ import java.util.Optional;
 
 public interface GiocatoreRepository {
 
-    String createTable() throws SQLException;
+    Boolean createTable() throws SQLException;
 
-    String insertGiocatore(Giocatore giocatore) throws SQLException;
+    Boolean insertGiocatore(Giocatore giocatore) throws SQLException;
 
-    String updateGiocatoreById(Integer id, Giocatore giocatore) throws SQLException;
+    Boolean updateGiocatoreById(Integer id, Giocatore giocatore) throws SQLException;
 
     Optional<Giocatore> selectGiocatoreById(Integer id) throws SQLException;
 
     List<Giocatore> selectAllGiocatore() throws SQLException;
 
-    String cancellaGiocatoreById(Integer id) throws SQLException;
+    Boolean cancellaGiocatoreById(Integer id) throws SQLException;
 
 }

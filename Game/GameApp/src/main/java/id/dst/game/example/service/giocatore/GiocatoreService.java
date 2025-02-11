@@ -2,7 +2,6 @@ package id.dst.game.example.service.giocatore;
 
 import id.dst.game.example.entity.giocatore.Giocatore;
 import id.dst.game.example.repository.giocatore.GiocatoreDAO;
-import id.dst.game.example.tools.ResultEnum;
 
 
 import java.sql.SQLException;
@@ -21,12 +20,13 @@ public class GiocatoreService {
      * Crea la tabella per i giocatori nel database.
      * @return ResultEnum.OK se la creazione ha successo, ResultEnum.KO altrimenti.
      */
-    public String createTable() {
+    public Boolean createTable() {
+        String result;
         try {
             return giocatoreDAO.createTable();
         } catch (SQLException e) {
             log.warning("Errore nella creazione della tabella: " + e.getMessage());
-            return ResultEnum.KO.getResultEnum();
+            return false;
         }
     }
 
@@ -35,12 +35,13 @@ public class GiocatoreService {
      * @param giocatore L'oggetto Giocatore da inserire.
      * @return ResultEnum.OK se l'inserimento ha successo, ResultEnum.KO altrimenti.
      */
-    public String insertGiocatore(Giocatore giocatore) {
+    public Boolean insertGiocatore(Giocatore giocatore) {
+        String result;
         try {
             return giocatoreDAO.insertGiocatore(giocatore);
         } catch (SQLException e) {
             log.warning("Errore nell'inserimento del giocatore: " + e.getMessage());
-            return ResultEnum.KO.getResultEnum();
+            return false;
         }
     }
 
@@ -50,12 +51,13 @@ public class GiocatoreService {
      * @param giocatore Nuovi dati del giocatore.
      * @return ResultEnum.OK se l'aggiornamento ha successo, ResultEnum.KO altrimenti.
      */
-    public String updateGiocatoreById(Integer id, Giocatore giocatore) {
+    public Boolean updateGiocatoreById(Integer id, Giocatore giocatore) {
+        String result;
         try {
-            return giocatoreDAO.updateGiocatoreById(id, giocatore);
+            return  giocatoreDAO.updateGiocatoreById(id, giocatore);
         } catch (SQLException e) {
             log.warning("Errore nell'aggiornamento del giocatore con ID " + id + ": " + e.getMessage());
-            return ResultEnum.KO.getResultEnum();
+            return false;
         }
     }
 
@@ -97,12 +99,12 @@ public class GiocatoreService {
      * @param id ID del giocatore da eliminare.
      * @return ResultEnum.OK se l'eliminazione ha successo, ResultEnum.KO altrimenti.
      */
-    public String cancellaGiocatoreById(Integer id) {
+    public Boolean cancellaGiocatoreById(Integer id) {
         try {
             return giocatoreDAO.cancellaGiocatoreById(id);
         } catch (SQLException e) {
             log.warning("Errore nella cancellazione del giocatore con ID " + id + ": " + e.getMessage());
-            return ResultEnum.KO.getResultEnum();
+            return false;
         }
     }
 
