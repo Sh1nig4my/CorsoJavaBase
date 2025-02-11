@@ -1,6 +1,6 @@
-package id.dst.game.repository.giocatore;
+package id.dst.game.example.repository.giocatore;
 
-import id.dst.game.entity.giocatore.Giocatore;
+import id.dst.game.example.entity.giocatore.Giocatore;
 
 import java.sql.SQLException;
 import java.util.List;

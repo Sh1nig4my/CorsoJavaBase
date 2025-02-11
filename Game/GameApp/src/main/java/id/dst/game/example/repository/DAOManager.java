@@ -1,4 +1,4 @@
-package id.dst.game.repository;
+package id.dst.game.example.repository;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

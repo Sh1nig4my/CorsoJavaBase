@@ -1,8 +1,8 @@
-package id.dst.game.service.giocatore;
+package id.dst.game.example.service.giocatore;
 
-import id.dst.game.entity.giocatore.Giocatore;
-import id.dst.game.repository.giocatore.GiocatoreDAO;
-import id.dst.game.tools.ResultEnum;
+import id.dst.game.example.entity.giocatore.Giocatore;
+import id.dst.game.example.repository.giocatore.GiocatoreDAO;
+import id.dst.game.example.tools.ResultEnum;
 
 
 import java.sql.SQLException;

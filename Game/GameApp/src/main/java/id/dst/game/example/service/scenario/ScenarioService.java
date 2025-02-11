@@ -1,6 +1,6 @@
-package id.dst.game.service.scenario;
+package id.dst.game.example.service.scenario;
 
-import id.dst.game.repository.scenario.ScenarioDAO;
+import id.dst.game.example.repository.scenario.ScenarioDAO;
 
 import java.util.logging.Logger;
 

@@ -1,7 +1,7 @@
-package id.dst.game.service;
+package id.dst.game.example.service;
 
-import id.dst.game.service.giocatore.GiocatoreService;
-import id.dst.game.service.scenario.ScenarioService;
+import id.dst.game.example.service.giocatore.GiocatoreService;
+import id.dst.game.example.service.scenario.ScenarioService;
 
 import java.util.logging.Logger;
 

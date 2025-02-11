@@ -1,4 +1,4 @@
-package id.dst.game.tools;
+package id.dst.game.example.tools;
 
 public interface PersonaggioNonGiocante {
 

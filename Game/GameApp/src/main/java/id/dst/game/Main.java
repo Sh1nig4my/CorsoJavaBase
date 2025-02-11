@@ -1,7 +1,7 @@
 package id.dst.game;
 
-import id.dst.game.service.GameService;
-import id.dst.game.tools.ResultEnum;
+import id.dst.game.example.service.GameService;
+import id.dst.game.example.tools.ResultEnum;
 
 import java.sql.SQLException;
 

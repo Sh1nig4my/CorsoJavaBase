@@ -1,7 +1,7 @@
-package id.dst.game.repository.scenario;
+package id.dst.game.example.repository.scenario;
 
-import id.dst.game.entity.scenario.Scenario;
-import id.dst.game.repository.DAOManager;
+import id.dst.game.example.entity.scenario.Scenario;
+import id.dst.game.example.repository.DAOManager;
 
 import java.sql.SQLException;
 import java.util.List;

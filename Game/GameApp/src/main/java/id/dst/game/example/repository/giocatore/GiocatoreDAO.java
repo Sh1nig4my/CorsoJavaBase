@@ -1,9 +1,9 @@
-package id.dst.game.repository.giocatore;
+package id.dst.game.example.repository.giocatore;
 
-import id.dst.game.entity.giocatore.Giocatore;
-import id.dst.game.repository.DAOManager;
-import id.dst.game.tools.EntityEnum;
-import id.dst.game.tools.ResultEnum;
+import id.dst.game.example.entity.giocatore.Giocatore;
+import id.dst.game.example.repository.DAOManager;
+import id.dst.game.example.tools.EntityEnum;
+import id.dst.game.example.tools.ResultEnum;
 
 import java.sql.*;
 import java.util.ArrayList;

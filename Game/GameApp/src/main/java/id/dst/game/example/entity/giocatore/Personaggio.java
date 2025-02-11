@@ -1,4 +1,4 @@
-package id.dst.game.entity.giocatore;
+package id.dst.game.example.entity.giocatore;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
