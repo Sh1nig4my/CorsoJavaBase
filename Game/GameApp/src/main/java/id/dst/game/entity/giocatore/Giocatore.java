@@ -4,9 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
-
-import java.util.List;
 
 @EqualsAndHashCode(callSuper = true)
 @Data  // Include automaticamente getter, setter, toString(), equals() e hashCode()
@@ -14,11 +11,11 @@ import java.util.List;
 @NoArgsConstructor
 public class Giocatore extends Personaggio {
 
-    public Integer id ;
-    public Integer forza;
-    public Integer destrezza;
-    public Integer intelligenza;
-    public String tipo;
+    private Integer id ;
+    private Integer forza;
+    private Integer destrezza;
+    private Integer intelligenza;
+    private String tipo;
 
     // INFO: si può migliorare?
     public Giocatore(Integer id, String nome, Integer eta, Integer hp, Integer forza, Integer destrezza, Integer intelligenza, String tipo) {
@@ -29,4 +26,5 @@ public class Giocatore extends Personaggio {
         this.intelligenza = intelligenza;
         this.tipo = tipo;
     }
+
 }
