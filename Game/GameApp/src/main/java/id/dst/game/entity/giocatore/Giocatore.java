@@ -28,5 +28,8 @@ public class Giocatore extends Personaggio {
         this.destrezza = destrezza;
         this.intelligenza = intelligenza;
         this.tipo = tipo;
+
+        Giocatore player_test =new Giocatore();
+        player_test.getForza();
     }
 }
