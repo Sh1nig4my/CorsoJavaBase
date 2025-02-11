@@ -15,12 +15,12 @@ public class DAOManager {
 
 	private Connection conn = null;
 
-	public void getConnection() throws SQLException {
+	public void getConnection() {
 		try {
 			if (this.conn == null)
 				this.conn = DriverManager.getConnection(URL, USER, PASSWORD);
 		} catch (SQLException e) {
-			throw e;
+			e.printStackTrace();
 		}
 	}
 
@@ -31,15 +31,15 @@ public class DAOManager {
 		} catch (SQLException e) {
 			throw e;
 		}
-		return false;
+		return true;
 	}
 	
-	public void close() throws SQLException {
-		try {
-			if (this.conn != null)
+	public void closeConnection() {
+		try{
+			if (this.conn != null && !isClosed())
 				this.conn.close();
-		} catch (SQLException e) {
-			throw e;
+		}catch (SQLException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -47,13 +47,7 @@ public class DAOManager {
 	
 	public GenericDAO getDAO(Table t) throws SQLException {
 
-		try {
-			if (this.conn == null || this.conn.isClosed()) // Let's ensure our connection is open
-				getConnection();
-		} catch (SQLException e) {
-			throw e;
-		}
-
+		
 		switch (t) {
 		case LIBRO:
 			return new LibriDAO(this.conn);

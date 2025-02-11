@@ -11,11 +11,8 @@ import it.dst.formazione.tools.InputOutputConst;
 
 public class CRUDBibliotecaMax implements BibliotecaInterface{
 		private LibriDAO libriDAO= null;
-		private DAOManager daoManager=null;
 
-		public CRUDBibliotecaMax() {
-			daoManager=new DAOManager();
-			
+		public CRUDBibliotecaMax(DAOManager daoManager) {
 			try {
 				
 				this.libriDAO= (LibriDAO) daoManager.getDAO(Table.LIBRO);
@@ -103,15 +100,4 @@ public class CRUDBibliotecaMax implements BibliotecaInterface{
 	    	return LibriDAO.resultStringKO;
 	    }
 	    
-	    public void closeConnection() {
-	    		
-    		try {
-    			if (daoManager!=null && !daoManager.isClosed())  {		
-    				daoManager.close();
-    			}	
-    		} catch (SQLException e) {
-				System.err.println("[Test Close Connection] ERRORE - " + e.getMessage());
-    		}
-	    	
-	    }
 }
