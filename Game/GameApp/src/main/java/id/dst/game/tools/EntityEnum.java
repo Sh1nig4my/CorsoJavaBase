@@ -5,6 +5,7 @@ import lombok.Getter;
 @Getter
 public enum EntityEnum {
 
+    SCENRIO("SCENARIO"),
     GIOCATORE("GIOCATORE");
 
     private final String tableName;

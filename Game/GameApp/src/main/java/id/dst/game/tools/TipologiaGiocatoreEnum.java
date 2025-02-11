@@ -5,8 +5,8 @@ import lombok.Getter;
 @Getter
 public enum TipologiaGiocatoreEnum {
 
-    PNG("PNG"),
-    PG("PG");
+    GUERRIERO("GUERRIERO"),
+    MAGO("MAGO");
 
     private final String tipologiaGiocatoreEnum;
 

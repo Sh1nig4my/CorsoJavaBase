@@ -1,14 +1,15 @@
 package id.dst.game.service;
 
 import id.dst.game.service.giocatore.GiocatoreService;
-import id.dst.game.tools.ResultEnum;
+import id.dst.game.service.scenario.ScenarioService;
 
-import java.sql.SQLException;
+import java.util.logging.Logger;
 
 public class GameService {
 
+    private static final Logger log = Logger.getLogger(GameService.class.getName());
     private static final GiocatoreService giocatoreService = new GiocatoreService();
-
+    private static final ScenarioService scenarioService = new ScenarioService();
 
     // INFO: fase di inizializzazione del gioco
     //  (creazione delle tabelle e dei attributi necessari)
@@ -16,30 +17,23 @@ public class GameService {
 
         String resultConfig;
 
-        try {
-            resultConfig = giocatoreService.createTable();
+        resultConfig = giocatoreService.createTable();
 
-        } catch (SQLException e) {
-            System.err.println("ERROR GameService - configGame()  : " + e.getMessage());
-            return ResultEnum.KO.getResultEnum();
-        }
+        // TODO creo tutte le entity necessarie
 
+        // TODO popolo il gioco con le oinfo di base
 
-        /*try {
-            // TODO: crea Tabella Scenario
-        } catch (SQLException e) {
-            System.err.println("ERROR GameService - configGame() : " + e.getMessage());
-            return ResultEnum.KO.getResultEnum();
-        }*/
+        // TODO verifico che il giocatore ha già un salvataggio attivo
 
         return resultConfig;
 
     }
 
-    public static String selectPG() {
 
-        return "";
+    public static String startGame() {
+
+        return "resultConfig";
+
     }
-
 
 }

@@ -1,7 +1,19 @@
 package id.dst.game.entity.scenario;
 
-public class Scenario {
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-    // TODO
+import java.util.List;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class Scenario {
+    private Integer id;
+    private String nome;
+    private String descrizione;
+
+    // TODO: da implementare
 
 }

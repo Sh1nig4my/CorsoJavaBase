@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
-public interface CRUDGiocatore {
+public interface GiocatoreRepository {
 
     String createTable() throws SQLException;
 
@@ -16,7 +16,7 @@ public interface CRUDGiocatore {
 
     Optional<Giocatore> selectGiocatoreById(Integer id) throws SQLException;
 
-    Optional<List<Giocatore>> selectAllGiocatore() throws SQLException;
+    List<Giocatore> selectAllGiocatore() throws SQLException;
 
     String cancellaGiocatoreById(Integer id) throws SQLException;
 

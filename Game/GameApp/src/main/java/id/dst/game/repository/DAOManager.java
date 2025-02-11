@@ -14,8 +14,9 @@ public class DAOManager {
 	public Connection conn = null;
 
 	public void getConnection() throws SQLException {
-        if (this.conn == null)
+        if (this.conn == null || this.conn.isClosed()) { // Controlla se la connessione è già aperta
             this.conn = DriverManager.getConnection(DB_URL, USER, PASSWORD);
+        }
     }
 
 	public Boolean isClosed() throws SQLException {
@@ -25,8 +26,10 @@ public class DAOManager {
 	}
 	
 	public void close() throws SQLException {
-        if (this.conn != null)
+        if (this.conn != null && !this.conn.isClosed()) {
             this.conn.close();
+            this.conn = null;  // Assicura che la connessione venga "resettata"
+        }
     }
 
 
