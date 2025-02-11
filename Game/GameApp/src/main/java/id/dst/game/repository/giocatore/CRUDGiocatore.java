@@ -18,6 +18,6 @@ public interface CRUDGiocatore {
 
     Optional<List<Giocatore>> selectAllGiocatore() throws SQLException;
 
-    void cancellaGioctoreById(Integer id);
+    void cancellaGiocatoreById(Integer id);
 
 }

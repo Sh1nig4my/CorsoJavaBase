@@ -56,7 +56,7 @@ public class GiocatoreDAO extends DAOManager implements CRUDGiocatore {
     }
 
     @Override
-    public void cancellaGioctoreById(Integer id) {
+    public void cancellaGiocatoreById(Integer id) {
 
     }
 
