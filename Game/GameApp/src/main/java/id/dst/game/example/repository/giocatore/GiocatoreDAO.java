@@ -72,6 +72,7 @@ public class GiocatoreDAO extends DAOManager implements GiocatoreRepository {
             return resultQuery > 0;
 
         } catch (SQLException e) {
+            log.severe("Errore nell'inserimento del giocatore: " + e.getMessage());
             throw new SQLException("Errore nell'inserimento del giocatore: " + e.getMessage());
         } finally {
             if (pstmt != null) pstmt.close();
@@ -84,9 +85,10 @@ public class GiocatoreDAO extends DAOManager implements GiocatoreRepository {
     public Boolean updateGiocatoreById(Integer id, Giocatore giocatore) throws SQLException {
         String sql = "UPDATE " + EntityEnum.GIOCATORE.getTableName() + " SET nome = ?, eta = ?, hp = ?, forza = ?, destrezza = ?, intelligenza = ?, tipo = ? WHERE id = ?";
         int resultQuery;
+        PreparedStatement pstmt = null;
         try {
             getConnection();
-            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, giocatore.getNome());
             pstmt.setInt(2, giocatore.getEta());
             pstmt.setInt(3, giocatore.getHp());
@@ -106,8 +108,10 @@ public class GiocatoreDAO extends DAOManager implements GiocatoreRepository {
             return resultQuery > 0;
 
         } catch (SQLException e) {
+            log.severe("Errore nell'aggiornamento del giocatore: " + e.getMessage());
             throw new SQLException("Errore nell'aggiornamento del giocatore: " + e.getMessage());
         } finally {
+            if (pstmt != null) pstmt.close();
             close();
         }
 

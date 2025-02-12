@@ -10,6 +10,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Scenario {
+
     private Integer id;
     private String nome;
     private String descrizione;

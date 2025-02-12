@@ -23,6 +23,7 @@ public class GameService {
         if (!resultConfig) return false;
 
         // TODO creo tutte le entity necessarie
+
         // TODO popolo il gioco con le info di base
 
         return true;
