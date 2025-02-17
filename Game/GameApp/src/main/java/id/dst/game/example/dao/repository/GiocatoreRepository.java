@@ -1,10 +1,10 @@
-package id.dst.game.example.repository.giocatore;
-
-import id.dst.game.example.entity.giocatore.Giocatore;
+package id.dst.game.example.dao.repository;
 
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
+
+import id.dst.game.example.entity.Giocatore;
 
 public interface GiocatoreRepository {
 

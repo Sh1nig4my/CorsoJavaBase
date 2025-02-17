@@ -1,10 +1,10 @@
-package id.dst.game.example.repository.scenario;
-
-import id.dst.game.example.entity.scenario.Scenario;
+package id.dst.game.example.dao.repository;
 
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
+
+import id.dst.game.example.entity.Scenario;
 
 public interface ScenarioRepository {
 
