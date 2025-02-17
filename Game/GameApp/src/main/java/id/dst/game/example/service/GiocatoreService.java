@@ -1,8 +1,7 @@
-package id.dst.game.example.service.giocatore;
+package id.dst.game.example.service;
 
-import id.dst.game.example.entity.giocatore.Giocatore;
-import id.dst.game.example.repository.giocatore.GiocatoreDAO;
-
+import id.dst.game.example.dao.GiocatoreDAO;
+import id.dst.game.example.entity.Giocatore;
 
 import java.sql.SQLException;
 
@@ -17,11 +16,9 @@ public class GiocatoreService {
     private final GiocatoreDAO giocatoreDAO = new GiocatoreDAO();
 
     /**
-     * Crea la tabella per i giocatori nel database.
-     * @return ResultEnum.OK se la creazione ha successo, ResultEnum.KO altrimenti.
+     * Crea la tabella per i giocatori nel database
      */
     public Boolean createTable() {
-        String result;
         try {
             return giocatoreDAO.createTable();
         } catch (SQLException e) {
@@ -33,10 +30,8 @@ public class GiocatoreService {
     /**
      * Inserisce un nuovo giocatore nel database.
      * @param giocatore L'oggetto Giocatore da inserire.
-     * @return ResultEnum.OK se l'inserimento ha successo, ResultEnum.KO altrimenti.
      */
     public Boolean insertGiocatore(Giocatore giocatore) {
-        String result;
         try {
             return giocatoreDAO.insertGiocatore(giocatore);
         } catch (SQLException e) {
@@ -49,10 +44,8 @@ public class GiocatoreService {
      * Aggiorna un giocatore nel database in base al suo ID.
      * @param id ID del giocatore da aggiornare.
      * @param giocatore Nuovi dati del giocatore.
-     * @return ResultEnum.OK se l'aggiornamento ha successo, ResultEnum.KO altrimenti.
      */
     public Boolean updateGiocatoreById(Integer id, Giocatore giocatore) {
-        String result;
         try {
             return  giocatoreDAO.updateGiocatoreById(id, giocatore);
         } catch (SQLException e) {
@@ -85,19 +78,15 @@ public class GiocatoreService {
         List<Giocatore> list = List.of();
         try {
             list = giocatoreDAO.selectAllGiocatore();
-
         } catch (SQLException e) {
             log.warning("Errore nella selezione di tutti i giocatori: " + e.getMessage());
-            return list; // Ritorna una lista vuota in caso di errore
         }
-
         return list;
     }
 
     /**
      * Cancella un giocatore dal database tramite ID.
      * @param id ID del giocatore da eliminare.
-     * @return ResultEnum.OK se l'eliminazione ha successo, ResultEnum.KO altrimenti.
      */
     public Boolean cancellaGiocatoreById(Integer id) {
         try {

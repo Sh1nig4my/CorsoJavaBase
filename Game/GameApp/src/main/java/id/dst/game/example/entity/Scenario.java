@@ -1,4 +1,4 @@
-package id.dst.game.example.entity.scenario;
+package id.dst.game.example.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,6 +10,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Scenario {
+
     private Integer id;
     private String nome;
     private String descrizione;

@@ -1,9 +1,9 @@
-package id.dst.game.example.service.scenario;
-
-import id.dst.game.example.repository.scenario.ScenarioDAO;
+package id.dst.game.example.service;
 
 import java.sql.SQLException;
 import java.util.logging.Logger;
+
+import id.dst.game.example.dao.ScenarioDAO;
 
 public class ScenarioService {
 
@@ -19,5 +19,8 @@ public class ScenarioService {
             return false;
         }
     }
+
+
+    // TODO
 
 }

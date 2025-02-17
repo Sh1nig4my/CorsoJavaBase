@@ -1,4 +1,4 @@
-package id.dst.game.example.entity.giocatore;
+package id.dst.game.example.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,16 +15,18 @@ public class Giocatore extends Personaggio {
     private Integer forza;
     private Integer destrezza;
     private Integer intelligenza;
-    private String tipo;
+    private String  tipo;
+    private String  grafica;
 
     // INFO: si può migliorare?
-    public Giocatore(Integer id, String nome, Integer eta, Integer hp, Integer forza, Integer destrezza, Integer intelligenza, String tipo) {
+    public Giocatore(Integer id, String nome, Integer eta, Integer hp, Integer forza, Integer destrezza, Integer intelligenza, String tipo, String grafica) {
         super(nome, eta, hp);
         this.id = id;
         this.forza = forza;
         this.destrezza = destrezza;
         this.intelligenza = intelligenza;
         this.tipo = tipo;
+        this.grafica = grafica;
     }
 
 }

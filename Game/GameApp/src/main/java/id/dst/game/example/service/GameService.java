@@ -1,8 +1,5 @@
 package id.dst.game.example.service;
 
-import id.dst.game.example.service.giocatore.GiocatoreService;
-import id.dst.game.example.service.scenario.ScenarioService;
-
 import java.util.logging.Logger;
 
 public class GameService {
@@ -23,6 +20,7 @@ public class GameService {
         if (!resultConfig) return false;
 
         // TODO creo tutte le entity necessarie
+
         // TODO popolo il gioco con le info di base
 
         return true;

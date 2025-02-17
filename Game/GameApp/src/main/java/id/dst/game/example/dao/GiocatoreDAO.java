@@ -1,7 +1,7 @@
-package id.dst.game.example.repository.giocatore;
+package id.dst.game.example.dao;
 
-import id.dst.game.example.entity.giocatore.Giocatore;
-import id.dst.game.example.repository.DAOManager;
+import id.dst.game.example.dao.repository.GiocatoreRepository;
+import id.dst.game.example.entity.Giocatore;
 import id.dst.game.example.tools.EntityEnum;
 
 import java.sql.*;
@@ -24,7 +24,8 @@ public class GiocatoreDAO extends DAOManager implements GiocatoreRepository {
                 "forza INT NOT NULL, " +
                 "destrezza INT NOT NULL, " +
                 "intelligenza INT NOT NULL, " +
-                "tipo VARCHAR(50) NOT NULL" +
+                "tipo VARCHAR(50) NOT NULL," +
+                "grafica TEXT NOT NULL," +
                 ");";
 
         try {
@@ -72,6 +73,7 @@ public class GiocatoreDAO extends DAOManager implements GiocatoreRepository {
             return resultQuery > 0;
 
         } catch (SQLException e) {
+            log.severe("Errore nell'inserimento del giocatore: " + e.getMessage());
             throw new SQLException("Errore nell'inserimento del giocatore: " + e.getMessage());
         } finally {
             if (pstmt != null) pstmt.close();
@@ -84,9 +86,10 @@ public class GiocatoreDAO extends DAOManager implements GiocatoreRepository {
     public Boolean updateGiocatoreById(Integer id, Giocatore giocatore) throws SQLException {
         String sql = "UPDATE " + EntityEnum.GIOCATORE.getTableName() + " SET nome = ?, eta = ?, hp = ?, forza = ?, destrezza = ?, intelligenza = ?, tipo = ? WHERE id = ?";
         int resultQuery;
+        PreparedStatement pstmt = null;
         try {
             getConnection();
-            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt = conn.prepareStatement(sql);
             pstmt.setString(1, giocatore.getNome());
             pstmt.setInt(2, giocatore.getEta());
             pstmt.setInt(3, giocatore.getHp());
@@ -106,8 +109,10 @@ public class GiocatoreDAO extends DAOManager implements GiocatoreRepository {
             return resultQuery > 0;
 
         } catch (SQLException e) {
+            log.severe("Errore nell'aggiornamento del giocatore: " + e.getMessage());
             throw new SQLException("Errore nell'aggiornamento del giocatore: " + e.getMessage());
         } finally {
+            if (pstmt != null) pstmt.close();
             close();
         }
 
@@ -134,7 +139,8 @@ public class GiocatoreDAO extends DAOManager implements GiocatoreRepository {
                         rs.getInt("forza"),
                         rs.getInt("destrezza"),
                         rs.getInt("intelligenza"),
-                        rs.getString("tipo")
+                        rs.getString("tipo"),
+                        rs.getString("grafica")
                 );
             }
 
@@ -171,7 +177,8 @@ public class GiocatoreDAO extends DAOManager implements GiocatoreRepository {
                         rs.getInt("forza"),
                         rs.getInt("destrezza"),
                         rs.getInt("intelligenza"),
-                        rs.getString("tipo")
+                        rs.getString("tipo"),
+                        rs.getString("grafica")
                 );
                 giocatori.add(giocatore);
             }
