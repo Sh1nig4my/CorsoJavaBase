@@ -1,7 +1,7 @@
-package id.dst.game.example.repository.giocatore;
+package id.dst.game.example.dao;
 
-import id.dst.game.example.entity.giocatore.Giocatore;
-import id.dst.game.example.repository.DAOManager;
+import id.dst.game.example.dao.repository.GiocatoreRepository;
+import id.dst.game.example.entity.Giocatore;
 import id.dst.game.example.tools.EntityEnum;
 
 import java.sql.*;
@@ -24,7 +24,8 @@ public class GiocatoreDAO extends DAOManager implements GiocatoreRepository {
                 "forza INT NOT NULL, " +
                 "destrezza INT NOT NULL, " +
                 "intelligenza INT NOT NULL, " +
-                "tipo VARCHAR(50) NOT NULL" +
+                "tipo VARCHAR(50) NOT NULL," +
+                "grafica TEXT NOT NULL," +
                 ");";
 
         try {
@@ -138,7 +139,8 @@ public class GiocatoreDAO extends DAOManager implements GiocatoreRepository {
                         rs.getInt("forza"),
                         rs.getInt("destrezza"),
                         rs.getInt("intelligenza"),
-                        rs.getString("tipo")
+                        rs.getString("tipo"),
+                        rs.getString("grafica")
                 );
             }
 
@@ -175,7 +177,8 @@ public class GiocatoreDAO extends DAOManager implements GiocatoreRepository {
                         rs.getInt("forza"),
                         rs.getInt("destrezza"),
                         rs.getInt("intelligenza"),
-                        rs.getString("tipo")
+                        rs.getString("tipo"),
+                        rs.getString("grafica")
                 );
                 giocatori.add(giocatore);
             }

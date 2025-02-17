@@ -1,4 +1,4 @@
-package it.dst.formazione.lezione_8.esercizio;
+package it.dst.formazione.lezioni.lezione8.esercizio;
 
 import java.util.ArrayList;
 import java.util.Arrays;

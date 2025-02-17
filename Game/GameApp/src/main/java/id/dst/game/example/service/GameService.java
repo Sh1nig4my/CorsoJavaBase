@@ -1,8 +1,5 @@
 package id.dst.game.example.service;
 
-import id.dst.game.example.service.giocatore.GiocatoreService;
-import id.dst.game.example.service.scenario.ScenarioService;
-
 import java.util.logging.Logger;
 
 public class GameService {

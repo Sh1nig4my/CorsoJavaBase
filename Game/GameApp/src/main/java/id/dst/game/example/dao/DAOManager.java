@@ -1,4 +1,4 @@
-package id.dst.game.example.repository;
+package id.dst.game.example.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -9,7 +9,7 @@ public class DAOManager {
 
 	private static final String DB_URL = "jdbc:mysql://localhost:3306/game";
 	private static final String USER = "root";
-	private static final String PASSWORD = "011092";
+	private static final String PASSWORD = "R3ziel&80";
 
 	public Connection conn = null;
 
