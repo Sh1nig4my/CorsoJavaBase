@@ -1,0 +1,11 @@
+spring:
+  name: server-template
+  datasource:
+    url: jdbc:mysql://localhost:3306/servertemplate?allowPublicKeyRetrieval=true&useSSL=false
+    username: root
+    password: 011092
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: update
+    show-sql: true
