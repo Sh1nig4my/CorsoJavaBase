@@ -12,6 +12,6 @@ public class TestController {
 	@GetMapping("/")
     public String getTest() {
 		String howTo="PATH http://localhost:8080/api/users/";
-    	return "HOW TO TEST </BR>"+howTo;
+    	return "HOW TO TEST "+howTo;
     }
 }
