@@ -1,7 +1,11 @@
 package it.dst.server.template.service.user;
 
 
-import it.dst.server.template.model.User;
+import it.dst.server.template.object.dto.OrderDTO;
+import it.dst.server.template.object.dto.UserDTO;
+import it.dst.server.template.object.model.Order;
+import it.dst.server.template.object.model.User;
+import jakarta.transaction.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -9,13 +13,18 @@ import java.util.Optional;
 public interface UserService  {
 
 
-    List<User> getAllUsers();
+    List<UserDTO> getAllUsers();
 
-    Optional<User> getUserById(Long id);
+    Optional<UserDTO> getUserByEmail(String email);
 
-    Optional<User> getUserByEmail(String email);
+    UserDTO saveUser(UserDTO user);
 
-    User saveUser(User user);
+    UserDTO updateUser(Long id, UserDTO user);
 
     void deleteUser(Long id);
+
+    // ORDERS
+    OrderDTO createOrder(Long userId, OrderDTO order);
+
+    UserDTO findUserById(Long id);
 }

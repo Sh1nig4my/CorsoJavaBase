@@ -5,7 +5,374 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Programma Corso di Programmazione Backend</title>
-  <link rel="stylesheet" href="/styles/style.css" />
+  <style>
+    body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f4f4f9; /* Colore di sfondo chiaro e accogliente */
+    color: #333333;
+    line-height: 1.75;
+    margin: 0;
+    padding: 0 20px;
+}
+
+.title {
+    color: #003366;
+    font-weight: bold;
+    font-size: 1.3em;
+    margin-bottom: 5px;
+}
+
+a[href] {
+    text-decoration: none; /* Rimuove la sottolineatura */
+    color: #0066cc; /* Colore blu visibile e coerente */
+    font-weight: bold; /* Testo in grassetto */
+    transition: color 0.3s ease-in-out; /* Transizione morbida */
+}
+
+a[href]:hover {
+    text-decoration: underline; /* Sottolineatura al passaggio del mouse */
+    color: #003399; /* Colore blu più scuro per hover */
+}
+
+p {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #333; /* colore del testo */
+    margin: 1rem 0; /* spaziatura sopra e sotto */
+    text-align: justify; /* testo giustificato */
+}
+
+h1, h2, h3 {
+    color: #003366; /* Blu uniforme per titoli */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 2.5em;
+}
+
+h2 {
+    margin-top: 25px;
+    font-size: 2em;
+}
+
+h3 {
+    margin-top: 20px;
+    font-size: 1.5em;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 10px; /* Spaziatura maggiore tra gli elementi */
+    font-size: 1.1em;
+    padding-left: 10px;
+    border-left: 3px solid #014684;
+}
+
+li li {
+    font-size: 14px;
+    margin-left: 20px;
+    padding-left: 10px;
+    border-left: none;
+    list-style-type: square; /* Cambia il tipo di pallino della lista annidata */
+}
+
+.section {
+    background-color: #ffffff; /* Sfondo bianco per contrasto */
+    color: #333333; /* Testo scuro per una buona leggibilità */
+    padding: 20px; /* Spaziatura interna */
+    margin: 20px auto; /* Centrare la sezione e aggiungere margini */
+    border-radius: 10px; /* Angoli più arrotondati */
+    max-width: 800px; /* Limita la larghezza per facilitare la lettura */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Ombreggiatura leggera */
+    line-height: 1.8; /* Migliora la leggibilità del testo */
+    font-size: 1.1em; /* Dimensione del font leggermente più grande */
+    text-align: justify; /* Testo giustificato per un aspetto professionale */
+}
+
+.day {
+    margin-left: 20px;
+    padding: 10px;
+    border-left: 3px solid #ccc;
+    font-size: 1em;
+    line-height: 1.5;
+}
+
+.day-exam {
+    margin-left: 20px;
+    padding: 10px;
+    border-left: 3px solid #c400a6; /* Rosso acceso */
+    background-color: #fab5f4; /* Rosso chiaro */
+    font-size: 1em;
+    line-height: 1.5;
+    font-weight: bold;
+}
+
+.day-exercise {
+    margin-left: 20px;
+    padding: 10px;
+    border-left: 3px solid #4da6ff; /* Blu acceso */
+    background-color: #e3f2fd; /* Blu chiaro */
+    font-size: 1em;
+    line-height: 1.5;
+    font-style: italic;
+}
+
+code {
+    font-family: "Courier New", Courier, monospace;
+}
+
+
+
+
+.bibliography {
+    background-color: #e9f5e9;
+
+    border-left: 4px solid #248202;
+
+    padding: 15px;
+
+    margin-top: 20px;
+
+    color: #333333; /* Testo scuro per una buona leggibilità */
+    margin: 20px auto; /* Centrare la sezione e aggiungere margini */
+    border-radius: 10px; /* Angoli più arrotondati */
+    max-width: 800px; /* Limita la larghezza per facilitare la lettura */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Ombreggiatura leggera */
+    line-height: 1.8; /* Migliora la leggibilità del testo */
+    font-size: 1.1em; /* Dimensione del font leggermente più grande */
+    text-align: justify; /* Testo giustificato per un aspetto professionale */
+}
+
+.advanced {
+    background-color: #f5e9f4;
+    border-left: 4px solid #570282;
+    padding: 15px;
+
+    margin-top: 20px;
+
+    color: #333333; /* Testo scuro per una buona leggibilità */
+    margin: 20px auto; /* Centrare la sezione e aggiungere margini */
+    border-radius: 10px; /* Angoli più arrotondati */
+    max-width: 800px; /* Limita la larghezza per facilitare la lettura */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Ombreggiatura leggera */
+    line-height: 1.8; /* Migliora la leggibilità del testo */
+    font-size: 1.1em; /* Dimensione del font leggermente più grande */
+    text-align: justify; /* Testo giustificato per un aspetto professionale */
+}
+
+
+.example {
+    background-color: #f0f2f5;
+    border-left: 4px solid #016ee3;
+    padding: 15px;
+    margin-top: 15px;
+    border-radius: 5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.approfondimento {
+    background-color: #f0f2f5;
+    border-left: 4px solid #9350ff;
+    padding: 15px;
+    margin-top: 15px;
+    border-radius: 5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.test {
+    background-color: #f0f2f5;
+    border-left: 4px solid #db7a19;
+    padding: 15px;
+    margin-top: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+        color: #333333; /* Testo scuro per una buona leggibilità */
+        margin: 20px auto; /* Centrare la sezione e aggiungere margini */
+        max-width: 800px; /* Limita la larghezza per facilitare la lettura */
+        line-height: 1.8; /* Migliora la leggibilità del testo */
+        font-size: 1.1em; /* Dimensione del font leggermente più grande */
+        text-align: justify;
+}
+
+.exercise {
+    background-color: #f0f2f5;
+    border-left: 4px solid #248202;
+    padding: 15px;
+    margin-top: 15px;
+    border-radius: 5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+.footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    color: #333;
+    text-align: center;
+    margin-top: 15px;
+    font-size: 0.9em;
+    border-radius: 5px;
+    gap: 20px;
+    width: 100%;
+}
+
+.footer-links {
+    display: flex;
+    justify-content: space-between; /* Allinea i link ai bordi */
+    align-items: center;
+    width: 100%; /* Usa tutta la larghezza disponibile */
+    max-width: 800px; /* Limita la larghezza massima per estetica */
+}
+
+.footer-link {
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #333;
+    transition: color 0.3s ease;
+}
+
+.footer-logo img {
+    height: 50px;
+    width: auto;
+    margin: 10px 0;
+}
+
+.footer-link.left {
+    margin-right: 0; /* Rimuovi auto */
+    order: 1; /* Mantieni a sinistra */
+}
+
+.footer-link.right {
+    margin-left: 0; /* Rimuovi auto */
+    order: 3; /* Mantieni a destra */
+}
+
+/* Contenitore per la tabella con scrolling orizzontale */
+.table-container {
+    width: 100%;
+    overflow-x: auto; /* Scroll orizzontale per schermi piccoli */
+    margin: 20px auto; /* Mantiene la coerenza del layout */
+    padding: 10px;
+}
+
+/* Stile generale per la tabella */
+table {
+    width: 100%;
+    max-width: 800px; /* Mantiene una larghezza leggibile */
+    border-collapse: collapse; /* Rimuove gli spazi tra i bordi */
+    background-color: #ffffff; /* Sfondo bianco */
+    border-radius: 10px; /* Angoli arrotondati */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Ombreggiatura leggera */
+    overflow: hidden; /* Evita che gli angoli si sovrappongano */
+}
+
+/* Stile per l'intestazione della tabella */
+thead {
+    background-color: #003366; /* Blu scuro in linea con il tema */
+    color: white;
+    font-weight: bold;
+}
+
+th {
+    padding: 12px;
+    text-align: left;
+    font-size: 1.1em;
+    border-bottom: 2px solid #002244; /* Bordo inferiore più scuro */
+}
+
+/* Stile per le righe della tabella */
+tr {
+    border-bottom: 1px solid #ddd; /* Bordo sottile tra le righe */
+}
+
+tr:nth-child(even) {
+    background-color: #f8f9fa; /* Alternanza di colore tra le righe */
+}
+
+/* Stile per le celle della tabella */
+td {
+    padding: 12px;
+    font-size: 1.1em;
+    text-align: left;
+    color: #333; /* Testo scuro per una buona leggibilità */
+}
+
+/* Ottimizza il blocco di codice nei comandi */
+pre {
+    overflow-x: auto; /* Abilita lo scroll nei blocchi di codice */
+    max-width: 100%;
+    background-color: #2d2d2d; /* Colore di sfondo coerente con il tema */
+    color: #f8f8f2;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 0.95em;
+}
+
+
+/* Stile della tabella */
+.http-table {
+    width: 100%;
+    max-width: 900px;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+/* Intestazione della tabella */
+.http-table thead {
+    background-color: #003366;
+    color: white;
+    font-weight: bold;
+}
+
+.http-table th, .http-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    font-size: 1rem;
+}
+
+
+/* Adattabilità per dispositivi mobili */
+@media screen and (max-width: 768px) {
+    .table-container {
+        overflow-x: auto; /* Scroll orizzontale per schermi piccoli */
+    }
+
+    table {
+        width: 100%;
+        display: block;
+        overflow-x: auto;
+    }
+
+    .http-table {
+            display: block;
+            overflow-x: auto;
+        }
+
+    th, td {
+        padding: 10px;
+        font-size: 1em;
+    }
+}
+
+
+  </style>
 </head>
 
 <body>
@@ -34,28 +401,6 @@
       </p>
     </section>
   </section>
-
-  <br />
-
-  <br />
-
-  <br />
-
-  <br />
-
-  <br />
-
-  <br />
-
-  <br />
-
-  <br />
-
-  <br />
-
-  <br />
-
-  <br />
 
   <br />
 
@@ -203,6 +548,7 @@
 
   <!-- Settimana 3 -->
   <section class="section">
+
     <div class="week">
       <h2>Settimana 3: SQL Language / JDBC</h2>
       <ul>
@@ -241,12 +587,7 @@
             - <strong>Gestione degli errori SQL:</strong> trattamento delle eccezioni con SQLException<br />
           </div>
         </li>
-
-        <br />
-        <br />
-        <br />
-        <br />
-
+        
         <li class="day-exam">
           <span class="title">Giorno 15 (Test Intermedio):</span>
           <div class="content">
@@ -259,40 +600,9 @@
       </ul>
 
     </div>
+
   </section>
 
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
   <!-- Settimana 4 -->
   <section class="section">
 
@@ -347,35 +657,7 @@
     </div>
   </section>
 
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
+
   <!-- Settimana 5 -->
   <section class="section">
     <div class="week">
@@ -385,6 +667,15 @@
         <li class="day">
           <span class="title">Giorno 21:</span>
           <div class="content">
+            - <strong>Introduzione a Spring:</strong> concetti base di Spring Framework e Spring Boot.<br />
+            - <strong>Dependency Injection:</strong> creazione di un'applicazione Spring con gestione dei bean.<br />
+            - <strong>Configurazione del database in Spring Boot:</strong> utilizzo di <code>application.properties</code> e Spring Data JPA.
+          </div>
+        </li>
+
+        <li class="day">
+          <span class="title">Giorno 22:</span>
+          <div class="content">
             - <strong>Introduzione a JPA e Hibernate:</strong> concetti di ORM, differenze tra JDBC e JPA, vantaggi di un ORM.<br />
             - <strong>Configurazione di Hibernate:</strong> creazione di un progetto base con JPA, configurazione del file <code>persistence.xml</code>.<br />
             - <strong>Gestione delle Entità:</strong> utilizzo delle annotazioni <code>@Entity</code>, <code>@Table</code>, <code>@Id</code>, <code>@GeneratedValue</code>.
@@ -392,7 +683,7 @@
         </li>
 
         <li class="day">
-          <span class="title">Giorno 22:</span>
+          <span class="title">Giorno 23:</span>
           <div class="content">
             - <strong>Relazioni tra entità:</strong> tipi di relazioni (<code>@OneToOne</code>, <code>@OneToMany</code>, <code>@ManyToMany</code>) e gestione delle foreign key.<br />
             - <strong>CRUD con Hibernate:</strong> gestione delle operazioni di persistenza con <code>EntityManager</code> e <code>Repository</code>.<br />
@@ -401,22 +692,13 @@
         </li>
 
         <li class="day">
-          <span class="title">Giorno 23:</span>
+          <span class="title">Giorno 24:</span>
           <div class="content">
             - <strong>JPQL (Java Persistence Query Language):</strong> scrittura di query personalizzate.<br />
             - <strong>Testing delle entità:</strong> utilizzo di JUnit e TestContainers per testare l’integrazione con il database.
           </div>
         </li>
 
-        <li class="day">
-          <span class="title">Giorno 24:</span>
-          <div class="content">
-            - <strong>Introduzione a Spring:</strong> concetti base di Spring Framework e Spring Boot.<br />
-            - <strong>Dependency Injection:</strong> creazione di un'applicazione Spring con gestione dei bean.<br />
-            - <strong>Configurazione del database in Spring Boot:</strong> utilizzo di <code>application.properties</code> e Spring Data JPA.
-          </div>
-        </li>
-        <br />
         <li class="day-exercise">
           <span class="title">Giorno 25 (Esercitazione):</span>
           <div class="content">
@@ -429,35 +711,6 @@
     </div>
   </section>
 
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
-  <br />
   <!-- Settimana 6 -->
   <section class="section">
     <div class="week">
@@ -467,7 +720,7 @@
         <li class="day">
           <span class="title">Giorno 26:</span>
           <div class="content">
-            - <strong>Spring Boot e API REST:</strong> creazione di controller REST con annotazioni <code>@RestController</code>.<br />
+            - <strong>Spring Boot e API REST:</strong> creazione di controller REST.<br />
             - <strong>Gestione delle richieste HTTP:</strong> metodi GET, POST, PUT, DELETE e gestione degli status code.<br />
           </div>
         </li>
@@ -475,8 +728,7 @@
         <li class="day">
           <span class="title">Giorno 27:</span>
           <div class="content">
-            - <strong>Gestione dei dati in Spring Boot:</strong> interazione con database SQL.<br />
-            - <strong>Introduzione ai microservizi:</strong> concetti base, vantaggi e svantaggi rispetto alle architetture monolitiche.<br />
+            - <strong>Gestione dei dati in Spring Boot:</strong> interazione con database Mongo.<br />
           </div>
         </li>
 
@@ -493,15 +745,10 @@
           <span class="title">Giorno 29:</span>
           <div class="content">
             - <strong>Testing in Java:</strong> utilizzo di JUnit e Mockito per testare i servizi Spring.<br />
-            - <strong>Best practices per la scrittura di API REST:</strong> error handling, validazione delle richieste e documentazione con Swagger.
+            - <strong>Best practices per la scrittura di API REST:</strong> error handling, validazione delle richieste.
           </div>
         </li>
 
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
         <li class="day-exam">
           <span class="title">Giorno 30 (Esame Finale):</span>
           <div class="content">
@@ -518,13 +765,17 @@
 
 
   <footer class="footer">
-    <br />
-    <br />
-    <br />
     <a href="/index.html" class="footer-logo">
       <img src="/img/logo.png" alt="Logo del sito" />
     </a>
-
+    <div class="footer-links">
+      <a href="/index.html" class="footer-link left">
+        &#8592; Pagina precedente
+      </a>
+      <a href="/Settimana_1/Lezione_2.html" class="footer-link right">
+        Pagina successiva &#8594;
+      </a>
+    </div>
     &copy; 2025 Corso di Programmazione Backend. Tutti i diritti riservati.
   </footer>
 
