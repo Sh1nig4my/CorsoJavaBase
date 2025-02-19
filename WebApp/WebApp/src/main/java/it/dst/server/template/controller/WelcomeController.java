@@ -7,11 +7,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/test")
-public class TestController {
+public class WelcomeController {
 
-	@GetMapping("/")
+	@GetMapping()
     public String getTest() {
-		String howTo="PATH http://localhost:8080/api/users/";
-    	return howTo;
+    	return "index.html";
     }
 }
