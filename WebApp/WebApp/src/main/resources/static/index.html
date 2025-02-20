@@ -38,26 +38,25 @@
 			//chiamo la POST
 			if(!isExist){
 				post(method, url, body);
+				
 			}else{
+				method ="PUT";
+				url = "http://localhost:8080/api/users";
+				
+				body = JSON.stringify({
+					  nome: 	"Hello Worldeee",
+					  email:	"m.grande@dstech.it",
+					  password: "900"
+					});
+			
+				var bodyParsed= put(method, url, id, body);
+				console.log("AGGIORNO: "+bodyParsed);
+				
 				method ="DELETE";
 				url = "http://localhost:8080/api/users";
 				cancella(method, url, id);
 			
 			}
-			
-			
-			/*method ="PUT";
-			url = "http://localhost:8080/api/users";
-			var id = "7";
-			body = JSON.stringify({
-				  nome: 	"Hello World",
-				  email:	"My POST request",
-				  password: "10000"
-				});
-		
-			put(method, url, id, body);*/
-			
-			
 			
 			function get(method, url) {
 
@@ -71,7 +70,8 @@
 			    if (xhr.status === 200) {
 			        console.log( xhr.responseText);
 
-			    } else console.warn('request_error');
+			    } else 
+			    	console.warn('request_error');
 				
 			    
 			    if(xhr.responseText===""){
@@ -83,47 +83,57 @@
 			
 			function post(method, url, body){
 				const xhr = new XMLHttpRequest();
-				xhr.open(method, url);
+				xhr.open(method, url, false);
 				xhr.setRequestHeader("Content-Type", "application/json");
 				
-				xhr.onload = () => {
-				  if (xhr.readyState == 4 && xhr.status == 201) {
-				    console.log(JSON.parse(xhr.responseText));
-				  } else {
-				    console.log(`Error: ${xhr.status}`);
-				  }
-				};
 				xhr.send(body);
+				for(; xhr.readyState !== 4;)
+			    	
+		    	 if (xhr.status === 200) {
+				     console.log( xhr.responseText);
+				 } else 
+					 console.warn('request_error');
+					
+				if(xhr.responseText===""){
+			    	return "[]";
+			    }
+			    return JSON.parse(xhr.responseText);
 			 }
 			
 			function put(method, url, id, body){
 				const xhr = new XMLHttpRequest();
-				xhr.open(method, url+"/"+id);
+				xhr.open(method, url+"/"+id, false);
 				xhr.setRequestHeader("Content-Type", "application/json");
-				
-				xhr.onload = () => {
-				  if (xhr.readyState == 4 && xhr.status == 201) {
-				    console.log(JSON.parse(xhr.responseText));
-				  } else {
-				    console.log(`Error: ${xhr.status}`);
-				  }
-				};
 				xhr.send(body);
+				
+				 // stop the engine while xhr isn't done
+			    for(; xhr.readyState !== 4;)
+			    	
+		    	if (xhr.status === 200) {
+					console.log( xhr.responseText);
+
+				} else 
+					console.warn('request_error');
+					
+			    return xhr.responseText;
 			 }
 			
 			function cancella(method, url, id){
 				const xhr = new XMLHttpRequest();
-				xhr.open(method, url+"/"+id);
-				xhr.onload = function () {
-				  //var data = JSON.parse(xhr.responseText);
-				  if (xhr.readyState == 4 && xhr.status == "200") {
-				    //console.log(data);
-					console.log(xhr.responseText);
-				  } else {
-				    console.log(`Error: ${xhr.status}`);
-				  }
-				};
+				xhr.open(method, url+"/"+id, false);
 				xhr.send();
+				
+				for(; xhr.readyState !== 4;)
+			    if (xhr.status === 200) {
+					console.log( xhr.responseText);
+
+				} else 
+					console.warn('request_error');
+					
+			    if(xhr.responseText===""){
+			    	return "[]";
+			    }
+			    return JSON.parse(xhr.responseText);
 			}
 		</script>
 	</head>
