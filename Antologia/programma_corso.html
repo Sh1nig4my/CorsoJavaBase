@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Programma Corso di Programmazione Backend</title>
+  <style>
+    body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f4f4f9; /* Colore di sfondo chiaro e accogliente */
+    color: #333333;
+    line-height: 1.75;
+    margin: 0;
+    padding: 0 20px;
+}
+
+.title {
+    color: #003366;
+    font-weight: bold;
+    font-size: 1.3em;
+    margin-bottom: 5px;
+}
+
+a[href] {
+    text-decoration: none; /* Rimuove la sottolineatura */
+    color: #0066cc; /* Colore blu visibile e coerente */
+    font-weight: bold; /* Testo in grassetto */
+    transition: color 0.3s ease-in-out; /* Transizione morbida */
+}
+
+a[href]:hover {
+    text-decoration: underline; /* Sottolineatura al passaggio del mouse */
+    color: #003399; /* Colore blu più scuro per hover */
+}
+
+p {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #333; /* colore del testo */
+    margin: 1rem 0; /* spaziatura sopra e sotto */
+    text-align: justify; /* testo giustificato */
+}
+
+h1, h2, h3 {
+    color: #003366; /* Blu uniforme per titoli */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 2.5em;
+}
+
+h2 {
+    margin-top: 25px;
+    font-size: 2em;
+}
+
+h3 {
+    margin-top: 20px;
+    font-size: 1.5em;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 10px; /* Spaziatura maggiore tra gli elementi */
+    font-size: 1.1em;
+    padding-left: 10px;
+    border-left: 3px solid #014684;
+}
+
+li li {
+    font-size: 14px;
+    margin-left: 20px;
+    padding-left: 10px;
+    border-left: none;
+    list-style-type: square; /* Cambia il tipo di pallino della lista annidata */
+}
+
+.section {
+    background-color: #ffffff; /* Sfondo bianco per contrasto */
+    color: #333333; /* Testo scuro per una buona leggibilità */
+    padding: 20px; /* Spaziatura interna */
+    margin: 20px auto; /* Centrare la sezione e aggiungere margini */
+    border-radius: 10px; /* Angoli più arrotondati */
+    max-width: 800px; /* Limita la larghezza per facilitare la lettura */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Ombreggiatura leggera */
+    line-height: 1.8; /* Migliora la leggibilità del testo */
+    font-size: 1.1em; /* Dimensione del font leggermente più grande */
+    text-align: justify; /* Testo giustificato per un aspetto professionale */
+}
+
+.day {
+    margin-left: 20px;
+    padding: 10px;
+    border-left: 3px solid #ccc;
+    font-size: 1em;
+    line-height: 1.5;
+}
+
+.day-exam {
+    margin-left: 20px;
+    padding: 10px;
+    border-left: 3px solid #c400a6; /* Rosso acceso */
+    background-color: #fab5f4; /* Rosso chiaro */
+    font-size: 1em;
+    line-height: 1.5;
+    font-weight: bold;
+}
+
+.day-exercise {
+    margin-left: 20px;
+    padding: 10px;
+    border-left: 3px solid #4da6ff; /* Blu acceso */
+    background-color: #e3f2fd; /* Blu chiaro */
+    font-size: 1em;
+    line-height: 1.5;
+    font-style: italic;
+}
+
+code {
+    font-family: "Courier New", Courier, monospace;
+}
+
+
+
+
+.bibliography {
+    background-color: #e9f5e9;
+
+    border-left: 4px solid #248202;
+
+    padding: 15px;
+
+    margin-top: 20px;
+
+    color: #333333; /* Testo scuro per una buona leggibilità */
+    margin: 20px auto; /* Centrare la sezione e aggiungere margini */
+    border-radius: 10px; /* Angoli più arrotondati */
+    max-width: 800px; /* Limita la larghezza per facilitare la lettura */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Ombreggiatura leggera */
+    line-height: 1.8; /* Migliora la leggibilità del testo */
+    font-size: 1.1em; /* Dimensione del font leggermente più grande */
+    text-align: justify; /* Testo giustificato per un aspetto professionale */
+}
+
+.advanced {
+    background-color: #f5e9f4;
+    border-left: 4px solid #570282;
+    padding: 15px;
+
+    margin-top: 20px;
+
+    color: #333333; /* Testo scuro per una buona leggibilità */
+    margin: 20px auto; /* Centrare la sezione e aggiungere margini */
+    border-radius: 10px; /* Angoli più arrotondati */
+    max-width: 800px; /* Limita la larghezza per facilitare la lettura */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Ombreggiatura leggera */
+    line-height: 1.8; /* Migliora la leggibilità del testo */
+    font-size: 1.1em; /* Dimensione del font leggermente più grande */
+    text-align: justify; /* Testo giustificato per un aspetto professionale */
+}
+
+
+.example {
+    background-color: #f0f2f5;
+    border-left: 4px solid #016ee3;
+    padding: 15px;
+    margin-top: 15px;
+    border-radius: 5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.approfondimento {
+    background-color: #f0f2f5;
+    border-left: 4px solid #9350ff;
+    padding: 15px;
+    margin-top: 15px;
+    border-radius: 5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.test {
+    background-color: #f0f2f5;
+    border-left: 4px solid #db7a19;
+    padding: 15px;
+    margin-top: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+        color: #333333; /* Testo scuro per una buona leggibilità */
+        margin: 20px auto; /* Centrare la sezione e aggiungere margini */
+        max-width: 800px; /* Limita la larghezza per facilitare la lettura */
+        line-height: 1.8; /* Migliora la leggibilità del testo */
+        font-size: 1.1em; /* Dimensione del font leggermente più grande */
+        text-align: justify;
+}
+
+.exercise {
+    background-color: #f0f2f5;
+    border-left: 4px solid #248202;
+    padding: 15px;
+    margin-top: 15px;
+    border-radius: 5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+.footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    color: #333;
+    text-align: center;
+    margin-top: 15px;
+    font-size: 0.9em;
+    border-radius: 5px;
+    gap: 20px;
+    width: 100%;
+}
+
+.footer-links {
+    display: flex;
+    justify-content: space-between; /* Allinea i link ai bordi */
+    align-items: center;
+    width: 100%; /* Usa tutta la larghezza disponibile */
+    max-width: 800px; /* Limita la larghezza massima per estetica */
+}
+
+.footer-link {
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #333;
+    transition: color 0.3s ease;
+}
+
+.footer-logo img {
+    height: 50px;
+    width: auto;
+    margin: 10px 0;
+}
+
+.footer-link.left {
+    margin-right: 0; /* Rimuovi auto */
+    order: 1; /* Mantieni a sinistra */
+}
+
+.footer-link.right {
+    margin-left: 0; /* Rimuovi auto */
+    order: 3; /* Mantieni a destra */
+}
+
+/* Contenitore per la tabella con scrolling orizzontale */
+.table-container {
+    width: 100%;
+    overflow-x: auto; /* Scroll orizzontale per schermi piccoli */
+    margin: 20px auto; /* Mantiene la coerenza del layout */
+    padding: 10px;
+}
+
+/* Stile generale per la tabella */
+table {
+    width: 100%;
+    max-width: 800px; /* Mantiene una larghezza leggibile */
+    border-collapse: collapse; /* Rimuove gli spazi tra i bordi */
+    background-color: #ffffff; /* Sfondo bianco */
+    border-radius: 10px; /* Angoli arrotondati */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Ombreggiatura leggera */
+    overflow: hidden; /* Evita che gli angoli si sovrappongano */
+}
+
+/* Stile per l'intestazione della tabella */
+thead {
+    background-color: #003366; /* Blu scuro in linea con il tema */
+    color: white;
+    font-weight: bold;
+}
+
+th {
+    padding: 12px;
+    text-align: left;
+    font-size: 1.1em;
+    border-bottom: 2px solid #002244; /* Bordo inferiore più scuro */
+}
+
+/* Stile per le righe della tabella */
+tr {
+    border-bottom: 1px solid #ddd; /* Bordo sottile tra le righe */
+}
+
+tr:nth-child(even) {
+    background-color: #f8f9fa; /* Alternanza di colore tra le righe */
+}
+
+/* Stile per le celle della tabella */
+td {
+    padding: 12px;
+    font-size: 1.1em;
+    text-align: left;
+    color: #333; /* Testo scuro per una buona leggibilità */
+}
+
+/* Ottimizza il blocco di codice nei comandi */
+pre {
+    overflow-x: auto; /* Abilita lo scroll nei blocchi di codice */
+    max-width: 100%;
+    background-color: #2d2d2d; /* Colore di sfondo coerente con il tema */
+    color: #f8f8f2;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 0.95em;
+}
+
+
+/* Stile della tabella */
+.http-table {
+    width: 100%;
+    max-width: 900px;
+    border-collapse: collapse;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+/* Intestazione della tabella */
+.http-table thead {
+    background-color: #003366;
+    color: white;
+    font-weight: bold;
+}
+
+.http-table th, .http-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    font-size: 1rem;
+}
+
+
+/* Adattabilità per dispositivi mobili */
+@media screen and (max-width: 768px) {
+    .table-container {
+        overflow-x: auto; /* Scroll orizzontale per schermi piccoli */
+    }
+
+    table {
+        width: 100%;
+        display: block;
+        overflow-x: auto;
+    }
+
+    .http-table {
+            display: block;
+            overflow-x: auto;
+        }
+
+    th, td {
+        padding: 10px;
+        font-size: 1em;
+    }
+}
+
+
+  </style>
+</head>
+
+<body>
+
+
+  <h1>Programma Corso di Programmazione Backend</h1>
+
+  <section class="section">
+    <!-- INTRO  -->
+    <section class="intro">
+      <p>
+        Benvenuti al corso di formazione in Programmazione Backend, un viaggio
+        formativo progettato per fornire competenze solide e pratiche nello
+        sviluppo di applicazioni lato server. Questo corso è dedicato a chi
+        desidera intraprendere una carriera come sviluppatore back-end o
+        approfondire le proprie conoscenze in questo ambito, partendo da una
+        base di utilizzo del computer.
+      </p>
+      <p>
+        Il backend è il cuore di ogni applicazione moderna. È qui che i dati
+        vengono gestiti, le logiche applicative prendono vita e le richieste
+        degli utenti trovano risposta. Durante il corso esploreremo i fondamenti
+        della programmazione backend, i linguaggi e i framework principali, i
+        database relazionali e non relazionali, e le pratiche di testing,
+        culminando nella realizzazione di un progetto completo in Java Spring.
+      </p>
+    </section>
+  </section>
+
+  <br />
+
+  <!-- Settimana 1  -->
+  <section class="section">
+
+    <div class="week">
+      <h2>
+        Settimana 1: Introduzione alla Programmazione e Configurazione degli
+        Strumenti
+      </h2>
+      <ul>
+
+        <li class="day">
+          <a href="Settimana_1/Lezione_1.html">
+            <span class="title">Giorno 1:</span>
+          </a>
+          <div class="content">
+            - <strong>Introduzione alla programmazione:</strong> concetti
+            fondamentali, differenza tra frontend e backend.<br />
+            - <strong>Strumenti di sviluppo:</strong> installazione di Java,
+            Maven, Git, e configurazione di un IDE (IntelliJ/Eclipse).
+          </div>
+        </li>
+
+        <li class="day">
+          <a href="Settimana_1/Lezione_2.html">
+            <span class="title">Giorno 2:</span>
+          </a>
+          <div class="content">
+            - <strong>Git:</strong> comandi base (clone, add, commit, push,
+            pull).<br />
+            - <strong>Repository GitHub:</strong> creazione di un semplice
+            repository condiviso.<br />
+            - <strong>Risoluzione problemi:</strong> introduzione a pseudocodice
+            e approccio alla risoluzione di problemi.
+          </div>
+        </li>
+
+        <li class="day">
+          <a href="Settimana_1/Lezione_3.html">
+            <span class="title">Giorno 3:</span>
+          </a>
+          <div class="content">
+            - <strong>Fondamenti Java:</strong> variabili, tipi di dati,
+            operatori, strutture di controllo.<br />
+            - <strong>Primo programma Java:</strong> input/output da console.
+          </div>
+        </li>
+        <li class="day">
+          <a href="Settimana_1/Lezione_4.html">
+            <span class="title">Giorno 4:</span>
+          </a>
+          <div class="content">
+            - <strong>Programmazione orientata agli oggetti:</strong> classi,
+            oggetti, ereditarietà, polimorfismo.<br />
+            - <strong>Esempi OOP:</strong> applicazione pratica in Java per
+            modellare un problema reale.
+          </div>
+        </li>
+
+        <li class="day-exercise">
+          <a href="Settimana_1/Esercitazione_1.html">
+            <span class="title">Giorno 5:</span>
+          </a>
+          <div class="content">
+            - <strong>Progetto OOP:</strong> realizzazione di un programma con
+            gestione di classi e metodi.<br />
+            - <strong>Versionamento con Git:</strong> utilizzo per il progetto
+            sviluppato.
+          </div>
+        </li>
+
+      </ul>
+    </div>
+  </section>
+
+  <!-- Settimana 2 -->
+  <section class="section">
+    <div class="week">
+      <h2>Settimana 2: Java e le sue Versioni</h2>
+      <ul>
+
+        <li class="day">
+          <a href="Settimana_2/Lezione_6.html">
+            <span class="title">Giorno 6:</span>
+          </a>
+          <div class="content">
+            - <strong>Fondamenti di Java:</strong> classi, metodi, costruttori e utilizzo delle interfacce.<br />
+            - <strong>Introduzione alle Collezioni:</strong> panoramica su ArrayList, HashMap e HashSet.<br />
+            - <strong>Esempi Pratici:</strong> implementazione di strutture dati comuni con le collezioni di base.
+          </div>
+        </li>
+
+        <li class="day">
+          <a href="Settimana_2/Lezione_7.html">
+            <span class="title">Giorno 7:</span>
+          </a>
+          <div class="content">
+            - <strong>Lambda Expressions:</strong> sintassi di base e confronto con classi anonime.<br />
+            - <strong>Functional Interfaces:</strong> utilizzo e implementazioni comuni come Predicate, Function e
+            Consumer.<br />
+            - <strong>Esercizi:</strong> creazione di espressioni lambda per semplificare codice complesso.
+          </div>
+        </li>
+
+        <li class="day">
+          <a href="Settimana_2/Lezione_8.html">
+            <span class="title">Giorno 8:</span>
+          </a>
+          <div class="content">
+            - <strong>Stream API:</strong> utilizzo di operazioni intermedie e terminali per il trattamento di
+            dati.<br />
+            - <strong>Optional:</strong> gestione sicura dei valori nulli per prevenire NullPointerException.<br />
+            - <strong>Progetti:</strong> implementazione di filtri e trasformazioni con Stream API e Optional.
+          </div>
+        </li>
+
+        <li class="day">
+          <a href="Settimana_2/Lezione_9.html">
+            <span class="title">Giorno 9:</span>
+          </a>
+          <div class="content">
+            - <strong>Innovazioni di Java 8:</strong> Default Methods nelle interfacce e metodi statici.<br />
+            - <strong>Nuovi Metodi Utility:</strong> aggiunte significative in Arrays, Collections e Objects.<br />
+            - <strong>Case Study:</strong> come Java 8 ha migliorato la leggibilità e la manutenibilità del codice.
+          </div>
+        </li>
+
+        <li class="day-exercise">
+          <a href="Settimana_2/Esercitazione_2.html">
+            <span class="title">Giorno 10:</span>
+          </a>
+          <div class="content">
+            - <strong>Progetto Java:</strong> utilizzo di Stream, Optional e
+            Date API per analisi dati e gestione temporale.<br />
+            - <strong>Refactoring:</strong> modernizzazione di codice legacy
+            utilizzando le novità di Java 8.
+          </div>
+        </li>
+
+      </ul>
+    </div>
+  </section>
+
+  <!-- Settimana 3 -->
+  <section class="section">
+
+    <div class="week">
+      <h2>Settimana 3: SQL Language / JDBC</h2>
+      <ul>
+
+        <li class="day">
+          <span class="title">Giorno 11:</span>
+          <div class="content">
+            - <strong>Correzione Esercitazione:</strong> revisione approfondita dei progetti realizzati nella settimana 2.<br />
+            - <strong>Discussione sugli errori comuni:</strong> individuazione delle problematiche riscontrate e suggerimenti per migliorare efficienza e manutenibilità del codice.<br />
+            - <strong>Refactoring e ottimizzazione del codice:</strong> utilizzo delle best practices apprese nelle settimane precedenti, con applicazione di Stream API, Optional e lambda expressions.<br />
+          </div>
+        </li>
+        
+        <li class="day">
+          <span class="title">Giorno 12:</span>
+          <div class="content">
+            - <strong>Database Relazionali:</strong> concetti base di SQL, tabelle, colonne, relazioni e chiavi primarie/esterne.<br />
+            - <strong>Installazione di MySQL:</strong> configurazione di un database MySQL e connessione con MySQL Workbench.<br />
+            - <strong>Query SQL:</strong> SELECT, INSERT, UPDATE, DELETE con esempi pratici.
+          </div>
+        </li>
+        
+        <li class="day">
+          <span class="title">Giorno 13:</span>
+          <div class="content">
+            - <strong>Introduzione a JDBC:</strong> panoramica e vantaggi rispetto ad alternative come JPA e Hibernate.<br />
+            - <strong>Configurazione di JDBC:</strong> installazione dei driver MySQL e connessione a un database con Java.<br />
+            - <strong>Operazioni fondamentali:</strong> esecuzione di query SQL tramite JDBC, recupero e manipolazione dei dati.<br />
+          </div>
+        </li>
+        
+        <li class="day-exercise">
+          <span class="title">Giorno 14 (Esercitazione):</span>
+          <div class="content">
+            - <strong>Inserimento e recupero dati:</strong> creazione di un programma Java per operazioni CRUD (Create, Read, Update, Delete) su MySQL con JDBC.<br />
+            - <strong>Gestione degli errori SQL:</strong> trattamento delle eccezioni con SQLException<br />
+          </div>
+        </li>
+        
+        <li class="day-exam">
+          <span class="title">Giorno 15 (Test Intermedio):</span>
+          <div class="content">
+            - <strong>Esercizio teorico:</strong> test con domande a risposta aperta.<br />
+            - <strong>Esercizio pratico:</strong> realizzazione di un'applicazione.<br />
+            - <strong>Discussione:</strong> revisione degli errori più comuni.
+          </div>
+        </li>
+
+      </ul>
+
+    </div>
+
+  </section>
+
+  <!-- Settimana 4 -->
+  <section class="section">
+
+    <div class="week">
+
+      <h2>Settimana 4: Revisione Codice, DAO e Sviluppo di un Gioco Testuale</h2>
+
+      <ul>
+
+        <li class="day">
+          <span class="title">Giorno 16:</span>
+          <div class="content">
+            - <strong>Review del Codice:</strong> analisi del codice scritto nelle settimane precedenti, individuazione di errori e miglioramenti.<br />
+            - <strong>Introduzione al pattern DAO:</strong> concetti fondamentali e best practice per l'interazione con MySQL.<br />
+            - <strong>Strutturazione di un database MySQL:</strong> progettazione di tabelle, chiavi primarie e relazioni tra dati.
+          </div>
+        </li>
+        <li class="day">
+          <span class="title">Giorno 17:</span>
+          <div class="content">
+            - <strong>Layer di sviluppo:</strong> introduzione ai concetti di Service e Repository e loro ruolo nell'architettura di un'applicazione.<br />
+            - <strong>Esercitazione pratica:</strong> avvio di un progetto di gioco testuale con connessione a un database MySQL.<br />
+            - <strong>Implementazione dei primi metodi:</strong> creazione di classi per la gestione degli oggetti di gioco e la loro persistenza.
+          </div>
+        </li>
+        <li class="day">
+          <span class="title">Giorno 18:</span>
+          <div class="content">
+            - <strong>Utilizzo di Lombok:</strong> introduzione e vantaggi della riduzione del codice boilerplate.<br />
+            - <strong>Logging in Java:</strong> utilizzo di <code>java.util.logging</code> per la gestione dei log nell'applicazione.<br />
+            - <strong>Continua lo sviluppo del gioco testuale:</strong> implementazione della gestione dell'inventario e interazioni tra personaggi, integrando un db MySql tramite JDBC.
+          </div>
+        </li>
+        <li class="day">
+          <span class="title">Giorno 19:</span>
+          <div class="content">
+            - <strong>Proseguimento dello sviluppo del gioco testuale:</strong> aggiunta di nuove funzionalità e gestione avanzata dei dati.<br />
+            - <strong>Accenno alle metodologie Agile:</strong> introduzione a Scrum e Kanban per la gestione dei progetti software.
+          </div>
+        </li>
+        <li class="day-exercise">
+          <span class="title">Giorno 20 (Consegna Esercitazione):</span>
+          <div class="content">
+            - <strong>Finalizzazione del gioco testuale:</strong> verifica delle funzionalità implementate e test delle interazioni.<br />
+            - <strong>Consegna del progetto:</strong> ogni studente presenta il proprio lavoro e riceve feedback.<br />
+            - <strong>Revisione collettiva:</strong> discussione sugli errori più comuni e possibili ottimizzazioni.
+          </div>
+        </li>
+
+      </ul>
+
+    </div>
+  </section>
+
+
+  <!-- Settimana 5 -->
+  <section class="section">
+    <div class="week">
+      <h2>Settimana 5: JPA, Hibernate e Introduzione a Spring</h2>
+      <ul>
+
+        <li class="day">
+          <span class="title">Giorno 21:</span>
+          <div class="content">
+            - <strong>Introduzione a Spring:</strong> concetti base di Spring Framework e Spring Boot.<br />
+            - <strong>Dependency Injection:</strong> creazione di un'applicazione Spring con gestione dei bean.<br />
+            - <strong>Configurazione del database in Spring Boot:</strong> utilizzo di <code>application.properties</code> e Spring Data JPA.
+          </div>
+        </li>
+
+        <li class="day">
+          <span class="title">Giorno 22:</span>
+          <div class="content">
+            - <strong>Introduzione a JPA e Hibernate:</strong> concetti di ORM, differenze tra JDBC e JPA, vantaggi di un ORM.<br />
+            - <strong>Configurazione di Hibernate:</strong> creazione di un progetto base con JPA, configurazione del file <code>persistence.xml</code>.<br />
+            - <strong>Gestione delle Entità:</strong> utilizzo delle annotazioni <code>@Entity</code>, <code>@Table</code>, <code>@Id</code>, <code>@GeneratedValue</code>.
+          </div>
+        </li>
+
+        <li class="day">
+          <span class="title">Giorno 23:</span>
+          <div class="content">
+            - <strong>Relazioni tra entità:</strong> tipi di relazioni (<code>@OneToOne</code>, <code>@OneToMany</code>, <code>@ManyToMany</code>) e gestione delle foreign key.<br />
+            - <strong>CRUD con Hibernate:</strong> gestione delle operazioni di persistenza con <code>EntityManager</code> e <code>Repository</code>.<br />
+            - <strong>Transazioni e gestione delle eccezioni:</strong> commit, rollback e gestione degli errori SQL.
+          </div>
+        </li>
+
+        <li class="day">
+          <span class="title">Giorno 24:</span>
+          <div class="content">
+            - <strong>JPQL (Java Persistence Query Language):</strong> scrittura di query personalizzate.<br />
+            - <strong>Testing delle entità:</strong> utilizzo di JUnit e TestContainers per testare l’integrazione con il database.
+          </div>
+        </li>
+
+        <li class="day-exercise">
+          <span class="title">Giorno 25 (Esercitazione):</span>
+          <div class="content">
+            - <strong>Progetto Hibernate:</strong> realizzazione di un'applicazione CRUD completa con Spring Boot e MySQL.<br />
+            - <strong>Test e Debugging:</strong> revisione degli errori più comuni e suggerimenti per ottimizzare le query.
+          </div>
+        </li>
+
+      </ul>
+    </div>
+  </section>
+
+  <!-- Settimana 6 -->
+  <section class="section">
+    <div class="week">
+      <h2>Settimana 6: Approfondimento su Spring e Confronto con altri Linguaggi</h2>
+      <ul>
+
+        <li class="day">
+          <span class="title">Giorno 26:</span>
+          <div class="content">
+            - <strong>Spring Boot e API REST:</strong> creazione di controller REST.<br />
+            - <strong>Gestione delle richieste HTTP:</strong> metodi GET, POST, PUT, DELETE e gestione degli status code.<br />
+          </div>
+        </li>
+
+        <li class="day">
+          <span class="title">Giorno 27:</span>
+          <div class="content">
+            - <strong>Gestione dei dati in Spring Boot:</strong> interazione con database Mongo.<br />
+          </div>
+        </li>
+
+        <li class="day">
+          <span class="title">Giorno 28:</span>
+          <div class="content">
+            - <strong>Confronto con altri linguaggi backend:</strong> panoramica su Python (FastAPI) e JavaScript (Node.js, Express).<br />
+            - <strong>Pro e Contro di Java rispetto ad altri linguaggi backend:</strong> performance, scalabilità, community e best practice.<br />
+            - <strong>Quando scegliere Java per lo sviluppo backend?</strong> Scenari d’uso e casi aziendali.
+          </div>
+        </li>
+
+        <li class="day">
+          <span class="title">Giorno 29:</span>
+          <div class="content">
+            - <strong>Testing in Java:</strong> utilizzo di JUnit e Mockito per testare i servizi Spring.<br />
+            - <strong>Best practices per la scrittura di API REST:</strong> error handling, validazione delle richieste.
+          </div>
+        </li>
+
+        <li class="day-exam">
+          <span class="title">Giorno 30 (Esame Finale):</span>
+          <div class="content">
+            - <strong>Progetto Finale:</strong> sviluppo e presentazione di un'applicazione REST con Spring Boot.<br />
+            - <strong>Test di Valutazione:</strong> esercizi teorici e pratici su JPA, Hibernate e Spring.<br />
+            - <strong>Discussione e Feedback:</strong> analisi dei progetti realizzati, individuazione dei punti di forza e delle aree di miglioramento.
+          </div>
+        </li>
+
+      </ul>
+    </div>
+  </section>
+
+
+
+  <footer class="footer">
+    <a href="/index.html" class="footer-logo">
+      <img src="/img/logo.png" alt="Logo del sito" />
+    </a>
+    <div class="footer-links">
+      <a href="/index.html" class="footer-link left">
+        &#8592; Pagina precedente
+      </a>
+      <a href="/Settimana_1/Lezione_2.html" class="footer-link right">
+        Pagina successiva &#8594;
+      </a>
+    </div>
+    &copy; 2025 Corso di Programmazione Backend. Tutti i diritti riservati.
+  </footer>
+
+
+</body>
+
+</html>
