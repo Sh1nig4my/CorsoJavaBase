@@ -12,58 +12,26 @@
 
 <!-- Annotazioni Spring Core -->
 <div class="section">
-    <h2>2. Annotazioni Spring Core</h2>
+    <h2>1. Introduzione alle Annotazioni in Spring</h2>
     <p>
-        Nel framework Spring le annotazioni rappresentano un pilastro fondamentale per la configurazione automatica e la gestione dei bean, eliminando la necessità di configurazioni XML estese. Esse facilitano l'implementazione del pattern Inversion of Control (IoC) e del Dependency Injection, rendendo il codice più modulare, testabile e manutenibile.
+        Le annotazioni in Spring rappresentano un elemento chiave per la semplificazione e la modularizzazione dello sviluppo applicativo. Esse consentono di eliminare gran parte del codice ripetitivo (boilerplate) e di configurare l'applicazione in maniera dichiarativa, sfruttando il paradigma dell'Inversion of Control (IoC). Grazie a queste annotazioni, il container Spring è in grado di:
     </p>
     <ul>
         <li>
-            <strong>@Component</strong>: Questa annotazione segna una classe come componente generico gestito dal container Spring. Attraverso il component scanning, Spring rileva automaticamente queste classi e ne gestisce il ciclo di vita, consentendo di creare bean senza configurazioni esplicite.
+            <strong>Gestire l'iniezione delle dipendenze:</strong> Le annotazioni permettono di definire automaticamente le relazioni tra i bean, evitando di dover creare manualmente le istanze e configurare i collegamenti tra le classi. Questo facilita il testing e il mantenimento del codice.
         </li>
         <li>
-            <strong>@Service</strong>: Specializzazione di <code>@Component</code>, questa annotazione è destinata alle classi che contengono la logica di business. Utilizzarla rende il codice più leggibile, poiché indica chiaramente il ruolo della classe all'interno dell'architettura applicativa.
+            <strong>Configurare la gestione delle transazioni:</strong> Con annotazioni come <code>@Transactional</code>, Spring garantisce che le operazioni di persistenza vengano eseguite in modo atomico, assicurando la coerenza dei dati anche in caso di errori o eccezioni.
         </li>
         <li>
-            <strong>@Repository</strong>: Utilizzata per le classi di accesso ai dati, questa annotazione non solo marca il bean come repository, ma abilita anche il meccanismo di traduzione delle eccezioni specifiche del database in eccezioni non controllate di Spring, semplificando la gestione degli errori.
-        </li>
-        <li>
-            <strong>@Controller</strong> e <strong>@RestController</strong>: Queste annotazioni identificano le classi che fungono da controller nel pattern MVC. <code>@Controller</code> è utilizzata per applicazioni web tradizionali, mentre <code>@RestController</code> combina <code>@Controller</code> con <code>@ResponseBody</code> per facilitare lo sviluppo di API RESTful, restituendo direttamente i dati in formati come JSON o XML.
-        </li>
-        <li>
-            <strong>@Autowired</strong>: Fondamentale per l'iniezione delle dipendenze, questa annotazione permette al container Spring di risolvere e iniettare automaticamente i bean necessari. Grazie a <code>@Autowired</code>, non è necessario creare manualmente istanze delle classi, poiché Spring gestisce la loro istanziazione e il loro ciclo di vita, promuovendo un'architettura altamente modulare.
+            <strong>Abilitare la configurazione automatica dei componenti:</strong> Attraverso il component scanning e annotazioni specifiche, Spring rileva e registra automaticamente le classi che devono essere gestite come bean, semplificando notevolmente la configurazione dell’applicazione.
         </li>
     </ul>
-    <div class="example">
-        <h3>Esempio Pratico: Utilizzo di @Component e @Autowired</h3>
-        <pre><code>import org.springframework.stereotype.Component;
-import org.springframework.beans.factory.annotation.Autowired;
-
-// La classe MyComponent è annotata con @Component, rendendola un bean gestito da Spring.
-@Component
-public class MyComponent {
-    public void doWork() {
-        System.out.println("Lavoro eseguito da MyComponent");
-    }
-}
-
-// La classe MyService, anch'essa un componente, utilizza l'iniezione delle dipendenze per ottenere un'istanza di MyComponent.
-// Grazie a @Autowired, Spring risolve automaticamente la dipendenza e inietta il bean necessario tramite il costruttore.
-@Component
-public class MyService {
-    private final MyComponent myComponent;
-
-    @Autowired
-    public MyService(MyComponent myComponent) {
-        this.myComponent = myComponent;
-    }
-
-    public void performService() {
-        // Invoca il metodo doWork() del bean MyComponent, illustrando come le dipendenze siano gestite automaticamente.
-        myComponent.doWork();
-    }
-}</code></pre>
-    </div>
+    <p>
+        In questa lezione, esamineremo in dettaglio le annotazioni più importanti impiegate in Spring, nonché quelle utilizzate in combinazione con tecnologie complementari come Lombok, JPA e Hibernate. Verranno illustrate le funzionalità, i vantaggi e le best practice nell'uso di queste annotazioni, fornendo esempi pratici e casi d'uso che evidenziano come queste tecnologie possano collaborare per creare applicazioni robuste, scalabili e facilmente manutenibili.
+    </p>
 </div>
+
 
 
 <!-- Annotazioni Spring Core -->
