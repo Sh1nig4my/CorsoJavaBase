@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lezione - @Mapper e MapStruct</title>
+  <link rel="stylesheet" href="/styles/style.css">
+</head>
+<body>
+<h1 class="lesson-title">Lezione: @Mapper e MapStruct</h1>
+
+<div class="section">
+    <h2>1. Introduzione a MapStruct</h2>
+    <p>
+        MapStruct è un framework di mapping per Java che permette di convertire oggetti tra diversi livelli di un'applicazione
+        (ad esempio da entità JPA a DTO e viceversa) senza la necessità di scrivere manualmente codice boilerplate.
+    </p>
+    <p>
+        Grazie all'annotazione <code>@Mapper</code>, MapStruct genera automaticamente le implementazioni dei mapper, garantendo
+        performance elevate e codice più pulito. Questo riduce drasticamente il codice ripetitivo e il rischio di errori nel mapping.
+    </p>
+    <p>
+        MapStruct è particolarmente utile nei progetti che utilizzano **Spring Boot** con **JPA**, dove le conversioni tra entità e DTO
+        sono frequenti. A differenza di altre librerie di mapping, come **ModelMapper**, MapStruct esegue il mapping **a tempo di compilazione**
+        anziché a runtime, migliorando così l'efficienza delle prestazioni.
+    </p>
+    <p>
+        Inoltre, MapStruct supporta **mapping personalizzati** tramite espressioni Java e metodi custom, consentendo di gestire conversioni
+        più complesse, come la trasformazione di un nome completo in nome e cognome separati. Può anche essere combinato con **Lombok**
+        per ridurre ulteriormente il codice boilerplate nella definizione di DTO ed entità.
+    </p>
+</div>
+
+<div class="section">
+    <h2>2. Configurazione di MapStruct in un Progetto Spring Boot</h2>
+    <h3>2.1 Aggiunta della Dipendenza</h3>
+    <p>Aggiungi la seguente dipendenza nel file <code>pom.xml</code> per integrare MapStruct nel progetto:</p>
+    <pre><code>
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.mapstruct&lt;/groupId&gt;
+            &lt;artifactId&gt;mapstruct&lt;/artifactId&gt;
+            &lt;version&gt;1.5.3.Final&lt;/version&gt;
+        &lt;/dependency&gt;
+
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.mapstruct&lt;/groupId&gt;
+            &lt;artifactId&gt;mapstruct-processor&lt;/artifactId&gt;
+            &lt;version&gt;1.5.3.Final&lt;/version&gt;
+            &lt;scope&gt;provided&lt;/scope&gt;
+        &lt;/dependency&gt;
+
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;
+            &lt;artifactId&gt;lombok&lt;/artifactId&gt;
+            &lt;version&gt;1.18.26&lt;/version&gt;
+            &lt;scope&gt;provided&lt;/scope&gt;
+        &lt;/dependency&gt;
+
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;
+            &lt;artifactId&gt;lombok-mapstruct-binding&lt;/artifactId&gt;
+            &lt;version&gt;0.2.0&lt;/version&gt;
+            &lt;scope&gt;provided&lt;/scope&gt;
+        &lt;/dependency&gt;
+  </code></pre>
+
+    <h3>2.2 Abilitare l'Annotation Processor</h3>
+    <p>
+        In IntelliJ IDEA, vai su **File -> Settings -> Build, Execution, Deployment -> Compiler -> Annotation Processors**
+        e abilita il supporto per gli annotation processors. Assicurati di selezionare **Enable annotation processing**
+        per generare correttamente i mapper.
+    </p>
+
+    <h3>2.3 Configurazione per il Build con Maven</h3>
+    <p>
+        Per garantire che MapStruct generi automaticamente i mapper, aggiungi il seguente plugin al file <code>pom.xml</code>:
+    </p>
+    <pre><code>
+        &lt;build&gt;
+            &lt;plugins&gt;
+                &lt;plugin&gt;
+                    &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+                    &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;
+                    &lt;version&gt;3.8.1&lt;/version&gt;
+                    &lt;configuration&gt;
+                        &lt;source&gt;17&lt;/source&gt;
+                        &lt;target&gt;17&lt;/target&gt;
+                        &lt;annotationProcessorPaths&gt;
+                            &lt;path&gt;
+                                &lt;groupId&gt;org.mapstruct&lt;/groupId&gt;
+                                &lt;artifactId&gt;mapstruct-processor&lt;/artifactId&gt;
+                                &lt;version&gt;1.5.3.Final&lt;/version&gt;
+                            &lt;/path&gt;
+                            &lt;path&gt;
+                                &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;
+                                &lt;artifactId&gt;lombok-mapstruct-binding&lt;/artifactId&gt;
+                                &lt;version&gt;0.2.0&lt;/version&gt;
+                            &lt;/path&gt;
+                        &lt;/annotationProcessorPaths&gt;
+                    &lt;/configuration&gt;
+                &lt;/plugin&gt;
+            &lt;/plugins&gt;
+        &lt;/build&gt;
+  </code></pre>
+
+    <h3>2.4 Verifica della Configurazione</h3>
+    <p>
+        Dopo aver completato la configurazione, esegui il seguente comando per assicurarti che MapStruct generi correttamente
+        le classi dei mapper:
+    </p>
+    <pre><code>
+    mvn clean compile
+  </code></pre>
+    <p>
+        Se la configurazione è corretta, nella cartella <code>target/generated-sources/annotations</code> troverai le classi
+        di mapping generate automaticamente da MapStruct.
+    </p>
+</div>
+
+
+<div class="section">
+    <h2>3. Creazione di un Mapper con @Mapper</h2>
+    <p>Supponiamo di avere un'entità JPA e un DTO corrispondente:</p>
+
+    <h3>3.1 Definizione dell'Entità JPA</h3>
+    <pre><code>
+        @Entity
+        @Table(name = "users")
+        @Data
+        @NoArgsConstructor
+        @AllArgsConstructor
+        public class User {
+            @Id
+            @GeneratedValue(strategy = GenerationType.IDENTITY)
+            private Long id;
+            private String firstName;
+            private String lastName;
+            private String email;
+        }
+  </code></pre>
+
+    <h3>3.2 Definizione del DTO</h3>
+    <pre><code>
+        @Data
+        @AllArgsConstructor
+        @NoArgsConstructor
+        public class UserDTO {
+            private Long id;
+            private String fullName;
+            private String email;
+        }
+  </code></pre>
+
+    <h3>3.3 Creazione del Mapper</h3>
+    <pre><code>
+        @Mapper(componentModel = "spring")
+        public interface UserMapper {
+            @Mapping(target = "fullName", expression = "java(user.getFirstName() + ' ' + user.getLastName())")
+            UserDTO toDto(User user);
+
+            @Mapping(target = "firstName", expression = "java(userDTO.getFullName().split(" ")[0])")
+            @Mapping(target = "lastName", expression = "java(userDTO.getFullName().substring(userDTO.getFullName().indexOf(' ') + 1))")
+            User toEntity(UserDTO userDTO);
+        }
+  </code></pre>
+    <p>
+        Con questa configurazione, MapStruct si occuperà automaticamente della conversione tra <code>User</code> e <code>UserDTO</code>,
+        gestendo correttamente la concatenazione del nome e la sua separazione nel mapping inverso.
+    </p>
+</div>
+
+<div class="bibliography">
+    <h2>4. Bibliografia e Risorse Utili</h2>
+    <ul>
+        <li><a href="https://mapstruct.org/">Documentazione ufficiale di MapStruct</a></li>
+        <li><a href="https://www.baeldung.com/mapstruct">Guida Baeldung su MapStruct</a></li>
+        <li><a href="https://docs.spring.io/">Documentazione ufficiale di Spring</a></li>
+    </ul>
+</div>
+
+<div class="advanced">
+    <h2>5. Approfondimenti</h2>
+    <p>Per migliorare l'uso di MapStruct nel tuo progetto, puoi esplorare:</p>
+    <ul>
+        <li><strong>Mapping avanzati</strong>: conversione tra tipi complessi come liste e mappe.</li>
+        <li><strong>Customization</strong>: utilizzo di metodi custom per personalizzare la trasformazione.</li>
+        <li><strong>Testing</strong>: strategie per testare i mapper generati automaticamente.</li>
+    </ul>
+</div>
+
+
+<footer class="footer">
+    <a href="./index.html" class="footer-logo">
+        <img src="./img/logo.png" alt="Logo del sito" />
+    </a>
+    <div class="footer-links">
+        <a href="./index.html" class="footer-link left">
+            &#8592; Pagina precedente
+        </a>
+    </div>
+    &copy; 2025 Corso di Programmazione Backend. Developed By Emanuele Ienna e Massimiliano Grande. Tutti i diritti riservati.
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Progetto Python + FastAPI</title>
+  <link rel="stylesheet" href="/styles/style.css">
+</head>
+<body>
+<h1 class="lesson-title">Progetto: Creazione di un Server Python con FastAPI</h1>
+
+
+<div class="section">
+  <h2>1. Introduzione a Python e FastAPI</h2>
+
+  <p>
+    **FastAPI** è un framework moderno, leggero e altamente performante per la creazione di **API RESTful** in Python.
+    Basato sui **Python type hints**, è progettato per offrire **validazione automatica dei dati**, **documentazione interattiva**,
+    e **massime prestazioni** grazie all'uso di **Starlette** e **Pydantic**. FastAPI è particolarmente indicato per applicazioni
+    che richiedono efficienza, scalabilità e semplicità nello sviluppo.
+  </p>
+
+  <h3>🚀 Perché scegliere FastAPI?</h3>
+  <p>
+    Rispetto ad altri framework come Flask o Django REST Framework, FastAPI si distingue per **prestazioni eccezionali** e un approccio
+    basato su **tipizzazione statica**, che migliora lo sviluppo e la qualità del codice.
+  </p>
+
+  <ul>
+    <li><strong>⚡ Alte prestazioni:</strong> Grazie all'uso di **Starlette** (per il server) e **Pydantic** (per la validazione dei dati),
+      FastAPI è fino a 3 volte più veloce di Flask e comparabile a Node.js.</li>
+    <li><strong>🛠 Facilità di sviluppo:</strong> L'autocompletamento avanzato e il supporto nativo per **type hints** riducono gli errori
+      e migliorano la leggibilità del codice.</li>
+    <li><strong>📑 Documentazione automatica:</strong> Ogni API creata con FastAPI genera automaticamente una documentazione interattiva
+      utilizzando **Swagger UI** e **ReDoc**, accessibile direttamente via browser.</li>
+    <li><strong>🛡 Sicurezza integrata:</strong> Supporto nativo per **OAuth2**, autenticazione JWT e middleware di sicurezza.</li>
+    <li><strong>🔌 Asincronia nativa:</strong> FastAPI supporta **async/await**, permettendo di gestire operazioni I/O in modo efficiente
+      e migliorando le prestazioni in applicazioni ad alto traffico.</li>
+  </ul>
+
+  <h3>📌 Quando usare FastAPI?</h3>
+  <p>
+    FastAPI è ideale per la creazione di:
+  </p>
+  <ul>
+    <li>📡 **API REST ad alte prestazioni** per microservizi.</li>
+    <li>🤖 **Sistemi di machine learning** con modelli di AI serviti via API.</li>
+    <li>🔄 **Backend per applicazioni web** e mobile con gestione di dati in tempo reale.</li>
+    <li>💾 **Servizi basati su database** grazie all'integrazione con SQLAlchemy e MongoDB.</li>
+  </ul>
+
+  <h3>🎯 Conclusione</h3>
+  <p>
+    Grazie alla sua **semplicità, velocità e sicurezza**, FastAPI è uno dei framework più consigliati per la realizzazione di **API moderne e scalabili**.
+    Nei prossimi passi vedremo come installarlo e creare la nostra prima API con FastAPI. 🚀
+  </p>
+</div>
+
+
+<div class="section">
+  <h2>2. Installazione di Python e Configurazione dell'Ambiente</h2>
+
+  <h3>2.1 Installazione di Python</h3>
+  <p>
+    Per sviluppare con **FastAPI**, è necessario installare **Python 3.7+**. Puoi scaricare l'ultima versione dal sito ufficiale:
+    <a href="https://www.python.org/downloads/" target="_blank">Python Download</a>.
+  </p>
+
+  <h4>📌 Passaggi per installare Python:</h4>
+  <ol>
+    <li>Scarica l'installer per il tuo sistema operativo (Windows, macOS o Linux).</li>
+    <li>Su **Windows**, durante l'installazione, seleziona l'opzione <strong>"Add Python to PATH"</strong> per facilitarne l'uso da terminale.</li>
+    <li>Completa l'installazione e verifica che Python sia stato installato correttamente eseguendo il seguente comando nel terminale:</li>
+  </ol>
+
+  <pre><code>
+# Verifica della versione di Python
+python --version
+
+# Verifica della versione di pip (gestore pacchetti di Python)
+pip --version
+  </code></pre>
+
+  <p>
+    Se i comandi restituiscono i numeri di versione di Python e pip, significa che l'installazione è avvenuta con successo. 🎉
+  </p>
+
+  <h3>2.2 Creazione di un Progetto Python per FastAPI</h3>
+  <p>
+    Per organizzare al meglio il nostro progetto FastAPI, creiamo un ambiente virtuale.
+    Questo ci permetterà di gestire le dipendenze senza interferire con altri progetti Python sul sistema.
+  </p>
+
+  <h4>📌 Creazione della cartella del progetto:</h4>
+  <pre><code>
+mkdir my-fastapi-server
+cd my-fastapi-server
+  </code></pre>
+
+  <h4>📌 Creazione di un ambiente virtuale:</h4>
+  <p>
+    Un **ambiente virtuale** isola le dipendenze del progetto. Creiamolo eseguendo:
+  </p>
+  <pre><code>
+# Creazione dell'ambiente virtuale
+python -m venv venv
+  </code></pre>
+
+  <h4>📌 Attivazione dell'ambiente virtuale:</h4>
+  <p>A seconda del sistema operativo, usa uno dei seguenti comandi per attivare l'ambiente virtuale:</p>
+
+  <ul>
+    <li><strong>Linux/macOS:</strong></li>
+    <pre><code>source venv/bin/activate</code></pre>
+
+    <li><strong>Windows (cmd):</strong></li>
+    <pre><code>venv\Scripts\activate</code></pre>
+
+    <li><strong>Windows (PowerShell):</strong></li>
+    <pre><code>venv\Scripts\Activate.ps1</code></pre>
+  </ul>
+
+  <p>Quando l'ambiente è attivato, vedrai il prefisso **(venv)** nel terminale. Questo indica che i pacchetti installati verranno usati solo all'interno di questo progetto.</p>
+
+  <h3>2.3 Installazione di FastAPI e Uvicorn</h3>
+  <p>
+    **FastAPI** è il framework che useremo per creare l'API, mentre **Uvicorn** è il server ASGI che ci permetterà di eseguire l'applicazione.
+    Installiamoli utilizzando **pip**:
+  </p>
+
+  <pre><code>
+pip install fastapi uvicorn
+  </code></pre>
+
+  <h4>📌 Verifica dell'installazione:</h4>
+  <p>
+    Dopo l'installazione, possiamo verificare che FastAPI sia stato installato correttamente eseguendo:
+  </p>
+  <pre><code>
+pip list | grep fastapi
+  </code></pre>
+
+  <p>Se vedi **fastapi** e **uvicorn** nella lista, significa che l'installazione è andata a buon fine! 🎉</p>
+
+  <h3>📌 Conclusione</h3>
+  <p>
+    Ora abbiamo un ambiente Python configurato con un **ambiente virtuale isolato** e **FastAPI installato**.
+    Nel prossimo passo, creeremo la nostra prima API con FastAPI e la eseguiremo con Uvicorn. 🚀
+  </p>
+</div>
+
+
+<div class="section">
+  <h2>3. Creazione di un Server con FastAPI</h2>
+
+  <h3>3.1 Creazione del file <code>main.py</code></h3>
+  <p>
+    Ora che abbiamo installato **FastAPI** e **Uvicorn**, possiamo creare il nostro primo server API.
+    FastAPI è progettato per essere semplice e performante, permettendo di definire API con poche righe di codice.
+  </p>
+
+  <h4>📌 Passaggi per creare il server:</h4>
+  <ol>
+    <li>Apri il terminale e assicurati di essere nella cartella del progetto <code>cd my-fastapi-server</code>.</li>
+    <li>Crea un nuovo file Python chiamato **main.py**:</li>
+  </ol>
+
+  <pre><code>touch main.py</code></pre>
+
+  <p>
+    Apri il file con il tuo editor di testo preferito (VS Code, PyCharm, Sublime, Nano) e aggiungi il seguente codice:
+  </p>
+
+  <h3>3.2 Scrittura del codice per il server</h3>
+  <p>
+    Il codice seguente crea un server **FastAPI** con un **endpoint di base** che restituisce un messaggio JSON di benvenuto.
+  </p>
+
+  <pre><code>
+from fastapi import FastAPI
+
+# Creazione dell'applicazione FastAPI
+app = FastAPI()
+
+# Definizione di una route GET per la home
+@app.get("/")
+def read_root():
+    return {"message": "Benvenuto nel server FastAPI!"}
+
+# Avvio del server con Uvicorn se lo script viene eseguito direttamente
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="127.0.0.1", port=8000)
+  </code></pre>
+
+  <h4>📌 Spiegazione del codice:</h4>
+  <ul>
+    <li><strong>from fastapi import FastAPI</strong>: Importa FastAPI.</li>
+    <li><strong>app = FastAPI()</strong>: Crea un'istanza dell'applicazione.</li>
+    <li><strong>@app.get("/")</strong>: Definisce una route **GET** che risponde con un messaggio JSON.</li>
+    <li><strong>def read_root()</strong>: La funzione che restituisce il messaggio di benvenuto.</li>
+    <li><strong>if __name__ == "__main__"</strong>: Permette di avviare il server direttamente da **Python**, utile per il debug.</li>
+    <li><strong>uvicorn.run(app, host="127.0.0.1", port=8000)</strong>: Avvia il server su **localhost:8000**.</li>
+  </ul>
+
+  <h3>3.3 Avvio del Server con Uvicorn</h3>
+  <p>
+    Per eseguire il server, utilizzeremo **Uvicorn**, un server ASGI ottimizzato per applicazioni FastAPI.
+    Esegui il seguente comando nel terminale:
+  </p>
+
+  <pre><code>uvicorn main:app --reload</code></pre>
+
+  <h4>📌 Cosa fa il comando?</h4>
+  <ul>
+    <li><strong>uvicorn</strong>: Avvia il server ASGI.</li>
+    <li><strong>main:app</strong>: Specifica il file <code>main.py</code> e l'istanza **app** da eseguire.</li>
+    <li><strong>--reload</strong>: Abilita il **riavvio automatico** quando il codice viene modificato (utile in fase di sviluppo).</li>
+  </ul>
+
+  <p>
+    Se tutto è configurato correttamente, il terminale mostrerà un output simile a questo:
+  </p>
+
+  <pre><code>
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     Application startup complete.
+  </code></pre>
+
+  <h3>3.4 Test del Server</h3>
+  <p>
+    Apri il browser e vai su **<a href="http://127.0.0.1:8000" target="_blank">http://127.0.0.1:8000</a>**.
+    Dovresti vedere una risposta JSON come questa:
+  </p>
+
+  <pre><code>
+{
+    "message": "Benvenuto nel server FastAPI!"
+}
+  </code></pre>
+
+  <h3>3.5 Documentazione Automatica</h3>
+  <p>
+    Uno dei vantaggi di **FastAPI** è la generazione automatica della documentazione API.
+    Puoi accedervi direttamente aprendo il browser su:
+  </p>
+  <ul>
+    <li>📄 **Swagger UI**: <a href="http://127.0.0.1:8000/docs" target="_blank">http://127.0.0.1:8000/docs</a></li>
+    <li>📄 **ReDoc**: <a href="http://127.0.0.1:8000/redoc" target="_blank">http://127.0.0.1:8000/redoc</a></li>
+  </ul>
+
+  <p>
+    Questi strumenti permettono di **esplorare e testare le API** in modo interattivo direttamente dal browser. 🚀
+  </p>
+
+  <h3>📌 Conclusione</h3>
+  <p>
+    Ora hai un server **FastAPI** funzionante con **documentazione automatica** e supporto per richieste **RESTful**. 🎉
+    Nei prossimi passi, vedremo come aggiungere **parametri alle route**, gestire **richieste POST** e collegare un **database** al nostro server! 🔥
+  </p>
+</div>
+
+
+<div class="section">
+  <h2>4. Creazione delle API di Login e Logout</h2>
+
+  <p>
+    In questa sezione, implementeremo due endpoint API per gestire l'autenticazione di un utente utilizzando **FastAPI**:
+  </p>
+  <ul>
+    <li>🔑 Un'API **POST** per il **login**, che verifica le credenziali dell'utente e restituisce una risposta JSON.</li>
+    <li>🚪 Un'API **POST** per il **logout**, che semplicemente conferma l'uscita dell'utente.</li>
+  </ul>
+
+  <h3>4.1 Creazione dell'API di Login</h3>
+  <p>
+    L'endpoint di login riceve un **username** e una **password** dal corpo della richiesta e verifica se le credenziali sono corrette.
+    Se l'autenticazione ha successo, restituisce una risposta positiva; altrimenti, restituisce un errore HTTP **401 Unauthorized**.
+  </p>
+
+  <h4>📌 Implementazione dell'API Login</h4>
+  <pre><code>
+from fastapi import FastAPI, HTTPException
+from pydantic import BaseModel
+
+app = FastAPI()
+
+# Modello dati per la richiesta di login
+class LoginRequest(BaseModel):
+    username: str
+    password: str
+
+@app.post("/login")
+def login(request: LoginRequest):
+    # Simulazione della verifica delle credenziali
+    if request.username == "admin" and request.password == "password":
+        return {"success": True, "message": "Login riuscito!"}
+
+    # Se le credenziali sono errate, restituisce un errore HTTP 401
+    raise HTTPException(status_code=401, detail="Credenziali errate")
+  </code></pre>
+
+  <h4>📌 Spiegazione del codice:</h4>
+  <ul>
+    <li><strong>from fastapi import FastAPI, HTTPException</strong>: Importa FastAPI e la gestione delle eccezioni.</li>
+    <li><strong>from pydantic import BaseModel</strong>: Pydantic permette di definire e validare i dati di input.</li>
+    <li><strong>class LoginRequest(BaseModel)</strong>: Definisce la struttura della richiesta di login.</li>
+    <li><strong>@app.post("/login")</strong>: Definisce un endpoint **POST** che gestisce la richiesta di login.</li>
+    <li><strong>if request.username == "admin" and request.password == "password"</strong>: Simula un controllo sulle credenziali dell'utente.</li>
+    <li><strong>raise HTTPException(status_code=401, detail="Credenziali errate")</strong>: Se le credenziali sono errate, viene restituito un errore HTTP 401.</li>
+  </ul>
+
+  <h4>🛠 Test dell'API con Postman o cURL</h4>
+  <p>
+    Per testare il login, puoi usare **Postman** o **cURL** per inviare una richiesta **POST** con un corpo JSON come questo:
+  </p>
+  <pre><code>
+{
+    "username": "admin",
+    "password": "password"
+}
+  </code></pre>
+
+  <p>
+    Se le credenziali sono corrette, la risposta sarà:
+  </p>
+  <pre><code>
+{
+    "success": true,
+    "message": "Login riuscito!"
+}
+  </code></pre>
+
+  <p>
+    Se le credenziali sono errate, la risposta sarà:
+  </p>
+  <pre><code>
+{
+    "detail": "Credenziali errate"
+}
+  </code></pre>
+
+  <h3>4.2 Creazione dell'API di Logout</h3>
+  <p>
+    L'endpoint di logout restituisce semplicemente un messaggio di conferma.
+    In un'applicazione reale, potrebbe anche invalidare un **token di sessione** o eliminare un **cookie di autenticazione**.
+  </p>
+
+  <h4>📌 Implementazione dell'API Logout</h4>
+  <pre><code>
+@app.post("/logout")
+def logout():
+    return {"success": True, "message": "Logout effettuato con successo!"}
+  </code></pre>
+
+  <h4>📌 Spiegazione del codice:</h4>
+  <ul>
+    <li><strong>@app.post("/logout")</strong>: Definisce un endpoint **POST** per gestire il logout.</li>
+    <li><strong>return {"success": True, "message": "Logout effettuato con successo!"}</strong>: Restituisce una conferma del logout.</li>
+  </ul>
+
+  <h4>🛠 Test dell'API Logout</h4>
+  <p>
+    Per testare il logout, invia una richiesta **POST** a **http://127.0.0.1:8000/logout**.
+    La risposta attesa sarà:
+  </p>
+  <pre><code>
+{
+    "success": true,
+    "message": "Logout effettuato con successo!"
+}
+  </code></pre>
+
+  <h3>5. Miglioramenti futuri</h3>
+  <p>
+    Attualmente, il nostro sistema di autenticazione è molto basilare. Nei prossimi passi possiamo:
+  </p>
+  <ul>
+    <li>🔐 **Implementare JWT (JSON Web Token)** per una gestione sicura delle sessioni.</li>
+    <li>🗄 **Utilizzare un database** per gestire utenti e credenziali in modo sicuro.</li>
+    <li>🔑 **Aggiungere hashing delle password** per proteggere i dati sensibili.</li>
+  </ul>
+
+  <h3>📌 Conclusione</h3>
+  <p>
+    Ora hai implementato le API di **Login** e **Logout** in **FastAPI**! 🎉
+    Questo è il primo passo verso la creazione di un sistema di autenticazione più completo e sicuro. 🚀
+  </p>
+</div>
+
+
+
+<footer class="footer">
+  <a href="./index.html" class="footer-logo">
+    <img src="./img/logo.png" alt="Logo del sito" />
+  </a>
+  <div class="footer-links">
+    <a href="./index.html" class="footer-link left">
+      &#8592; Pagina precedente
+    </a>
+  </div>
+  &copy; 2025 Corso di Programmazione Backend. Developed By Emanuele Ienna e Massimiliano Grande. Tutti i diritti riservati.
+</footer>
+
+</body>
+</html>

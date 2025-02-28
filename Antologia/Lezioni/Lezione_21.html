@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lezione - Layer Controller, Service e Repository in Spring</title>
+    <link rel="stylesheet" href="../styles/style.css">
+</head>
+
+<body>
+<h1 class="lesson-title">Lezione: Layer Controller, Service e Repository in Spring</h1>
+
+<div class="section">
+    <h2>1. Introduzione a Spring Framework</h2>
+    <p>
+        Spring è un framework potente e versatile per lo sviluppo di applicazioni Java, progettato per semplificare
+        la creazione di applicazioni <strong>scalabili, modulari e facilmente testabili</strong>. È particolarmente utile
+        nello sviluppo di applicazioni <strong>enterprise</strong> grazie alla sua capacità di gestire la complessità e promuovere
+        le best practices.
+    </p>
+    <p>Spring si basa su concetti fondamentali come:</p>
+    <ul>
+        <li><strong>Inversion of Control (IoC)</strong>: Permette a Spring di gestire la creazione e l’iniezione degli oggetti, rendendo il codice più modulare e testabile.</li>
+        <li><strong>Dependency Injection (DI)</strong>: I componenti dell’applicazione ricevono le loro dipendenze dall’esterno, migliorando manutenibilità e testabilità.</li>
+        <li><strong>Aspect-Oriented Programming (AOP)</strong>: Consente di separare le logiche trasversali come logging, gestione delle transazioni e sicurezza.</li>
+        <li><strong>Modularità e Flessibilità</strong>: Spring è composto da vari moduli (Spring Core, Spring MVC, Spring Security, Spring Data, ecc.), permettendo di utilizzare solo le componenti necessarie.</li>
+    </ul>
+    <p>
+        Spring è ampiamente utilizzato nello sviluppo di <strong>applicazioni web e microservizi</strong>, con supporto a tecnologie moderne
+        come <strong>Spring Boot</strong>, che automatizza molte configurazioni, rendendo lo sviluppo più veloce ed efficiente.
+    </p>
+</div>
+
+<div class="section">
+    <h2>2. Architettura a Layer in Spring</h2>
+    <p>
+        L'architettura di un'applicazione Spring è tipicamente <strong>stratificata</strong>, seguendo il pattern <strong>MVC (Model-View-Controller)</strong>
+        e una chiara separazione delle responsabilità. Questa organizzazione favorisce la modularità e facilita il testing e la manutenibilità del codice.
+    </p>
+
+    <h3>2.1. I principali layer in un'applicazione Spring</h3>
+    <p>L'architettura standard di un'applicazione Spring è composta dai seguenti layer:</p>
+
+    <ul>
+        <li>
+            <strong>Controller Layer (Presentazione)</strong>: Gestisce le richieste HTTP e coordina le operazioni tra frontend e business logic.
+            <br><strong>Esempio:</strong>
+            <pre><code>@RestController
+@RequestMapping("/api/studenti")
+public class StudenteController {
+
+    private final StudenteService studenteService;
+
+    public StudenteController(StudenteService studenteService) {
+        this.studenteService = studenteService;
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity&lt;Studente&gt; getStudenteById(@PathVariable Long id) {
+        return ResponseEntity.ok(studenteService.getStudenteById(id));
+    }
+}</code></pre>
+        </li>
+
+        <li>
+            <strong>Service Layer (Business Logic)</strong>: Contiene la logica di business e interagisce con il repository per recuperare ed elaborare i dati.
+            <br><strong>Esempio:</strong>
+            <pre><code>@Service
+public class StudenteService {
+
+    private final StudenteRepository studenteRepository;
+
+    public StudenteService(StudenteRepository studenteRepository) {
+        this.studenteRepository = studenteRepository;
+    }
+
+    public Studente getStudenteById(Long id) {
+        return studenteRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Studente non trovato"));
+    }
+}</code></pre>
+        </li>
+
+        <li>
+            <strong>Repository Layer (Data Access Layer - DAL)</strong>: Gestisce l'accesso ai dati e la comunicazione con il database tramite JPA o JDBC.
+            <br><strong>Esempio:</strong>
+            <pre><code>@Repository
+public interface StudenteRepository extends JpaRepository&lt;Studente, Long&gt; {
+}</code></pre>
+        </li>
+
+        <li>
+            <strong>Database Layer (Persistence Layer)</strong>: Il livello fisico in cui i dati vengono memorizzati, generalmente in database relazionali (MySQL, PostgreSQL) o NoSQL.
+            <br><strong>Esempio di configurazione:</strong>
+            <pre><code>spring.datasource.url=jdbc:mysql://localhost:3306/scuola
+spring.datasource.username=root
+spring.datasource.password=secret
+spring.jpa.hibernate.ddl-auto=update</code></pre>
+        </li>
+    </ul>
+
+    <h3>2.2. Vantaggi dell’architettura a layer</h3>
+    <ul>
+        <li><strong>Separazione delle responsabilità</strong>: Ogni layer ha una funzione ben definita.</li>
+        <li><strong>Scalabilità</strong>: È facile sostituire un componente senza impattare gli altri livelli.</li>
+        <li><strong>Facilità di testing</strong>: I vari layer possono essere testati indipendentemente.</li>
+        <li><strong>Modularità</strong>: Ogni layer può essere migliorato o esteso senza influenzare l’intera applicazione.</li>
+    </ul>
+
+    <p>Questa struttura è particolarmente adatta per le <strong>applicazioni enterprise e i microservizi</strong>, in quanto facilita la gestione e la manutenibilità del codice nel tempo.</p>
+</div>
+
+
+<div class="section">
+    <h2>3. Implementazione dei Layer</h2>
+
+    <h3>3.1 Controller Layer</h3>
+    <p>
+        Il <strong>Controller</strong> è responsabile della gestione delle richieste HTTP e dell'interazione con il Service Layer.
+        In un’applicazione Spring Boot, i controller sono annotati con <code>@RestController</code> e utilizzano
+        <code>@RequestMapping</code> per definire i percorsi delle API.
+    </p>
+    <p>
+        Il **controller** riceve una richiesta, la elabora (eventualmente con parametri) e chiama il livello di servizio per ottenere i dati richiesti.
+        Restituisce poi una risposta al client, tipicamente in formato JSON.
+    </p>
+
+    <div class="example">
+        <h3>Esempio di Controller</h3>
+        <pre><code>@RestController
+@RequestMapping("/api/utenti")
+public class UtenteController {
+    private final UtenteService utenteService;
+
+    public UtenteController(UtenteService utenteService) {
+        this.utenteService = utenteService;
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity&lt;Utente&gt; getUtente(@PathVariable Long id) {
+        return ResponseEntity.ok(utenteService.getUtenteById(id));
+    }
+
+    @PostMapping
+    public ResponseEntity&lt;Utente&gt; createUtente(@RequestBody Utente utente) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(utenteService.saveUtente(utente));
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity&lt;Void&gt; deleteUtente(@PathVariable Long id) {
+        utenteService.deleteUtente(id);
+        return ResponseEntity.noContent().build();
+    }
+}</code></pre>
+    </div>
+
+    <h3>3.2 Service Layer</h3>
+    <p>
+        Il <strong>Service Layer</strong> contiene la logica di business dell’applicazione.
+        Questo livello si occupa dell’elaborazione dei dati e interagisce con il repository per recuperarli o modificarli nel database.
+        I servizi in Spring Boot sono annotati con <code>@Service</code>.
+    </p>
+
+    <div class="example">
+        <h3>Esempio di Service</h3>
+        <pre><code>@Service
+public class UtenteService {
+    private final UtenteRepository utenteRepository;
+
+    public UtenteService(UtenteRepository utenteRepository) {
+        this.utenteRepository = utenteRepository;
+    }
+
+    public Utente getUtenteById(Long id) {
+        return utenteRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Utente non trovato"));
+    }
+
+    public Utente saveUtente(Utente utente) {
+        return utenteRepository.save(utente);
+    }
+
+    public void deleteUtente(Long id) {
+        utenteRepository.deleteById(id);
+    }
+}</code></pre>
+    </div>
+
+    <h3>3.3 Repository Layer</h3>
+    <p>
+        Il <strong>Repository Layer</strong> è responsabile dell’accesso ai dati e dell’interazione con il database.
+        Questo livello utilizza <code>Spring Data JPA</code> per ridurre la necessità di scrivere query SQL manuali.
+        Le interfacce Repository sono annotate con <code>@Repository</code> e possono estendere <code>JpaRepository</code> per beneficiare di metodi predefiniti.
+    </p>
+
+    <div class="example">
+        <h3>Esempio di Repository</h3>
+        <pre><code>@Repository
+public interface UtenteRepository extends JpaRepository&lt;Utente, Long&gt; {
+}</code></pre>
+    </div>
+
+    <h3>3.4 Database Layer</h3>
+    <p>
+        Il livello database è il livello di persistenza in cui i dati vengono memorizzati.
+        Spring Boot si integra facilmente con database relazionali (MySQL, PostgreSQL) e NoSQL (MongoDB).
+    </p>
+    <p>
+        Esempio di configurazione per MySQL in <code>application.properties</code>:
+    </p>
+    <pre><code>spring.datasource.url=jdbc:mysql://localhost:3306/app_db
+spring.datasource.username=root
+spring.datasource.password=password
+spring.jpa.hibernate.ddl-auto=update</code></pre>
+
+    <p>
+        Esempio di classe <code>Utente</code> come entità JPA:
+    </p>
+    <div class="example">
+        <h3>Esempio di Entità</h3>
+        <pre><code>@Entity
+@Table(name = "utenti")
+public class Utente {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String nome;
+    private String email;
+
+    // Getter e Setter
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public String getNome() { return nome; }
+    public void setNome(String nome) { this.nome = nome; }
+
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+}</code></pre>
+    </div>
+</div>
+
+
+<div class="bibliography">
+    <h2>4. Bibliografia e Risorse</h2>
+    <p>
+        Per approfondire gli argomenti trattati e migliorare le proprie competenze in Spring Boot e Spring Data JPA,
+        si consiglia di consultare le seguenti risorse ufficiali:
+    </p>
+    <ul>
+        <li>
+            <a href="https://spring.io/projects/spring-boot" target="_blank">
+                <strong>Spring Boot Official Documentation</strong>
+            </a> - Guida ufficiale di Spring Boot, con dettagli su configurazione, dipendenze e utilizzo.
+        </li>
+        <li>
+            <a href="https://docs.spring.io/spring-data/jpa/docs/current/reference/html/" target="_blank">
+                <strong>Spring Data JPA Guide</strong>
+            </a> - Documentazione ufficiale di Spring Data JPA per lavorare con database relazionali in modo efficiente.
+        </li>
+        <li>
+            <a href="https://www.baeldung.com/spring-boot" target="_blank">
+                <strong>Baeldung - Spring Boot Guide</strong>
+            </a> - Articoli, tutorial e approfondimenti su Spring Boot e i suoi moduli principali.
+        </li>
+        <li>
+            <a href="https://www.javadevjournal.com/spring-boot/" target="_blank">
+                <strong>JavaDevJournal - Spring Boot Tutorials</strong>
+            </a> - Blog con esempi pratici e casi d'uso avanzati di Spring Boot.
+        </li>
+    </ul>
+</div>
+
+<div class="advanced">
+    <h2>5. Approfondimenti</h2>
+    <p>
+        Per approfondire il pattern **MVC** e migliorare l'architettura delle applicazioni Spring, puoi esplorare i seguenti argomenti avanzati:
+    </p>
+    <ul>
+        <li>
+            <strong>Gestione delle Transazioni con <code>@Transactional</code>:</strong>
+            Utilizzo della gestione automatica delle transazioni per garantire l'integrità dei dati e migliorare le performance delle operazioni su database.
+            <br> <a href="https://docs.spring.io/spring-framework/docs/current/reference/html/data-access.html#transaction" target="_blank">
+            Leggi la documentazione ufficiale su Spring Transactions
+        </a>.
+        </li>
+        <li>
+            <strong>Testing delle API con <code>Spring Boot Test</code> e <code>Mockito</code>:</strong>
+            Implementazione di test unitari e di integrazione per garantire il corretto funzionamento delle API REST.
+            <br> <a href="https://www.baeldung.com/spring-boot-testing" target="_blank">
+            Guida completa ai test in Spring Boot
+        </a>.
+        </li>
+
+    </ul>
+</div>
+
+
+<footer class="footer">
+    <a href="./index.html" class="footer-logo">
+        <img src="./img/logo.png" alt="Logo del sito" />
+    </a>
+    <div class="footer-links">
+        <a href="./index.html" class="footer-link left">
+            &#8592; Pagina precedente
+        </a>
+    </div>
+    &copy; 2025 Corso di Programmazione Backend. Developed By Emanuele Ienna e Massimiliano Grande. Tutti i diritti riservati.
+</footer>
+
+</body>
+
+</html>

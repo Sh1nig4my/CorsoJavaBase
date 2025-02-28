@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progetto Node.js + Express</title>
+    <link rel="stylesheet" href="/styles/style.css">
+</head>
+<body>
+<h1 class="lesson-title">Progetto: Creazione di un Server Node.js con Express</h1>
+
+
+<div class="section">
+    <h2>1. Introduzione a Node.js e Express</h2>
+    <p>
+        Node.js è un **runtime JavaScript asincrono e event-driven**, basato sul motore **V8 di Chrome**.
+        È progettato per eseguire codice JavaScript lato server, permettendo lo sviluppo di **applicazioni scalabili e ad alte prestazioni**.
+        A differenza dei linguaggi di backend tradizionali, Node.js utilizza un modello **non bloccante (non-blocking I/O)**,
+        il che significa che può gestire molte richieste simultaneamente senza creare nuovi thread per ogni richiesta.
+    </p>
+    <p>
+        <strong>Perché scegliere Node.js?</strong>
+    </p>
+    <ul>
+        <li><strong>Efficienza:</strong> Il suo modello asincrono gli permette di gestire migliaia di connessioni contemporaneamente.</li>
+        <li><strong>Leggerezza:</strong> È basato su un singolo thread con un **event loop**, ideale per applicazioni I/O intensive.</li>
+        <li><strong>Grande ecosistema:</strong> Il gestore pacchetti <code>npm</code> offre **oltre un milione di librerie** per velocizzare lo sviluppo.</li>
+        <li><strong>Full-stack JavaScript:</strong> Consente di utilizzare JavaScript sia lato client che lato server, riducendo il numero di linguaggi necessari nello sviluppo web.</li>
+    </ul>
+
+    <h3>1.1 Cos'è Express.js?</h3>
+    <p>
+        **Express.js** è un framework minimalista per Node.js che semplifica la gestione delle **API REST** e la creazione di **server web**.
+        Grazie alla sua semplicità e modularità, Express è uno degli strumenti più utilizzati per lo sviluppo backend in Node.js.
+    </p>
+    <p><strong>Caratteristiche di Express:</strong></p>
+    <ul>
+        <li><strong>Routing flessibile:</strong> Permette di definire percorsi (URL) e gestire richieste HTTP con facilità.</li>
+        <li><strong>Middleware potente:</strong> Offre un sistema modulare per gestire richieste, autenticazione, logging, error handling e molto altro.</li>
+        <li><strong>Supporto per template engines:</strong> Compatibile con **Pug, EJS, Handlebars** e altri motori di template per il rendering di pagine dinamiche.</li>
+        <li><strong>Compatibilità con database:</strong> Può essere utilizzato con MongoDB, MySQL, PostgreSQL e altri database.</li>
+    </ul>
+
+    <h3>1.2 Installazione e Primo Server con Express</h3>
+    <p>
+        Per iniziare, è necessario installare **Node.js**. Una volta installato, possiamo creare un progetto Express seguendo questi passaggi:
+    </p>
+    <pre><code>
+# Creazione di una cartella per il progetto
+mkdir mio-progetto
+cd mio-progetto
+
+# Inizializzazione di un progetto Node.js
+npm init -y
+
+# Installazione di Express
+npm install express
+    </code></pre>
+
+    <h3>1.3 Creazione di un Server Express</h3>
+    <p>
+        Creiamo un semplice server con **Express**. All'interno del progetto, crea un file `server.js` e aggiungi il seguente codice:
+    </p>
+    <pre><code>
+const express = require('express');
+const app = express();
+const port = 3000;
+
+// Definizione di una route di base
+app.get('/', (req, res) => {
+    res.send('Benvenuto nel server Express!');
+});
+
+// Avvio del server sulla porta 3000
+app.listen(port, () => {
+    console.log(`Server avviato su http://localhost:${port}`);
+});
+    </code></pre>
+    <p>
+        Per avviare il server, esegui il comando:
+    </p>
+    <pre><code>node server.js</code></pre>
+    <p>
+        Ora puoi visitare **http://localhost:3000** nel browser per vedere il messaggio di benvenuto.
+    </p>
+
+    <h3>1.4 Gestione delle Rotte con Express</h3>
+    <p>
+        Express permette di gestire facilmente diverse **rotte HTTP**. Ecco un esempio con più percorsi:
+    </p>
+    <pre><code>
+app.get('/utente/:id', (req, res) => {
+    const userId = req.params.id;
+    res.json({ id: userId, nome: "Mario Rossi" });
+});
+
+app.post('/utente', (req, res) => {
+    res.status(201).json({ message: "Utente creato!" });
+});
+
+app.put('/utente/:id', (req, res) => {
+    res.json({ message: "Utente aggiornato!" });
+});
+
+app.delete('/utente/:id', (req, res) => {
+    res.json({ message: "Utente eliminato!" });
+});
+    </code></pre>
+    <p>
+        Queste rotte consentono di **creare, leggere, aggiornare ed eliminare** utenti, imitando le operazioni CRUD di un'API REST.
+    </p>
+
+    <h3>1.5 Middleware in Express</h3>
+    <p>
+        I **middleware** sono funzioni che possono elaborare le richieste prima che raggiungano la loro destinazione finale.
+        Express fornisce middleware integrati per la gestione di JSON, logging e autenticazione.
+    </p>
+    <p><strong>Esempio di middleware per il logging:</strong></p>
+    <pre><code>
+const morgan = require('morgan');
+app.use(morgan('dev'));  // Registra le richieste in console
+    </code></pre>
+
+    <h3>1.6 Connessione a un Database</h3>
+    <p>
+        Express può connettersi facilmente a un database, come **MongoDB** con Mongoose o **MySQL** con Sequelize.
+        Ecco un esempio di connessione a MongoDB con Mongoose:
+    </p>
+    <pre><code>
+const mongoose = require('mongoose');
+
+mongoose.connect('mongodb://localhost:27017/miodb', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+}).then(() => {
+    console.log('Connessione a MongoDB riuscita!');
+}).catch(err => {
+    console.error('Errore di connessione:', err);
+});
+    </code></pre>
+
+    <h3>1.7 Conclusione</h3>
+    <p>
+        **Node.js e Express.js** rappresentano una combinazione potente per lo sviluppo backend.
+        Grazie alla loro efficienza e flessibilità, vengono utilizzati per creare **API REST, applicazioni web e sistemi scalabili**.
+    </p>
+</div>
+
+
+<div class="section">
+    <h2>2. Installazione di Node.js e Configurazione dell'Ambiente</h2>
+
+    <h3>2.1 Installazione di Node.js</h3>
+    <p>
+        Node.js è disponibile per **Windows, macOS e Linux** e può essere scaricato direttamente dal sito ufficiale:
+        <a href="https://nodejs.org/" target="_blank">Node.js Download</a>.
+    </p>
+
+    <h4>⚡ Passaggi per installare Node.js:</h4>
+    <ol>
+        <li>Accedi al sito ufficiale e scarica la versione **LTS (Long-Term Support)** per maggiore stabilità.</li>
+        <li>Esegui il programma di installazione e segui le istruzioni guidate.</li>
+        <li>Durante l'installazione, assicurati che l'opzione **"Add to PATH"** sia selezionata (per Windows).</li>
+        <li>Una volta completata l'installazione, apri il **Prompt dei comandi (Windows)** o **Terminale (Mac/Linux)** e verifica l'installazione con i seguenti comandi:</li>
+    </ol>
+
+    <pre><code>
+# Verifica della versione di Node.js installata
+node -v
+
+# Verifica della versione di npm installata
+npm -v
+    </code></pre>
+
+    <p>Se i comandi restituiscono i numeri di versione, significa che l'installazione è andata a buon fine. 🎉</p>
+
+    <h3>2.2 Creazione di un Progetto Node.js</h3>
+    <p>
+        Ora che **Node.js** è installato, possiamo configurare un nuovo progetto per sviluppare la nostra applicazione.
+        Apri il terminale e segui questi passaggi:
+    </p>
+
+    <h4>1️⃣ Creare la cartella del progetto:</h4>
+    <pre><code>
+mkdir my-express-server
+cd my-express-server
+    </code></pre>
+
+    <h4>2️⃣ Inizializzare un progetto Node.js:</h4>
+    <p>
+        Il comando seguente creerà un file **package.json**, che conterrà le informazioni sul progetto e le dipendenze:
+    </p>
+    <pre><code>
+npm init -y
+    </code></pre>
+
+    <p>
+        L'opzione **-y** accetta automaticamente tutte le impostazioni predefinite, creando un file <code>package.json</code> simile a questo:
+    </p>
+    <pre><code>
+{
+  "name": "my-express-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {}
+}
+    </code></pre>
+
+    <h3>2.3 Installazione di Express</h3>
+    <p>
+        Express è il framework che utilizzeremo per creare il server. Per installarlo, esegui il comando:
+    </p>
+    <pre><code>
+npm install express
+    </code></pre>
+
+    <p>
+        Questo comando aggiungerà Express alle **dipendenze del progetto**, creando una cartella **node_modules** e aggiornando il file <code>package.json</code>.
+    </p>
+
+    <h4>📌 Verifica dell'installazione</h4>
+    <p>Dopo l'installazione, puoi controllare se Express è stato aggiunto correttamente eseguendo:</p>
+    <pre><code>npm list express</code></pre>
+    <p>Se vedi un output simile a questo, significa che tutto è stato installato correttamente:</p>
+    <pre><code>
+my-express-server@1.0.0
+└── express@4.18.2
+    </code></pre>
+
+    <h3>2.4 Creazione del primo file server</h3>
+    <p>
+        Ora possiamo creare il file **server.js** per avviare il nostro primo server Express. Nel terminale, esegui:
+    </p>
+    <pre><code>touch server.js</code></pre>
+    <p>
+        Apri il file con un editor di testo (VS Code, Sublime, o Nano) e inserisci il seguente codice:
+    </p>
+    <pre><code>
+const express = require('express');  // Importa Express
+const app = express();
+const port = 3000;  // Definisce la porta del server
+
+// Route di base
+app.get('/', (req, res) => {
+    res.send('Benvenuto nel server Express!');
+});
+
+// Avvio del server
+app.listen(port, () => {
+    console.log(`Server in esecuzione su http://localhost:${port}`);
+});
+    </code></pre>
+
+    <h3>2.5 Avviare il Server</h3>
+    <p>Ora puoi avviare il server eseguendo:</p>
+    <pre><code>node server.js</code></pre>
+    <p>Apri il browser e vai su <a href="http://localhost:3000" target="_blank">http://localhost:3000</a> per vedere il tuo primo server in azione! 🚀</p>
+
+    <h3>🎯 Conclusione</h3>
+    <p>
+        Ora hai un ambiente Node.js pronto e un server Express funzionante. Nei prossimi passi esploreremo come gestire le richieste, utilizzare middleware
+        e connettere un database per costruire un'API REST completa. 🎉
+    </p>
+</div>
+
+
+<div class="section">
+    <h2>3. Creazione di un Server con Express</h2>
+
+    <h3>3.1 Creazione del file <code>server.js</code></h3>
+    <p>
+        Ora che abbiamo installato **Node.js** ed Express, possiamo creare il nostro primo server.
+        Il server si occuperà di gestire le richieste HTTP e rispondere ai client.
+    </p>
+
+    <h4>📌 Passaggi per creare il server:</h4>
+    <ol>
+        <li>Apri il terminale e accedi alla cartella del progetto (<code>cd my-express-server</code>).</li>
+        <li>Crea un file chiamato **server.js** eseguendo il comando:</li>
+    </ol>
+
+    <pre><code>touch server.js</code></pre>
+
+    <p>Ora apri il file con il tuo editor preferito (VS Code, Sublime, Nano) e aggiungi il seguente codice:</p>
+
+    <h3>3.2 Scrittura del codice per il server</h3>
+    <p>
+        Il codice seguente configura un server **Express** che:
+    </p>
+    <ul>
+        <li>Importa il modulo **Express**.</li>
+        <li>Inizializza un'applicazione Express.</li>
+        <li>Imposta una porta su cui il server verrà eseguito.</li>
+        <li>Abilita il parsing JSON per le richieste.</li>
+        <li>Definisce una **route GET** per rispondere con un messaggio di benvenuto.</li>
+        <li>Avvia il server in ascolto sulla porta specificata.</li>
+    </ul>
+
+    <pre><code>
+const express = require('express');  // Importa il framework Express
+const app = express();
+const PORT = 3000;  // Definisce la porta del server
+
+// Middleware per gestire JSON nelle richieste
+app.use(express.json());
+
+// Rotta di base
+app.get('/', (req, res) => {
+    res.send('Benvenuto nel server Node.js con Express!');
+});
+
+// Avvio del server
+app.listen(PORT, () => {
+    console.log(`Server in ascolto su http://localhost:${PORT}`);
+});
+    </code></pre>
+
+    <h3>3.3 Avvio del Server</h3>
+    <p>
+        Dopo aver creato il file <code>server.js</code>, possiamo avviare il server con il comando:
+    </p>
+    <pre><code>node server.js</code></pre>
+
+    <p>
+        Se tutto è configurato correttamente, dovresti vedere nel terminale un messaggio simile a questo:
+    </p>
+    <pre><code>Server in ascolto su http://localhost:3000</code></pre>
+
+    <h3>3.4 Test del Server</h3>
+    <p>
+        Ora puoi verificare che il server funzioni correttamente aprendo il browser e navigando su:
+    </p>
+    <pre><code>http://localhost:3000</code></pre>
+    <p>
+        Dovresti vedere il messaggio **"Benvenuto nel server Node.js con Express!"** nella pagina web.
+    </p>
+
+    <h3>3.5 Test con Postman o Curl</h3>
+    <p>
+        Oltre al browser, possiamo verificare il server utilizzando **Postman** o il comando `curl`.
+        Apri un terminale e digita:
+    </p>
+    <pre><code>curl http://localhost:3000</code></pre>
+    <p>
+        Il terminale dovrebbe restituire il messaggio di benvenuto.
+    </p>
+
+    <h3>📌 Conclusione</h3>
+    <p>
+        Ora hai un server **Express** funzionante! 🚀 Nei prossimi passi, esploreremo come gestire richieste più complesse,
+        utilizzare middleware e connettere il server a un database per costruire una vera **API REST**.
+    </p>
+</div>
+
+
+<div class="section">
+    <h2>4. Creazione delle API di Login e Logout</h2>
+
+    <p>
+        In questa sezione, implementeremo due endpoint API per gestire l'autenticazione di un utente:
+    </p>
+    <ul>
+        <li>Un'API **POST** per il **login**, che verifica le credenziali dell'utente.</li>
+        <li>Un'API **POST** per il **logout**, che consente all'utente di terminare la sessione.</li>
+    </ul>
+
+    <h3>4.1 Creazione dell'API di Login</h3>
+    <p>
+        L'endpoint di login riceve un **username** e una **password** dal corpo della richiesta (**req.body**) e verifica le credenziali.
+        Se le credenziali sono corrette, restituisce una risposta di successo; altrimenti, restituisce un errore HTTP **401 Unauthorized**.
+    </p>
+
+    <h4>📌 Implementazione:</h4>
+    <pre><code>
+app.post('/login', (req, res) => {
+    const { username, password } = req.body;
+
+    // Simulazione di autenticazione
+    if (username === 'admin' && password === 'password') {
+        res.json({ success: true, message: 'Login riuscito!' });
+    } else {
+        res.status(401).json({ success: false, message: 'Credenziali errate' });
+    }
+});
+    </code></pre>
+
+    <h4>📌 Spiegazione del codice:</h4>
+    <ul>
+        <li><strong>app.post('/login')</strong>: Definisce un'API **POST** per gestire la richiesta di login.</li>
+        <li><strong>req.body</strong>: Contiene i dati inviati dal client nel corpo della richiesta.</li>
+        <li><strong>if (username === 'admin' && password === 'password')</strong>: Simula un controllo sulle credenziali dell'utente.</li>
+        <li><strong>res.json({ success: true, message: 'Login riuscito!' })</strong>: Se le credenziali sono corrette, restituisce un messaggio di successo.</li>
+        <li><strong>res.status(401).json({ success: false, message: 'Credenziali errate' })</strong>: Se le credenziali sono sbagliate, restituisce un errore HTTP 401.</li>
+    </ul>
+
+    <h4>🛠 Test dell'API con Postman</h4>
+    <p>
+        Per testare il login, puoi utilizzare **Postman** o **cURL** inviando una richiesta **POST** con un corpo JSON simile a questo:
+    </p>
+    <pre><code>
+{
+    "username": "admin",
+    "password": "password"
+}
+    </code></pre>
+
+    <p>
+        Se le credenziali sono corrette, la risposta sarà:
+    </p>
+    <pre><code>
+{
+    "success": true,
+    "message": "Login riuscito!"
+}
+    </code></pre>
+
+    <p>
+        Se le credenziali sono errate, la risposta sarà:
+    </p>
+    <pre><code>
+{
+    "success": false,
+    "message": "Credenziali errate"
+}
+    </code></pre>
+
+    <h3>4.2 Creazione dell'API di Logout</h3>
+    <p>
+        L'endpoint di logout semplicemente restituisce un messaggio di conferma della disconnessione.
+        In un'applicazione reale, potrebbe invalidare un **token di sessione** o eliminare un **cookie di autenticazione**.
+    </p>
+
+    <h4>📌 Implementazione:</h4>
+    <pre><code>
+app.post('/logout', (req, res) => {
+    res.json({ success: true, message: 'Logout effettuato con successo!' });
+});
+    </code></pre>
+
+    <h4>📌 Spiegazione del codice:</h4>
+    <ul>
+        <li><strong>app.post('/logout')</strong>: Definisce un'API **POST** per gestire il logout.</li>
+        <li><strong>res.json({ success: true, message: 'Logout effettuato con successo!' })</strong>: Invia una risposta JSON per confermare il logout.</li>
+    </ul>
+
+    <h4>🛠 Test dell'API con Postman</h4>
+    <p>
+        Per testare il logout, invia una richiesta **POST** a **http://localhost:3000/logout**. La risposta attesa sarà:
+    </p>
+    <pre><code>
+{
+    "success": true,
+    "message": "Logout effettuato con successo!"
+}
+    </code></pre>
+
+    <h3>🎯 Conclusione</h3>
+    <p>
+        Ora abbiamo implementato le API di **login** e **logout** in Express! 🚀
+        Nei prossimi passi vedremo come migliorare la gestione dell'autenticazione utilizzando **JSON Web Token (JWT)** e proteggere le API con middleware di sicurezza.
+    </p>
+</div>
+
+
+
+<footer class="footer">
+    <a href="./index.html" class="footer-logo">
+        <img src="./img/logo.png" alt="Logo del sito" />
+    </a>
+    <div class="footer-links">
+        <a href="./index.html" class="footer-link left">
+            &#8592; Pagina precedente
+        </a>
+    </div>
+    &copy; 2025 Corso di Programmazione Backend. Developed By Emanuele Ienna e Massimiliano Grande. Tutti i diritti riservati.
+</footer>
+
+</body>
+</html>

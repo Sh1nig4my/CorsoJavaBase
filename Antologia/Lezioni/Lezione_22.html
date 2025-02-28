@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lezione 22 - Introduzione a JPA e Hibernate</title>
+    <link rel="stylesheet" href="../styles/style.css" />
+</head>
+
+<body>
+    <h1 class="lesson-title">Lezione 22: Introduzione a JPA e Hibernate</h1>
+
+    <div class="section">
+        <h2>1. Cos'è JPA e Hibernate?</h2>
+        <p>
+            **JPA (Java Persistence API)** è una specifica Java che definisce un metodo standard per gestire la persistenza dei dati nelle applicazioni Java. 
+            La **persistenza** è il processo di conservazione dei dati oltre la durata di un programma, generalmente attraverso il salvataggio in un database relazionale.
+        </p>
+    
+        <p>
+            **Hibernate** è una delle implementazioni più popolari di JPA ed è un framework **ORM (Object-Relational Mapping)** che facilita la gestione dei dati.
+            Utilizzando Hibernate, gli sviluppatori possono interagire con il database attraverso oggetti Java, evitando di scrivere query SQL dirette.
+        </p>
+    
+        <h3>1.1 Differenze tra JPA e Hibernate</h3>
+        <p>
+            È importante distinguere tra JPA e Hibernate:
+        </p>
+        <ul>
+            <li>
+                **JPA** è solo una **specifica**: fornisce un insieme di interfacce e regole, ma non ha un'implementazione propria.
+            </li>
+            <li>
+                **Hibernate** è un'**implementazione concreta** della specifica JPA: fornisce la logica necessaria per gestire la persistenza dei dati.
+            </li>
+        </ul>
+    
+        <h4>Altre implementazioni di JPA</h4>
+        <p>Oltre a Hibernate, esistono altre implementazioni di JPA, tra cui:</p>
+        <ul>
+            <li><strong>EclipseLink</strong>: L'implementazione ufficiale di riferimento per JPA.</li>
+            <li><strong>OpenJPA</strong>: Progetto Apache focalizzato sulla flessibilità.</li>
+            <li><strong>DataNucleus</strong>: Supporta non solo database relazionali, ma anche NoSQL.</li>
+        </ul>
+    
+        <h3>1.2 Hibernate vs JDBC: Quali sono i vantaggi?</h3>
+        <p>
+            Prima dell'introduzione di JPA e Hibernate, l'interazione con i database in Java avveniva principalmente tramite **JDBC (Java Database Connectivity)**,
+            che richiedeva di scrivere direttamente query SQL e gestire manualmente la connessione al database.
+        </p>
+    
+        <h4>Vantaggi di Hibernate rispetto a JDBC</h4>
+        <ul>
+            <li>
+                **Astrazione del database:** Hibernate genera automaticamente query SQL, riducendo il bisogno di scrivere codice SQL manualmente.
+            </li>
+            <li>
+                **Gestione automatica delle transazioni:** Hibernate gestisce le transazioni in modo più intuitivo rispetto a JDBC, che richiede gestione esplicita.
+            </li>
+            <li>
+                **Supporto per il caching:** Permette di migliorare le prestazioni riducendo il numero di interrogazioni al database.
+            </li>
+            <li>
+                **Indipendenza dal database sottostante:** Grazie ai **dialetti SQL**, è possibile passare da un database all'altro senza modificare il codice.
+            </li>
+            <li>
+                **Mapping oggetto-relazionale (ORM):** Hibernate permette di lavorare con oggetti Java invece di record e tabelle.
+            </li>
+        </ul>
+    
+        <h4>Confronto tra JDBC e Hibernate</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>Caratteristica</th>
+                    <th>JDBC</th>
+                    <th>Hibernate</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Scrittura delle query</td>
+                    <td>SQL manuale</td>
+                    <td>Genera SQL automaticamente</td>
+                </tr>
+                <tr>
+                    <td>Transazioni</td>
+                    <td>Gestione manuale con commit/rollback</td>
+                    <td>Gestione automatica delle transazioni</td>
+                </tr>
+                <tr>
+                    <td>Indipendenza dal database</td>
+                    <td>No, dipende dal database specifico</td>
+                    <td>Sì, grazie ai dialetti SQL</td>
+                </tr>
+                <tr>
+                    <td>Caching</td>
+                    <td>Non supportato</td>
+                    <td>Supporto per cache di primo e secondo livello</td>
+                </tr>
+                <tr>
+                    <td>Manutenzione</td>
+                    <td>Complessità elevata per query avanzate</td>
+                    <td>Più semplice e organizzato con JPA</td>
+                </tr>
+            </tbody>
+        </table>
+    
+        <h3>1.3 Esempio pratico con JPA e Hibernate</h3>
+        <p>
+            Creiamo una semplice classe Java per la gestione degli utenti, utilizzando **JPA** con **Hibernate** per la mappatura ORM.
+        </p>
+    
+        <pre><code>
+    import jakarta.persistence.*;
+    
+    @Entity
+    @Table(name = "utenti")
+    public class Utente {
+    
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY) 
+        private Long id;
+    
+        @Column(nullable = false, length = 50)
+        private String nome;
+    
+        @Column(nullable = false, unique = true, length = 100)
+        private String email;
+    
+        // Costruttori
+        public Utente() {}
+    
+        public Utente(String nome, String email) {
+            this.nome = nome;
+            this.email = email;
+        }
+    
+        // Getters e Setters
+        public Long getId() { return id; }
+        public void setId(Long id) { this.id = id; }
+    
+        public String getNome() { return nome; }
+        public void setNome(String nome) { this.nome = nome; }
+    
+        public String getEmail() { return email; }
+        public void setEmail(String email) { this.email = email; }
+    }
+        </code></pre>
+    
+        <h3>1.4 Persistenza di un oggetto con Hibernate</h3>
+        <p>
+            Dopo aver definito l'entità, possiamo salvare un oggetto <code>Utente</code> nel database utilizzando **EntityManager**.
+        </p>
+    
+        <pre><code>
+    import jakarta.persistence.EntityManager;
+    import jakarta.persistence.EntityManagerFactory;
+    import jakarta.persistence.Persistence;
+    
+    public class Main {
+        public static void main(String[] args) {
+            // Creazione della factory e dell'EntityManager
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("my-persistence-unit");
+            EntityManager em = emf.createEntityManager();
+    
+            // Creazione di un nuovo utente
+            Utente nuovoUtente = new Utente("Luca", "luca.rossi@email.com");
+    
+            // Avvio della transazione
+            em.getTransaction().begin();
+            em.persist(nuovoUtente); // Salvataggio nel database
+            em.getTransaction().commit();
+    
+            System.out.println("Utente salvato con ID: " + nuovoUtente.getId());
+    
+            // Chiusura delle risorse
+            em.close();
+            emf.close();
+        }
+    }
+        </code></pre>
+    
+        <h3>1.5 Conclusione</h3>
+        <p>
+            **JPA e Hibernate** semplificano la gestione della persistenza rispetto a JDBC, fornendo strumenti avanzati per il mapping tra oggetti Java e database.
+            Hibernate è particolarmente utile per lo sviluppo di applicazioni scalabili e indipendenti dal database. 
+            Nei prossimi capitoli, esploreremo come gestire le relazioni tra entità, query avanzate e ottimizzazioni delle performance.
+        </p>
+    </div>
+    
+
+    <div class="section">
+        <h2>2. Configurazione di Hibernate</h2>
+        <p>
+            Hibernate è un framework ORM (Object-Relational Mapping) che semplifica l'interazione tra 
+            le applicazioni Java e i database relazionali, consentendo di lavorare con oggetti Java 
+            invece di scrivere query SQL dirette. Per utilizzarlo in un progetto, è necessario configurare 
+            il file <code>persistence.xml</code>, che definisce le impostazioni di connessione al database 
+            e il comportamento di Hibernate.
+        </p>
+    
+        <h3>2.1 Creazione del file <code>persistence.xml</code></h3>
+        <p>
+            Il file <code>persistence.xml</code> si trova nella cartella <code>META-INF</code> di un progetto JPA
+            e contiene informazioni cruciali per la connessione al database, inclusi il driver JDBC, le credenziali di accesso 
+            e le proprietà specifiche di Hibernate.
+        </p>
+    
+        <h4>Configurazione di un database MySQL con Hibernate</h4>
+        <p>Di seguito è riportato un esempio di configurazione di <code>persistence.xml</code> per un database MySQL:</p>
+        
+        <pre><code>
+    &lt;persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence" version="2.1"&gt;
+        &lt;persistence-unit name="my-persistence-unit" transaction-type="RESOURCE_LOCAL"&gt;
+            &lt;class&gt;com.example.model.Utente&lt;/class&gt; <!-- Definizione delle classi Entity -->
+            &lt;properties&gt;
+                <!-- Configurazione JDBC -->
+                &lt;property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/&gt;
+                &lt;property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/mydb?useSSL=false"/&gt;
+                &lt;property name="javax.persistence.jdbc.user" value="root"/&gt;
+                &lt;property name="javax.persistence.jdbc.password" value="password"/&gt;
+    
+                <!-- Dialetto di Hibernate per MySQL -->
+                &lt;property name="hibernate.dialect" value="org.hibernate.dialect.MySQL8Dialect"/&gt;
+    
+                <!-- Strategie di generazione e aggiornamento delle tabelle -->
+                &lt;property name="hibernate.hbm2ddl.auto" value="update"/&gt;
+    
+                <!-- Debug SQL -->
+                &lt;property name="hibernate.show_sql" value="true"/&gt;
+                &lt;property name="hibernate.format_sql" value="true"/&gt;
+    
+                <!-- Cache e ottimizzazioni -->
+                &lt;property name="hibernate.cache.use_second_level_cache" value="false"/&gt;
+                &lt;property name="hibernate.cache.use_query_cache" value="false"/&gt;
+            &lt;/properties&gt;
+        &lt;/persistence-unit&gt;
+    &lt;/persistence&gt;
+        </code></pre>
+    
+        <h4>Spiegazione della configurazione:</h4>
+        <ul>
+            <li><code>persistence-unit</code>: Definisce l'unità di persistenza e il suo nome, che verrà usato nel codice.</li>
+            <li><code>javax.persistence.jdbc.driver</code>: Specifica il driver JDBC per MySQL.</li>
+            <li><code>javax.persistence.jdbc.url</code>: URL di connessione al database.</li>
+            <li><code>javax.persistence.jdbc.user</code> e <code>javax.persistence.jdbc.password</code>: Credenziali di accesso.</li>
+            <li><code>hibernate.dialect</code>: Specifica il dialetto SQL che Hibernate utilizzerà.</li>
+            <li><code>hibernate.hbm2ddl.auto</code>: Determina come Hibernate deve gestire la creazione e aggiornamento delle tabelle. Opzioni comuni:
+                <ul>
+                    <li><code>create</code>: Crea le tabelle ad ogni avvio, cancellando i dati esistenti.</li>
+                    <li><code>update</code>: Aggiorna la struttura delle tabelle senza perdere dati.</li>
+                    <li><code>validate</code>: Controlla che la struttura delle tabelle corrisponda alle entità Java.</li>
+                    <li><code>none</code>: Non effettua alcuna operazione sulle tabelle.</li>
+                </ul>
+            </li>
+            <li><code>hibernate.show_sql</code>: Mostra le query SQL eseguite nella console.</li>
+            <li><code>hibernate.format_sql</code>: Formatta il codice SQL per una maggiore leggibilità.</li>
+        </ul>
+    
+        <h3>2.2 Esempio di utilizzo in un'applicazione Java</h3>
+        <p>
+            Dopo aver configurato <code>persistence.xml</code>, possiamo utilizzare Hibernate per interagire con il database.
+            Creiamo un semplice esempio con una classe <code>Utente</code> e un'operazione di inserimento dati.
+        </p>
+    
+        <h4>Definizione dell'entità <code>Utente</code></h4>
+        <pre><code>
+    import jakarta.persistence.*;
+    
+    @Entity
+    @Table(name = "utenti")
+    public class Utente {
+        
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        private Long id;
+    
+        @Column(nullable = false, length = 50)
+        private String nome;
+    
+        @Column(nullable = false, length = 50)
+        private String cognome;
+    
+        @Column(unique = true, nullable = false, length = 100)
+        private String email;
+    
+        // Costruttori
+        public Utente() {}
+    
+        public Utente(String nome, String cognome, String email) {
+            this.nome = nome;
+            this.cognome = cognome;
+            this.email = email;
+        }
+    
+        // Getters e Setters
+        public Long getId() { return id; }
+        public void setId(Long id) { this.id = id; }
+    
+        public String getNome() { return nome; }
+        public void setNome(String nome) { this.nome = nome; }
+    
+        public String getCognome() { return cognome; }
+        public void setCognome(String cognome) { this.cognome = cognome; }
+    
+        public String getEmail() { return email; }
+        public void setEmail(String email) { this.email = email; }
+    }
+        </code></pre>
+    
+        <h4>Inserimento di un utente nel database</h4>
+        <pre><code>
+    import jakarta.persistence.EntityManager;
+    import jakarta.persistence.EntityManagerFactory;
+    import jakarta.persistence.Persistence;
+    
+    public class Main {
+        public static void main(String[] args) {
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("my-persistence-unit");
+            EntityManager em = emf.createEntityManager();
+    
+            // Creazione di un nuovo utente
+            Utente nuovoUtente = new Utente("Mario", "Rossi", "mario.rossi@email.com");
+    
+            // Transazione e salvataggio
+            em.getTransaction().begin();
+            em.persist(nuovoUtente);
+            em.getTransaction().commit();
+    
+            System.out.println("Utente salvato con ID: " + nuovoUtente.getId());
+    
+            em.close();
+            emf.close();
+        }
+    }
+        </code></pre>
+    
+        <h3>2.3 Conclusione</h3>
+        <p>
+            Hibernate fornisce un modo potente ed efficiente per gestire la persistenza dei dati in un'applicazione Java.
+            Configurando correttamente <code>persistence.xml</code> e definendo le entità, è possibile eseguire operazioni 
+            CRUD in modo semplice ed elegante, eliminando la necessità di scrivere manualmente query SQL.
+        </p>
+    </div>
+    
+
+    <div class="section">
+        <h2>3. EntityManager e SessionFactory</h2>
+        <p>
+            Per interagire con il database, Hibernate utilizza due componenti principali: 
+            <strong>EntityManager</strong> (parte di JPA) e <strong>SessionFactory</strong> (specifico di Hibernate). 
+            Questi componenti sono responsabili della gestione delle operazioni di persistenza e della connessione al database.
+        </p>
+    
+        <h3>3.1 Differenze tra EntityManager e SessionFactory</h3>
+        <ul>
+            <li>
+                <strong>EntityManager</strong>: Fa parte della specifica JPA ed è responsabile della gestione del ciclo di vita degli oggetti persistenti 
+                (entità). Gestisce operazioni CRUD come <code>persist</code>, <code>merge</code>, <code>remove</code>, e permette l'esecuzione di query JPQL.
+            </li>
+            <li>
+                <strong>SessionFactory</strong>: È una classe di Hibernate che gestisce le sessioni e le connessioni con il database. È utilizzata 
+                per creare oggetti <code>Session</code> che forniscono un'interfaccia simile a <code>EntityManager</code> ma con funzionalità avanzate di caching e gestione delle transazioni.
+            </li>
+        </ul>
+    
+        <h3>3.2 Creazione di un EntityManager</h3>
+        <p>
+            In un'applicazione basata su JPA con Hibernate, la creazione di un <code>EntityManager</code> avviene tramite 
+            un'istanza di <code>EntityManagerFactory</code>, definita nel file <code>persistence.xml</code>.
+        </p>
+        
+        <pre><code>
+    import jakarta.persistence.EntityManager;
+    import jakarta.persistence.EntityManagerFactory;
+    import jakarta.persistence.Persistence;
+    
+    public class EntityManagerExample {
+        public static void main(String[] args) {
+            // Creazione della factory e dell'EntityManager
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("my-persistence-unit");
+            EntityManager em = emf.createEntityManager();
+    
+            // Avvio di una transazione
+            em.getTransaction().begin();
+            
+            // Creazione e persistenza di un'entità
+            Utente utente = new Utente("Giovanni", "Bianchi", "giovanni.bianchi@email.com");
+            em.persist(utente);
+            
+            // Commit della transazione
+            em.getTransaction().commit();
+            
+            // Chiusura delle risorse
+            em.close();
+            emf.close();
+            
+            System.out.println("Utente salvato con successo!");
+        }
+    }
+        </code></pre>
+    
+        <h4>Spiegazione del codice:</h4>
+        <ul>
+            <li>Creiamo un'istanza di <code>EntityManagerFactory</code> specificando il nome dell'unità di persistenza.</li>
+            <li>Generiamo un <code>EntityManager</code> per gestire le operazioni CRUD.</li>
+            <li>Avviamo una transazione con <code>begin()</code> e la confermiamo con <code>commit()</code>.</li>
+            <li>Persistiamo un oggetto di tipo <code>Utente</code> nel database.</li>
+            <li>Chiudiamo <code>EntityManager</code> e <code>EntityManagerFactory</code> per liberare le risorse.</li>
+        </ul>
+    
+        <h3>3.3 Utilizzo di SessionFactory in Hibernate</h3>
+        <p>
+            Se invece utilizziamo Hibernate senza JPA, dobbiamo creare una <code>SessionFactory</code> per gestire le sessioni 
+            e le connessioni con il database.
+        </p>
+        
+        <pre><code>
+    import org.hibernate.Session;
+    import org.hibernate.SessionFactory;
+    import org.hibernate.Transaction;
+    import org.hibernate.cfg.Configuration;
+    
+    public class HibernateSessionExample {
+        public static void main(String[] args) {
+            // Configurazione e creazione della SessionFactory
+            SessionFactory factory = new Configuration().configure("hibernate.cfg.xml").buildSessionFactory();
+            
+            // Creazione della sessione
+            Session session = factory.openSession();
+            
+            // Avvio di una transazione
+            Transaction transaction = session.beginTransaction();
+            
+            // Creazione e salvataggio di un'entità
+            Utente utente = new Utente("Marco", "Verdi", "marco.verdi@email.com");
+            session.save(utente);
+            
+            // Commit della transazione
+            transaction.commit();
+            
+            // Chiusura della sessione e della factory
+            session.close();
+            factory.close();
+            
+            System.out.println("Utente salvato con successo!");
+        }
+    }
+        </code></pre>
+    
+        <h4>Spiegazione del codice:</h4>
+        <ul>
+            <li><code>Configuration().configure("hibernate.cfg.xml")</code>: Carica la configurazione da <code>hibernate.cfg.xml</code>.</li>
+            <li><code>buildSessionFactory()</code>: Crea un'istanza di <code>SessionFactory</code>, oggetto costoso da creare, quindi dovrebbe essere riutilizzato.</li>
+            <li><code>openSession()</code>: Apre una sessione per interagire con il database.</li>
+            <li><code>beginTransaction()</code>: Inizia una transazione.</li>
+            <li><code>save(utente)</code>: Salva un'istanza della classe <code>Utente</code> nel database.</li>
+            <li><code>commit()</code>: Conferma la transazione.</li>
+            <li>Chiudiamo la sessione e la factory per liberare le risorse.</li>
+        </ul>
+    
+        <h3>3.4 Differenze pratiche tra EntityManager e SessionFactory</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Caratteristica</th>
+                    <th>EntityManager (JPA)</th>
+                    <th>SessionFactory (Hibernate)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Standard</td>
+                    <td>Fa parte della specifica JPA</td>
+                    <td>Proprietario di Hibernate</td>
+                </tr>
+                <tr>
+                    <td>Gestione delle transazioni</td>
+                    <td>Gestite automaticamente da JPA</td>
+                    <td>Necessita di gestione manuale con <code>Transaction</code></td>
+                </tr>
+                <tr>
+                    <td>Facilità d'uso</td>
+                    <td>Più semplice, grazie all'astrazione fornita da JPA</td>
+                    <td>Maggiore controllo e flessibilità</td>
+                </tr>
+                <tr>
+                    <td>Performance</td>
+                    <td>Più astratto, leggermente più lento</td>
+                    <td>Più performante per operazioni avanzate</td>
+                </tr>
+            </tbody>
+        </table>
+    
+        <h3>3.5 Conclusioni</h3>
+        <p>
+            Entrambi gli approcci offrono vantaggi distinti:
+            <ul>
+                <li>Se stai lavorando con JPA e desideri un'implementazione standardizzata, utilizza <strong>EntityManager</strong>.</li>
+                <li>Se necessiti di un controllo più granulare sulle transazioni e sulle ottimizzazioni di Hibernate, utilizza <strong>SessionFactory</strong>.</li>
+            </ul>
+            La scelta dipende dalle esigenze specifiche del progetto e dall'ecosistema tecnologico utilizzato.
+        </p>
+    </div>
+    
+
+    <div class="section">
+        <h2>4. Creazione di un'Entità in JPA</h2>
+        <p>
+            Un'**entità** in JPA rappresenta una tabella del database, dove ogni istanza della classe corrisponde a una riga della tabella.
+            Per definire un'entità, utilizziamo la classe Java annotata con <code>@Entity</code> e <code>@Table</code>.
+        </p>
+    
+        <h3>4.1 Definizione di una classe Entità</h3>
+        <p>
+            Supponiamo di voler creare una tabella chiamata <code>utenti</code> con le seguenti colonne:
+        </p>
+        <ul>
+            <li><strong>id</strong>: Identificatore univoco (chiave primaria).</li>
+            <li><strong>nome</strong>: Nome dell'utente, obbligatorio.</li>
+            <li><strong>email</strong>: Indirizzo email univoco.</li>
+            <li><strong>dataIscrizione</strong>: Data di registrazione dell'utente con valore predefinito.</li>
+        </ul>
+    
+        <p>
+            Ecco come definire la classe **Utente** in JPA:
+        </p>
+    
+        <pre><code>
+    import jakarta.persistence.*;
+    import java.time.LocalDate;
+    
+    @Entity
+    @Table(name = "utenti")
+    public class Utente {
+    
+        @Id
+        @GeneratedValue(strategy = GenerationType.IDENTITY) 
+        private Long id;
+    
+        @Column(nullable = false, length = 50)
+        private String nome;
+    
+        @Column(nullable = false, unique = true, length = 100)
+        private String email;
+    
+        @Column(name = "data_iscrizione", nullable = false)
+        private LocalDate dataIscrizione;
+    
+        // Costruttori
+        public Utente() {
+            this.dataIscrizione = LocalDate.now(); // Imposta la data di iscrizione alla data corrente
+        }
+    
+        public Utente(String nome, String email) {
+            this.nome = nome;
+            this.email = email;
+            this.dataIscrizione = LocalDate.now();
+        }
+    
+        // Getters e Setters
+        public Long getId() { return id; }
+        public void setId(Long id) { this.id = id; }
+    
+        public String getNome() { return nome; }
+        public void setNome(String nome) { this.nome = nome; }
+    
+        public String getEmail() { return email; }
+        public void setEmail(String email) { this.email = email; }
+    
+        public LocalDate getDataIscrizione() { return dataIscrizione; }
+        public void setDataIscrizione(LocalDate dataIscrizione) { this.dataIscrizione = dataIscrizione; }
+    }
+        </code></pre>
+    
+        <h3>4.2 Spiegazione delle annotazioni</h3>
+        <ul>
+            <li><code>@Entity</code>: Indica che questa classe è un'entità gestita da JPA.</li>
+            <li><code>@Table(name = "utenti")</code>: Specifica il nome della tabella nel database.</li>
+            <li><code>@Id</code>: Definisce il campo chiave primaria.</li>
+            <li><code>@GeneratedValue(strategy = GenerationType.IDENTITY)</code>: Utilizza una strategia in cui il database genera automaticamente un valore per la chiave primaria.</li>
+            <li><code>@Column(nullable = false, length = 50)</code>: Specifica che il campo <code>nome</code> è obbligatorio e ha una lunghezza massima di 50 caratteri.</li>
+            <li><code>@Column(nullable = false, unique = true, length = 100)</code>: Il campo <code>email</code> è obbligatorio, unico e con lunghezza massima di 100 caratteri.</li>
+            <li><code>@Column(name = "data_iscrizione", nullable = false)</code>: Imposta il nome della colonna nel database e la rende obbligatoria.</li>
+        </ul>
+    
+        <h3>4.3 Creazione della Tabella con Hibernate</h3>
+        <p>
+            Quando Hibernate viene eseguito con l'opzione <code>hibernate.hbm2ddl.auto = update</code>, genererà automaticamente la seguente tabella SQL nel database:
+        </p>
+    
+        <pre><code>
+    CREATE TABLE utenti (
+        id BIGINT AUTO_INCREMENT PRIMARY KEY,
+        nome VARCHAR(50) NOT NULL,
+        email VARCHAR(100) UNIQUE NOT NULL,
+        data_iscrizione DATE NOT NULL
+    );
+        </code></pre>
+    
+        <h3>4.4 Persistenza di un oggetto Utente</h3>
+        <p>
+            Dopo aver configurato Hibernate e il database, possiamo ora salvare un oggetto <code>Utente</code> nel database con il seguente codice:
+        </p>
+    
+        <pre><code>
+    import jakarta.persistence.EntityManager;
+    import jakarta.persistence.EntityManagerFactory;
+    import jakarta.persistence.Persistence;
+    
+    public class Main {
+        public static void main(String[] args) {
+            // Creazione della factory e dell'EntityManager
+            EntityManagerFactory emf = Persistence.createEntityManagerFactory("my-persistence-unit");
+            EntityManager em = emf.createEntityManager();
+    
+            // Creazione di un nuovo utente
+            Utente nuovoUtente = new Utente("Giovanni", "giovanni.rossi@email.com");
+    
+            // Avvio della transazione
+            em.getTransaction().begin();
+            em.persist(nuovoUtente); // Salvataggio nel database
+            em.getTransaction().commit();
+    
+            System.out.println("Utente salvato con ID: " + nuovoUtente.getId());
+    
+            // Chiusura delle risorse
+            em.close();
+            emf.close();
+        }
+    }
+        </code></pre>
+    
+        <h4>Spiegazione del codice:</h4>
+        <ul>
+            <li>Creiamo un <code>EntityManagerFactory</code> e un <code>EntityManager</code>.</li>
+            <li>Iniziamo una transazione con <code>begin()</code>.</li>
+            <li>Persistiamo un nuovo oggetto <code>Utente</code> nel database.</li>
+            <li>Effettuiamo il <code>commit()</code> per salvare i dati in modo permanente.</li>
+            <li>Chiudiamo <code>EntityManager</code> e <code>EntityManagerFactory</code> per liberare le risorse.</li>
+        </ul>
+    
+        <h3>4.5 Conclusione</h3>
+        <p>
+            La definizione di un'entità JPA consente di mappare oggetti Java a tabelle del database in modo semplice e strutturato.
+            Con Hibernate, possiamo automatizzare la creazione delle tabelle e semplificare la gestione della persistenza.
+            Nei prossimi passaggi, esploreremo le operazioni CRUD (Create, Read, Update, Delete) e le relazioni tra entità.
+        </p>
+    </div>
+    
+
+    <div class="bibliography">
+        <h2>5. Bibliografia e Risorse</h2>
+        <ul>
+            <li><a href="https://hibernate.org/orm/documentation/5.6/">Documentazione ufficiale di Hibernate</a></li>
+            <li><a href="https://docs.oracle.com/javaee/7/tutorial/persistence-intro.htm">Guida JPA su Oracle</a></li>
+        </ul>
+    </div>
+
+    <div class="advanced">
+        <h2>6. Approfondimenti</h2>
+        <p>Per approfondire, si consiglia di esplorare:</p>
+        <ul>
+            <li>Le relazioni tra entità: <code>@OneToOne</code>, <code>@OneToMany</code>, <code>@ManyToMany</code>.</li>
+            <li>Utilizzo del caching di Hibernate per migliorare le prestazioni.</li>
+            <li>Named Queries e criteri avanzati di interrogazione.</li>
+        </ul>
+    </div>
+
+    <footer class="footer">
+        <a href="./index.html" class="footer-logo">
+            <img src="./img/logo.png" alt="Logo del sito" />
+        </a>
+        <div class="footer-links">
+            <a href="./index.html" class="footer-link left">
+                &#8592; Pagina precedente
+            </a>
+        </div>
+        &copy; 2025 Corso di Programmazione Backend. Developed By Emanuele Ienna e Massimiliano Grande. Tutti i diritti riservati.
+    </footer>
+
+</body>
+</html>

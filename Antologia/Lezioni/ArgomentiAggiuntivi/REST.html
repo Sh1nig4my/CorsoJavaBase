@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lezione - Chiamate REST</title>
+    <link rel="stylesheet" href="/styles/style.css">
+</head>
+<body>
+<h1 class="lesson-title">Lezione: Chiamate REST</h1>
+
+<div class="section">
+    <h2>1. Introduzione alle Chiamate REST</h2>
+    <p>
+        Le **API REST** (Representational State Transfer) rappresentano un insieme di regole per la comunicazione tra sistemi distribuiti.
+        REST non è un linguaggio o un framework, ma un'**architettura** che permette a diversi software di interagire tra loro in modo standardizzato, utilizzando il protocollo HTTP.
+    </p>
+
+    <h3>Come funzionano le API REST?</h3>
+    <p>
+        Le API REST si basano su richieste e risposte tra un **client** (es. un’applicazione frontend o mobile) e un **server** (che fornisce i dati richiesti).
+        Ogni richiesta segue un modello preciso e sfrutta i **metodi HTTP**, che permettono di eseguire operazioni specifiche sui dati.
+    </p>
+
+    <h3>Metodi HTTP principali</h3>
+    <ul>
+        <li><strong>GET</strong>: Recupera dati da un server. Esempio: ottenere la lista di utenti.</li>
+        <li><strong>POST</strong>: Invia nuovi dati al server. Esempio: registrare un nuovo utente.</li>
+        <li><strong>PUT</strong>: Modifica dati esistenti. Esempio: aggiornare il profilo di un utente.</li>
+        <li><strong>DELETE</strong>: Elimina dati dal server. Esempio: rimuovere un account utente.</li>
+    </ul>
+
+    <h3>Esempio di richiesta REST</h3>
+    <p>Supponiamo di voler ottenere la lista di tutti gli utenti registrati. Il client può inviare la seguente richiesta:</p>
+    <pre><code>GET https://api.miosito.com/utenti</code></pre>
+    <p>Il server risponderà con i dati in formato JSON:</p>
+    <pre><code>{
+    "utenti": [
+        {"id": 1, "nome": "Mario", "cognome": "Rossi"},
+        {"id": 2, "nome": "Anna", "cognome": "Bianchi"}
+    ]
+}</code></pre>
+
+    <h3>REST e JSON</h3>
+    <p>
+        La maggior parte delle API REST utilizza il formato **JSON (JavaScript Object Notation)** per lo scambio di dati. JSON è semplice, leggibile e compatibile con molti linguaggi di programmazione.
+    </p>
+
+    <h3>Vantaggi delle API REST</h3>
+    <ul>
+        <li><strong>Indipendenza dalla piattaforma</strong>: Un client in qualsiasi linguaggio può comunicare con un server REST.</li>
+        <li><strong>Scalabilità</strong>: Il design REST è pensato per essere efficiente anche su larga scala.</li>
+        <li><strong>Facile integrazione</strong>: Molte applicazioni moderne utilizzano API REST per interagire con servizi esterni.</li>
+    </ul>
+
+    <h3>Conclusione</h3>
+    <p>
+        Le API REST sono un pilastro dello sviluppo software moderno, permettendo di collegare tra loro applicazioni web, mobile e cloud.
+        Nei prossimi capitoli, esploreremo come implementare API REST in Java con il framework **Spring Boot**.
+    </p>
+</div>
+
+<div class="section">
+    <h2>2. Differenze tra REST e Altri Tipi di Chiamate</h2>
+    <p>
+        Esistono diversi modi per far comunicare un client con un server. REST è una delle architetture più utilizzate,
+        ma non è l'unica. Vediamo come si confronta con altre tecnologie di comunicazione come **SOAP** e **GraphQL**.
+    </p>
+
+    <h3>REST vs SOAP</h3>
+    <p>
+        **SOAP (Simple Object Access Protocol)** è un protocollo più vecchio rispetto a REST ed è stato ampiamente utilizzato in passato
+        per la comunicazione tra applicazioni distribuite. Tuttavia, presenta alcune differenze chiave rispetto a REST.
+    </p>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Caratteristica</th>
+            <th>REST</th>
+            <th>SOAP</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td><strong>Formato dei dati</strong></td>
+            <td>JSON, XML, YAML, Testo semplice</td>
+            <td>Solo XML</td>
+        </tr>
+        <tr>
+            <td><strong>Velocità</strong></td>
+            <td>Leggero e veloce</td>
+            <td>Più pesante, richiede più risorse</td>
+        </tr>
+        <tr>
+            <td><strong>Sicurezza</strong></td>
+            <td>HTTPS + OAuth, JWT</td>
+            <td>WS-Security con crittografia avanzata</td>
+        </tr>
+        <tr>
+            <td><strong>Utilizzo</strong></td>
+            <td>Applicazioni web, API moderne</td>
+            <td>Servizi finanziari e aziendali complessi</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <p>
+        **Quando usare SOAP?**
+        SOAP è consigliato quando servono **transazioni sicure e affidabili**, come nei sistemi bancari o nei servizi finanziari.
+    </p>
+
+    <p>
+        **Quando usare REST?**
+        REST è più adatto per **applicazioni web moderne, API pubbliche e microservizi** grazie alla sua leggerezza e flessibilità.
+    </p>
+
+    <h3>REST vs GraphQL</h3>
+    <p>
+        **GraphQL** è un linguaggio di query per API sviluppato da Facebook che offre un modo alternativo a REST per recuperare i dati.
+        La differenza principale è che, mentre REST espone risorse fisse, GraphQL consente ai client di specificare esattamente i dati di cui hanno bisogno.
+    </p>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Caratteristica</th>
+            <th>REST</th>
+            <th>GraphQL</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td><strong>Struttura delle richieste</strong></td>
+            <td>Basata su URL (es. <code>/utenti/1</code>)</td>
+            <td>Basata su query personalizzate</td>
+        </tr>
+        <tr>
+            <td><strong>Over-fetching / Under-fetching</strong></td>
+            <td>Recupera sempre tutti i dati di una risorsa</td>
+            <td>Recupera solo i dati richiesti, ottimizzando il payload</td>
+        </tr>
+        <tr>
+            <td><strong>Formato della risposta</strong></td>
+            <td>JSON con struttura predefinita</td>
+            <td>JSON con struttura definita dal client</td>
+        </tr>
+        <tr>
+            <td><strong>Utilizzo</strong></td>
+            <td>Applicazioni tradizionali con dati strutturati</td>
+            <td>Applicazioni moderne con interfacce dinamiche (es. Facebook, GitHub API)</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <p>
+        **Quando usare GraphQL?**
+        GraphQL è utile quando si vogliono evitare richieste multiple o quando i client necessitano di dati specifici senza scaricare informazioni inutili.
+        È ideale per app con **interfacce dinamiche**, come **React, Vue.js e Angular**.
+    </p>
+
+    <p>
+        **Quando usare REST?**
+        REST è più indicato per **architetture semplici**, microservizi e quando l’over-fetching non è un problema.
+    </p>
+
+    <h3>Conclusione</h3>
+    <p>
+        REST rimane la scelta più comune per API grazie alla sua semplicità e compatibilità con il web.
+        Tuttavia, in contesti specifici, SOAP o GraphQL potrebbero offrire vantaggi migliori a seconda delle esigenze del progetto.
+    </p>
+</div>
+
+<div class="section">
+    <h2>3. Metodi HTTP nelle API REST</h2>
+    <p>
+        Le API REST utilizzano il protocollo HTTP per la comunicazione tra client e server. Ogni operazione viene eseguita attraverso uno specifico **metodo HTTP**, che indica l'azione da compiere su una risorsa.
+    </p>
+
+    <h3>Panoramica dei Metodi HTTP</h3>
+    <p>
+        Ecco i quattro metodi HTTP principali utilizzati nelle API REST, con una spiegazione del loro utilizzo e un esempio pratico:
+    </p>
+
+    <div class="table-container">
+        <table class="http-table">
+            <thead>
+            <tr>
+                <th>Metodo</th>
+                <th>Descrizione</th>
+                <th>Esempio di richiesta</th>
+                <th>Esempio di risposta</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td><strong>GET</strong></td>
+                <td>Recupera una o più risorse dal server.</td>
+                <td><code>GET /utenti</code></td>
+                <td>
+                    <pre><code>{
+    "utenti": [
+        {"id": 1, "nome": "Mario", "email": "mario@example.com"},
+        {"id": 2, "nome": "Anna", "email": "anna@example.com"}
+    ]
+}</code></pre>
+                </td>
+            </tr>
+            <tr>
+                <td><strong>POST</strong></td>
+                <td>Crea una nuova risorsa.</td>
+                <td>
+                    <pre><code>POST /utenti
+Content-Type: application/json
+{
+    "nome": "Luca",
+    "email": "luca@example.com"
+}</code></pre>
+                </td>
+                <td>
+                    <pre><code>{
+    "id": 3,
+    "nome": "Luca",
+    "email": "luca@example.com",
+    "messaggio": "Utente creato con successo"
+}</code></pre>
+                </td>
+            </tr>
+            <tr>
+                <td><strong>PUT</strong></td>
+                <td>Aggiorna un'intera risorsa esistente.</td>
+                <td>
+                    <pre><code>PUT /utenti/1
+Content-Type: application/json
+{
+    "nome": "Mario Rossi",
+    "email": "mario.rossi@example.com"
+}</code></pre>
+                </td>
+                <td>
+                    <pre><code>{
+    "id": 1,
+    "nome": "Mario Rossi",
+    "email": "mario.rossi@example.com",
+    "messaggio": "Utente aggiornato con successo"
+}</code></pre>
+                </td>
+            </tr>
+            <tr>
+                <td><strong>DELETE</strong></td>
+                <td>Elimina una risorsa.</td>
+                <td><code>DELETE /utenti/1</code></td>
+                <td>
+                    <pre><code>{
+    "messaggio": "Utente eliminato con successo"
+}</code></pre>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h3>Quando Usare Ogni Metodo?</h3>
+    <ul>
+        <li><strong>GET</strong>: Da usare quando si vogliono **recuperare informazioni** senza modificarle.</li>
+        <li><strong>POST</strong>: Da usare quando si vuole **creare una nuova risorsa** sul server.</li>
+        <li><strong>PUT</strong>: Da usare quando si vuole **aggiornare completamente** una risorsa esistente.</li>
+        <li><strong>DELETE</strong>: Da usare quando si vuole **eliminare una risorsa** dal server.</li>
+    </ul>
+
+    <h3>RESTful Best Practices</h3>
+    <ul>
+        <li>Utilizzare **GET** solo per leggere i dati, senza effetti collaterali sul server.</li>
+        <li>Per aggiornare **parzialmente** una risorsa, si può usare <code>PATCH</code> invece di <code>PUT</code>.</li>
+        <li>Assicurarsi che ogni richiesta **POST** restituisca un codice di stato <code>201 Created</code> con l'ID della nuova risorsa.</li>
+        <li>Quando si usa <code>DELETE</code>, restituire sempre una conferma della cancellazione.</li>
+    </ul>
+
+    <h3>Conclusione</h3>
+    <p>
+        I metodi HTTP sono il cuore delle API REST e definiscono le operazioni eseguibili sulle risorse. Comprendere il loro corretto utilizzo aiuta a progettare API più efficienti, sicure e facili da usare.
+    </p>
+</div>
+
+
+<div class="section">
+
+    <div class="example">
+        <h3>Esempio: Creazione di un'API REST con Spring Boot</h3>
+        <p>
+            In questo esempio, creeremo un semplice controller REST con Spring Boot per gestire una lista di utenti.
+            L'API consentirà di aggiungere nuovi utenti e recuperarne la lista.
+        </p>
+
+        <h4>Passaggi:</h4>
+        <ol>
+            <li>Definiamo un controller Spring Boot con l'annotazione <code>@RestController</code>.</li>
+            <li>Usiamo <code>@RequestMapping</code> per definire il percorso base dell'API.</li>
+            <li>Creiamo un endpoint <code>GET</code> per recuperare tutti gli utenti.</li>
+            <li>Creiamo un endpoint <code>POST</code> per aggiungere un nuovo utente.</li>
+        </ol>
+
+        <pre><code>
+import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/users")
+public class UserController {
+    private List<String> users = new ArrayList<>();
+
+    // Recupera la lista di utenti
+    @GetMapping
+    public List<String> getUsers() {
+        return users;
+    }
+
+    // Aggiunge un nuovo utente
+    @PostMapping
+    public String addUser(@RequestBody String user) {
+        users.add(user);
+        return "Utente aggiunto con successo!";
+    }
+}
+    </code></pre>
+
+        <h3>🔍 Esempio di Test con cURL</h3>
+        <p>
+            Una volta avviato il server Spring Boot, possiamo testare i nostri endpoint con **cURL**.
+        </p>
+
+        <h4>1️⃣ Recuperare la lista utenti</h4>
+        <pre><code>
+curl -X GET http://localhost:8080/api/users
+    </code></pre>
+
+        <h4>2️⃣ Aggiungere un nuovo utente</h4>
+        <pre><code>
+curl -X POST http://localhost:8080/api/users -H "Content-Type: application/json" -d "\"Luca\""
+    </code></pre>
+
+        <h3>🔧 Espansione: Aggiungere metodi PUT e DELETE</h3>
+        <p>
+            Attualmente, la nostra API consente solo di aggiungere e recuperare utenti. Aggiungiamo ora due nuovi endpoint per aggiornare e rimuovere un utente.
+        </p>
+
+        <pre><code>
+    @PutMapping("/{index}")
+    public String updateUser(@PathVariable int index, @RequestBody String newUser) {
+        if (index >= 0 && index < users.size()) {
+            users.set(index, newUser);
+            return "Utente aggiornato con successo!";
+        } else {
+            return "Indice non valido!";
+        }
+    }
+
+    @DeleteMapping("/{index}")
+    public String deleteUser(@PathVariable int index) {
+        if (index >= 0 && index < users.size()) {
+            users.remove(index);
+            return "Utente eliminato con successo!";
+        } else {
+            return "Indice non valido!";
+        }
+    }
+    </code></pre>
+
+        <h3>🔍 Test con cURL per PUT e DELETE</h3>
+
+        <h4>3️⃣ Modificare un utente</h4>
+        <pre><code>
+curl -X PUT http://localhost:8080/api/users/0 -H "Content-Type: application/json" -d "\"Giovanni\""
+    </code></pre>
+
+        <h4>4️⃣ Eliminare un utente</h4>
+        <pre><code>
+curl -X DELETE http://localhost:8080/api/users/0
+    </code></pre>
+
+        <p>
+            Ora abbiamo un'API REST completa che supporta le operazioni CRUD sugli utenti! 🎉
+        </p>
+    </div>
+
+    <div class="test">
+        <h3>📝 Test sulle API REST</h3>
+        <p>
+            Verifica la tua comprensione delle API REST rispondendo alle seguenti domande e svolgendo alcuni esercizi pratici.
+        </p>
+
+        <h4>❓ Domande Teoriche</h4>
+        <ul>
+            <li>1️⃣ Cosa sono le API REST e quali sono i loro principi fondamentali?</li>
+            <li>2️⃣ Quali sono i principali vantaggi di REST rispetto a SOAP?</li>
+            <li>3️⃣ Qual è la differenza tra <code>GET</code>, <code>POST</code>, <code>PUT</code> e <code>DELETE</code>?</li>
+            <li>4️⃣ Come viene rappresentata una risorsa in un'API REST?</li>
+        </ul>
+
+        <h4>⚡ Esercizi Pratici</h4>
+        <p>
+            Implementa gli esercizi seguenti nel tuo progetto Spring Boot o utilizzando Postman/cURL per testare le API REST.
+        </p>
+
+        <ul>
+            <li>
+                **1️⃣ Scrivi un endpoint REST per eliminare un utente dato il suo ID.**
+                <br>
+                <small>*Suggerimento:* Usa <code>@DeleteMapping</code> e passa l'ID come <code>@PathVariable</code>.</small>
+            </li>
+            <li>
+                **2️⃣ Scrivi un endpoint REST per aggiornare il nome di un utente dato il suo ID.**
+                <br>
+                <small>*Suggerimento:* Usa <code>@PutMapping</code> e un <code>@RequestBody</code> con il nuovo valore.</small>
+            </li>
+            <li>
+                **3️⃣ Simula una chiamata API utilizzando Postman o cURL per recuperare la lista degli utenti.**
+            </li>
+            <li>
+                **4️⃣ Scrivi un test JUnit per verificare che l'endpoint <code>GET /api/users</code> restituisca una lista non vuota.**
+            </li>
+        </ul>
+
+    </div>
+
+</div>
+
+
+<div class="bibliography">
+    <h2>4. Bibliografia e Risorse</h2>
+    <p>
+        Lo sviluppo di API REST è un argomento ampio e in continua evoluzione. Di seguito troverai alcune delle migliori risorse per approfondire la teoria e la pratica nello sviluppo di servizi REST con Spring Boot.
+    </p>
+
+    <h3>📖 Risorse Fondamentali</h3>
+    <ul>
+        <li>
+            <a href="https://restfulapi.net/">RESTful API Tutorial</a> - Una guida completa che spiega i concetti fondamentali delle API REST, i principi architetturali, i metodi HTTP e le best practices.
+        </li>
+        <li>
+            <a href="https://spring.io/guides/gs/rest-service/">Spring Boot REST Guide</a> - Una guida ufficiale di Spring Boot per creare API RESTful in Java. Ideale per chi vuole imparare a implementare servizi REST con il framework Spring.
+        </li>
+    </ul>
+
+    <h3>📌 Articoli e Guide Tecniche</h3>
+    <ul>
+        <li>
+            <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods">HTTP Methods - MDN</a> - Approfondisce il funzionamento dei metodi HTTP utilizzati nelle API REST.
+        </li>
+        <li>
+            <a href="https://www.baeldung.com/rest-api-best-practices">REST API Best Practices - Baeldung</a> - Raccolta di best practices per la progettazione e l'implementazione di API REST efficienti e scalabili.
+        </li>
+        <li>
+            <a href="https://www.ics.uci.edu/~fielding/pubs/dissertation/top.htm">Roy Fielding's Dissertation on REST</a> - Il documento originale di Roy Fielding in cui ha definito i principi delle API REST.
+        </li>
+    </ul>
+
+    <h3>📚 Libri Consigliati</h3>
+    <ul>
+        <li>
+            <strong>RESTful Web APIs</strong> - Leonard Richardson, Mike Amundsen, Sam Ruby. Un libro essenziale per comprendere i principi REST e progettare API efficaci.
+        </li>
+        <li>
+            <strong>Spring in Action</strong> - Craig Walls. Copre in dettaglio Spring Boot, compreso lo sviluppo di API REST.
+        </li>
+        <li>
+            <strong>Designing Web APIs</strong> - Brenda Jin, Saurabh Sahni, Amir Shevat. Ottima lettura per chi vuole approfondire il design delle API REST.
+        </li>
+    </ul>
+
+    <h3>🛠 Strumenti Utili per lo Sviluppo di API REST</h3>
+    <ul>
+        <li>
+            <a href="https://www.postman.com/">Postman</a> - Uno strumento essenziale per testare e documentare API REST.
+        </li>
+        <li>
+            <a href="https://swagger.io/">Swagger / OpenAPI</a> - Permette di documentare e testare API REST in modo interattivo.
+        </li>
+        <li>
+            <a href="https://insomnia.rest/">Insomnia</a> - Alternativa a Postman per il test delle API.
+        </li>
+    </ul>
+
+    <p>
+        Con queste risorse, avrai una solida base per sviluppare e perfezionare le tue API REST, applicando le best practices e utilizzando gli strumenti più avanzati per il testing e la documentazione. 📌
+    </p>
+</div>
+
+<div class="advanced">
+    <h2>5. Approfondimenti</h2>
+    <p>
+        Una volta acquisiti i concetti base delle API REST, è possibile esplorare argomenti più avanzati che migliorano la sicurezza, la gestione degli errori e l'efficienza delle API.
+    </p>
+
+    <h3>🔐 Autenticazione e Sicurezza nelle API REST</h3>
+    <p>
+        La sicurezza è un aspetto fondamentale nello sviluppo di API. Una gestione efficace dell'autenticazione e dell'autorizzazione è essenziale per proteggere i dati e garantire un accesso sicuro.
+    </p>
+    <ul>
+        <li>
+            **🔑 JSON Web Token (JWT):** Un metodo per autenticare gli utenti senza gestire sessioni. JWT è ampiamente utilizzato per autenticare richieste API.
+            <br>👉 <a href="https://jwt.io/">JWT Official Website</a>
+        </li>
+        <li>
+            **🛡 OAuth 2.0 e OpenID Connect:** Standard per l'autenticazione sicura tra client e server, utilizzati in API pubbliche come Google, GitHub e Facebook.
+            <br>👉 <a href="https://oauth.net/2/">OAuth 2.0 Guide</a>
+        </li>
+        <li>
+            **🔒 API Key Authentication:** Un metodo semplice per proteggere le API utilizzando chiavi di accesso.
+        </li>
+        <li>
+            **🚧 CORS (Cross-Origin Resource Sharing):** Gestione della sicurezza per evitare richieste non autorizzate tra domini diversi.
+            <br>👉 <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS">MDN CORS Guide</a>
+        </li>
+    </ul>
+
+    <h3>❗ Gestione degli Errori nelle API REST</h3>
+    <p>
+        Una buona gestione degli errori migliora l'esperienza degli utenti e facilita il debugging. Alcuni aspetti fondamentali includono:
+    </p>
+    <ul>
+        <li>
+            **📌 Utilizzo di Codici di Stato HTTP Correttamente:**
+            - <code>200 OK</code> → Richiesta eseguita con successo
+            - <code>201 Created</code> → Risorsa creata con successo
+            - <code>400 Bad Request</code> → Dati della richiesta non validi
+            - <code>401 Unauthorized</code> → Richiesta non autenticata
+            - <code>403 Forbidden</code> → L'utente non ha i permessi necessari
+            - <code>404 Not Found</code> → Risorsa non trovata
+            - <code>500 Internal Server Error</code> → Errore generico del server
+        </li>
+        <li>
+            **📜 Creazione di una Struttura di Errore Standardizzata:**
+            <pre><code>{
+    "timestamp": "2024-02-17T14:33:21Z",
+    "status": 400,
+    "error": "Bad Request",
+    "message": "Il campo 'email' è obbligatorio.",
+    "path": "/api/utenti"
+}</code></pre>
+        </li>
+        <li>
+            **🚦 Logging degli errori per facilitare il debugging:** Utilizzare strumenti come <code>SLF4J</code> e <code>Logback</code> per monitorare gli errori API.
+        </li>
+    </ul>
+
+    <p>
+        Questi approfondimenti ti aiuteranno a sviluppare API REST **sicure, scalabili ed efficienti**, migliorando l'esperienza dell'utente e le performance dell'applicazione. 🚀
+    </p>
+</div>
+
+
+<footer class="footer">
+    <a href="./index.html" class="footer-logo">
+        <img src="./img/logo.png" alt="Logo del sito" />
+    </a>
+    <div class="footer-links">
+        <a href="./index.html" class="footer-link left">
+            &#8592; Pagina precedente
+        </a>
+    </div>
+    &copy; 2025 Corso di Programmazione Backend. Developed By Emanuele Ienna e Massimiliano Grande. Tutti i diritti riservati.
+</footer>
+
+</body>
+</html>

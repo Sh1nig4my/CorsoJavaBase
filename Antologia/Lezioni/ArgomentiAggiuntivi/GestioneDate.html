@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lezione Aggiuntiva: Le Date in Java</title>
+    <link rel="stylesheet" href="/styles/style.css">
+</head>
+<body>
+    <header class="header">
+        <h1>Lezione Aggiuntiva: Le Date in Java</h1>
+    </header>
+
+    <main class="content">
+
+        <section class="section">
+            <h2>Introduzione</h2>
+            <p>
+                In questa lezione aggiuntiva ci focalizzeremo sull'uso delle date in Java, un argomento fondamentale 
+                per la gestione del tempo e delle scadenze all'interno delle applicazioni. Esploreremo le principali 
+                classi e metodi forniti dal package <code>java.time</code>, introdotto con Java 8.
+            </p>
+        </section>
+
+        <section class="section">
+            <h2>Gestione delle Date in Java (Java 8+)</h2>
+            <p>Con Java 8 è stata introdotta la libreria <code>java.time</code>, che rappresenta un grande miglioramento rispetto alle classi <code>Date</code> e <code>Calendar</code>. Le nuove API forniscono una gestione più intuitiva e moderna di date, orari e fusi orari. Le principali classi come <code>LocalDate</code>, <code>LocalTime</code>, <code>LocalDateTime</code> e <code>ZonedDateTime</code> sono immutabili e thread-safe, progettate per essere facili da usare e meno soggette ad errori.</p>
+            <p>Di seguito esploreremo alcune delle classi più utilizzate nella libreria <code>java.time</code> e i loro casi d'uso più comuni.</p>
+        
+            <h3>2.1 LocalDate</h3>
+            <p>La classe <code>LocalDate</code> rappresenta una data senza considerare l'ora del giorno. È ideale per lavorare con calendari, compleanni e altre applicazioni legate solo alla data.</p>
+            <p>Esempio di utilizzo:</p>
+        
+            <pre><code class="language-java">import java.time.LocalDate;
+        
+        public class DateExample {
+            public static void main(String[] args) {
+                // Ottenere la data odierna
+                LocalDate today = LocalDate.now();
+        
+                // Creare una data specifica
+                LocalDate specificDate = LocalDate.of(2023, 1, 1);
+        
+                // Confronto tra date
+                boolean isBefore = specificDate.isBefore(today);
+                boolean isAfter = specificDate.isAfter(today);
+        
+                System.out.println("Data di oggi: " + today);
+                System.out.println("Data specifica: " + specificDate);
+                System.out.println("La data specifica è precedente alla data odierna? " + isBefore);
+                System.out.println("La data specifica è successiva alla data odierna? " + isAfter);
+            }
+        }</code></pre>
+        
+            <h3>2.2 LocalTime</h3>
+            <p>La classe <code>LocalTime</code> rappresenta un orario del giorno senza una data associata. È utile per gestire orari come quelli di apertura/chiusura di attività o programmazioni orarie.</p>
+            <p>Esempio di utilizzo:</p>
+        
+            <pre><code class="language-java">import java.time.LocalTime;
+        
+        public class TimeExample {
+            public static void main(String[] args) {
+                // Ottenere l'orario attuale
+                LocalTime now = LocalTime.now();
+        
+                // Creare un orario specifico
+                LocalTime specificTime = LocalTime.of(14, 30);
+        
+                // Aggiungere o sottrarre tempo
+                LocalTime timePlusHours = specificTime.plusHours(2);
+                LocalTime timeMinusMinutes = specificTime.minusMinutes(15);
+        
+                System.out.println("Orario attuale: " + now);
+                System.out.println("Orario specifico: " + specificTime);
+                System.out.println("Orario specifico più 2 ore: " + timePlusHours);
+                System.out.println("Orario specifico meno 15 minuti: " + timeMinusMinutes);
+            }
+        }</code></pre>
+        
+            <h3>2.3 LocalDateTime</h3>
+            <p>La classe <code>LocalDateTime</code> combina una data e un'ora in un singolo oggetto. È utile per registrare timestamp senza tener conto del fuso orario.</p>
+            <p>Esempio di utilizzo:</p>
+        
+            <pre><code class="language-java">import java.time.LocalDateTime;
+        
+        public class DateTimeExample {
+            public static void main(String[] args) {
+                // Ottenere la data e l'ora attuale
+                LocalDateTime now = LocalDateTime.now();
+        
+                // Creare una data e un orario specifici
+                LocalDateTime specificDateTime = LocalDateTime.of(2023, 1, 1, 14, 30);
+        
+                // Aggiungere giorni e ore
+                LocalDateTime futureDateTime = specificDateTime.plusDays(5).plusHours(3);
+        
+                System.out.println("Data e ora attuale: " + now);
+                System.out.println("Data e ora specifica: " + specificDateTime);
+                System.out.println("Data e ora futura: " + futureDateTime);
+            }
+        }</code></pre>
+        
+            <h3>2.4 Manipolazione delle Date</h3>
+            <p>Le API Java 8 permettono una manipolazione facile ed elegante di date e orari. Puoi aggiungere o sottrarre giorni, mesi o anni in modo semplice utilizzando metodi come <code>plusDays()</code> o <code>minusMonths()</code>.</p>
+            <p>Esempio di manipolazione delle date:</p>
+        
+            <pre><code class="language-java">import java.time.LocalDate;
+        
+        public class ManipulateDate {
+            public static void main(String[] args) {
+                LocalDate today = LocalDate.now();
+        
+                // Aggiungere giorni e mesi
+                LocalDate nextWeek = today.plusWeeks(1);
+                LocalDate lastMonth = today.minusMonths(1);
+        
+                // Modificare l'anno
+                LocalDate nextYear = today.plusYears(1);
+        
+                System.out.println("Data di oggi: " + today);
+                System.out.println("Data della prossima settimana: " + nextWeek);
+                System.out.println("Data del mese scorso: " + lastMonth);
+                System.out.println("Data del prossimo anno: " + nextYear);
+            }
+        }</code></pre>
+        
+            <h3>2.5 ZonedDateTime e Fusi Orari</h3>
+            <p>La classe <code>ZonedDateTime</code> aggiunge il supporto per i fusi orari, rendendola ideale per applicazioni globali che necessitano di gestire il tempo in contesti internazionali.</p>
+            <p>Esempio di utilizzo:</p>
+        
+            <pre><code class="language-java">import java.time.ZonedDateTime;
+        import java.time.ZoneId;
+        
+        public class ZonedDateTimeExample {
+            public static void main(String[] args) {
+                // Ottenere la data e l'ora attuale in un fuso orario specifico
+                ZonedDateTime nowInUTC = ZonedDateTime.now(ZoneId.of("UTC"));
+                ZonedDateTime nowInNewYork = ZonedDateTime.now(ZoneId.of("America/New_York"));
+        
+                System.out.println("Data e ora attuale in UTC: " + nowInUTC);
+                System.out.println("Data e ora attuale a New York: " + nowInNewYork);
+            }
+        }</code></pre>
+        </section> 
+
+
+
+        <section class="bibliography">
+            <h2>Bibliografia</h2>
+            <p>
+                Per approfondire ulteriormente l'uso delle API per la gestione delle date e degli orari in Java, puoi consultare i seguenti riferimenti:
+            </p>
+            <ul>
+                <li>
+                    <a href="https://docs.oracle.com/javase/8/docs/api/java/time/package-summary.html" target="_blank">
+                        Documentazione ufficiale di java.time
+                    </a>
+                    - Una panoramica dettagliata di tutti i componenti del package <code>java.time</code>, inclusi esempi di utilizzo e best practice per lavorare con date, orari e fusi orari.
+                </li>
+                <li>
+                    <a href="https://www.baeldung.com/java-8-date-time-intro" target="_blank">
+                        Guida introduttiva a java.time su Baeldung
+                    </a>
+                    - Una guida introduttiva completa, che spiega i concetti chiave dietro il nuovo modello delle date in Java 8 e offre esempi pratici per iniziare.
+                </li>
+                <li>
+                    <a href="https://www.tutorialspoint.com/java8/java8_datetime_api.htm" target="_blank">
+                        TutorialsPoint: Java 8 Date/Time API
+                    </a>
+                    - Un tutorial passo-passo che illustra come utilizzare le principali classi dell'API, con esempi semplici e diretti.
+                </li>
+            </ul>
+        </section>
+        
+        <section class="advanced">
+            <h2>Approfondimenti</h2>
+            <p>
+                Per chi desidera esplorare ulteriormente le potenzialità delle API di gestione delle date e degli orari in Java, si suggeriscono i seguenti approfondimenti:
+            </p>
+            <ul>
+                <li>
+                    L'uso avanzato delle classi <code>ZoneId</code> e <code>ZonedDateTime</code> per gestire applicazioni che richiedono un supporto completo per i fusi orari, incluse operazioni come la conversione tra fusi diversi e il calcolo delle differenze temporali.
+                </li>
+                <li>
+                    L'integrazione delle API di <code>java.time</code> con i database, utilizzando classi come <code>java.sql.Timestamp</code> e <code>LocalDate</code> per garantire la corretta gestione delle informazioni temporali nelle applicazioni enterprise.
+                </li>
+                <li>
+                    La creazione di formatter personalizzati con <code>DateTimeFormatterBuilder</code>, che permette di definire formattazioni complesse per soddisfare requisiti specifici, come quelli richiesti in applicazioni multilingua o per report personalizzati.
+                </li>
+            </ul>
+        </section>
+        
+
+    </main>
+
+    <footer class="footer">
+        <a href="./index.html" class="footer-logo">
+            <img src="./img/logo.png" alt="Logo del sito" />
+        </a>
+        <div class="footer-links">
+            <a href="./index.html" class="footer-link left">
+                &#8592; Pagina precedente
+            </a>
+        </div>
+        &copy; 2025 Corso di Programmazione Backend. Developed By Emanuele Ienna e Massimiliano Grande. Tutti i diritti riservati.
+    </footer>
+
+</body>
+</html>

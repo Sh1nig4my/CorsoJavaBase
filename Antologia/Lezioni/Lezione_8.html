@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lezione 8 - Stream API e Optional</title>
+    <link rel="stylesheet" href="../styles/style.css">
+</head>
+
+<body>
+    <h1 class="lesson-title">Lezione 8: Stream API e Optional</h1>
+
+    <div class="section">
+        <h2>1. Stream API</h2>
+        <p>
+            La Stream API, introdotta in Java 8, rappresenta una rivoluzione nel modo di elaborare i dati in Java. 
+            Fornisce un'interfaccia fluida e funzionale per lavorare con sequenze di elementi, consentendo operazioni 
+            come filtraggio, mappatura, ordinamento e riduzione dei dati in modo dichiarativo.
+            Grazie alla Stream API, il codice è più conciso, leggibile e semplice da mantenere rispetto agli approcci tradizionali 
+            basati su cicli espliciti.
+        </p>
+        <p>
+            Una stream è essenzialmente una sequenza di dati che supporta operazioni aggregate. Esistono due tipi principali di operazioni: 
+            <strong>intermedie</strong>, che trasformano la stream senza consumarla, e <strong>terminali</strong>, che consumano 
+            la stream e producono un risultato. Gli stream sono pensati per essere utilizzati una sola volta e sono ottimizzati per 
+            elaborazioni efficienti.
+        </p>
+
+        <div class="example">
+            <h3>Esempio di utilizzo della Stream API</h3>
+            <p>Il seguente esempio mostra come filtrare i numeri pari, raddoppiarli e raccoglierli in una lista:</p>
+            <pre><code>import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+public class EsempioStream {
+    public static void main(String[] args) {
+        List<Integer> numeri = Arrays.asList(1, 2, 3, 4, 5, 6);
+
+        // Filtrare i numeri pari e raddoppiarli
+        List<Integer> risultati = numeri.stream()
+                                        .filter(n -> n % 2 == 0)
+                                        .map(n -> n * 2)
+                                        .collect(Collectors.toList());
+
+        System.out.println("Risultati: " + risultati);
+    }
+}</code></pre>
+        </div>
+
+        <div class="example">
+            <h3>Esempio Avanzato: Calcolo della Media</h3>
+            <p>Questo esempio calcola la media di una lista di numeri utilizzando la Stream API:</p>
+            <pre><code>import java.util.Arrays;
+import java.util.OptionalDouble;
+
+public class CalcoloMedia {
+    public static void main(String[] args) {
+        int[] numeri = {1, 2, 3, 4, 5, 6};
+
+        OptionalDouble media = Arrays.stream(numeri)
+                                     .average();
+
+        if (media.isPresent()) {
+            System.out.println("La media è: " + media.getAsDouble());
+        } else {
+            System.out.println("Lista vuota, impossibile calcolare la media.");
+        }
+    }
+}</code></pre>
+        </div>
+
+        <h3>Operazioni Intermedie</h3>
+        <ul>
+            <li><strong>filter:</strong> Filtra gli elementi di uno stream in base a una condizione, ad esempio rimuovendo valori nulli o elementi non necessari.</li>
+            <li><strong>map:</strong> Trasforma ogni elemento dello stream in un nuovo valore, utile per applicare modifiche o estrarre dati da oggetti complessi.</li>
+            <li><strong>sorted:</strong> Ordina gli elementi in ordine naturale o personalizzato utilizzando un comparatore.</li>
+        </ul>
+
+        <h3>Operazioni Terminali</h3>
+        <ul>
+            <li><strong>collect:</strong> Raccoglie i risultati in una struttura dati come List, Set o Map.</li>
+            <li><strong>forEach:</strong> Esegue un'operazione su ogni elemento dello stream, ad esempio stampando i dati su console.</li>
+            <li><strong>reduce:</strong> Riduce gli elementi dello stream a un singolo valore (ad esempio somma, prodotto o concatenazione) utilizzando un accumulatore.</li>
+        </ul>
+
+        <div class="example">
+            <h3>Esempio di Utilizzo di reduce</h3>
+            <p>Calcolare il prodotto di una lista di numeri:</p>
+            <pre><code>import java.util.Arrays;
+import java.util.List;
+
+public class CalcoloProdotto {
+    public static void main(String[] args) {
+        List<Integer> numeri = Arrays.asList(1, 2, 3, 4);
+
+        int prodotto = numeri.stream()
+                             .reduce(1, (a, b) -> a * b);
+
+        System.out.println("Il prodotto è: " + prodotto);
+    }
+}</code></pre>
+        </div>
+
+        <div class="test">
+            <h3>Test sugli Stream</h3>
+            <ul>
+                <li>Descrivi la differenza tra un'operazione intermedia e un'operazione terminale in uno stream.</li>
+                <li>Implementa uno stream che trova la somma di tutti i numeri dispari in una lista.</li>
+                <li>Scrivi un esempio di utilizzo di <code>reduce</code> per concatenare una lista di stringhe in un'unica stringa separata da virgole.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>2. Optional</h2>
+        <p>
+            La classe <code>Optional</code>, introdotta in Java 8, è uno strumento essenziale per gestire in modo sicuro 
+            i valori che potrebbero essere nulli. Utilizzando <code>Optional</code>, puoi rappresentare l'assenza di un valore 
+            senza dover fare affidamento diretto su controlli espliciti come <code>if (valore != null)</code>, riducendo così 
+            il rischio di errori come il famigerato <code>NullPointerException</code>.
+        </p>
+        <p>
+            <code>Optional</code> funge da contenitore per un valore che potrebbe essere presente o meno. 
+            Include una serie di metodi per controllare, trasformare e recuperare il valore in modo elegante e leggibile.
+        </p>
+
+        <div class="example">
+            <h3>Esempio Base di Utilizzo di Optional</h3>
+            <p>Questo esempio mostra come utilizzare <code>Optional</code> per gestire in sicurezza un valore:</p>
+            <pre><code>import java.util.Optional;
+
+public class EsempioOptional {
+    public static void main(String[] args) {
+        Optional<String> nome = Optional.of("Java");
+
+        // Controlla se è presente un valore
+        nome.ifPresent(n -> System.out.println("Il valore è: " + n));
+
+        // Valore predefinito
+        String valore = nome.orElse("Valore di default");
+        System.out.println("Valore: " + valore);
+    }
+}</code></pre>
+        </div>
+
+        <div class="example">
+            <h3>Esempio Avanzato: Combinazione di Optional</h3>
+            <p>Qui utilizziamo <code>Optional.map</code> e <code>Optional.flatMap</code> per manipolare valori annidati:</p>
+            <pre><code>import java.util.Optional;
+
+public class OptionalCombinazione {
+    public static void main(String[] args) {
+        Optional<String> valore = Optional.of("Ciao");
+
+        // Trasforma il valore se presente
+        Optional<Integer> lunghezza = valore.map(String::length);
+        lunghezza.ifPresent(l -> System.out.println("Lunghezza: " + l));
+
+        // Utilizzo di flatMap per lavorare con valori annidati
+        Optional<Optional<String>> annidato = Optional.of(Optional.of("Annidato"));
+        annidato.flatMap(v -> v).ifPresent(System.out::println);
+    }
+}</code></pre>
+        </div>
+
+        <h3>Metodi Principali</h3>
+        <ul>
+            <li><strong>isPresent:</strong> Verifica se è presente un valore.</li>
+            <li><strong>orElse:</strong> Restituisce il valore se presente, altrimenti restituisce un valore predefinito.</li>
+            <li><strong>orElseGet:</strong> Simile a <code>orElse</code>, ma calcola il valore predefinito solo se necessario.</li>
+            <li><strong>map:</strong> Applica una funzione al valore, se presente, e restituisce un nuovo <code>Optional</code>.</li>
+            <li><strong>flatMap:</strong> Simile a <code>map</code>, ma utilizzato per evitare annidamenti di <code>Optional</code>.</li>
+        </ul>
+
+        <div class="test">
+            <h3>Test sugli Optional</h3>
+            <ul>
+                <li>Qual è lo scopo della classe <code>Optional</code>?</li>
+                <li>Scrivi un esempio in cui utilizzi <code>Optional.map</code> per trasformare un valore presente.</li>
+                <li>Implementa un metodo che restituisca un <code>Optional</code> vuoto se il valore passato è nullo.</li>
+                <li>Utilizza <code>orElseGet</code> per fornire un valore predefinito calcolato dinamicamente.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>3. Progetto Pratico</h2>
+        <p>
+            Questo progetto dimostrativo combina l'utilizzo di Stream API e Optional per implementare un filtro 
+            dati sicuro ed efficiente. Questo esempio si concentra sulla capacità di gestire valori nulli e trasformare 
+            dati in modo funzionale.
+        </p>
+
+        <div class="example">
+            <h3>Esempio Base</h3>
+            <p>
+                Nell'esempio seguente, utilizziamo Stream API per processare una lista di nomi che può contenere valori nulli.
+                Grazie a <code>Optional</code>, possiamo gestire i valori nulli in modo sicuro e trasformare i nomi presenti 
+                in maiuscolo:
+            </p>
+            <pre><code>public class ProgettoStreamOptional {
+    public static void main(String[] args) {
+        
+        List<Optional<String>> nomiOptionalList = List.of(
+            Optional.of("Mario"),
+            Optional.empty(),
+            Optional.of("Anna"),
+            Optional.empty(),
+            Optional.of("Luigi")
+        );
+    
+        List<String> risultati = nomiOptionalList.stream()
+            .filter(Optional::isPresent) // Filtra solo gli Optional non vuoti
+            .map(Optional::get) // Estrai il valore da Optional
+            .map(String::toUpperCase) // Trasforma in maiuscolo
+            .toList();
+
+        System.out.println("Nomi trasformati: " + risultati);
+    }
+}</code></pre>
+        </div>
+
+        <div class="example">
+            <h3>Esempio Avanzato</h3>
+            <p>
+                Nell'esempio avanzato, utilizziamo metodi aggiuntivi di <code>Optional</code> e la Stream API per calcolare 
+                la lunghezza media dei nomi, ignorando i valori nulli:
+            </p>
+            <pre><code>public class LunghezzaMediaNomi {
+    public static void main(String[] args) {
+
+        List<Optional<String>> nomiOptionalList = List.of(
+                Optional.of("Mario"),
+                Optional.empty(),
+                Optional.of("Anna"),
+                Optional.empty(),
+                Optional.of("Luigi")
+        );
+
+        double lunghezzaMedia = nomiOptionalList.stream()
+                .flatMap(Optional::stream) // Estrae i valori presenti senza usare isPresent() e get()
+                .mapToInt(String::length) // Mappa alla lunghezza delle stringhe
+                .average() // Calcola la media
+                .orElse(0.0); // Ritorna 0.0 se la lista è vuota
+
+        System.out.println("Lunghezza media dei nomi: " + lunghezzaMedia);
+    }
+}</code></pre>
+        </div>
+
+        <h3>Obiettivi del Progetto</h3>
+        <ul>
+            <li>Utilizzare Stream API per processare collezioni di dati in modo dichiarativo.</li>
+            <li>Implementare <code>Optional</code> per gestire valori nulli senza rischiare eccezioni.</li>
+            <li>Combinare le due tecnologie per creare un'applicazione robusta e leggibile.</li>
+        </ul>
+
+        <div class="test">
+            <h3>Test del Progetto</h3>
+            <ul>
+                <li>Scrivi un test che verifica il corretto filtraggio di valori nulli da una lista.</li>
+                <li>Implementa una funzione che, data una lista di stringhe, restituisca una lista di lunghezze delle stringhe non nulle.</li>
+                <li>Utilizza <code>Optional</code> per ritornare un messaggio predefinito se tutti i valori nella lista sono nulli.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="bibliography">
+        <h2>4. Bibliografia e Risorse Utili</h2>
+        <p>
+            La seguente lista di risorse fornisce approfondimenti e documentazione per utilizzare efficacemente Stream API e Optional in Java.
+            Queste risorse sono ideali per consolidare i concetti trattati durante la lezione e approfondire funzionalità avanzate.
+        </p>
+        <ul>
+            <li>
+                <a href="https://docs.oracle.com/javase/8/docs/api/java/util/stream/package-summary.html">
+                    <strong>Documentazione Stream API</strong>
+                </a>: Una guida ufficiale di Oracle che esplora tutte le classi e i metodi disponibili per lavorare con Stream API.
+            </li>
+            <li>
+                <a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html">
+                    <strong>Documentazione Optional</strong>
+                </a>: Documentazione completa sulla classe Optional e sui suoi metodi principali.
+            </li>
+            <li>
+                <a href="https://www.baeldung.com/java-8-streams">
+                    <strong>Guida alle Streams su Baeldung</strong>
+                </a>: Un tutorial pratico e ricco di esempi per comprendere le Stream API in contesti reali.
+            </li>
+            <li>
+                <a href="https://www.baeldung.com/java-optional">
+                    <strong>Guida a Optional su Baeldung</strong>
+                </a>: Un articolo dettagliato che esplora i casi d'uso di Optional con esempi e best practice.
+            </li>
+        </ul>
+    </div>
+
+    <div class="advanced">
+        <h2>5. Approfondimenti</h2>
+        <p>
+            Per chi desidera andare oltre i concetti introduttivi, questa sezione propone esercizi avanzati e risorse per migliorare
+            ulteriormente la padronanza di Stream API e Optional. Approfondire queste tecniche consente di scrivere codice Java
+            ancora più robusto e performante.
+        </p>
+        <ul>
+            <li>
+                <strong>Utilizzo di <code>flatMap</code>:</strong> Approfondisci come combinare Stream API e Optional per elaborare dati complessi o annidati.
+                Ad esempio, utilizza <code>flatMap</code> per trasformare liste di liste in una singola lista piatta.
+            </li>
+            <li>
+                <strong>Gestione di valori calcolati dinamicamente:</strong> Esplora il metodo <code>orElseGet</code> di <code>Optional</code> per fornire valori
+                predefiniti che vengono calcolati solo al momento del bisogno, riducendo sprechi di risorse.
+            </li>
+            <li>
+                <strong>Sistemi di filtraggio avanzati:</strong> Implementa un sistema di filtraggio per dati annidati, come liste di oggetti complessi o strutture
+                dati multi-livello, utilizzando Stream API per gestire in modo dichiarativo questi scenari.
+            </li>
+            <li>
+                <strong>Esercizi Pratici:</strong> Prova a risolvere problemi complessi combinando Stream API e Optional, come il calcolo di medie ponderate o
+                la riorganizzazione di dati in base a criteri personalizzati.
+            </li>
+        </ul>
+    </div>
+
+
+    <footer class="footer">
+        <a href="./index.html" class="footer-logo">
+            <img src="./img/logo.png" alt="Logo del sito" />
+        </a>
+        <div class="footer-links">
+            <a href="./index.html" class="footer-link left">
+                &#8592; Pagina precedente
+            </a>
+        </div>
+        &copy; 2025 Corso di Programmazione Backend. Developed By Emanuele Ienna e Massimiliano Grande. Tutti i diritti riservati.
+    </footer>
+
+</body>
+
+</html>

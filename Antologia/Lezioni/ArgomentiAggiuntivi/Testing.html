@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lezione - Testing in Java Spring con JUnit 4 e JUnit 5</title>
+    <link rel="stylesheet" href="/styles/style.css">
+</head>
+<body>
+<h1 class="lesson-title">Testing in Java Spring: Confronto tra JUnit 4 e JUnit 5</h1>
+
+<div class="section">
+    <h2>1. Introduzione ai Test in Java Spring</h2>
+    <p>
+        I test sono una componente fondamentale nello sviluppo software, soprattutto in applicazioni enterprise basate su Java e Spring.
+        Un codice ben testato riduce la probabilità di bug, facilita la manutenzione e garantisce che le modifiche non introducano regressioni.
+    </p>
+
+    <h3>1.1 Perché Testare?</h3>
+    <p>
+        Il testing del software permette di individuare errori prima che il codice venga rilasciato in produzione. Nel contesto di
+        Java Spring, il testing aiuta a garantire la stabilità delle componenti, tra cui i servizi, i repository e i controller.
+    </p>
+
+    <h3>1.2 JUnit e Spring Boot</h3>
+    <p>
+        <strong>JUnit</strong> è il framework di testing più utilizzato in Java. Con l'evoluzione da JUnit 4 a JUnit 5, sono stati introdotti
+        miglioramenti significativi, tra cui un'architettura modulare, maggiore flessibilità e un supporto migliorato per le estensioni.
+    </p>
+
+    <p>
+        Spring Boot si integra perfettamente con JUnit, offrendo strumenti per testare i vari livelli dell'applicazione. Le principali
+        tipologie di test in un'applicazione Spring includono:
+    </p>
+    <ul>
+        <li><strong>Unit Testing:</strong> verifica il funzionamento di singole unità di codice (metodi e classi).</li>
+        <li><strong>Integration Testing:</strong> testa l'interazione tra più componenti dell'applicazione.</li>
+        <li><strong>End-to-End Testing:</strong> verifica il funzionamento dell'intero sistema.</li>
+    </ul>
+
+    <h3>1.3 Strumenti Utili</h3>
+    <p>Nel contesto di Spring Boot, oltre a JUnit, vengono utilizzati diversi strumenti per il testing:</p>
+    <ul>
+        <li><strong>Mockito:</strong> libreria per la creazione di mock e simulazioni di dipendenze.</li>
+        <li><strong>Spring Boot Test:</strong> modulo integrato in Spring Boot che semplifica i test di componenti Spring.</li>
+        <li><strong>Testcontainers:</strong> per eseguire test di integrazione con database reali in ambienti containerizzati.</li>
+    </ul>
+
+    <h3>1.4 Esempio di Test con JUnit e Mockito</h3>
+    <p>Di seguito un esempio di test unitario per un servizio che calcola la somma di due numeri:</p>
+
+    <div class="example">
+        <pre><code>
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
+
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
+class CalculatorServiceTest {
+
+    @InjectMocks
+    private CalculatorService calculatorService;
+
+    @Test
+    void testSum() {
+        int result = calculatorService.sum(5, 3);
+        assertEquals(8, result, "La somma di 5 e 3 dovrebbe essere 8");
+    }
+}
+
+class CalculatorService {
+    public int sum(int a, int b) {
+        return a + b;
+    }
+}
+        </code></pre>
+    </div>
+
+    <h3>1.5 Test di un Service con Mock</h3>
+    <p>
+        Se il nostro servizio dipende da un repository, possiamo utilizzare <code>@Mock</code> per simulare il comportamento senza
+        dipendere da un database reale.
+    </p>
+
+    <div class="example">
+        <pre><code>
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.*;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+
+class UserServiceTest {
+
+    @Mock
+    private UserRepository userRepository;
+
+    @InjectMocks
+    private UserService userService;
+
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.openMocks(this);
+    }
+
+    @Test
+    void testGetUserById() {
+        User mockUser = new User(1L, "Mario Rossi");
+        when(userRepository.findById(1L)).thenReturn(java.util.Optional.of(mockUser));
+
+        User user = userService.getUserById(1L);
+        assertEquals("Mario Rossi", user.getName(), "Il nome dell'utente deve essere Mario Rossi");
+    }
+}
+        </code></pre>
+    </div>
+
+    <p>In questo test, <code>userRepository</code> è un mock e viene simulata una risposta per il metodo <code>findById</code>.</p>
+
+</div>
+
+
+<div class="section">
+    <h2>2. Differenze chiave tra JUnit 4 e JUnit 5</h2>
+    <p>
+        JUnit è il framework di testing più utilizzato in Java, e con l'introduzione di <strong>JUnit 5</strong> sono stati apportati numerosi miglioramenti rispetto alla versione precedente.
+        JUnit 5 non è solo un aggiornamento di JUnit 4, ma un'architettura completamente modulare, pensata per rendere il testing più flessibile ed estensibile.
+    </p>
+
+    <h3>2.1 Struttura e Architettura</h3>
+    <p>
+        Una delle differenze più significative tra JUnit 4 e JUnit 5 è la loro architettura. JUnit 4 era monolitico e conteneva tutto il necessario in una singola libreria,
+        mentre JUnit 5 è diviso in più moduli per offrire maggiore flessibilità.
+    </p>
+
+    <table>
+        <thead>
+        <tr>
+            <th>Caratteristica</th>
+            <th>JUnit 4</th>
+            <th>JUnit 5</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td><strong>Struttura</strong></td>
+            <td>Monolitico, basato su una singola libreria</td>
+            <td>Modulare, diviso in più librerie (JUnit Platform, Jupiter, Vintage)</td>
+        </tr>
+        <tr>
+            <td><strong>Annotazioni</strong></td>
+            <td>@Test, @Before, @After, @Ignore</td>
+            <td>@Test, @BeforeEach, @AfterEach, @BeforeAll, @AfterAll, @Disabled</td>
+        </tr>
+        <tr>
+            <td><strong>Gestione delle eccezioni</strong></td>
+            <td>Expected Exception in <code>@Test(expected = Exception.class)</code></td>
+            <td>Uso di <code>Assertions.assertThrows()</code> per una maggiore flessibilità</td>
+        </tr>
+        <tr>
+            <td><strong>Supporto a metodi test multipli</strong></td>
+            <td>Limitato, senza supporto nativo per test annidati</td>
+            <td>Supporto migliorato con <code>@Nested</code> per test gerarchici</td>
+        </tr>
+        <tr>
+            <td><strong>Dependency Injection</strong></td>
+            <td>Non supportata</td>
+            <td>Supportata con <code>@ExtendWith</code> per integrare estensioni personalizzate</td>
+        </tr>
+        <tr>
+            <td><strong>Compatibilità con versioni precedenti</strong></td>
+            <td>Compatibile solo con se stesso</td>
+            <td>JUnit 5 supporta i test JUnit 4 tramite il modulo Vintage</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h3>2.2 Annotazioni Migliorate</h3>
+    <p>
+        JUnit 5 introduce nuove annotazioni per migliorare la chiarezza e la gestione dei test. Alcune delle principali modifiche includono:
+    </p>
+    <ul>
+        <li><strong>@Before e @After</strong> → sostituite da <strong>@BeforeEach</strong> e <strong>@AfterEach</strong>, più leggibili e intuitive.</li>
+        <li><strong>@BeforeClass e @AfterClass</strong> → sostituite da <strong>@BeforeAll</strong> e <strong>@AfterAll</strong>, con esecuzione statica migliorata.</li>
+        <li><strong>@Ignore</strong> → sostituita da <strong>@Disabled</strong> per disabilitare test temporaneamente.</li>
+    </ul>
+
+    <h3>2.3 Gestione delle Eccezioni</h3>
+    <p>
+        In JUnit 4, la gestione delle eccezioni nei test avveniva tramite l'attributo <code>expected</code> di <code>@Test</code>:
+    </p>
+    <div class="example">
+        <pre><code>
+@Test(expected = IllegalArgumentException.class)
+public void testException() {
+    throw new IllegalArgumentException("Errore simulato");
+}
+        </code></pre>
+    </div>
+
+    <p>
+        In JUnit 5, è stato introdotto <code>Assertions.assertThrows()</code>, che rende il test più flessibile e leggibile:
+    </p>
+    <div class="example">
+        <pre><code>
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
+@Test
+void testException() {
+    assertThrows(IllegalArgumentException.class, () -> {
+        throw new IllegalArgumentException("Errore simulato");
+    });
+}
+        </code></pre>
+    </div>
+
+    <h3>2.4 Test Annidati con @Nested</h3>
+    <p>
+        JUnit 5 introduce l'annotazione <code>@Nested</code>, che consente di organizzare test gerarchici per migliorare la leggibilità:
+    </p>
+    <div class="example">
+        <pre><code>
+import org.junit.jupiter.api.*;
+
+class CalculatorTest {
+
+    @Nested
+    @DisplayName("Test sulla somma")
+    class SumTests {
+        @Test
+        void sumTwoPositiveNumbers() {
+            Assertions.assertEquals(5, 2 + 3);
+        }
+
+        @Test
+        void sumWithZero() {
+            Assertions.assertEquals(2, 2 + 0);
+        }
+    }
+
+    @Nested
+    @DisplayName("Test sulla sottrazione")
+    class SubtractionTests {
+        @Test
+        void subtractTwoNumbers() {
+            Assertions.assertEquals(1, 3 - 2);
+        }
+    }
+}
+        </code></pre>
+    </div>
+
+    <h3>2.5 Estendibilità con @ExtendWith</h3>
+    <p>
+        JUnit 5 introduce <code>@ExtendWith</code> per aggiungere funzionalità personalizzate ai test tramite estensioni. Ad esempio, possiamo integrare Mockito per la simulazione di dipendenze:
+    </p>
+    <div class="example">
+        <pre><code>
+import static org.mockito.Mockito.*;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.junit.jupiter.api.Test;
+
+@ExtendWith(MockitoExtension.class)
+class UserServiceTest {
+
+    @Mock
+    private UserRepository userRepository;
+
+    @InjectMocks
+    private UserService userService;
+
+    @Test
+    void testFindUserById() {
+        when(userRepository.findById(1L)).thenReturn(java.util.Optional.of(new User(1L, "Mario Rossi")));
+
+        User user = userService.getUserById(1L);
+        Assertions.assertEquals("Mario Rossi", user.getName());
+    }
+}
+        </code></pre>
+    </div>
+
+    <h3>2.6 Compatibilità con JUnit 4</h3>
+    <p>
+        Se hai test scritti con JUnit 4 e vuoi eseguirli in JUnit 5 senza riscriverli, puoi usare il <strong>modulo Vintage</strong>.
+        Basta aggiungere la dipendenza al tuo <code>pom.xml</code>:
+    </p>
+    <div class="example">
+        <pre><code>
+&lt;dependency&gt;
+    &lt;groupId&gt;org.junit.vintage&lt;/groupId&gt;
+    &lt;artifactId&gt;junit-vintage-engine&lt;/artifactId&gt;
+    &lt;version&gt;5.9.2&lt;/version&gt;
+    &lt;scope&gt;test&lt;/scope&gt;
+&lt;/dependency&gt;
+        </code></pre>
+    </div>
+
+    <h3>2.7 Conclusione</h3>
+    <p>
+        JUnit 5 offre significativi miglioramenti rispetto a JUnit 4, con un'architettura modulare, nuove annotazioni, migliore gestione delle eccezioni, supporto per test annidati e integrazione più semplice con Mockito e altre librerie di test.
+    </p>
+</div>
+
+
+<div class="section">
+    <h2>3. Confronto di Codice: JUnit 4 vs JUnit 5</h2>
+    <p>
+        In questa sezione, confrontiamo il codice tra <strong>JUnit 4</strong> e <strong>JUnit 5</strong> evidenziando le principali differenze nella sintassi e nelle funzionalità.
+        Con l'introduzione di JUnit 5, il framework ha subito miglioramenti significativi, rendendo i test più modulari e leggibili.
+    </p>
+
+    <h3>3.1 Differenze Principali nel Codice</h3>
+    <p>
+        Di seguito un semplice test scritto in JUnit 4 e JUnit 5 per confrontare le principali modifiche nella sintassi e nelle annotazioni.
+    </p>
+
+    <div class="example">
+        <h3>JUnit 4</h3>
+        <p>
+            In JUnit 4, si utilizzava <code>@RunWith(SpringRunner.class)</code> per integrare Spring nei test e <code>@Before</code> per eseguire operazioni prima di ogni test.
+        </p>
+        <pre><code>
+import static org.junit.Assert.assertEquals;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.test.context.junit4.SpringRunner;
+
+@RunWith(SpringRunner.class)
+public class ExampleTest {
+
+    @Before
+    public void setUp() {
+        System.out.println("Setup iniziale");
+    }
+
+    @Test
+    public void testExample() {
+        assertEquals(4, 2 + 2);
+    }
+}
+        </code></pre>
+    </div>
+
+    <div class="example">
+        <h3>JUnit 5</h3>
+        <p>
+            In JUnit 5, viene introdotta <code>@ExtendWith(SpringExtension.class)</code> per estendere il supporto di Spring nei test, mentre <code>@BeforeEach</code> sostituisce <code>@Before</code> per maggiore chiarezza.
+        </p>
+        <pre><code>
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+@ExtendWith(SpringExtension.class)
+public class ExampleTest {
+
+    @BeforeEach
+    void setUp() {
+        System.out.println("Setup iniziale");
+    }
+
+    @Test
+    void testExample() {
+        assertEquals(4, 2 + 2);
+    }
+}
+        </code></pre>
+    </div>
+
+    <h3>3.2 Confronto tra JUnit 4 e JUnit 5</h3>
+    <table>
+        <thead>
+        <tr>
+            <th>Caratteristica</th>
+            <th>JUnit 4</th>
+            <th>JUnit 5</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td><strong>Runner di Spring</strong></td>
+            <td>@RunWith(SpringRunner.class)</td>
+            <td>@ExtendWith(SpringExtension.class)</td>
+        </tr>
+        <tr>
+            <td><strong>Metodi di setup</strong></td>
+            <td>@Before</td>
+            <td>@BeforeEach</td>
+        </tr>
+        <tr>
+            <td><strong>Annotazione dei test</strong></td>
+            <td>@Test</td>
+            <td>@Test (immutato, ma con <code>Assertions</code> migliorate)</td>
+        </tr>
+        <tr>
+            <td><strong>Assert</strong></td>
+            <td>Assert.assertEquals()</td>
+            <td>Assertions.assertEquals()</td>
+        </tr>
+        <tr>
+            <td><strong>Supporto per test annidati</strong></td>
+            <td>Non supportato</td>
+            <td>Supportato con @Nested</td>
+        </tr>
+        <tr>
+            <td><strong>Struttura</strong></td>
+            <td>Monolitico</td>
+            <td>Modulare e più flessibile</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <h3>3.3 Altri Cambiamenti Rilevanti</h3>
+    <ul>
+        <li><strong>Miglior gestione delle eccezioni:</strong> In JUnit 4, si usava <code>@Test(expected = Exception.class)</code>, mentre in JUnit 5 si usa <code>Assertions.assertThrows()</code>.</li>
+        <li><strong>Struttura modulare:</strong> JUnit 5 è diviso in <code>JUnit Platform</code>, <code>JUnit Jupiter</code> e <code>JUnit Vintage</code> per maggiore flessibilità.</li>
+        <li><strong>Maggiore compatibilità con framework di terze parti:</strong> Supporto nativo per Mockito e altre librerie di test.</li>
+    </ul>
+
+    <h3>3.4 Quando Aggiornare a JUnit 5?</h3>
+    <p>
+        Se stai lavorando con progetti legacy che utilizzano JUnit 4, puoi gradualmente aggiornare a JUnit 5 utilizzando il <strong>JUnit Vintage Engine</strong> per eseguire test esistenti senza riscriverli.
+    </p>
+    <p>Per abilitare questa compatibilità, aggiungi questa dipendenza a <code>pom.xml</code>:</p>
+    <div class="example">
+        <pre><code>
+&lt;dependency&gt;
+    &lt;groupId&gt;org.junit.vintage&lt;/groupId&gt;
+    &lt;artifactId&gt;junit-vintage-engine&lt;/artifactId&gt;
+    &lt;version&gt;5.9.2&lt;/version&gt;
+    &lt;scope&gt;test&lt;/scope&gt;
+&lt;/dependency&gt;
+        </code></pre>
+    </div>
+
+    <h3>3.5 Conclusione</h3>
+    <p>
+        JUnit 5 è una scelta migliore per i nuovi progetti grazie alla sua modularità, maggiore leggibilità e funzionalità avanzate.
+        Tuttavia, se il tuo progetto utilizza ancora JUnit 4, puoi aggiornarlo gradualmente sfruttando il supporto Vintage.
+    </p>
+
+</div>
+
+
+<div class="section">
+    <h2>4. Testing con Spring Boot</h2>
+    <p>
+        Spring Boot facilita il testing delle applicazioni grazie alla sua integrazione con JUnit e altre librerie di testing.
+        In particolare, il testing con <code>@SpringBootTest</code> permette di caricare l'intero contesto dell'applicazione per eseguire test di integrazione.
+    </p>
+
+    <h3>4.1 Tipologie di Test in Spring Boot</h3>
+    <p>Spring Boot supporta diversi tipi di test, tra cui:</p>
+    <ul>
+        <li><strong>Unit Testing:</strong> verifica il comportamento di singole classi o metodi senza dipendenze esterne.</li>
+        <li><strong>Integration Testing:</strong> verifica l'interazione tra più componenti, spesso con database in memoria o mock.</li>
+        <li><strong>End-to-End Testing:</strong> simula l'intero flusso di un'applicazione con tutti i suoi componenti attivi.</li>
+    </ul>
+
+    <h3>4.2 Test di Integrazione con <code>@SpringBootTest</code></h3>
+    <p>
+        L'annotazione <code>@SpringBootTest</code> viene utilizzata per eseguire test di integrazione, caricando l'intero contesto di Spring Boot e permettendo
+        di testare i servizi con le loro dipendenze effettive.
+    </p>
+
+    <div class="example">
+        <h3>Test di integrazione con JUnit 5</h3>
+        <pre><code>
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class ApplicationTests {
+
+    @Autowired
+    private MyService myService;
+
+    @Test
+    void testService() {
+        assertNotNull(myService, "Il servizio deve essere iniettato correttamente");
+    }
+}
+        </code></pre>
+    </div>
+
+    <h3>4.3 Uso di <code>@MockBean</code> per Mockare Dipendenze</h3>
+    <p>
+        Se vogliamo evitare di avviare un vero database o un'altra dipendenza pesante nei test di integrazione, possiamo usare <code>@MockBean</code>.
+        Questo permette di sostituire i bean reali con delle versioni mock, migliorando le prestazioni dei test.
+    </p>
+
+    <div class="example">
+        <h3>Test con <code>@MockBean</code></h3>
+        <pre><code>
+import static org.mockito.Mockito.*;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+
+@SpringBootTest
+class ApplicationTests {
+
+    @MockBean
+    private MyRepository myRepository;
+
+    @Autowired
+    private MyService myService;
+
+    @Test
+    void testServiceWithMock() {
+        when(myRepository.findData()).thenReturn("Mocked Data");
+
+        String result = myService.getData();
+        assertNotNull(result);
+        assertEquals("Mocked Data", result);
+    }
+}
+        </code></pre>
+    </div>
+
+    <h3>4.4 Test di API REST con <code>@WebMvcTest</code></h3>
+    <p>
+        Se vogliamo testare un <code>Controller</code> senza caricare l'intero contesto dell'applicazione, possiamo usare <code>@WebMvcTest</code>,
+        che esegue test specifici per gli endpoint REST senza avviare altre componenti inutili.
+    </p>
+
+    <div class="example">
+        <h3>Test di un Controller con <code>@WebMvcTest</code></h3>
+        <pre><code>
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.test.web.servlet.MockMvc;
+
+@WebMvcTest(MyController.class)
+class MyControllerTest {
+
+    @Autowired
+    private MockMvc mockMvc;
+
+    @Test
+    void testGetEndpoint() throws Exception {
+        mockMvc.perform(get("/api/data"))
+                .andExpect(status().isOk())
+                .andExpect(content().string("Hello, World!"));
+    }
+}
+        </code></pre>
+    </div>
+
+    <h3>4.5 Conclusione</h3>
+    <p>
+        Il framework di testing di Spring Boot fornisce strumenti potenti per testare ogni livello dell'applicazione, dai servizi ai repository e ai controller REST.
+        Utilizzare le annotazioni corrette come <code>@SpringBootTest</code>, <code>@MockBean</code> e <code>@WebMvcTest</code> aiuta a scrivere test efficienti e modulari.
+    </p>
+</div>
+
+
+<div class="bibliography">
+    <h2>5. Bibliografia e Risorse</h2>
+    <p>
+        Per approfondire il testing in Java con JUnit 5 e Spring Boot, ecco una selezione di risorse ufficiali e tutorial avanzati.
+        Queste guide offrono una panoramica completa sulle best practices per scrivere test efficaci e migliorare la qualità del codice.
+    </p>
+
+    <h3>5.1 Risorse Ufficiali</h3>
+    <ul>
+        <li>
+            <a href="https://junit.org/junit5/" target="_blank"><strong>JUnit 5 Official Documentation</strong></a>
+            <p>Documentazione ufficiale di JUnit 5. Include informazioni dettagliate su annotazioni, configurazione e nuove funzionalità.</p>
+        </li>
+        <li>
+            <a href="https://docs.spring.io/spring-boot/docs/current/reference/html/features.html#features.testing" target="_blank"><strong>Spring Boot Testing Guide</strong></a>
+            <p>Guida ufficiale di Spring Boot per il testing, con spiegazioni su <code>@SpringBootTest</code>, <code>@MockBean</code> e altre annotazioni chiave.</p>
+        </li>
+    </ul>
+
+    <h3>5.2 Tutorial e Guide Approfondite</h3>
+    <ul>
+        <li>
+            <a href="https://www.baeldung.com/junit-5" target="_blank"><strong>Guida a JUnit 5 su Baeldung</strong></a>
+            <p>Un tutorial completo su JUnit 5, con esempi pratici e spiegazioni su <code>Assertions</code>, <code>Test Lifecycle</code> e test avanzati.</p>
+        </li>
+        <li>
+            <a href="https://www.baeldung.com/spring-boot-testing" target="_blank"><strong>Testing con Spring Boot - Baeldung</strong></a>
+            <p>Approfondimento su test unitari e di integrazione in Spring Boot, con focus su <code>@WebMvcTest</code>, <code>@MockBean</code> e database embedded.</p>
+        </li>
+        <li>
+            <a href="https://www.geeksforgeeks.org/junit-5-tutorial/" target="_blank"><strong>JUnit 5 Tutorial - GeeksForGeeks</strong></a>
+            <p>Introduzione a JUnit 5 con esempi pratici su test parametrizzati, <code>@Nested</code> e mock di servizi.</p>
+        </li>
+    </ul>
+
+    <h3>5.3 Risorse Avanzate</h3>
+    <ul>
+        <li>
+            <a href="https://www.testcontainers.org/" target="_blank"><strong>Testcontainers - Testing con Database Reali</strong></a>
+            <p>Guida per eseguire test di integrazione con database containerizzati, utile per simulare ambienti di produzione.</p>
+        </li>
+        <li>
+            <a href="https://www.mockito.org/" target="_blank"><strong>Mockito - Libreria per Mock</strong></a>
+            <p>Documentazione ufficiale di Mockito, essenziale per creare test unitari efficaci senza dipendere da database reali.</p>
+        </li>
+    </ul>
+
+    <h3>5.4 Community e Forum</h3>
+    <ul>
+        <li>
+            <a href="https://stackoverflow.com/questions/tagged/junit5" target="_blank"><strong>Stack Overflow - JUnit 5</strong></a>
+            <p>Domande e risposte su JUnit 5 dalla community di sviluppatori.</p>
+        </li>
+        <li>
+            <a href="https://stackoverflow.com/questions/tagged/spring-boot-testing" target="_blank"><strong>Stack Overflow - Spring Boot Testing</strong></a>
+            <p>Discussioni e soluzioni a problemi comuni nel testing con Spring Boot.</p>
+        </li>
+    </ul>
+
+    <h3>5.5 Libri Consigliati</h3>
+    <ul>
+        <li>
+            <a href="https://www.oreilly.com/library/view/junit-in-action/9781617297045/" target="_blank"><strong>JUnit in Action - O'Reilly</strong></a>
+            <p>Libro completo sul testing in Java con JUnit, perfetto per chi vuole approfondire strategie di testing avanzate.</p>
+        </li>
+        <li>
+            <a href="https://www.amazon.com/Test-Driven-Development-Kent-Beck/dp/0321146530" target="_blank"><strong>Test-Driven Development by Example - Kent Beck</strong></a>
+            <p>Un classico sul Test-Driven Development (TDD), che spiega come scrivere codice testabile ed evolvibile.</p>
+        </li>
+    </ul>
+
+    <h3>5.6 Conclusione</h3>
+    <p>
+        Queste risorse forniscono un ottimo punto di partenza per padroneggiare il testing in Java e Spring Boot. Approfondire JUnit 5 e le tecniche di test aiuta a migliorare la qualità e la robustezza del codice, riducendo il rischio di bug e regressioni.
+    </p>
+</div>
+
+
+<footer class="footer">
+    <a href="./index.html" class="footer-logo">
+        <img src="./img/logo.png" alt="Logo del sito" />
+    </a>
+    <div class="footer-links">
+        <a href="./index.html" class="footer-link left">
+            &#8592; Pagina precedente
+        </a>
+    </div>
+    &copy; 2025 Corso di Programmazione Backend. Developed By Emanuele Ienna e Massimiliano Grande. Tutti i diritti riservati.
+</footer>
+
+</body>
+</html>
