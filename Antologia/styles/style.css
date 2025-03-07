@@ -184,6 +184,13 @@ code {
     margin-top: 15px;
     border-radius: 5px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+
+    color: #333333; /* Testo scuro per una buona leggibilità */
+                margin: 20px auto; /* Centrare la sezione e aggiungere margini */
+                max-width: 800px; /* Limita la larghezza per facilitare la lettura */
+                line-height: 1.8; /* Migliora la leggibilità del testo */
+                font-size: 1.1em; /* Dimensione del font leggermente più grande */
+                text-align: justify;
 }
 
 .test {
