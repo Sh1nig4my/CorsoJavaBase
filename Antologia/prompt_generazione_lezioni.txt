@@ -1,0 +1,105 @@
+Prompt per Generare una Lezione in Formato HTML per il Corso di Programmazione Backend
+
+Devo generare una lezione per il mio corso di programmazione backend in formato HTML, seguendo lo stile e la struttura delle lezioni già create. Il corso copre argomenti relativi a Java e al framework Spring.
+
+Requisiti per la Lezione
+Formato HTML: La lezione deve essere un file HTML strutturato come le lezioni precedenti, con titoli, paragrafi, esempi di codice, sezioni di test, approfondimenti ed esercizi.
+Stile CSS: Deve utilizzare lo stesso stile CSS delle lezioni già create (file style.css).
+Struttura della Lezione:
+Titolo della lezione: [Titolo della lezione basato sul programma del corso]
+Sezione 1: Introduzione: Una spiegazione introduttiva dell'argomento.
+Sezione 2: Concetti principali: Approfondimento delle teorie fondamentali con codice di esempio.
+Sezione 3: Esempi pratici: Codice Java funzionante e spiegazioni.
+Sezione 4: Test e domande: Una serie di domande per verificare la comprensione dello studente.
+Sezione 5: Esercizi pratici: Compiti per esercitarsi sugli argomenti trattati.
+Sezione 6: Bibliografia: Link alla documentazione ufficiale e a risorse di approfondimento.
+Sezione 7: Avanzata: Approfondimenti tecnici per studenti più esperti.
+Contenuto della Lezione
+La lezione da generare deve coprire il seguente argomento, come specificato nel programma del corso (file index.html):
+
+Giorno [numero]: [Nome e argomenti del giorno]
+Stile e Linguaggio
+Il tono deve essere formativo e professionale, simile a un manuale di programmazione.
+Ogni sezione deve essere ben spiegata e accompagnata da esempi di codice funzionante in Java.
+Test e domande devono verificare la comprensione degli studenti.
+Esercizi pratici devono essere progettati per mettere in pratica quanto appreso.
+La sezione avanzata deve fornire spunti di studio per approfondire l'argomento.
+Formato del Codice
+Il codice deve essere completo, funzionante e commentato, per essere facilmente comprensibile agli studenti.
+Il codice Java deve essere formattato all'interno dei tag <pre><code> per una corretta visualizzazione.
+Esempio di Struttura della Lezione
+Il file HTML deve essere simile a quelli già generati (es. Lezione_1.html), e seguire questa struttura:
+
+html
+Copia
+Modifica
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lezione X - [Titolo della Lezione]</title>
+    <link rel="stylesheet" href="/styles/style.css">
+</head>
+<body>
+    <h1 class="lesson-title">Lezione X: [Titolo della Lezione]</h1>
+
+    <div class="section">
+        <h2>1. Introduzione</h2>
+        <p>[Spiegazione introduttiva]</p>
+    </div>
+
+    <div class="section">
+        <h2>2. Concetti Chiave</h2>
+        <p>[Teoria e concetti fondamentali]</p>
+    </div>
+
+    <div class="example">
+        <h3>Esempio di codice</h3>
+        <pre><code>public class Esempio {
+    public static void main(String[] args) {
+        System.out.println("Esempio di codice Java");
+    }
+}</code></pre>
+    </div>
+
+    <div class="test">
+        <h3>Test di Verifica</h3>
+        <ul>
+            <li>Domanda 1: ...</li>
+            <li>Domanda 2: ...</li>
+        </ul>
+    </div>
+
+    <div class="exercise">
+        <h3>Esercizio Pratico</h3>
+        <p>Scrivi un programma che ...</p>
+    </div>
+
+    <div class="bibliography">
+        <h2>4. Bibliografia e Risorse Utili</h2>
+        <ul>
+            <li><a href="https://docs.oracle.com/en/java/">Documentazione ufficiale di Java</a></li>
+        </ul>
+    </div>
+
+    <div class="advanced">
+        <h2>5. Approfondimenti</h2>
+        <p>Per studenti avanzati, si consiglia di esplorare ...</p>
+    </div>
+
+    <footer class="footer">
+        <a href="/index.html" class="footer-logo">
+            <img src="/img/logo.png" alt="Logo del sito">
+        </a>
+        <div class="footer-links">
+            <a href="/index.html" class="footer-link left">&#8592; Pagina precedente</a>
+            <a href="/Settimana_X/Lezione_Y.html" class="footer-link right">Pagina successiva &#8594;</a>
+        </div>
+        &copy; 2025 Corso di Programmazione Backend. Tutti i diritti riservati.
+    </footer>
+</body>
+</html>
+
+Usando questo prompt, puoi generare le lezioni mancanti mantenendo la coerenza con il resto del corso.
+
