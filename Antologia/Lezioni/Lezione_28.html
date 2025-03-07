@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Finale - Progetto Spring Boot</title>
+    <link rel="stylesheet" href="../styles/style.css">
+</head>
+
+<body>
+<h1>Lezione 28: Preparazione Test Finale - Sistema di Gestione degli Ordini</h1>
+
+
+<div class="section">
+    <h2>Obiettivo</h2>
+    <p>Lo scopo di questa esercitazione è permettere agli studenti di applicare concretamente le competenze acquisite durante il corso, sviluppando un progetto backend completo basato su <strong>Spring Boot</strong>. L'obiettivo è costruire un'API RESTful ben strutturata, che segua le best practices per l'integrazione con un database relazionale.</p>
+
+    <p>Nel dettaglio, gli studenti dovranno:</p>
+    <ul>
+        <li>Utilizzare <strong>Spring Boot</strong> per sviluppare il backend dell'applicazione in modo modulare e scalabile.</li>
+        <li>Implementare la persistenza dei dati con <strong>JPA (Java Persistence API)</strong> e <strong>Hibernate</strong>, sfruttando il concetto di ORM (Object-Relational Mapping) per interagire con il database in modo efficiente.</li>
+        <li>Gestire le entità e le relazioni tra gli oggetti, applicando concetti di progettazione orientata agli oggetti.</li>
+        <li>Utilizzare <strong>Lombok</strong> per ridurre la scrittura di codice boilerplate e migliorare la leggibilità.</li>
+    </ul>
+
+    <p>Alla fine dell'esercitazione, gli studenti avranno creato un'API REST capace di gestire utenti, ordini e prodotti, con operazioni CRUD ben strutturate e con un'architettura conforme agli standard moderni di sviluppo software.</p>
+</div>
+
+
+<div class="section">
+    <h2>Requisiti</h2>
+    <ul>
+        <li><strong>Spring Boot</strong> per l'applicazione principale</li>
+        <li><strong>Spring Data JPA</strong> per l'interazione con il database</li>
+        <li><strong>Hibernate</strong> per l'ORM</li>
+        <li><strong>Lombok</strong> per ridurre la boilerplate code</li>
+        <li><strong>MySQL</strong> come database</li>
+    </ul>
+</div>
+
+
+<div class="section">
+    <h2>Entità e Relazioni</h2>
+    <p>Di seguito sono riportate le principali entità del sistema e le loro relazioni. Ogni entità rappresenta un concetto fondamentale dell'applicazione e permette la gestione dei dati in modo strutturato ed efficiente.</p>
+
+    <h3>1. Utente</h3>
+    <p>Rappresenta un utente del sistema, che può effettuare ordini.</p>
+    <pre><code>
+@Entity
+@Data
+public class Utente {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String nome;
+    private String email;
+
+    @OneToMany(mappedBy = "utente", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Ordine> ordini;
+}
+    </code></pre>
+
+    <h3>2. Ordine</h3>
+    <p>Rappresenta un ordine effettuato da un utente, con uno stato che può variare tra IN_ATTESA, SPEDITO e CONSEGNATO.</p>
+    <pre><code>
+@Entity
+@Data
+public class Ordine {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private LocalDate data;
+    private String stato; // IN_ATTESA, SPEDITO, CONSEGNATO
+    private Double totale;
+
+    @ManyToOne
+    @JoinColumn(name = "utente_id", nullable = false)
+    private Utente utente;
+
+    @OneToMany(mappedBy = "ordine", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<DettaglioOrdine> dettagli;
+}
+    </code></pre>
+
+    <h3>3. Prodotto</h3>
+    <p>Rappresenta un prodotto disponibile per l'acquisto, con nome e prezzo.</p>
+    <pre><code>
+@Entity
+@Data
+public class Prodotto {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String nome;
+    private Double prezzo;
+}
+    </code></pre>
+
+    <h3>4. Dettaglio Ordine</h3>
+    <p>Gestisce la relazione tra un ordine e i prodotti inclusi, specificando quantità e prezzo totale.</p>
+    <pre><code>
+@Entity
+@Data
+public class DettaglioOrdine {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private Integer quantita;
+    private Double prezzoTotale;
+
+    @ManyToOne
+    @JoinColumn(name = "ordine_id", nullable = false)
+    private Ordine ordine;
+
+    @ManyToOne
+    @JoinColumn(name = "prodotto_id", nullable = false)
+    private Prodotto prodotto;
+}
+    </code></pre>
+
+    <p>Le relazioni tra le entità permettono di collegare utenti agli ordini, ordini ai dettagli degli ordini e i dettagli degli ordini ai prodotti, creando così una struttura solida e coerente per il sistema di gestione degli ordini.</p>
+</div>
+
+
+<div class="section">
+    <h2>Funzionalità API REST</h2>
+    <p>Questa sezione descrive in dettaglio le funzionalità che gli studenti dovranno implementare per creare un'API REST completa. L'obiettivo è fornire endpoint ben strutturati che permettano la gestione di utenti, ordini, prodotti e dettagli degli ordini.</p>
+
+    <h3>1. Gestione Utenti</h3>
+    <p>Gli utenti rappresentano i clienti del sistema che possono effettuare ordini. Le API devono permettere di:</p>
+    <ul>
+        <li><strong>Creare un nuovo utente:</strong> Endpoint POST per registrare un nuovo utente con nome ed email.</li>
+        <li><strong>Ottenere la lista degli utenti:</strong> Endpoint GET per recuperare tutti gli utenti registrati.</li>
+        <li><strong>Recuperare un utente specifico:</strong> Endpoint GET per ottenere un utente dato il suo ID, includendo gli ordini associati.</li>
+    </ul>
+
+    <h3>2. Gestione Ordini</h3>
+    <p>Un ordine è associato a un utente e può contenere uno o più prodotti. Le API devono permettere di:</p>
+    <ul>
+        <li><strong>Creare un nuovo ordine:</strong> Endpoint POST per creare un ordine associato a un utente specifico.</li>
+        <li><strong>Recuperare tutti gli ordini:</strong> Endpoint GET per ottenere la lista di tutti gli ordini registrati.</li>
+        <li><strong>Aggiornare lo stato di un ordine:</strong> Endpoint PUT per modificare lo stato di un ordine tra IN_ATTESA, SPEDITO e CONSEGNATO.</li>
+    </ul>
+
+    <h3>3. Gestione Prodotti</h3>
+    <p>I prodotti rappresentano gli articoli disponibili per l'acquisto. Le API devono permettere di:</p>
+    <ul>
+        <li><strong>Aggiungere nuovi prodotti:</strong> Endpoint POST per inserire un nuovo prodotto con nome e prezzo.</li>
+        <li><strong>Recuperare tutti i prodotti disponibili:</strong> Endpoint GET per ottenere la lista dei prodotti nel catalogo.</li>
+    </ul>
+
+    <h3>4. Gestione Dettagli Ordine</h3>
+    <p>I dettagli ordine gestiscono la relazione tra ordini e prodotti, specificando quantità e prezzo totale. Le API devono permettere di:</p>
+    <ul>
+        <li><strong>Aggiungere prodotti a un ordine:</strong> Endpoint POST per inserire prodotti all'interno di un ordine esistente.</li>
+        <li><strong>Calcolare il totale dell'ordine automaticamente:</strong> Endpoint che aggiorna il totale di un ordine in base ai prodotti aggiunti.</li>
+    </ul>
+
+    <p>Queste funzionalità devono essere implementate utilizzando le best practices REST, garantendo la corretta gestione degli errori e validazioni degli input.</p>
+</div>
+
+
+<div class="section">
+    <h2>Come Preparare il Server in Locale</h2>
+    <p>Per garantire un ambiente di sviluppo stabile e ben configurato, gli studenti devono seguire i seguenti passi per impostare il server locale correttamente.</p>
+
+    <h3>1. Configurare il Database</h3>
+    <ul>
+        <li>Installare <strong>MySQL</strong> (o PostgreSQL, se preferito) e assicurarsi che il servizio sia in esecuzione.</li>
+        <li>Creare un database per l'applicazione con il comando SQL: <code>CREATE DATABASE gestione_ordini;</code></li>
+        <li>Creare un utente con privilegi di accesso al database e assegnare le autorizzazioni necessarie.</li>
+    </ul>
+
+    <h3>2. Configurare il Progetto Spring Boot</h3>
+    <ul>
+        <li>Aprire il progetto con un IDE come IntelliJ IDEA o VS Code.</li>
+        <li>Aggiungere le dipendenze necessarie nel file <code>pom.xml</code>, tra cui Spring Boot, Spring Data JPA, Lombok e MapStruct.</li>
+        <li>Eseguire il comando <code>mvn clean install</code> per verificare la corretta installazione delle dipendenze.</li>
+    </ul>
+
+    <h3>3. Configurare il File <code>application.yaml</code></h3>
+    <p>Nel file <code>src/main/resources/application.yaml</code>, configurare le credenziali per la connessione al database:</p>
+    <pre><code>
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/gestione_ordini
+    username: root
+    password: password
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    </code></pre>
+
+    <h3>4. Testare le API</h3>
+    <ul>
+        <li>Avviare l'applicazione con il comando <code>mvn spring-boot:run</code>.</li>
+        <li>Verificare la disponibilità degli endpoint utilizzando <strong>Postman</strong> o <strong>Swagger</strong>.</li>
+        <li>Controllare il database per assicurarsi che le tabelle siano state create correttamente.</li>
+    </ul>
+
+    <h3>5. Versionare il Codice con Git</h3>
+    <ul>
+        <li>Inizializzare un repository Git con <code>git init</code>.</li>
+        <li>Creare un <code>.gitignore</code> per escludere file non necessari come <code>target/</code> e <code>*.log</code>.</li>
+        <li>Eseguire il commit iniziale con <code>git add .</code> e <code>git commit -m "Initial commit"</code>.</li>
+        <li>Se richiesto, collegare il repository a GitHub e caricare il codice con <code>git push origin main</code>.</li>
+    </ul>
+
+    <p>Seguendo questi passi, il server sarà pronto per lo sviluppo e il testing delle API REST.</p>
+</div>
+
+
+<!-- Footer -->
+<footer class="footer">
+    <a href="../index.html" class="footer-logo">
+        <img src="../img/logo.png" alt="Logo del sito" />
+    </a>
+    <div class="footer-links">
+        <a href="./Lezione_27.html" class="footer-link left">
+            &#8592; Lezione precedente
+        </a>
+        <a href="./Lezione_29.html" class="footer-link right">
+       	    Lezione successiva &#8594;
+		</a>
+    </div>
+    &copy; 2025 Corso di Programmazione Backend. Developed By Emanuele Ienna e Massimiliano Grande. Tutti i diritti riservati.
+</footer>
+
+</body>
+
+</html>

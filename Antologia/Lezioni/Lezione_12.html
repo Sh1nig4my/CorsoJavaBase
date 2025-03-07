@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lezione 12: Database Relazionali e SQL</title>
+    <link rel="stylesheet" href="../styles/style.css" />
+</head>
+
+<body>
+    <h1 class="lesson-title">Lezione 12: Database Relazionali e SQL</h1>
+
+    <div class="section">
+        <h2>1. Introduzione ai Database Relazionali</h2>
+        <p>
+            Un **database relazionale** (RDBMS - Relational Database Management System) è un sistema software che organizza e gestisce i dati 
+            in tabelle strutturate e interconnesse. Ogni tabella rappresenta un'entità e contiene righe (record) e colonne (attributi), garantendo 
+            un'organizzazione chiara e facilmente manipolabile dei dati.
+        </p>
+    
+        <h3>1.1. Cosa rende un database relazionale?</h3>
+        <p>
+            I database relazionali si basano sul **modello relazionale**, introdotto negli anni '70 da Edgar F. Codd. Questo modello si basa su 
+            un'organizzazione dei dati in **tabelle relazionate tra loro**, eliminando la ridondanza e garantendo **coerenza** e **integrità** 
+            attraverso regole ben definite.
+        </p>
+    
+        <p>Le principali caratteristiche dei database relazionali includono:</p>
+        <ul>
+            <li><strong>Struttura a tabelle:</strong> I dati sono organizzati in tabelle composte da righe e colonne, facilitando la gestione e l'accesso ai dati.</li>
+            <li><strong>Relazioni tra tabelle:</strong> I database relazionali permettono di collegare i dati tra diverse tabelle tramite **chiavi primarie** e **chiavi esterne**.</li>
+            <li><strong>Integrità referenziale:</strong> Le relazioni tra le tabelle vengono mantenute attraverso vincoli che impediscono l’inserimento o l’eliminazione di dati incoerenti.</li>
+            <li><strong>Uso di SQL (Structured Query Language):</strong> Il linguaggio SQL è utilizzato per gestire e manipolare i dati attraverso operazioni di inserimento, aggiornamento, eliminazione e interrogazione.</li>
+            <li><strong>Atomicità, Coerenza, Isolamento, Durabilità (ACID):</strong> Le transazioni rispettano il modello ACID per garantire l’affidabilità dei dati.</li>
+        </ul>
+    
+        <h3>1.2. Perché usare un Database Relazionale?</h3>
+        <p>
+            I database relazionali sono utilizzati in una vasta gamma di applicazioni, dalle **piattaforme web** alle **applicazioni aziendali mission-critical**.
+            Alcuni vantaggi dell'uso di un RDBMS includono:
+        </p>
+        <ul>
+            <li><strong>Affidabilità e Scalabilità:</strong> Ideale per la gestione di grandi volumi di dati con elevati livelli di affidabilità.</li>
+            <li><strong>Controllo degli Accessi:</strong> Possibilità di assegnare permessi e restrizioni agli utenti.</li>
+            <li><strong>Consistenza dei Dati:</strong> Le regole di integrità garantiscono che i dati siano sempre corretti e aggiornati.</li>
+            <li><strong>Backup e Ripristino:</strong> Funzionalità integrate per la protezione dei dati in caso di guasti.</li>
+        </ul>
+    
+        <h3>1.3. Esempio di Database Relazionale</h3>
+        <p>
+            Consideriamo un semplice database per la gestione degli studenti in una scuola. Questo database potrebbe avere due tabelle principali:
+        </p>
+    
+        <h4>Tabella <code>Studenti</code></h4>
+        <pre><code>CREATE TABLE Studenti (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        nome VARCHAR(50) NOT NULL,
+        cognome VARCHAR(50) NOT NULL,
+        email VARCHAR(100) UNIQUE NOT NULL,
+        data_iscrizione DATE NOT NULL
+    );</code></pre>
+    
+        <h4>Tabella <code>Corsi</code></h4>
+        <pre><code>CREATE TABLE Corsi (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        nome_corso VARCHAR(100) NOT NULL,
+        descrizione TEXT
+    );</code></pre>
+    
+        <h4>Relazione tra <code>Studenti</code> e <code>Corsi</code></h4>
+        <p>Un **studente** può essere iscritto a più corsi e un **corso** può avere più studenti. Per rappresentare questa relazione **molti-a-molti**, 
+           creiamo una tabella di associazione:</p>
+    
+        <pre><code>CREATE TABLE Iscrizioni (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        studente_id INT,
+        corso_id INT,
+        FOREIGN KEY (studente_id) REFERENCES Studenti(id),
+        FOREIGN KEY (corso_id) REFERENCES Corsi(id)
+    );</code></pre>
+    
+        <p>Questa struttura consente di collegare più studenti a più corsi senza duplicare dati.</p>
+    
+        <h3>1.4. Confronto tra Database Relazionali e NoSQL</h3>
+        <p>
+            Esistono anche database **NoSQL** che differiscono dai database relazionali per struttura e approccio alla gestione dei dati.
+            Ecco una rapida comparazione:
+        </p>
+    
+        <table>
+            <thead>
+                <tr>
+                    <th>Caratteristica</th>
+                    <th>Database Relazionali (SQL)</th>
+                    <th>Database NoSQL</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Struttura</strong></td>
+                    <td>Tabelle con righe e colonne</td>
+                    <td>Documenti, chiavi-valore, grafi o colonne distribuite</td>
+                </tr>
+                <tr>
+                    <td><strong>Schema</strong></td>
+                    <td>Fisso e definito a priori</td>
+                    <td>Flessibile e adattabile</td>
+                </tr>
+                <tr>
+                    <td><strong>Integrità dei dati</strong></td>
+                    <td>Alta, grazie a vincoli e transazioni ACID</td>
+                    <td>Minore, spesso basata su consistenza eventuale</td>
+                </tr>
+                <tr>
+                    <td><strong>Scalabilità</strong></td>
+                    <td>Verticale (potenziamento dell'hardware)</td>
+                    <td>Orizzontale (aggiunta di nuovi nodi)</td>
+                </tr>
+                <tr>
+                    <td><strong>Utilizzo</strong></td>
+                    <td>Applicazioni aziendali, finanziarie e gestionali</td>
+                    <td>Big Data, social media, IoT</td>
+                </tr>
+            </tbody>
+        </table>
+    
+        <h3>1.5. Database Relazionali più Utilizzati</h3>
+        <p>
+            Esistono diversi database relazionali, ognuno con caratteristiche specifiche:
+        </p>
+        <ul>
+            <li><strong>MySQL:</strong> Il più diffuso RDBMS open-source, usato in molte applicazioni web.</li>
+            <li><strong>PostgreSQL:</strong> Database relazionale avanzato con supporto a funzionalità enterprise.</li>
+            <li><strong>SQL Server:</strong> Soluzione Microsoft con integrazione avanzata con prodotti aziendali.</li>
+            <li><strong>Oracle Database:</strong> Database commerciale potente, usato per grandi applicazioni enterprise.</li>
+            <li><strong>MariaDB:</strong> Fork di MySQL con miglioramenti sulle prestazioni.</li>
+        </ul>
+    
+        <h3>1.6. Conclusione</h3>
+        <p>
+            I database relazionali sono la base di molte applicazioni software e garantiscono una gestione dei dati affidabile ed efficiente.
+            Nelle lezioni successive, approfondiremo la configurazione e l’uso di **MySQL**, uno dei database relazionali più utilizzati al mondo.
+        </p>
+    </div>
+
+    <div class="section">
+        <h2>2. Installazione e Configurazione di MySQL</h2>
+        <p>MySQL è uno dei database relazionali più popolari e utilizzati al mondo, fondamentale per la gestione e manipolazione dei dati nelle applicazioni web e software aziendali. Segui questi passaggi per installarlo correttamente:</p>
+    
+        <h3>2.1. Download e Installazione</h3>
+        <ol>
+            <li>Visita il sito ufficiale di MySQL e scarica la versione adatta al tuo sistema operativo: 
+                <a href="https://dev.mysql.com/downloads/">MySQL Download</a>.
+            </li>
+            <li>Durante l'installazione, scegli MySQL Server e, se desideri un'interfaccia grafica, includi MySQL Workbench.</li>
+            <li>Configura una password sicura per l'utente <code>root</code>. Questo account ha pieni privilegi sul database.</li>
+            <li>Completa il processo di installazione e avvia il servizio MySQL.</li>
+        </ol>
+    
+        <h3>2.2. Verifica dell'Installazione</h3>
+        <p>Per assicurarti che MySQL sia stato installato correttamente, apri il terminale o il prompt dei comandi e digita:</p>
+        <pre><code>mysql --version</code></pre>
+        <p>Dovresti vedere un output simile a:</p>
+        <pre><code>mysql  Ver 8.0.26 for Windows on x86_64 (MySQL Community Server - GPL)</code></pre>
+    
+        <h3>2.3. Avvio e Accesso a MySQL</h3>
+        <p>Per avviare MySQL, esegui il seguente comando:</p>
+        <pre><code>sudo systemctl start mysql</code></pre>
+        <p>Ora puoi accedere al client MySQL con il comando:</p>
+        <pre><code>mysql -u root -p</code></pre>
+        <p>Dopo aver inserito la password, sarai dentro la console MySQL, pronta per eseguire comandi SQL.</p>
+    
+        <h3>2.4. Creazione di un Database</h3>
+        <p>Per creare un nuovo database, usa il comando:</p>
+        <pre><code>CREATE DATABASE nome_database;</code></pre>
+        <p>Per visualizzare i database disponibili:</p>
+        <pre><code>SHOW DATABASES;</code></pre>
+        <p>Per selezionare un database e iniziare a lavorare su di esso:</p>
+        <pre><code>USE nome_database;</code></pre>
+    
+        <h3>2.5. Creazione di un Utente e Assegnazione dei Privilegi</h3>
+        <p>Per creare un nuovo utente MySQL con privilegi personalizzati:</p>
+        <pre><code>CREATE USER 'nuovo_utente'@'localhost' IDENTIFIED BY 'password_sicura';</code></pre>
+        <p>Assegna i privilegi necessari all'utente:</p>
+        <pre><code>GRANT ALL PRIVILEGES ON nome_database.* TO 'nuovo_utente'@'localhost';</code></pre>
+        <p>Applica le modifiche:</p>
+        <pre><code>FLUSH PRIVILEGES;</code></pre>
+    
+        <h3>2.6. Connessione a MySQL da SQL Server Management Studio (SSMS)</h3>
+<p>
+    Se desideri utilizzare un'interfaccia grafica per gestire il database MySQL, puoi farlo tramite 
+    **SQL Server Management Studio (SSMS)**. Anche se SSMS è nativamente progettato per Microsoft SQL Server, 
+    può connettersi a MySQL utilizzando un driver ODBC o un provider specifico. 
+    Segui questi passaggi per configurare la connessione:
+</p>
+
+<h4>Passaggi per connettersi a MySQL tramite SSMS</h4>
+<ol>
+    <li>**Scarica e installa** SQL Server Management Studio (SSMS) se non lo hai già: 
+        <a href="https://aka.ms/ssmsfullsetup">Download SSMS</a>.
+    </li>
+    <li>Installa il driver ODBC per MySQL, se non è già presente, scaricandolo da: 
+        <a href="https://dev.mysql.com/downloads/connector/odbc/">MySQL ODBC Connector</a>.
+    </li>
+    <li>Apri **SQL Server Management Studio (SSMS)**.</li>
+    <li>Nella finestra **Connect to Server**, seleziona come tipo di connessione **ODBC Data Source**.</li>
+    <li>Clicca su **New Data Source**, quindi:
+        <ul>
+            <li>Seleziona **MySQL ODBC Driver**.</li>
+            <li>Inserisci **localhost** come nome del server.</li>
+            <li>Seleziona **TCP/IP** come metodo di connessione.</li>
+            <li>Inserisci le credenziali:
+                <ul>
+                    <li>**User ID**: <code>root</code> (o un altro utente MySQL configurato).</li>
+                    <li>**Password**: la password impostata durante l'installazione.</li>
+                </ul>
+            </li>
+            <li>Specifica il database a cui connetterti, oppure lascialo vuoto per visualizzare tutti i database disponibili.</li>
+        </ul>
+    </li>
+    <li>Clicca su **Test Connection** per verificare che la connessione sia riuscita.</li>
+    <li>Se tutto è corretto, premi **OK** per salvare la connessione.</li>
+    <li>Dalla schermata principale di SSMS, esegui query SQL direttamente su MySQL utilizzando la finestra di comando.</li>
+</ol>
+
+<h4>Esempio di Query SQL su MySQL in SSMS</h4>
+<p>Una volta connesso, puoi eseguire query direttamente su SSMS. Ad esempio, per visualizzare tutti i database MySQL disponibili:</p>
+<pre><code>SHOW DATABASES;</code></pre>
+
+<p>Per selezionare un database specifico e mostrare le tabelle al suo interno:</p>
+<pre><code>USE nome_database;
+SHOW TABLES;</code></pre>
+
+<p>Per eseguire una query di selezione su una tabella:</p>
+<pre><code>SELECT * FROM utenti;</code></pre>
+
+<h4>Vantaggi di Utilizzare SSMS per MySQL</h4>
+<ul>
+    <li>Interfaccia grafica familiare per chi già utilizza SQL Server.</li>
+    <li>Possibilità di gestire più database SQL (SQL Server e MySQL) dallo stesso ambiente.</li>
+    <li>Strumenti avanzati di gestione e ottimizzazione delle query.</li>
+</ul>
+
+<p>
+    Sebbene **MySQL Workbench** sia l'opzione più immediata per la gestione dei database MySQL, 
+    SQL Server Management Studio può risultare utile per gli sviluppatori che lavorano con 
+    più database relazionali all'interno di un unico ambiente.
+</p>
+
+    
+        <h3>2.7. Sicurezza e Configurazioni Aggiuntive</h3>
+        <p>Per rafforzare la sicurezza del server MySQL, puoi eseguire il comando:</p>
+        <pre><code>mysql_secure_installation</code></pre>
+        <p>Ti verranno chieste alcune configurazioni di sicurezza, tra cui:</p>
+        <ul>
+            <li>Impostare una password più sicura per <code>root</code>.</li>
+            <li>Rimuovere utenti anonimi.</li>
+            <li>Disabilitare l'accesso remoto per <code>root</code> se non necessario.</li>
+            <li>Rimuovere il database di test.</li>
+        </ul>
+    
+        <h3>2.8. Risoluzione Problemi Comuni</h3>
+        <p>Se MySQL non si avvia correttamente, prova questi comandi:</p>
+        <pre><code>sudo systemctl restart mysql</code></pre>
+        <p>Per verificare lo stato del servizio MySQL:</p>
+        <pre><code>sudo systemctl status mysql</code></pre>
+        <p>Se hai dimenticato la password di root, puoi reimpostarla seguendo <a href="https://dev.mysql.com/doc/refman/8.0/en/resetting-permissions.html">questa guida ufficiale</a>.</p>
+    
+    </div>
+
+    <div class="section">
+        <h2>3. Fondamenti di SQL</h2>
+        <p>
+            **SQL (Structured Query Language)** è il linguaggio standard per la gestione e manipolazione dei database 
+            relazionali. SQL permette di creare, leggere, aggiornare ed eliminare dati all'interno di un database 
+            attraverso comandi specifici.
+        </p>
+        
+        <p>Le principali operazioni SQL si dividono in quattro categorie:</p>
+        <ul>
+            <li><strong>DDL (Data Definition Language):</strong> Definisce la struttura del database (es. <code>CREATE</code>, <code>ALTER</code>, <code>DROP</code>).</li>
+            <li><strong>DML (Data Manipulation Language):</strong> Gestisce i dati contenuti nelle tabelle (es. <code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code>).</li>
+            <li><strong>DQL (Data Query Language):</strong> Recupera i dati dal database (es. <code>SELECT</code>).</li>
+            <li><strong>DCL (Data Control Language):</strong> Gestisce i permessi di accesso ai dati (es. <code>GRANT</code>, <code>REVOKE</code>).</li>
+        </ul>
+    
+        <h3>3.1 Creazione di un Database</h3>
+        <p>Per creare un nuovo database, utilizziamo il comando <code>CREATE DATABASE</code>:</p>
+        <pre><code>CREATE DATABASE scuola;</code></pre>
+        <p>Per verificare che il database sia stato creato correttamente, possiamo eseguire:</p>
+        <pre><code>SHOW DATABASES;</code></pre>
+        <p>Per iniziare a lavorare su questo database, dobbiamo selezionarlo con:</p>
+        <pre><code>USE scuola;</code></pre>
+    
+        <h3>3.2 Creazione di una Tabella</h3>
+        <p>
+            Una tabella in SQL è composta da colonne (attributi) e righe (record). 
+            Creiamo una tabella **studenti** per memorizzare informazioni sugli studenti iscritti:
+        </p>
+        <pre><code>CREATE TABLE studenti (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        nome VARCHAR(50) NOT NULL,
+        cognome VARCHAR(50) NOT NULL,
+        età INT CHECK (età >= 0),
+        email VARCHAR(100) UNIQUE NOT NULL,
+        data_iscrizione DATE DEFAULT CURDATE()
+    );</code></pre>
+        <p>Spiegazione degli attributi della tabella:</p>
+        <ul>
+            <li><code>id INT AUTO_INCREMENT PRIMARY KEY</code>: Identificatore univoco dello studente, generato automaticamente.</li>
+            <li><code>nome VARCHAR(50) NOT NULL</code>: Il nome dello studente, con un massimo di 50 caratteri.</li>
+            <li><code>cognome VARCHAR(50) NOT NULL</code>: Il cognome dello studente, con un massimo di 50 caratteri.</li>
+            <li><code>età INT CHECK (età >= 0)</code>: L’età dello studente, con un vincolo per evitare valori negativi.</li>
+            <li><code>email VARCHAR(100) UNIQUE NOT NULL</code>: L’email dello studente, deve essere univoca.</li>
+            <li><code>data_iscrizione DATE DEFAULT CURDATE()</code>: La data di iscrizione, con valore predefinito impostato alla data corrente.</li>
+        </ul>
+        <p>Per verificare la struttura della tabella creata, eseguiamo:</p>
+        <pre><code>DESC studenti;</code></pre>
+    
+        <h3>3.3 Inserimento di Dati</h3>
+        <p>Per aggiungere nuovi studenti nella tabella utilizziamo <code>INSERT INTO</code>:</p>
+        <pre><code>INSERT INTO studenti (nome, cognome, età, email) 
+    VALUES ('Mario', 'Rossi', 20, 'mario.rossi@email.com');</code></pre>
+        
+        <p>È possibile inserire più record contemporaneamente:</p>
+        <pre><code>INSERT INTO studenti (nome, cognome, età, email) 
+    VALUES 
+    ('Luca', 'Bianchi', 22, 'luca.bianchi@email.com'),
+    ('Giulia', 'Verdi', 19, 'giulia.verdi@email.com');</code></pre>
+    
+        <h3>3.4 Lettura dei Dati</h3>
+        <p>Per visualizzare tutti gli studenti presenti nella tabella:</p>
+        <pre><code>SELECT * FROM studenti;</code></pre>
+    
+        <p>Per visualizzare solo alcuni campi (ad esempio nome e cognome):</p>
+        <pre><code>SELECT nome, cognome FROM studenti;</code></pre>
+    
+        <p>Per filtrare i risultati, utilizziamo la clausola <code>WHERE</code>. Ad esempio, per trovare gli studenti di 20 anni:</p>
+        <pre><code>SELECT * FROM studenti WHERE età = 20;</code></pre>
+    
+        <p>Per ordinare i risultati per età in ordine crescente:</p>
+        <pre><code>SELECT * FROM studenti ORDER BY età ASC;</code></pre>
+    
+        <h3>3.5 Aggiornamento dei Dati</h3>
+        <p>Per aggiornare l’età di uno studente con <code>id = 1</code>, usiamo:</p>
+        <pre><code>UPDATE studenti SET età = 21 WHERE id = 1;</code></pre>
+    
+        <p>Possiamo anche aggiornare più colonne contemporaneamente:</p>
+        <pre><code>UPDATE studenti 
+    SET età = 23, email = 'mario.rossi23@email.com' 
+    WHERE id = 1;</code></pre>
+    
+        <h3>3.6 Eliminazione di un Record</h3>
+        <p>Per eliminare un record specifico, utilizziamo <code>DELETE</code>:</p>
+        <pre><code>DELETE FROM studenti WHERE id = 1;</code></pre>
+    
+        <p>Per eliminare tutti gli studenti di 22 anni:</p>
+        <pre><code>DELETE FROM studenti WHERE età = 22;</code></pre>
+    
+        <p><strong>Attenzione:</strong> Per eliminare tutti i dati dalla tabella senza rimuovere la struttura:</p>
+        <pre><code>TRUNCATE TABLE studenti;</code></pre>
+    
+        <h3>3.7 Eliminazione di una Tabella</h3>
+        <p>Se vogliamo rimuovere completamente una tabella dal database:</p>
+        <pre><code>DROP TABLE studenti;</code></pre>
+    
+        <h3>3.8 Eliminazione di un Database</h3>
+        <p>Per eliminare un intero database con tutte le sue tabelle:</p>
+        <pre><code>DROP DATABASE scuola;</code></pre>
+    
+        <h3>3.9 Esercizio Pratico</h3>
+        <p>Prova a scrivere ed eseguire le seguenti query nel tuo database:</p>
+        <ul>
+            <li>Creare una tabella **docenti** con i campi <code>id</code>, <code>nome</code>, <code>cognome</code>, <code>materia</code>.</li>
+            <li>Inserire tre docenti.</li>
+            <li>Visualizzare tutti i docenti.</li>
+            <li>Aggiornare la materia di un docente.</li>
+            <li>Eliminare un docente.</li>
+        </ul>
+    </div>
+    
+
+
+    
+
+    <div class="bibliography">
+        <h2>4. Bibliografia e Risorse</h2>
+        <p>Per approfondire i concetti trattati e ampliare le proprie competenze in SQL e MySQL, ecco alcune risorse utili:</p>
+        <ul>
+            <li>
+                <a href="https://dev.mysql.com/doc/" target="_blank">
+                    <strong>Documentazione ufficiale di MySQL</strong>
+                </a> - La guida completa e ufficiale per l'uso di MySQL, con riferimenti alle funzionalità avanzate.
+            </li>
+            <li>
+                <a href="https://www.w3schools.com/sql/" target="_blank">
+                    <strong>Guida SQL su W3Schools</strong>
+                </a> - Una guida interattiva con esercizi e spiegazioni passo dopo passo per imparare SQL.
+            </li>
+            <li>
+                <a href="https://www.mysqltutorial.org/" target="_blank">
+                    <strong>MySQL Tutorial</strong>
+                </a> - Un tutorial ben strutturato che copre dalla base alle funzioni avanzate di MySQL.
+            </li>
+            <li>
+                <a href="https://www.postgresql.org/docs/" target="_blank">
+                    <strong>Documentazione ufficiale di PostgreSQL</strong>
+                </a> - Se vuoi esplorare un'alternativa avanzata a MySQL, questa è una risorsa fondamentale.
+            </li>
+            <li>
+                <a href="https://sqlzoo.net/" target="_blank">
+                    <strong>SQLZoo - Esercizi interattivi</strong>
+                </a> - Ottima piattaforma per esercitarsi con query SQL in diversi database relazionali.
+            </li>
+            <li>
+                <a href="https://use-the-index-luke.com/" target="_blank">
+                    <strong>Use The Index, Luke</strong>
+                </a> - Una guida pratica all’ottimizzazione delle query SQL per migliorare le performance del database.
+            </li>
+        </ul>
+    </div>
+    
+    <div class="advanced">
+        <h2>5. Approfondimenti</h2>
+        <p>Per chi desidera approfondire ulteriormente i concetti legati ai database relazionali e MySQL, ecco alcuni argomenti avanzati da esplorare:</p>
+        
+    
+        <h3>Stored Procedures e Trigger</h3>
+        <p>
+            Le **stored procedure** sono funzioni SQL predefinite che consentono di eseguire operazioni ripetitive direttamente all'interno del database.
+            I **trigger**, invece, sono comandi SQL che vengono eseguiti automaticamente in risposta a determinate azioni sui dati.
+        </p>
+        <p>Risorse consigliate:</p>
+        <ul>
+            <li>
+                <a href="https://www.mysqltutorial.org/getting-started-with-mysql-stored-procedures.aspx" target="_blank">
+                    MySQL Tutorial: Stored Procedures
+                </a>
+            </li>
+            <li>
+                <a href="https://www.sqlservertutorial.net/sql-server-triggers/" target="_blank">
+                    SQL Server Tutorial: Triggers
+                </a>
+            </li>
+        </ul>
+    
+        <h3>Backup e Ripristino di un Database</h3>
+        <p>
+            Salvaguardare i dati è fondamentale. MySQL offre strumenti come <code>mysqldump</code> per eseguire backup e ripristini rapidi.
+            Altri database, come PostgreSQL e SQL Server, forniscono strumenti avanzati per la gestione dei backup.
+        </p>
+        <p>Risorse consigliate:</p>
+        <ul>
+            <li>
+                <a href="https://www.mysqltutorial.org/mysql-backup-and-restore-database.aspx" target="_blank">
+                    Backup e Ripristino in MySQL
+                </a>
+            </li>
+            <li>
+                <a href="https://docs.microsoft.com/en-us/sql/relational-databases/backup-restore/back-up-and-restore-of-sql-server-databases" target="_blank">
+                    Backup e Restore su SQL Server
+                </a>
+            </li>
+        </ul>
+    
+    </div>
+
+
+    <footer class="footer">
+        <a href="../index.html" class="footer-logo">
+            <img src="../img/logo.png" alt="Logo del sito" />
+        </a>
+        <div class="footer-links">
+            <a href="./Lezione_11.html" class="footer-link left">
+                &#8592; Lezione precedente
+            </a>
+            <a href="./Lezione_13.html" class="footer-link right">
+        	    Lezione successiva &#8594;
+   		    </a>
+        </div>
+        &copy; 2025 Corso di Programmazione Backend. Developed By Emanuele Ienna e Massimiliano Grande. Tutti i diritti riservati.
+    </footer>
+
+</body>
+</html>

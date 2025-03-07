@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lezione 19:  Proseguimento dello sviluppo del gioco testuale</title>
+    <link rel="stylesheet" href="../styles/style.css">
+</head>
+<h1 class="lesson-title">Lezione 19: Proseguimento dello sviluppo del gioco testuale</h1>
+<body>
+
+<div class="section">
+    <h2>1. Introduzione</h2>
+    <p>Questa lezione continua il lavoro sul gioco testuale iniziato nelle lezioni precedenti. Amplieremo la logica di gioco, implementeremo nuove funzionalità e miglioreremo l'integrazione con il database per una gestione più efficace dei dati di gioco.</p>
+</div>
+
+<div class="section">
+    <h2>2. Espansione della Logica di Gioco</h2>
+    <p>Per rendere il gioco più interattivo e coinvolgente, aggiungeremo nuove funzionalità come:</p>
+    <ul>
+        <li>Sistema di combattimento tra giocatori e nemici.</li>
+        <li>Gestione avanzata dell'inventario con oggetti utilizzabili.</li>
+        <li>Missioni e obiettivi per guidare il giocatore nel gioco.</li>
+    </ul>
+</div>
+
+<div class="example">
+    <h3>Implementazione del sistema di combattimento</h3>
+    <pre><code>public class Combattimento {
+    public static void combattere(Giocatore giocatore, Nemico nemico) {
+        while (giocatore.getSalute() > 0 && nemico.getSalute() > 0) {
+            System.out.println("Il giocatore attacca il nemico!");
+            nemico.riceviDanno(giocatore.getAttacco());
+
+            if (nemico.getSalute() > 0) {
+                System.out.println("Il nemico contrattacca!");
+                giocatore.riceviDanno(nemico.getAttacco());
+            }
+        }
+
+        if (giocatore.getSalute() > 0) {
+            System.out.println("Hai vinto il combattimento!");
+        } else {
+            System.out.println("Sei stato sconfitto...");
+        }
+    }
+}</code></pre>
+</div>
+
+<div class="test">
+    <h3>Test di Verifica</h3>
+    <ul>
+        <li>Come viene gestito il combattimento tra il giocatore e il nemico?</li>
+        <li>Quali miglioramenti possono essere apportati per bilanciare il gioco?</li>
+    </ul>
+</div>
+
+<div class="exercise">
+    <h3>Esercizio Pratico</h3>
+    <p>Implementa un sistema di gestione delle missioni, in cui il giocatore può accettare missioni, completarle e ricevere ricompense.</p>
+</div>
+
+<div class="bibliography">
+    <h2>4. Bibliografia e Risorse Utili</h2>
+    <ul>
+        <li><a href="https://docs.oracle.com/en/java/">Documentazione ufficiale di Java</a></li>
+        <li><a href="https://www.baeldung.com/java">Approfondimenti su Java - Baeldung</a></li>
+    </ul>
+</div>
+
+<div class="advanced">
+    <h2>5. Approfondimenti</h2>
+    <p>Per chi desidera approfondire, si consiglia di esplorare concetti avanzati di programmazione a stati finiti per gestire le fasi di gioco.</p>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+    <a href="../index.html" class="footer-logo">
+        <img src="../img/logo.png" alt="Logo del sito" />
+    </a>
+    <div class="footer-links">
+        <a href="./Lezione_18.html" class="footer-link left">
+            &#8592; Lezione precedente
+        </a>
+        <a href="./Esercitazione_4.html" class="footer-link right">
+       	    Lezione successiva - Esercitazione &#8594;
+		</a>
+    </div>
+    &copy; 2025 Corso di Programmazione Backend. Developed By Emanuele Ienna e Massimiliano Grande. Tutti i diritti riservati.
+</footer>
+
+</body>
+</html>

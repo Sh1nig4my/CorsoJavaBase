@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/style.css">
+    <title>Lezione 10 - SQL</title>
+</head>
+
+<body>
+    <header>
+        <h1>Introduzione ai Databases</h1>
+    </header>
+
+    <main>
+
+        <section class="section">
+            <h2>Introduzione</h2>
+            <p>Questa lezione si concentra sul fiunzionamento e sui comandi basilari SQL.
+                Analizzeremo in dettaglio come si installa e configura un server MySQL e i comandi di interrogazione SQL
+                dividendo i suoi sotto linguaggi.
+			</p>
+        </section>
+
+        <section class="section">
+			<h2>1. Installazione e preparazione ambiente SQL</h2>
+		
+			<h3>1.1 Installazione Server MySQL</h3>
+			<p>
+				Effettueremo il download della versione 8.0.40 dal sito ufficiale di MySQL Community. 
+				<a href="https://dev.mysql.com/downloads/" target="_blank">Download del server</a>.
+			</p>
+		
+			<h3>1.2 Installazione dei driver ODBC</h3>
+			<p>
+				Per l'interfacciamento del server, sarà necessario installare i connettori ODBC dal link ufficiale:
+				<a href="https://dev.mysql.com/downloads/connector/odbc/" target="_blank">ODBC Connector</a>.
+				<br>Per la configurazione, possiamo seguire questa guida dettagliata:
+				<a href="https://help.interfaceware.com/v6/connect-to-mysql-from-windows-with-odbc" target="_blank">Guida di configurazione per gli ODBC connector</a>.
+			</p>
+		
+			<h3>1.3 Introduzione alle varie tipologie di Database</h3>
+			<table>
+				<thead>
+					<tr>
+						<th>Tipologia</th>
+						<th>Descrizione</th>
+						<th>Esempi</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Database Relazionali</td>
+						<td>
+							I database relazionali (RDBMS) organizzano i dati in tabelle strutturate interconnesse tramite chiavi primarie ed esterne.
+							Utilizzano SQL per le query e le operazioni sui dati.
+						</td>
+						<td>MySQL, PostgreSQL, Oracle, Microsoft SQL Server</td>
+					</tr>
+					<tr>
+						<td>Database Non Relazionali (NoSQL)</td>
+						<td>
+							Questi database non utilizzano il modello tabellare, offrendo strutture più flessibili e scalabili.
+							Sono suddivisi in diverse categorie: document-based, key-value, column-family e graph-based.
+						</td>
+						<td>MongoDB, Redis, Cassandra, Neo4j</td>
+					</tr>
+					<tr>
+						<td>Database ad Oggetti</td>
+						<td>
+							Memorizzano e gestiscono i dati come oggetti, permettendo relazioni complesse tra entità.
+							Sono adatti per applicazioni con alto livello di astrazione.
+						</td>
+						<td>db4o, ObjectDB</td>
+					</tr>
+					<tr>
+						<td>Database Temporali</td>
+						<td>
+							Tracciano le modifiche ai dati nel tempo, permettendo query su dati storici o intervalli temporali specifici.
+							Spesso usati per analisi finanziarie e meteorologiche.
+						</td>
+						<td>TimescaleDB, InfluxDB</td>
+					</tr>
+				</tbody>
+			</table>
+			<p>
+				Per approfondire i database relazionali, consulta questa risorsa:
+				<a href="https://aulab.it/guide/177/linguaggio-sql-i-database-relazionali" target="_blank">Approfondimento Database Relazionali</a>.
+			</p>
+		
+			<h3>1.4 Il Linguaggio SQL</h3>
+			<p>SQL si suddivide in quattro sottolinguaggi principali, ognuno con specifiche funzionalità:</p>
+		
+			<div class="table-container">
+				<table>
+					<thead>
+						<tr>
+							<th>Sottolinguaggio</th>
+							<th>Descrizione</th>
+							<th>Esempi di Comandi</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>Data Query Language (DQL)</td>
+							<td>Responsabile della lettura e interrogazione dei dati.</td>
+							<td><pre><code>SELECT * FROM utenti;</code></pre></td>
+						</tr>
+						<tr>
+							<td>Data Manipulation Language (DML)</td>
+							<td>Gestisce l'aggiunta, modifica e cancellazione dei dati.</td>
+							<td>
+								<pre><code>INSERT INTO utenti (nome, cognome) VALUES ('Mario', 'Rossi');
+			UPDATE utenti SET cognome = 'Bianchi' WHERE id = 1;
+			DELETE FROM utenti WHERE id = 1;</code></pre>
+							</td>
+						</tr>
+						<tr>
+							<td>Data Definition Language (DDL)</td>
+							<td>Definisce la struttura dei dati in un database.</td>
+							<td>
+								<pre><code>CREATE TABLE utenti (id INT PRIMARY KEY, nome VARCHAR(100));
+			ALTER TABLE utenti ADD COLUMN email VARCHAR(255);
+			DROP TABLE utenti;</code></pre>
+							</td>
+						</tr>
+						<tr>
+							<td>Data Control Language (DCL)</td>
+							<td>Gestisce i permessi e i controlli di accesso al database.</td>
+							<td>
+								<pre><code>GRANT SELECT ON utenti TO 'utente1';
+			REVOKE INSERT ON utenti FROM 'utente2';</code></pre>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			
+		
+			
+		
+		</section>
+		
+        
+        <section class="section">
+			<h2>2. Tipi di dati</h2>
+		
+			<h3>Tipi numerici interi</h3>
+			<table>
+				<thead>
+					<tr>
+						<th>Tipo</th>
+						<th>Bit</th>
+						<th>Intervallo Valori</th>
+						<th>Standard SQL</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>TINYINT</td>
+						<td>8</td>
+						<td>-128 ... 127</td>
+						<td>No</td>
+					</tr>
+					<tr>
+						<td>SMALLINT</td>
+						<td>16</td>
+						<td>-32.768 ... 32.767</td>
+						<td>Sì</td>
+					</tr>
+					<tr>
+						<td>MEDIUMINT</td>
+						<td>24</td>
+						<td>-8.338.608 ... 8.338.607</td>
+						<td>No</td>
+					</tr>
+					<tr>
+						<td>INTEGER / INT</td>
+						<td>32</td>
+						<td>-2.147.483.648 ... 2.147.483.647</td>
+						<td>Sì</td>
+					</tr>
+					<tr>
+						<td>BIGINT</td>
+						<td>64</td>
+						<td>-9.223.372.036.854.775.808 ... 9.223.372.036.854.775.807</td>
+						<td>No</td>
+					</tr>
+				</tbody>
+			</table>
+		
+			<h3>Tipi numerici non interi</h3>
+			<p>Si distinguono due sottotipi: numeri approssimati in virgola mobile e numeri esatti in virgola fissa.</p>
+			<table>
+				<thead>
+					<tr>
+						<th>Tipo</th>
+						<th>Bit</th>
+						<th>Intervallo Valori</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>FLOAT</td>
+						<td>32</td>
+						<td>-3.402823466E+38 a 3.402823466E+38</td>
+					</tr>
+					<tr>
+						<td>DOUBLE</td>
+						<td>64</td>
+						<td>-1.7976931348623157E+308 a 1.7976931348623157E+308</td>
+					</tr>
+					<tr>
+						<td>NUMERIC(m, d)</td>
+						<td>Variabile</td>
+						<td>Fino a 65 cifre significative, con 30 decimali</td>
+					</tr>
+				</tbody>
+			</table>
+		
+			<h3>Tipi stringa</h3>
+			<table>
+				<thead>
+					<tr>
+						<th>Tipo</th>
+						<th>Descrizione</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>CHAR(n)</td>
+						<td>Stringa a lunghezza fissa, riempita di spazi se più corta</td>
+					</tr>
+					<tr>
+						<td>VARCHAR(n)</td>
+						<td>Stringa a lunghezza variabile, fino a 65535 caratteri</td>
+					</tr>
+					<tr>
+						<td>TEXT</td>
+						<td>Come VARCHAR ma con dimensioni più ampie</td>
+					</tr>
+				</tbody>
+			</table>
+		
+			<h3>Tipi insiemi ed enumerati</h3>
+			<pre><code>
+		ENUM('val1', 'val2', 'val3'); -- Può assumere solo uno dei valori specificati
+		SET('val1', 'val2', 'val3'); -- Può assumere uno o più valori specificati
+			</code></pre>
+		
+			<h3>Tipi per la data e l'ora</h3>
+			<table>
+				<thead>
+					<tr>
+						<th>Tipo</th>
+						<th>Formato</th>
+						<th>Intervallo Valori</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>DATE</td>
+						<td>YYYY-MM-DD</td>
+						<td>'0000-00-00' al '9999-12-31'</td>
+					</tr>
+					<tr>
+						<td>TIME</td>
+						<td>hh:mm:ss</td>
+						<td>'-838:59:59' a '838:59:59'</td>
+					</tr>
+					<tr>
+						<td>DATETIME</td>
+						<td>YYYY-MM-DD hh:mm:ss</td>
+						<td>'0000-00-00 00:00:00' al '9999-12-31 23:59:59'</td>
+					</tr>
+				</tbody>
+			</table>
+		
+			<h3>Campi AUTO_INCREMENT</h3>
+			<pre><code>
+		CREATE TABLE utenti (
+			id INT AUTO_INCREMENT PRIMARY KEY,
+			nome VARCHAR(100)
+		);
+			</code></pre>
+		
+			<h3>Guida per la sintassi SQL</h3>
+			<p>Per ulteriori dettagli sui tipi di dati in SQL, visita: 
+				<a href="https://www.w3schools.com/sql/default.asp">Guida SQL di W3Schools</a>
+			</p>
+		</section>
+		
+        
+        
+    </main>
+
+	<footer class="footer">
+		<a href="../../index.html" class="footer-logo">
+			<img src="../../img/logo.png" alt="Logo del sito" />
+		</a>
+		<div class="footer-links">
+			<a href="../../index.html" class="footer-link left">
+				&#8592; Pagina precedente
+			</a>
+		</div>
+		&copy; 2025 Corso di Programmazione Backend. Developed By Emanuele Ienna e Massimiliano Grande. Tutti i diritti riservati.
+	</footer>
+
+</body>
+
+</html>

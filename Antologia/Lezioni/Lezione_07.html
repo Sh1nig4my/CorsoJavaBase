@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lezione Giorno 7: Stream API, Optional e Metodi Statici nelle Interfacce</title>
+    <link rel="stylesheet" href="../styles/style.css">
+</head>
+
+<body>
+    <h1 class="lesson-title">Lezione Giorno 7: Stream API, Optional e Metodi Statici nelle Interfacce</h1>
+
+    <section class="section">
+        <h2>Introduzione</h2>
+        <p>Benvenuti alla lezione 7! Oggi esploreremo alcune delle caratteristiche più potenti introdotte con Java 8: la
+            <strong>Stream API</strong>, la classe <strong>Optional</strong>, e i <strong>metodi statici nelle
+                interfacce</strong>. Questi strumenti rappresentano un grande passo avanti nella programmazione in Java,
+            permettendo di scrivere codice più pulito, leggibile e funzionale.</p>
+        <p>Seguiremo un percorso logico che parte dalla necessità di processare e manipolare dati con efficienza,
+            passando per la gestione sicura di valori opzionali, fino ad arrivare all'uso dei metodi statici per
+            organizzare meglio il codice nelle interfacce.</p>
+    </section>
+
+
+
+    <section class="section">
+        <h2>Stream API</h2>
+        <p>La Stream API, introdotta in Java 8, consente di elaborare collezioni di dati in modo dichiarativo, simile a
+            quanto avviene nelle query SQL. Utilizzando i flussi (<strong>streams</strong>), possiamo eseguire
+            operazioni complesse come il filtraggio, la trasformazione e l'aggregazione dei dati in modo leggibile e
+            conciso, sfruttando lo stile funzionale offerto dalle lambda expressions.</p>
+
+        <h3>Caratteristiche dei Flussi</h3>
+        <p>Un flusso è una sequenza di elementi che supporta operazioni aggregate. Le caratteristiche principali dei
+            flussi sono:</p>
+        <ul>
+            <li><strong>Non Modificano i Dati Originali:</strong> I flussi non alterano la collezione originale, ma
+                producono un nuovo risultato.</li>
+            <li><strong>Laziness:</strong> Le operazioni intermedie vengono eseguite solo quando è chiamata
+                un'operazione terminale.</li>
+            <li><strong>Pipeline di Operazioni:</strong> Le operazioni possono essere concatenate per creare una
+                pipeline.</li>
+            <li><strong>Supporto al Parallelismo:</strong> I flussi possono essere eseguiti in modo parallelo per
+                migliorare le performance.</li>
+        </ul>
+
+        <h3>Esempio Pratico</h3>
+        <p>Immaginiamo di voler elaborare una lista di numeri per trovare solo i numeri pari, raddoppiarli e sommarli.
+            Con la Stream API, possiamo realizzare questa logica in modo chiaro e compatto:</p>
+
+        <div class="example">
+            <h3>Esempio: Operazioni su un flusso di numeri</h3>
+            <pre><code>import java.util.Arrays;
+    import java.util.List;
+    
+    public class StreamExample {
+        public static void main(String[] args) {
+            List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6);
+    
+            int result = numbers.stream()       // Crea un flusso dalla lista
+                                .filter(n -> n % 2 == 0) // Filtra i numeri pari
+                                .mapToInt(n -> n * 2)    // Raddoppia i numeri
+                                .sum();                 // Somma i risultati
+    
+            System.out.println("Risultato: " + result); // Output: 24
+        }
+    }</code></pre>
+        </div>
+        <p>In questo esempio, la pipeline del flusso è composta da tre operazioni:</p>
+        <ol>
+            <li><code>filter</code>: Seleziona solo i numeri pari.</li>
+            <li><code>mapToInt</code>: Trasforma i numeri, raddoppiandoli.</li>
+            <li><code>sum</code>: Somma i numeri trasformati.</li>
+        </ol>
+        <p>Il codice risultante è leggibile e conciso, esprimendo chiaramente l'intento dell'operazione.</p>
+
+        <h3>Operazioni sui Flussi</h3>
+        <p>Le operazioni sui flussi si dividono in due categorie principali:</p>
+        <ul>
+            <li><strong>Operazioni Intermedie:</strong> Trasformano o filtrano gli elementi del flusso. Sono lazy e
+                vengono eseguite solo se c'è un'operazione terminale. Esempi:
+                <ul>
+                    <li><code>filter</code>: Filtra gli elementi in base a una condizione.</li>
+                    <li><code>map</code>: Trasforma ogni elemento in un altro elemento.</li>
+                    <li><code>sorted</code>: Ordina gli elementi del flusso.</li>
+                    <li><code>distinct</code>: Rimuove i duplicati.</li>
+                </ul>
+            </li>
+            <li><strong>Operazioni Terminali:</strong> Producono un risultato o un effetto collaterale. Esempi:
+                <ul>
+                    <li><code>forEach</code>: Esegue un'azione su ogni elemento.</li>
+                    <li><code>collect</code>: Accumula gli elementi in una collezione o in un altro tipo di risultato.
+                    </li>
+                    <li><code>reduce</code>: Riduce il flusso a un singolo valore.</li>
+                    <li><code>count</code>: Conta il numero di elementi.</li>
+                </ul>
+            </li>
+        </ul>
+
+        <h3>Stream Sequenziali e Paralleli</h3>
+        <p>Oltre ai flussi sequenziali, Java offre flussi paralleli che consentono di suddividere automaticamente
+            l'elaborazione su più thread. Basta utilizzare il metodo <code>parallelStream</code> invece di
+            <code>stream</code> per abilitare l'elaborazione parallela. Tuttavia, l'uso di flussi paralleli è
+            consigliato solo quando si lavora con dataset grandi e il costo di creazione dei thread è giustificato.</p>
+
+        <h3>Vantaggi della Stream API</h3>
+        <p>Utilizzare la Stream API offre numerosi vantaggi:</p>
+        <ul>
+            <li><strong>Maggiore leggibilità:</strong> Le pipeline di flussi sono facili da leggere e comprendere.</li>
+            <li><strong>Meno codice boilerplate:</strong> Le operazioni comuni come filtraggio e trasformazione
+                richiedono meno righe di codice.</li>
+            <li><strong>Parallelismo semplificato:</strong> È possibile elaborare i dati in parallelo con un semplice
+                metodo.</li>
+        </ul>
+
+        <h3>Considerazioni</h3>
+        <p>Anche se la Stream API è potente, è importante usarla con cautela:</p>
+        <ul>
+            <li>Non utilizzare flussi per operazioni semplici che possono essere implementate in modo più chiaro con
+                cicli tradizionali.</li>
+            <li>Il parallelismo non è sempre vantaggioso e può introdurre overhead in dataset piccoli.</li>
+        </ul>
+    </section>
+
+
+    <section class="section">
+        <h2>Optional</h2>
+        <p>Uno dei problemi più frequenti in Java è la gestione dei <code>null</code>, che spesso porta al temuto
+            <code>NullPointerException</code>. Con l'introduzione di Java 8, la classe <code>Optional</code> è stata
+            progettata per fornire un approccio più sicuro ed espressivo alla gestione dei valori opzionali e migliorare
+            la leggibilità del codice.</p>
+
+        <h3>Cos'è <code>Optional</code>?</h3>
+        <p><code>Optional</code> è una classe contenitore che può rappresentare un valore presente o assente. Questo
+            elimina la necessità di verificare esplicitamente la presenza di un valore con controlli su
+            <code>null</code>, favorendo uno stile di programmazione più fluido e dichiarativo.</p>
+
+        <h3>Creazione e Utilizzo</h3>
+        <p>Un oggetto <code>Optional</code> può essere creato e gestito in diversi modi:</p>
+        <ul>
+            <li><code>Optional.of(value)</code>: Crea un <code>Optional</code> con un valore non nullo. Lancia
+                un'eccezione se il valore è <code>null</code>.</li>
+            <li><code>Optional.ofNullable(value)</code>: Crea un <code>Optional</code> che può contenere un valore o
+                essere vuoto.</li>
+            <li><code>Optional.empty()</code>: Crea un <code>Optional</code> vuoto.</li>
+        </ul>
+
+        <div class="example">
+            <h3>Esempio: Gestione di un valore opzionale</h3>
+            <pre><code>import java.util.Optional;
+    
+    public class OptionalExample {
+        public static void main(String[] args) {
+            // Creazione di un Optional con valore assente
+            Optional<String> optionalValue = Optional.ofNullable(getValue());
+    
+            // Utilizzo di ifPresentOrElse per gestire la presenza o assenza del valore
+            optionalValue.ifPresentOrElse(
+                value -> System.out.println("Valore presente: " + value),
+                () -> System.out.println("Valore assente")
+            );
+    
+            // Utilizzo di orElse per fornire un valore predefinito
+            String defaultValue = optionalValue.orElse("Valore di default");
+            System.out.println("Valore restituito: " + defaultValue");
+    
+            // Utilizzo di map per trasformare il valore se presente
+            Optional<Integer> length = optionalValue.map(String::length);
+            length.ifPresent(len -> System.out.println("Lunghezza del valore: " + len));
+        }
+    
+        private static String getValue() {
+            return null; // Cambia con "Java" per testare il valore presente
+        }
+    }</code></pre>
+        </div>
+        <p>Nell'esempio precedente:</p>
+        <ul>
+            <li><code>ifPresentOrElse</code> viene utilizzato per gestire sia il caso in cui il valore è presente, sia
+                quello in cui è assente.</li>
+            <li><code>orElse</code> fornisce un valore predefinito se il valore non è presente.</li>
+            <li><code>map</code> trasforma il valore in un altro tipo, se presente.</li>
+        </ul>
+
+        <h3>Metodi Comuni di <code>Optional</code></h3>
+        <p>La classe <code>Optional</code> offre diversi metodi utili per la gestione dei valori opzionali:</p>
+        <ul>
+            <li><code>isPresent()</code>: Restituisce <code>true</code> se il valore è presente, altrimenti
+                <code>false</code>.</li>
+            <li><code>ifPresent(Consumer)</code>: Esegue un'azione se il valore è presente.</li>
+            <li><code>ifPresentOrElse(Consumer, Runnable)</code>: Esegue un'azione se il valore è presente, o un'altra
+                azione se è assente.</li>
+            <li><code>orElse(T other)</code>: Restituisce un valore predefinito se il valore è assente.</li>
+            <li><code>orElseGet(Supplier)</code>: Fornisce un valore predefinito calcolato solo se il valore è assente.
+            </li>
+            <li><code>orElseThrow()</code>: Lancia un'eccezione se il valore è assente.</li>
+            <li><code>map(Function)</code>: Trasforma il valore contenuto in un altro tipo, se presente.</li>
+            <li><code>filter(Predicate)</code>: Filtra il valore contenuto in base a una condizione, se presente.</li>
+        </ul>
+
+        <h3>Quando Utilizzare <code>Optional</code>?</h3>
+        <p>Alcuni scenari in cui è utile utilizzare <code>Optional</code> includono:</p>
+        <ul>
+            <li>Restituzione di valori opzionali da metodi che potrebbero non avere un risultato significativo.</li>
+            <li>Gestione di parametri opzionali in metodi.</li>
+            <li>Eliminazione di verifiche esplicite su <code>null</code> per migliorare la leggibilità del codice.</li>
+        </ul>
+
+        <p>Tuttavia, è importante non abusare di <code>Optional</code>. Non dovrebbe essere utilizzato come sostituto
+            per campi di classe o in strutture dati.</p>
+    </section>
+
+
+    <section class="section">
+        <h2>Metodi Statici nelle Interfacce</h2>
+        <p>Con l'introduzione di Java 8, le interfacce possono includere metodi statici. Questo è un cambiamento
+            significativo nel design delle interfacce, che fino a Java 7 potevano contenere solo dichiarazioni di metodi
+            astratti (senza corpo) e costanti. I metodi statici nelle interfacce sono utili per definire funzionalità
+            comuni e condivise, che non dipendono da una specifica implementazione dell'interfaccia.</p>
+
+        <p>Un metodo statico in un'interfaccia:</p>
+        <ul>
+            <li>Deve essere preceduto dalla keyword <code>static</code>.</li>
+            <li>Non può essere sovrascritto dalle classi che implementano l'interfaccia.</li>
+            <li>Può essere richiamato direttamente usando il nome dell'interfaccia.</li>
+        </ul>
+
+        <p>Questa caratteristica consente di mantenere organizzate le utilità legate all'interfaccia stessa, evitando di
+            doverle dichiarare in classi separate.</p>
+
+        <div class="example">
+            <h3>Esempio: Metodo statico in un'interfaccia</h3>
+            <pre><code>interface MathUtils {
+    static int add(int a, int b) {
+        return a + b;
+    }
+
+    static int multiply(int a, int b) {
+        return a * b;
+    }
+}
+
+public class StaticMethodExample {
+    public static void main(String[] args) {
+        // Utilizzo del metodo statico dell'interfaccia
+        int sum = MathUtils.add(3, 7);
+        int product = MathUtils.multiply(3, 7);
+
+        System.out.println("Somma: " + sum);
+        System.out.println("Prodotto: " + product);
+    }
+}</code></pre>
+        </div>
+        <p>In questo esempio, l'interfaccia <code>MathUtils</code> definisce due metodi statici: <code>add</code> e
+            <code>multiply</code>. Questi metodi possono essere utilizzati direttamente nel metodo <code>main</code>
+            tramite il nome dell'interfaccia (<code>MathUtils.add</code> e <code>MathUtils.multiply</code>).</p>
+
+        <h3>Perché utilizzare metodi statici nelle interfacce?</h3>
+        <p>I metodi statici nelle interfacce sono utili in diversi scenari:</p>
+        <ul>
+            <li>Centralizzare le utility legate a un'interfaccia, evitando di doverle dichiarare in classi separate.
+            </li>
+            <li>Garantire che le funzionalità statiche siano strettamente correlate al contratto definito
+                dall'interfaccia.</li>
+            <li>Migliorare la leggibilità e la manutenibilità del codice, fornendo metodi statici direttamente associati
+                al concetto rappresentato dall'interfaccia.</li>
+        </ul>
+
+        <p>Ad esempio, se un'interfaccia rappresenta un contratto per operazioni matematiche, i metodi statici di
+            utilità come <code>add</code> o <code>multiply</code> appartengono logicamente all'interfaccia stessa e non
+            devono essere definiti altrove.</p>
+
+        <h3>Limiti dei metodi statici nelle interfacce</h3>
+        <p>Tuttavia, ci sono alcune limitazioni nell'uso dei metodi statici nelle interfacce:</p>
+        <ul>
+            <li>I metodi statici non possono essere sovrascritti da una classe che implementa l'interfaccia, poiché
+                appartengono esclusivamente all'interfaccia stessa.</li>
+            <li>Non possono accedere alle variabili di istanza di una classe che implementa l'interfaccia, poiché non
+                fanno parte di un'istanza specifica.</li>
+        </ul>
+    </section>
+
+
+
+
+    <section class="bibliography">
+        <h2>Bibliografia</h2>
+        <p>Per approfondire gli argomenti trattati in questa lezione e ottenere una comprensione più approfondita della Stream API e della classe <code>Optional</code>, consigliamo di consultare le seguenti risorse ufficiali e di riferimento:</p>
+        <ul>
+            <li><a href="https://docs.oracle.com/javase/8/docs/api/java/util/stream/package-summary.html" target="_blank">
+                    <strong>Documentazione Stream API</strong></a>: Guida ufficiale della Stream API, contenente informazioni su tutte le classi e i metodi utilizzabili per elaborare collezioni in Java.</li>
+            <li><a href="https://docs.oracle.com/javase/8/docs/api/java/util/Optional.html" target="_blank">
+                    <strong>Documentazione Optional</strong></a>: Dettagli e specifiche sull'uso della classe <code>Optional</code>, con esempi pratici e descrizioni dei metodi disponibili.</li>
+            <li><a href="https://docs.oracle.com/javase/8/docs/api/" target="_blank">
+                    <strong>Java 8 API</strong></a>: Riferimento completo di tutte le funzionalità introdotte con Java 8, incluse lambda expressions, Stream API e <code>Optional</code>.</li>
+            <li><a href="https://www.baeldung.com/java-streams" target="_blank">
+                    <strong>Guida ai Java Streams</strong></a>: Un tutorial completo su come utilizzare i flussi in Java, con esempi pratici e casi d'uso.</li>
+            <li><a href="https://www.baeldung.com/java-optional" target="_blank">
+                    <strong>Guida a Java Optional</strong></a>: Un'analisi dettagliata della classe <code>Optional</code> con esempi di implementazione in scenari reali.</li>
+        </ul>
+    </section>
+    
+    <section class="advanced">
+        <h2>Approfondimenti</h2>
+        <p>Se desideri approfondire ulteriormente gli argomenti trattati, ecco alcune tematiche avanzate con esempi pratici per esplorare il potenziale della Stream API e di <code>Optional</code>.</p>
+        <ul>
+            <li>
+                <strong>Creazione di <code>Collector</code> personalizzati:</strong> I <code>Collector</code> permettono di aggregare i dati da un flusso. Puoi crearne di personalizzati per esigenze specifiche.
+                <div class="example">
+                    <h3>Esempio: Collector personalizzato per concatenare stringhe</h3>
+                    <pre><code>import java.util.stream.Collector;
+    import java.util.stream.Collectors;
+    import java.util.List;
+    
+    public class CustomCollectorExample {
+        public static void main(String[] args) {
+            List<String> words = List.of("Java", "Stream", "API");
+            
+            // Collector personalizzato per concatenare stringhe con separatore
+            Collector<CharSequence, ?, String> customCollector = 
+                Collectors.joining(" - ");
+            
+            String result = words.stream().collect(customCollector);
+            System.out.println("Risultato: " + result); // Output: Java - Stream - API
+        }
+    }</code></pre>
+                </div>
+            </li>
+            <li>
+                <strong>Utilizzo avanzato di <code>Optional</code>:</strong> Combinare <code>Optional</code> con la Stream API consente di gestire valori opzionali in modo elegante.
+                <div class="example">
+                    <h3>Esempio: Uso di <code>Optional</code> in una pipeline</h3>
+                    <pre><code>import java.util.Optional;
+    import java.util.stream.Stream;
+    
+    public class OptionalInStreamExample {
+        public static void main(String[] args) {
+            Stream<Optional<String>> stream = Stream.of(
+                Optional.of("Java"),
+                Optional.empty(),
+                Optional.of("Stream")
+            );
+    
+            // Filtra ed elabora solo i valori presenti
+            stream.filter(Optional::isPresent)
+                  .map(Optional::get)
+                  .map(String::toUpperCase)
+                  .forEach(System.out::println); // Output: JAVA STREAM
+        }
+    }</code></pre>
+                </div>
+            </li>
+        </ul>
+        <p>Questi esempi dimostrano come le funzionalità avanzate di Java 8 possano essere applicate in scenari pratici per migliorare la leggibilità e la manutenibilità del codice.</p>
+    </section>
+
+
+
+    <footer class="footer">
+        <a href="../index.html" class="footer-logo">
+            <img src="../img/logo.png" alt="Logo del sito" />
+        </a>
+        <div class="footer-links">
+            <a href="./Lezione_06.html" class="footer-link left">
+                &#8592; Lezione precedente
+            </a>
+            <a href="./Lezione_08.html" class="footer-link right">
+        	    Lezione successiva &#8594;
+   		    </a>
+        </div>
+        &copy; 2025 Corso di Programmazione Backend. Developed By Emanuele Ienna e Massimiliano Grande. Tutti i diritti riservati.
+    </footer>
+    
+</body>
+
+</html>
