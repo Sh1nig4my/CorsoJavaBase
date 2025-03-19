@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lezione X - Concetti base e di Introduzione a Java</title>
+    <link rel="stylesheet" href="../../styles/style.css">
+</head>
+<body>
+<h1 class="lesson-title">Concetti base e di Introduzione a Java</h1>
+
+<div class="section">
+    <h2>1. Introduzione</h2>
+    <p>Java è un linguaggio di programmazione di alto livello, orientato agli oggetti, sviluppato da Sun Microsystems nel 1995 e attualmente mantenuto da Oracle. È stato progettato con l'obiettivo di essere portabile, sicuro e robusto, consentendo agli sviluppatori di scrivere codice una sola volta ed eseguirlo su qualsiasi piattaforma dotata di una Java Virtual Machine (JVM). Questo principio è noto come il paradigma "Write Once, Run Anywhere" (WORA).</p>
+
+    <p>Java è ampiamente utilizzato nello sviluppo di applicazioni desktop, mobile (Android), enterprise e sistemi embedded. La sua sintassi è ispirata a C++, ma con una gestione della memoria più sicura grazie al garbage collector, che libera automaticamente la memoria inutilizzata.</p>
+
+    <p>Uno degli elementi distintivi di Java è la sua architettura basata su tre componenti fondamentali:</p>
+    <ul>
+        <li><strong>JDK (Java Development Kit)</strong>: Fornisce gli strumenti necessari per sviluppare applicazioni Java, tra cui il compilatore (<code>javac</code>), la documentazione e le librerie.</li>
+        <li><strong>JRE (Java Runtime Environment)</strong>: Include tutto il necessario per eseguire programmi Java, tra cui la JVM e le librerie di base.</li>
+        <li><strong>JVM (Java Virtual Machine)</strong>: Il cuore del linguaggio, che interpreta ed esegue il bytecode compilato da Java su qualsiasi sistema operativo.</li>
+    </ul>
+</div>
+
+<div class="section">
+    <h2>2. Concetti Chiave</h2>
+    <p>Per comprendere Java a fondo, è essenziale conoscere alcuni concetti chiave che ne caratterizzano il funzionamento e la filosofia di programmazione.</p>
+
+    <ul>
+        <li><strong>Paradigma Orientato agli Oggetti (OOP)</strong>: Java è un linguaggio completamente orientato agli oggetti, il che significa che tutto in Java è basato su classi e oggetti. L'OOP facilita il riutilizzo del codice, la modularità e la manutenzione del software. I quattro pilastri fondamentali dell'OOP in Java sono:
+            <ul>
+                <li><strong>Incapsulamento</strong>: Protegge i dati racchiudendoli all'interno di classi e fornendo metodi pubblici per l'accesso controllato.</li>
+                <li><strong>Ereditarietà</strong>: Permette di definire nuove classi basate su classi esistenti, riducendo la duplicazione del codice.</li>
+                <li><strong>Polimorfismo</strong>: Consente alle classi di essere utilizzate attraverso una comune interfaccia, migliorando la flessibilità e la scalabilità del codice.</li>
+                <li><strong>Astrazione</strong>: Permette di nascondere i dettagli di implementazione e di esporre solo le funzionalità rilevanti.</li>
+            </ul>
+        </li>
+
+        <li><strong>JVM (Java Virtual Machine)</strong>: La JVM è un ambiente di esecuzione che permette ai programmi Java di essere eseguiti su qualsiasi sistema operativo senza modifiche. Converte il bytecode in istruzioni macchina specifiche per il sistema in cui viene eseguito, garantendo portabilità e sicurezza.</li>
+
+        <li><strong>Bytecode</strong>: Il codice sorgente Java non viene compilato direttamente in codice macchina, ma in un formato intermedio chiamato bytecode. Questo bytecode viene poi interpretato dalla JVM, il che lo rende indipendente dal sistema operativo.</li>
+
+        <li><strong>Gestione della Memoria</strong>: Java utilizza un Garbage Collector (GC) per gestire automaticamente la memoria, eliminando oggetti non più utilizzati e riducendo il rischio di memory leaks.</li>
+
+        <li><strong>Exception Handling</strong>: Java offre un robusto sistema di gestione delle eccezioni che consente di scrivere codice più sicuro e meno soggetto a errori imprevedibili. Le eccezioni vengono gestite tramite blocchi <code>try</code>, <code>catch</code> e <code>finally</code>.</li>
+
+        <li><strong>Multithreading</strong>: Java supporta il multithreading, consentendo l'esecuzione concorrente di più thread per migliorare le prestazioni delle applicazioni.</li>
+
+        <li><strong>Framework e Librerie</strong>: Java dispone di una vasta gamma di librerie standard e framework per lo sviluppo di applicazioni, tra cui:
+            <ul>
+                <li><strong>Java Standard Edition (SE)</strong>: Fornisce le API di base.</li>
+                <li><strong>Java Enterprise Edition (EE)</strong>: Offerte avanzate per lo sviluppo di applicazioni aziendali.</li>
+                <li><strong>Spring</strong>: Un framework popolare per lo sviluppo di applicazioni enterprise.</li>
+            </ul>
+        </li>
+    </ul>
+</div>
+
+<div class="example">
+    <h3>Esempio: Primo Programma Java</h3>
+    <pre><code>public class HelloWorld {
+    public static void main(String[] args) {
+        System.out.println("Ciao, mondo!");
+    }
+}</code></pre>
+</div>
+
+<div class="test">
+    <h3>Test di Verifica</h3>
+    <ul>
+        <li>Cos'è la JVM?</li>
+        <li>Quali sono le principali caratteristiche di Java?</li>
+        <li>Qual è il vantaggio del bytecode rispetto al codice macchina?</li>
+    </ul>
+</div>
+
+<div class="exercise">
+    <h3>Esercizio Pratico</h3>
+    <p>Scrivi un programma Java che stampi il tuo nome e la tua età.</p>
+</div>
+
+<div class="bibliography">
+    <h2>4. Bibliografia e Risorse Utili</h2>
+    <ul>
+        <li><a href="https://docs.oracle.com/en/java/">Documentazione ufficiale di Java</a></li>
+        <li><a href="https://www.w3schools.com/java/">Java Tutorial - W3Schools</a></li>
+    </ul>
+</div>
+
+<div class="advanced">
+    <h2>5. Approfondimenti</h2>
+    <p>Per studenti avanzati, si consiglia di esplorare argomenti come la Garbage Collection, le interfacce funzionali e la gestione delle eccezioni.</p>
+</div>
+
+<footer class="footer">
+    <a href="../../index.html" class="footer-logo">
+        <img src="../../img/logo.png" alt="Logo del sito">
+    </a>
+    <div class="footer-links">
+        <a href="../../index.html" class="footer-link left">&#8592; Pagina precedente</a>
+    </div>
+    &copy; 2025 Corso di Programmazione Backend. Tutti i diritti riservati.
+</footer>
+</body>
+</html>
