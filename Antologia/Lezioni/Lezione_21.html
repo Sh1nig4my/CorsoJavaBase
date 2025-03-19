@@ -125,10 +125,11 @@ spring.jpa.hibernate.ddl-auto=update</code></pre>
         Il **controller** riceve una richiesta, la elabora (eventualmente con parametri) e chiama il livello di servizio per ottenere i dati richiesti.
         Restituisce poi una risposta al client, tipicamente in formato JSON.
     </p>
+</div>
 
-    <div class="example">
-        <h3>Esempio di Controller</h3>
-        <pre><code>@RestController
+<div class="example">
+    <h3>Esempio di Controller</h3>
+    <pre><code>@RestController
 @RequestMapping("/api/utenti")
 public class UtenteController {
     private final UtenteService utenteService;
@@ -153,16 +154,18 @@ public class UtenteController {
         return ResponseEntity.noContent().build();
     }
 }</code></pre>
-    </div>
+</div>
 
+<div class="section">
     <h3>3.2 Service Layer</h3>
     <p>
         Il <strong>Service Layer</strong> contiene la logica di business dell’applicazione.
         Questo livello si occupa dell’elaborazione dei dati e interagisce con il repository per recuperarli o modificarli nel database.
         I servizi in Spring Boot sono annotati con <code>@Service</code>.
     </p>
+</div>
 
-    <div class="example">
+<div class="example">
         <h3>Esempio di Service</h3>
         <pre><code>@Service
 public class UtenteService {
@@ -187,12 +190,14 @@ public class UtenteService {
 }</code></pre>
     </div>
 
+<div class="section">
     <h3>3.3 Repository Layer</h3>
     <p>
         Il <strong>Repository Layer</strong> è responsabile dell’accesso ai dati e dell’interazione con il database.
         Questo livello utilizza <code>Spring Data JPA</code> per ridurre la necessità di scrivere query SQL manuali.
         Le interfacce Repository sono annotate con <code>@Repository</code> e possono estendere <code>JpaRepository</code> per beneficiare di metodi predefiniti.
     </p>
+</div>
 
     <div class="example">
         <h3>Esempio di Repository</h3>
@@ -201,6 +206,7 @@ public interface UtenteRepository extends JpaRepository&lt;Utente, Long&gt; {
 }</code></pre>
     </div>
 
+    <div class="section">
     <h3>3.4 Database Layer</h3>
     <p>
         Il livello database è il livello di persistenza in cui i dati vengono memorizzati.
@@ -217,6 +223,7 @@ spring.jpa.hibernate.ddl-auto=update</code></pre>
     <p>
         Esempio di classe <code>Utente</code> come entità JPA:
     </p>
+    </div>
     <div class="example">
         <h3>Esempio di Entità</h3>
         <pre><code>@Entity
@@ -240,7 +247,7 @@ public class Utente {
     public void setEmail(String email) { this.email = email; }
 }</code></pre>
     </div>
-</div>
+
 
 
 <div class="bibliography">

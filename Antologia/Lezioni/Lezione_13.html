@@ -42,8 +42,9 @@
         <h3>1.2 Esempio di utilizzo di JDBC</h3>
         <p>Vediamo un esempio pratico di connessione a un database MySQL e di esecuzione di una semplice query SELECT.
         </p>
+    </div>
 
-        <div class="example">
+    <div class="example">
             <h3>Connessione a MySQL e lettura dei dati</h3>
             <pre><code>
     import java.sql.Connection;
@@ -94,6 +95,7 @@
             </code></pre>
         </div>
 
+    <div class="section">
         <h3>1.3 Best Practices per JDBC</h3>
         <ul>
             <li>**Utilizzare PreparedStatement**: Aiuta a prevenire attacchi SQL Injection e migliora le prestazioni.
@@ -148,6 +150,7 @@
             Una volta installato il driver, possiamo stabilire una connessione al database MySQL. Per farlo, utilizziamo
             la classe <code>DriverManager</code> che ci permette di ottenere un oggetto <code>Connection</code>.
         </p>
+    </div>
 
         <div class="example">
             <h3>Esempio: Connessione a un database MySQL</h3>
@@ -173,6 +176,7 @@
     }</code></pre>
         </div>
 
+    <div class="section">
         <h3>2.3 Configurazione Avanzata della Connessione</h3>
         <p>
             Per ottenere una connessione più efficiente, possiamo specificare **opzioni aggiuntive** nell'URL di
@@ -220,6 +224,7 @@
             Per farlo, utilizziamo il metodo <code>executeQuery()</code> della classe <code>Statement</code> o
             <code>PreparedStatement</code>.
         </p>
+    </div>
 
         <div class="example">
             <h3>Esempio: Recupero dati con <code>executeQuery()</code></h3>
@@ -251,6 +256,7 @@
     }</code></pre>
         </div>
 
+    <div class="section">
         <h3>3.2 Inserimento di Dati</h3>
         <p>
             Per inserire dati in un database utilizziamo <code>PreparedStatement</code> con il metodo
@@ -258,6 +264,8 @@
             Questo approccio previene gli attacchi SQL Injection e migliora le prestazioni quando si eseguono più query
             simili.
         </p>
+    </div>
+
 
         <div class="example">
             <h3>Esempio: Inserimento di un nuovo utente</h3>
@@ -289,11 +297,13 @@
     }</code></pre>
         </div>
 
+    <div class="section">
         <h3>3.3 Aggiornamento di Dati</h3>
         <p>
             Per modificare i dati esistenti utilizziamo il metodo <code>executeUpdate()</code> con un'istruzione SQL
             UPDATE.
         </p>
+    </div>
 
         <div class="example">
             <h3>Esempio: Aggiornamento di un indirizzo email</h3>
@@ -315,11 +325,13 @@
     }</code></pre>
         </div>
 
+    <div class="section">
         <h3>3.4 Eliminazione di Dati</h3>
         <p>
             Per rimuovere record da un database usiamo <code>DELETE</code>, facendo attenzione a non eliminare dati per
             errore.
         </p>
+    </div>
 
         <div class="example">
             <h3>Esempio: Eliminazione di un utente</h3>
@@ -340,6 +352,7 @@
     }</code></pre>
         </div>
 
+    <div class="section">
         <h3>3.5 Best Practices per l'Esecuzione di Query</h3>
         <ul>
             <li>**Utilizzare PreparedStatement** per prevenire SQL Injection e migliorare le prestazioni.</li>
@@ -360,7 +373,6 @@
     </div>
 
 
-    <section class="section">
         <div class="test">
             <h3>Test di Verifica</h3>
             <p>
@@ -418,8 +430,9 @@
                 <li>Usa <code>PreparedStatement</code> per evitare SQL Injection.</li>
                 <li>Gestisci eventuali eccezioni SQL e assicurati di chiudere correttamente la connessione.</li>
             </ul>
+        </div>
 
-            <div class="example">
+    <div class="example">
                 <h3>Soluzione suggerita</h3>
                 <pre><code>import java.sql.Connection;
         import java.sql.DriverManager;
@@ -454,6 +467,7 @@
         }</code></pre>
             </div>
 
+    <div class="section">
             <h4>4. Qual è la differenza tra Statement e PreparedStatement?</h4>
             <p>
                 <strong>Descrizione:</strong> Confronta le due interfacce principali utilizzate per eseguire query in
@@ -491,11 +505,14 @@
                 numero totale di utenti nella tabella <code>utenti</code>.
             </p>
 
-            <div class="example">
+    </div>
+
+    <div class="example">
                 <h3>Soluzione suggerita</h3>
                 <pre><code>SELECT COUNT(*) AS numero_utenti FROM utenti;</code></pre>
-            </div>
+    </div>
 
+    <div class="section">
             <p>
                 Per implementarlo in Java usando JDBC:
             </p>
@@ -524,9 +541,8 @@
                 ma anche come eseguire query, aggiornare dati e applicare best practices per la gestione delle
                 connessioni.
             </p>
-        </div>
 
-    </section>
+    </div>
 
 
     <div class="bibliography">
@@ -597,43 +613,7 @@
         <p>
             <strong>Esempio: Utilizzo di transazioni in JDBC</strong>
         </p>
-        <div class="example">
-            <pre><code>import java.sql.Connection;
-    import java.sql.DriverManager;
-    import java.sql.PreparedStatement;
-    import java.sql.SQLException;
-    
-    public class TransactionExample {
-        public static void main(String[] args) {
-            String url = "jdbc:mysql://localhost:3306/miodatabase";
-            String user = "root";
-            String password = "password";
-    
-            try (Connection conn = DriverManager.getConnection(url, user, password)) {
-                conn.setAutoCommit(false); // Disabilita l'auto-commit
-    
-                try (PreparedStatement pstmt1 = conn.prepareStatement("UPDATE utenti SET saldo = saldo - 100 WHERE id = ?");
-                     PreparedStatement pstmt2 = conn.prepareStatement("UPDATE utenti SET saldo = saldo + 100 WHERE id = ?")) {
-    
-                    pstmt1.setInt(1, 1); // Utente che invia denaro
-                    pstmt1.executeUpdate();
-    
-                    pstmt2.setInt(1, 2); // Utente che riceve denaro
-                    pstmt2.executeUpdate();
-    
-                    conn.commit(); // Conferma la transazione
-                    System.out.println("Transazione completata con successo.");
-                } catch (SQLException e) {
-                    conn.rollback(); // Annulla la transazione in caso di errore
-                    System.out.println("Errore! Transazione annullata.");
-                    e.printStackTrace();
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-    }</code></pre>
-        </div>
+
     
         <h3>5.2 Connection Pooling per Migliorare le Prestazioni</h3>
         <p>
@@ -645,32 +625,6 @@
         <p>
             Una delle soluzioni più utilizzate è **HikariCP**, che offre un'eccellente gestione del pooling delle connessioni.
         </p>
-    
-        <div class="example">
-            <h3>Esempio: Connection Pooling con HikariCP</h3>
-            <pre><code>import com.zaxxer.hikari.HikariConfig;
-    import com.zaxxer.hikari.HikariDataSource;
-    import java.sql.Connection;
-    import java.sql.SQLException;
-    
-    public class HikariCPExample {
-        public static void main(String[] args) {
-            HikariConfig config = new HikariConfig();
-            config.setJdbcUrl("jdbc:mysql://localhost:3306/miodatabase");
-            config.setUsername("root");
-            config.setPassword("password");
-            config.setMaximumPoolSize(10); // Numero massimo di connessioni nel pool
-    
-            try (HikariDataSource dataSource = new HikariDataSource(config);
-                 Connection conn = dataSource.getConnection()) {
-    
-                System.out.println("Connessione ottenuta dal pool con successo!");
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-    }</code></pre>
-        </div>
     
         <h3>5.3 Utilizzo di JDBC con Database Diversi da MySQL</h3>
         <p>
@@ -701,7 +655,109 @@
         <p>Questa configurazione permette di adattare JDBC a diversi ambienti di database.</p>
     </div>
 
+    <div class="example">
+        <h3>Esempio: Transaction</h3>
+            <pre><code>import java.sql.Connection;
+    import java.sql.DriverManager;
+    import java.sql.PreparedStatement;
+    import java.sql.SQLException;
 
+    public class TransactionExample {
+        public static void main(String[] args) {
+            String url = "jdbc:mysql://localhost:3306/miodatabase";
+            String user = "root";
+            String password = "password";
+
+            try (Connection conn = DriverManager.getConnection(url, user, password)) {
+                conn.setAutoCommit(false); // Disabilita l'auto-commit
+
+                try (PreparedStatement pstmt1 = conn.prepareStatement("UPDATE utenti SET saldo = saldo - 100 WHERE id = ?");
+                     PreparedStatement pstmt2 = conn.prepareStatement("UPDATE utenti SET saldo = saldo + 100 WHERE id = ?")) {
+
+                    pstmt1.setInt(1, 1); // Utente che invia denaro
+                    pstmt1.executeUpdate();
+
+                    pstmt2.setInt(1, 2); // Utente che riceve denaro
+                    pstmt2.executeUpdate();
+
+                    conn.commit(); // Conferma la transazione
+                    System.out.println("Transazione completata con successo.");
+                } catch (SQLException e) {
+                    conn.rollback(); // Annulla la transazione in caso di errore
+                    System.out.println("Errore! Transazione annullata.");
+                    e.printStackTrace();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }</code></pre>
+    </div>
+
+    <div class="example">
+        <h3>Esempio: Transaction</h3>
+            <pre><code>import java.sql.Connection;
+    import java.sql.DriverManager;
+    import java.sql.PreparedStatement;
+    import java.sql.SQLException;
+
+    public class TransactionExample {
+        public static void main(String[] args) {
+            String url = "jdbc:mysql://localhost:3306/miodatabase";
+            String user = "root";
+            String password = "password";
+
+            try (Connection conn = DriverManager.getConnection(url, user, password)) {
+                conn.setAutoCommit(false); // Disabilita l'auto-commit
+
+                try (PreparedStatement pstmt1 = conn.prepareStatement("UPDATE utenti SET saldo = saldo - 100 WHERE id = ?");
+                     PreparedStatement pstmt2 = conn.prepareStatement("UPDATE utenti SET saldo = saldo + 100 WHERE id = ?")) {
+
+                    pstmt1.setInt(1, 1); // Utente che invia denaro
+                    pstmt1.executeUpdate();
+
+                    pstmt2.setInt(1, 2); // Utente che riceve denaro
+                    pstmt2.executeUpdate();
+
+                    conn.commit(); // Conferma la transazione
+                    System.out.println("Transazione completata con successo.");
+                } catch (SQLException e) {
+                    conn.rollback(); // Annulla la transazione in caso di errore
+                    System.out.println("Errore! Transazione annullata.");
+                    e.printStackTrace();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }</code></pre>
+    </div>
+
+    <div class="example">
+        <h3>Esempio: Connection Pooling con HikariCP</h3>
+        <pre><code>import com.zaxxer.hikari.HikariConfig;
+    import com.zaxxer.hikari.HikariDataSource;
+    import java.sql.Connection;
+    import java.sql.SQLException;
+
+    public class HikariCPExample {
+        public static void main(String[] args) {
+            HikariConfig config = new HikariConfig();
+            config.setJdbcUrl("jdbc:mysql://localhost:3306/miodatabase");
+            config.setUsername("root");
+            config.setPassword("password");
+            config.setMaximumPoolSize(10); // Numero massimo di connessioni nel pool
+
+            try (HikariDataSource dataSource = new HikariDataSource(config);
+                 Connection conn = dataSource.getConnection()) {
+
+                System.out.println("Connessione ottenuta dal pool con successo!");
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }</code></pre>
+    </div>
 
     <footer class="footer">
         <a href="../index.html" class="footer-logo">

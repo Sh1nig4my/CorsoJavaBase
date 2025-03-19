@@ -104,9 +104,15 @@ public interface UserRepository extends JpaRepository&lt;User, Long&gt; {
     <p>
         Utilizzando <code>@SpringBootTest</code>, l'intero contesto applicativo viene caricato, permettendo l'iniezione delle dipendenze e la simulazione di un ambiente reale. TestContainers consente di avviare in modo semplice un container Docker con PostgreSQL, offrendo un ambiente di test isolato e replicabile, che elimina le dipendenze dall'ambiente locale e riduce il rischio di errori dovuti a configurazioni differenti.
     </p>
-    <div class="example">
-        <h3>Esempio: Test di integrazione per <code>UserRepository</code></h3>
-        <pre><code>import org.junit.jupiter.api.Test;
+
+    <p>
+        Questi test dimostrano come verificare non solo la correttezza delle query, ma anche l'integrazione complessiva con un database reale. L'uso di TestContainers consente di simulare un ambiente di produzione in maniera automatizzata, assicurando che le funzionalità implementate nel repository rispondano in modo affidabile e consistente anche in situazioni reali.
+    </p>
+</div>
+
+<div class="example">
+    <h3>Esempio: Test di integrazione per <code>UserRepository</code></h3>
+    <pre><code>import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.AfterAll;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -153,17 +159,12 @@ public class UserRepositoryTest {
     }
 }
 </code></pre>
-    </div>
-    <p>
-        Questi test dimostrano come verificare non solo la correttezza delle query, ma anche l'integrazione complessiva con un database reale. L'uso di TestContainers consente di simulare un ambiente di produzione in maniera automatizzata, assicurando che le funzionalità implementate nel repository rispondano in modo affidabile e consistente anche in situazioni reali.
-    </p>
 </div>
 
 
 
 <!-- Sezione Test -->
-<div class="section">
-    <div class="test">
+<div class="test">
         <h3>Test e Verifica della Comprensione</h3>
         <p>
             Rispondi alle seguenti domande per consolidare la tua comprensione sull'uso di **JPQL, JPA, Hibernate** e
@@ -193,7 +194,6 @@ public class UserRepositoryTest {
             Dopo aver risposto a queste domande, prova a implementare alcuni test pratici per verificare le tue conoscenze
             in un progetto reale. 🔍🛠️
         </p>
-    </div>
 </div>
 
 
