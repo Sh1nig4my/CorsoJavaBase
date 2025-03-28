@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Architettura Software: Monolitico vs Microservizi</title>
+  <link rel="stylesheet" href="../../styles/style.css">
+</head>
+<body>
+<h1 class="lesson-title">Architettura Software - Monolitico vs Microservizi</h1>
+
+<div class="section">
+    <h2>1. Introduzione</h2>
+    <p>Nel mondo dello sviluppo software, le architetture rappresentano il cuore della progettazione di applicazioni.
+        Tra le più diffuse, troviamo le architetture monolitiche e quelle a microservizi. In questa lezione, analizzeremo
+        i principi di entrambe, confrontandone vantaggi e svantaggi per comprendere quale sia la più adatta a determinati
+        scenari.</p>
+</div>
+
+<div class="section">
+    <h2>2. Architettura Monolitica</h2>
+    <p>L'architettura monolitica è un approccio tradizionale allo sviluppo software in cui tutti i componenti di un'applicazione
+        (interfaccia utente, logica di business e database) sono integrati in un'unica entità indivisibile. Questa struttura è stata
+        per lungo tempo il modello di riferimento per lo sviluppo di applicazioni aziendali, specialmente nei primi anni dell'informatica.
+
+        In un sistema monolitico, tutte le funzionalità dell'applicazione vengono gestite in un unico codice sorgente e deployate come
+        un unico eseguibile. Questo significa che ogni modifica, anche minima, richiede la ricompilazione e il ridistribuzione dell'intera
+        applicazione.</p>
+
+    <div class="example">
+        <h3>Esempio di Applicazione Monolitica</h3>
+        <pre><code>public class MonolithicApplication {
+    public static void main(String[] args) {
+        System.out.println("Avvio dell'applicazione monolitica...");
+        Database db = new Database();
+        Service service = new Service(db);
+        service.processData();
+    }
+}
+
+class Database {
+    void connect() {
+        System.out.println("Connessione al database...");
+    }
+}
+
+class Service {
+    private Database db;
+    Service(Database db) { this.db = db; }
+    void processData() {
+        db.connect();
+        System.out.println("Elaborazione dati...");
+    }
+}</code></pre>
+    </div>
+
+    <h3>Vantaggi</h3>
+    <ul>
+        <li><strong>Semplicità nello sviluppo:</strong> Le applicazioni monolitiche sono più semplici da sviluppare rispetto ai microservizi,
+            poiché non richiedono una suddivisione complessa in più servizi indipendenti.</li>
+        <li><strong>Facile gestione iniziale:</strong> Non essendo suddivisa in più servizi, la gestione del codice è più centralizzata.</li>
+        <li><strong>Efficienza nelle chiamate interne:</strong> Poiché tutti i componenti dell'applicazione condividono lo stesso spazio di memoria,
+            le operazioni interne sono più veloci rispetto alla comunicazione tra microservizi.</li>
+    </ul>
+
+    <h3>Svantaggi</h3>
+    <ul>
+        <li><strong>Difficoltà di scalabilità:</strong> Le applicazioni monolitiche sono generalmente scalate verticalmente, ovvero aumentando le risorse
+            hardware del server, il che può risultare inefficiente a lungo termine.</li>
+        <li><strong>Rischio di accumulo tecnico:</strong> Con il tempo, le applicazioni monolitiche possono diventare difficili da gestire a causa dell'accumulo
+            di codice non strutturato.</li>
+        <li><strong>Deploy complesso:</strong> Anche una piccola modifica al codice richiede il rilascio dell'intera applicazione, aumentando il rischio di errori
+            in produzione.</li>
+    </ul>
+</div>
+
+<div class="section">
+    <h2>3. Architettura a Microservizi</h2>
+    <p>Negli ultimi anni, l'architettura a microservizi è diventata popolare grazie alla sua capacità di suddividere un'applicazione in più servizi indipendenti,
+        ognuno responsabile di una specifica funzionalità. Questo approccio favorisce la modularità, la scalabilità orizzontale e una maggiore resilienza.</p>
+
+    <p>Ogni microservizio opera autonomamente, ha il proprio database e comunica con gli altri servizi attraverso API REST, messaggistica asincrona o protocolli come gRPC.</p>
+
+    <div class="example">
+        <h3>Esempio di Microservizio</h3>
+        <pre><code>@RestController
+@RequestMapping("/user")
+public class UserController {
+    @GetMapping("/{id}")
+    public ResponseEntity<User> getUser(@PathVariable Long id) {
+        return ResponseEntity.ok(new User(id, "Mario Rossi"));
+    }
+}
+
+class User {
+    private Long id;
+    private String name;
+    public User(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+}</code></pre>
+    </div>
+
+    <h3>Vantaggi</h3>
+    <ul>
+        <li><strong>Scalabilità:</strong> Ogni servizio può essere scalato in modo indipendente, ottimizzando l'uso delle risorse.</li>
+        <li><strong>Manutenibilità:</strong> Il codice è più organizzato e manutenibile grazie alla separazione delle responsabilità.</li>
+        <li><strong>Resilienza:</strong> Se un microservizio fallisce, il resto del sistema può continuare a funzionare.</li>
+    </ul>
+
+    <h3>Svantaggi</h3>
+    <ul>
+        <li><strong>Maggiore complessità:</strong> La gestione di più servizi distribuiti richiede strumenti per l'orchestrazione come Kubernetes.</li>
+        <li><strong>Comunicazione più lenta:</strong> La comunicazione tra microservizi introduce latenza rispetto a un'architettura monolitica.</li>
+        <li><strong>Difficoltà nel debugging:</strong> Tracciare e risolvere problemi diventa più complesso in un'architettura distribuita.</li>
+    </ul>
+</div>
+
+<div class="test">
+  <h3>Test di Verifica</h3>
+  <ul>
+    <li>Qual è la principale differenza tra un'architettura monolitica e una a microservizi?</li>
+    <li>Quando è più vantaggioso utilizzare un'architettura a microservizi?</li>
+    <li>Quali strumenti sono necessari per orchestrare microservizi?</li>
+  </ul>
+</div>
+
+<div class="exercise">
+  <h3>Esercizio Pratico</h3>
+  <p>Progetta un sistema software per un e-commerce, descrivendo quali moduli potrebbero essere implementati come microservizi e quali sarebbero i benefici rispetto a un'architettura monolitica.</p>
+</div>
+
+<div class="bibliography">
+  <h2>4. Bibliografia e Risorse Utili</h2>
+  <ul>
+    <li><a href="https://spring.io/projects/spring-boot">Spring Boot</a> - Documentazione ufficiale.</li>
+    <li><a href="https://martinfowler.com/articles/microservices.html">Microservices - Martin Fowler</a> - Approfondimento sul pattern a microservizi.</li>
+    <li><a href="https://kubernetes.io">Kubernetes</a> - Strumento di orchestrazione di container.</li>
+  </ul>
+</div>
+
+<div class="advanced">
+  <h2>5. Approfondimenti</h2>
+  <p>Per chi desidera approfondire, si consiglia di studiare le tecniche di comunicazione tra microservizi come REST, gRPC e Message Queue (Kafka, RabbitMQ), nonché le best practice di DevOps per il deployment continuo.</p>
+</div>
+
+<footer class="footer">
+  <a href="../../index.html" class="footer-logo">
+    <img src="../../img/logo.png" alt="Logo del sito">
+  </a>
+  <div class="footer-links">
+    <a href="../../index.html" class="footer-link right">&#8592; Pagina precedente</a>
+  </div>
+  &copy; 2025 Corso di Programmazione Backend. Tutti i diritti riservati.
+</footer>
+
+</body>
+</html>

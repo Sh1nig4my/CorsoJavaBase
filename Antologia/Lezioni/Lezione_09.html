@@ -20,9 +20,10 @@
             Ciò consente di aggiungere nuovi metodi senza interrompere il codice esistente.</p>
         
         <p>I default methods vengono spesso utilizzati per estendere funzionalità in librerie e API senza richiedere aggiornamenti a tutte le classi che le implementano.</p>
-        
+    </div>
         <div class="example">
             <h3>Esempio base: Default Method</h3>
+            <p>Se una classe implementa più interfacce con metodi di default aventi lo stesso nome, è necessario sovrascrivere il metodo per risolvere il conflitto.</p>
             <pre><code>interface Veicolo {
     default void avvia() {
         System.out.println("Il veicolo sta partendo.");
@@ -40,9 +41,7 @@ public class Main {
     }
 }</code></pre>
         </div>
-        
-        <p>Se una classe implementa più interfacce con metodi di default aventi lo stesso nome, è necessario sovrascrivere il metodo per risolvere il conflitto.</p>
-        
+
         <div class="example">
             <h3>Esempio avanzato: Gestione dei conflitti tra interfacce</h3>
             <pre><code>interface Veicolo {
@@ -72,8 +71,6 @@ public class Main {
 }</code></pre>
         </div>
 
-        <p>In questo caso, la classe <code>Auto</code> è obbligata a fornire un'implementazione del metodo <code>avvia()</code> per risolvere il conflitto tra le due interfacce.</p>
-    </div>
 
     <div class="section">
         <h2>2. Metodi Statici nelle Interfacce</h2>
@@ -81,7 +78,8 @@ public class Main {
            Questo evita la necessità di creare classi di supporto con metodi statici separati.</p>
         
         <p>I metodi statici nelle interfacce sono particolarmente utili per fornire funzionalità comuni senza richiedere istanze dell'interfaccia.</p>
-        
+    </div>
+
         <div class="example">
             <h3>Esempio base: Metodo statico</h3>
             <pre><code>interface Util {
@@ -97,7 +95,8 @@ public class Main {
     }
 }</code></pre>
         </div>
-        
+
+    <div class="section">
         <h3>Quando usare i Metodi Statici nelle Interfacce?</h3>
         <ul>
             <li>Quando si vogliono definire metodi di utilità direttamente nell'interfaccia.</li>
@@ -123,7 +122,7 @@ public class Main {
             <li><code>Objects.requireNonNull()</code> per validare oggetti e prevenire <code>NullPointerException</code>.</li>
             <li><code>Collections.unmodifiableList()</code> per creare liste immutabili e proteggere i dati.</li>
         </ul>
-
+    </div>
         <div class="example">
             <h3>Esempio: Ordinare una lista con una lambda</h3>
             <pre><code>import java.util.Arrays;
@@ -178,6 +177,7 @@ public class ListaImmutabile {
 }</code></pre>
         </div>
 
+    <div class="section">
         <h3>Quando Usare i Nuovi Metodi Utility?</h3>
         <ul>
             <li>Quando si desidera semplificare il codice con <code>Comparator</code> più concisi.</li>
@@ -199,7 +199,7 @@ public class ListaImmutabile {
            L'introduzione delle espressioni lambda e dei metodi di default ha ridotto significativamente la necessità di classi anonime, semplificando la logica del codice e migliorando la modularità.</p>
         
         <p>Uno degli esempi più evidenti di questa evoluzione riguarda il modo in cui venivano definite e utilizzate le interfacce funzionali prima e dopo Java 8.</p>
-        
+    </div>
         <div class="example">
             <h3>Prima di Java 8: Uso di una classe separata</h3>
             <pre><code>class Saluto {
@@ -230,7 +230,6 @@ public class Main {
 }</code></pre>
         </div>
         
-        <p>Come si può vedere, l’uso di espressioni lambda riduce il codice boilerplate e rende il codice più conciso e leggibile.</p>
 
         <div class="example">
             <h3>Utilizzo di interfacce funzionali predefinite</h3>
@@ -259,7 +258,7 @@ public class Main {
     }
 }</code></pre>
         </div>
-
+    <div class="section">
         <h3>Benefici delle Lambda Expression</h3>
         <ul>
             <li><strong>Maggiore leggibilità:</strong> il codice è più compatto e intuitivo.</li>
@@ -317,9 +316,10 @@ public class Main {
                 <br><a href="https://www.baeldung.com/java-8-lambda-expressions-tips">Approfondisci sulle Lambda Expressions</a>
             </li>
         </ul>
-        
-        <h3>Esempio: Utilizzo avanzato di Optional</h3>
+
+        </div>
         <div class="example">
+            <h3>Esempio: Utilizzo avanzato di Optional</h3>
             <pre><code>import java.util.Optional;
 
 public class OptionalExample {
@@ -334,8 +334,9 @@ public class OptionalExample {
 }</code></pre>
         </div>
 
-        <h3>Esempio: Uso di Parallel Streams</h3>
+
         <div class="example">
+            <h3>Esempio: Uso di Parallel Streams</h3>
             <pre><code>import java.util.Arrays;
 import java.util.List;
 
@@ -348,9 +349,6 @@ public class ParallelStreamsExample {
     }
 }</code></pre>
         </div>
-        
-        <p>Questi approfondimenti forniranno una visione più completa delle innovazioni di Java 8 e delle loro applicazioni pratiche nei progetti di sviluppo.</p>
-    </div>
 
 
     <footer class="footer">
